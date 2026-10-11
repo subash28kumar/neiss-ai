@@ -4,7 +4,16 @@
 
 NEISS-AI turns the US Consumer Product Safety Commission's [NEISS](https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data) data into consistent national estimates for e-bikes, e-scooters, bicycles and other micromobility devices, with survey-correct 95% confidence intervals.
 
-**Live dashboard:** https://subash28kumar.github.io/neiss-ai/
+**Live web app:** https://subash28kumar.github.io/neiss-ai/
+
+The web app has four parts, all free and running in the browser:
+
+- **Overview:** headline numbers and trends for e-bikes, e-scooters and kick scooters.
+- **Ask a question:** type a question in plain English (for example, *"How many teenagers broke a bone on an e-scooter in 2025?"*) and get a national estimate with a 95% confidence interval, a trend chart and an "Understood as" line showing how the question was read.
+- **Explore the data:** filter by device, years, age, sex, injury, body part, outcome and circumstance; download the results as CSV; share a link to any view.
+- **Search injury stories:** search the hospital narratives (for example *battery*, *hit by car*) to see national estimates by year and real example stories.
+
+The site refreshes itself: a GitHub Actions workflow (`.github/workflows/refresh.yml`) checks monthly for a new year of NEISS data, reruns the tool and republishes the site. It never publishes fewer years than the site already shows.
 
 ## Why it exists
 
@@ -64,6 +73,12 @@ kids = neissai.national_estimates(df, by=["year"], where=(df["device"] == "E-bik
 hosp = neissai.shares(df, "hospitalized", by=["device", "age_group"], where=mm)
 ```
 
+## Rebuild the website data
+
+```
+python scripts/update_site.py --data-dir data --years 2019-2025
+```
+
 ## Retrain the classifier
 
 ```
@@ -78,7 +93,7 @@ NEISS counts emergency department visits, not riders or miles, so results are co
 
 If you use NEISS-AI, please cite the software (see `CITATION.cff` or "Cite this repository" on GitHub):
 
-> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.0.0. 2026. https://github.com/subash28kumar/neiss-ai
+> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0. 2026. https://github.com/subash28kumar/neiss-ai
 
 and the method paper:
 

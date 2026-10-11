@@ -72,3 +72,14 @@ def test_infant_age_conversion():
     raw.loc[0, "Age"] = 206.0
     out = standardize(raw.rename(columns={"Narrative": "Narrative_1"}), 2024)
     assert np.isclose(out.loc[0, "Age"], 0.5)
+
+
+def test_export_web_data(tmp_path):
+    import json
+    from neissai.export import export_web_data
+    lab = neissai.add_outcomes(neissai.label_devices(_sample()))
+    info = export_web_data(lab, tmp_path, "2026-01-01", "test")
+    rec = json.loads((tmp_path / "records.json").read_text())
+    stories = json.loads((tmp_path / "stories.json").read_text())
+    assert rec["n"] == info["records"] == len(stories)
+    assert len(rec["w"]) == rec["n"] and len(rec["cluster_stratum"]) == info["clusters"]
