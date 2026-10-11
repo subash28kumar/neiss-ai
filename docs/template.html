@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEISS-AI · E-bike injury tracker</title>
+<meta name="description" content="Free, open national estimates of US e-bike and e-scooter injuries treated in emergency departments, 2019-2025, built with NEISS-AI.">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f2; --surface:#fcfcfb; --surface-2:#f0efec; --border:#e2e0da; --grid:#e9e7e2;
+  --text:#0b0b0b; --text-2:#52514e; --text-3:#7a7974; --accent:#2a78d6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --ref:#8a8984;
+  --a1:#104281; --a2:#2a78d6; --a3:#86b6ef;
+  --band-op:.14; --code-bg:#f0efec;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --border:#33332f; --grid:#2a2a27;
+    --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --ref:#8f8e88;
+    --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
+    --band-op:.22; --code-bg:#232321;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --border:#33332f; --grid:#2a2a27;
+  --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --ref:#8f8e88;
+  --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
+  --band-op:.22; --code-bg:#232321;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:40px 0 8px}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+h1{font-size:clamp(28px,4.4vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:-.01em;max-width:22ch}
+.lede{font-size:18px;color:var(--text-2);max-width:62ch;margin:0}
+.meta{font-size:13px;color:var(--text-3);margin-top:14px}
+.meta a{color:inherit}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:28px 0 8px}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.tile .label{font-size:13px;color:var(--text-2);margin:0 0 6px}
+.tile .num{font-size:34px;font-weight:650;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .sub{font-size:13px;color:var(--text-3);margin-top:6px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 20px 14px;margin:16px 0}
+.card h2{font-size:20px;margin:0 0 4px;line-height:1.3}
+.card .desc{color:var(--text-2);font-size:15px;margin:0 0 14px;max-width:70ch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--text-2);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{display:inline-block;width:18px;height:0;border-top:2px solid currentColor}
+.legend i.rect{width:12px;height:12px;border:0;border-radius:3px}
+.legend i.hollow{width:10px;height:10px;border:2px solid var(--text-3);border-radius:50%}
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:inherit}
+.axis text{fill:var(--text-3);font-size:12px}
+.axis line,.axis path{stroke:var(--grid)}
+.dlabel{font-size:12px;font-weight:600;fill:var(--text-2)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 6px 20px rgba(0,0,0,.12);padding:10px 12px;font-size:13px;min-width:190px;opacity:0;transition:opacity .08s;z-index:5}
+.tip .t-h{font-weight:650;margin-bottom:6px;color:var(--text)}
+.tip .row{display:grid;grid-template-columns:14px auto 1fr;gap:8px;align-items:baseline;margin:2px 0}
+.tip .row i{display:block;width:14px;border-top:2px solid;transform:translateY(-3px)}
+.tip .row b{font-variant-numeric:tabular-nums;color:var(--text)}
+.tip .row span{color:var(--text-2)}
+.tip .ci{grid-column:3;color:var(--text-3);font-size:12px;margin-top:-2px}
+.note{font-size:13px;color:var(--text-3);margin:8px 0 0}
+details{margin-top:12px}
+summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--text-2);font-weight:600}
+.tablewrap{overflow-x:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{position:relative;padding-left:40px;margin:0 0 14px;color:var(--text-2)}
+.steps li b{color:var(--text)}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;
+  background:var(--surface-2);color:var(--text);font-weight:650;font-size:14px;display:flex;align-items:center;justify-content:center}
+pre{background:var(--code-bg);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:13.5px;line-height:1.5;margin:8px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+p code{background:var(--code-bg);padding:1px 6px;border-radius:5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--text-3);font-size:13px;padding:24px 0 48px}
+.themebtn{float:right;margin-top:-4px;background:var(--surface);color:var(--text-2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+@media (max-width:720px){
+  .tiles{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  .card{padding:16px 14px 12px}
+  header{padding-top:24px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <button class="themebtn" id="themebtn" type="button" aria-label="Switch light or dark theme">Theme</button>
+  <p class="kicker">NEISS-AI · open injury tracker</p>
+  <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
+  <p class="lede">National estimates of injuries treated in hospital emergency departments, built from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a></p>
+</header>
+
+<section class="tiles" aria-label="Headline numbers">
+  <div class="tile"><p class="label">E-bike emergency visits, 2025</p><div class="num" id="t1"></div><div class="sub" id="t1s"></div></div>
+  <div class="tile"><p class="label">Children (0–17) hurt on e-bikes, 2025</p><div class="num" id="t2"></div><div class="sub" id="t2s"></div></div>
+  <div class="tile"><p class="label">E-scooter emergency visits, 2025</p><div class="num" id="t3"></div><div class="sub" id="t3s"></div></div>
+</section>
+
+<section class="card">
+  <h2>Emergency department visits by device</h2>
+  <p class="desc">Estimated US visits each year with 95% confidence bands. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; they are in the table.</p>
+  <div class="legend" id="lg1"></div>
+  <div class="chart" id="c1"></div>
+  <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
+  <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
+</section>
+
+<div class="grid2">
+<section class="card">
+  <h2>Who is getting hurt on e-bikes</h2>
+  <p class="desc">E-bike visits by age group. Children's visits rose sevenfold from 2022 to 2025.</p>
+  <div class="legend" id="lg2"></div>
+  <div class="chart" id="c2"></div>
+  <details><summary>Show the numbers</summary><div class="tablewrap" id="tb2"></div></details>
+</section>
+<section class="card">
+  <h2>How often an injury means a hospital stay</h2>
+  <p class="desc">Share of injured riders admitted, transferred or held, 2019–2025, by age group. For children, e-bike injuries are more serious than bicycle injuries.</p>
+  <div class="legend" id="lg3"></div>
+  <div class="chart" id="c3"></div>
+  <details><summary>Show the numbers</summary><div class="tablewrap" id="tb3"></div></details>
+</section>
+</div>
+
+<section class="card">
+  <h2>How NEISS-AI works</h2>
+  <ol class="steps">
+    <li><b>Read every NEISS record.</b> Each record is one emergency department visit, with product codes, the patient's age and a short injury story written by hospital staff.</li>
+    <li><b>Label the device.</b> Product codes and whole-word keywords in the story identify e-bikes, e-scooters, bicycles and similar devices. Before 2024 e-bikes shared code 3215 with mopeds; when the story is unclear, a text classifier trained on 2024–2025 records (where the codes are separate) decides. Cross-validated accuracy: AUC 0.995.</li>
+    <li><b>Estimate national totals.</b> NEISS is a stratified sample of hospitals, so each estimate uses survey weights and Taylor-linearized 95% confidence intervals, and flags unstable numbers using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 4%.</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>Use it yourself</h2>
+  <p class="desc">Free and open source (MIT licence). Download the NEISS annual files from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data">CPSC</a> into a folder called <code>data</code>, then:</p>
+<pre><code>pip install git+https://github.com/subash28kumar/neiss-ai
+neissai micromobility --years 2019-2025 --data-dir data --out-dir results
+neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
+  <p class="desc">Results are saved as CSV files: national estimates by year, device and age group, plus hospitalisation, head-injury, motor-vehicle and helmet shares.</p>
+</section>
+
+<section class="card">
+  <h2>Cite and limits</h2>
+  <p class="desc">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives (software), version 1.0.0, 2026. <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a>. Method: Kumar S. E-bike injuries among US children surged in 2025 (preprint, medRxiv, 2026).</p>
+  <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. Helmet use is only what the story mentions. Early e-bike estimates (2019–2021) rest on small samples.</p>
+</section>
+
+<footer>Built by Subash Kumar, independent researcher · <a href="https://orcid.org/0009-0003-6661-3424">ORCID 0009-0003-6661-3424</a> · Data from the US Consumer Product Safety Commission; CPSC does not endorse this tool.</footer>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+(function(){
+const root=document.documentElement, btn=document.getElementById('themebtn');
+const KEY='neissai-theme';
+try{const t=localStorage.getItem(KEY); if(t) root.setAttribute('data-theme',t);}catch(e){}
+btn.addEventListener('click',()=>{
+  const dark=root.getAttribute('data-theme')? root.getAttribute('data-theme')==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const next=dark?'light':'dark'; root.setAttribute('data-theme',next);
+  try{localStorage.setItem(KEY,next);}catch(e){}
+  drawAll();
+});
+})();
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtK=v=>v>=10000? (Math.round(v/100)*100).toLocaleString('en-US') : (Math.round(v/100)*100).toLocaleString('en-US');
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,str,attrs){const t=el('text',attrs,parent);t.textContent=str;return t;}
+function niceStep(v){const p=Math.pow(10,Math.floor(Math.log10(v)));const m=v/p;return (m<=1?1:m<=2?2:m<=5?5:10)*p;}
+function ticksFor(max,n){const st=niceStep(max/n);const top=Math.ceil(max/st)*st;const t=[];for(let v=0;v<=top+1e-9;v+=st)t.push(v);return {top,t};}
+function legend(id,items){const L=document.getElementById(id);L.textContent='';items.forEach(it=>{const s=document.createElement('span');const i=document.createElement('i');if(it.rect){i.className='rect';i.style.background=it.color;}else if(it.hollow){i.className='hollow';}else{i.style.color=it.color;}s.appendChild(i);s.appendChild(document.createTextNode(it.label));L.appendChild(s);});}
+function table(id,head,rows){const W=document.getElementById(id);W.textContent='';const t=document.createElement('table');const tr=document.createElement('tr');head.forEach(h=>{const th=document.createElement('th');th.textContent=h;tr.appendChild(th);});t.appendChild(tr);rows.forEach(r=>{const tr=document.createElement('tr');r.forEach(c=>{const td=document.createElement('td');td.textContent=c;tr.appendChild(td);});t.appendChild(tr);});W.appendChild(t);}
+
+function lineChart(id, series, opts){
+  const host=document.getElementById(id); host.textContent='';
+  const W=Math.max(300,host.clientWidth), H=opts.height||(W<520?260:320);
+  const m={t:12,r:opts.right||92,b:30,l:48};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':opts.aria},host);
+  const years=series[0].points.map(p=>p.year);
+  const TK=ticksFor(Math.max(...series.flatMap(s=>s.points.map(p=>opts.band?p.hi:p.est))),4), ymax=TK.top;
+  const x=y=>m.l+(W-m.l-m.r)*(years.indexOf(y))/(years.length-1);
+  const yS=v=>H-m.b-(H-m.t-m.b)*v/ymax;
+  const ax=el('g',{class:'axis'},svg);
+  TK.t.forEach(v=>{const yy=yS(v);el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,'stroke-width':1},ax);txt(ax,opts.fmtAxis(v),{x:m.l-8,y:yy+4,'text-anchor':'end'});});
+  const every=((W-m.l-m.r)/(years.length-1))<44?2:1;
+  years.forEach((yv,i)=>{if((years.length-1-i)%every===0)txt(ax,String(yv),{x:x(yv),y:H-m.b+20,'text-anchor':'middle'});});
+  series.forEach(s=>{
+    const col=s.color;
+    if(opts.band){const d=s.points.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.hi)}`).join('')+s.points.slice().reverse().map(p=>`L${x(p.year)},${yS(p.lo)}`).join('')+'Z';el('path',{d,fill:col,'fill-opacity':css('--band-op'),stroke:'none'},svg);}
+  });
+  series.forEach(s=>{
+    const col=s.color;
+    el('path',{d:s.points.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.est)}`).join(''),fill:'none',stroke:col,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    s.points.forEach(p=>el('circle',{cx:x(p.year),cy:yS(p.est),r:4,fill:p.unstable?css('--surface'):col,stroke:p.unstable?col:css('--surface'),'stroke-width':2},svg));
+  });
+  // direct labels at line ends, nudged apart
+  const ends=series.map(s=>({s,y:yS(s.points[s.points.length-1].est)})).sort((a,b)=>a.y-b.y);
+  for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<15) ends[i].y=ends[i-1].y+15;
+  ends.forEach(e=>txt(svg,e.s.label,{x:W-m.r+10,y:e.y+4,class:'dlabel'}));
+  // crosshair + tooltip
+  const hair=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:0},svg);
+  const tip=document.createElement('div');tip.className='tip';host.appendChild(tip);
+  const hit=el('rect',{x:m.l-20,y:m.t,width:W-m.l-m.r+40,height:H-m.t-m.b,fill:'transparent',tabindex:0},svg);
+  function show(i){
+    const yv=years[i];const px=x(yv);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.setAttribute('opacity',1);
+    tip.textContent='';const h=document.createElement('div');h.className='t-h';h.textContent=String(yv);tip.appendChild(h);
+    series.slice().sort((a,b)=>b.points[i].est-a.points[i].est).forEach(s=>{const p=s.points[i];const r=document.createElement('div');r.className='row';
+      const k=document.createElement('i');k.style.borderColor=s.color;const b=document.createElement('b');b.textContent=opts.fmtTip(p.est)+(p.unstable?' *':'');const sp=document.createElement('span');sp.textContent=s.label;
+      r.append(k,b,sp);tip.appendChild(r);
+      if(opts.band){const ci=document.createElement('div');ci.className='ci';ci.textContent=`95% CI ${opts.fmtTip(p.lo)} to ${opts.fmtTip(p.hi)}`;r.appendChild(ci);}
+    });
+    if(series.some(s=>s.points[i].unstable)){const n=document.createElement('div');n.className='ci';n.style.marginTop='4px';n.textContent='* potentially unstable estimate';tip.appendChild(n);}
+    tip.style.opacity=1;
+    const scale=host.clientWidth/W; let left=px*scale+14; if(left+tip.offsetWidth>host.clientWidth) left=px*scale-tip.offsetWidth-14;
+    tip.style.left=Math.max(0,left)+'px';tip.style.top='8px';
+  }
+  let cur=years.length-1;
+  hit.addEventListener('pointermove',ev=>{const r=svg.getBoundingClientRect();const px=(ev.clientX-r.left)*W/r.width;let best=0,bd=1e9;years.forEach((yv,i)=>{const d=Math.abs(x(yv)-px);if(d<bd){bd=d;best=i;}});cur=best;show(best);});
+  hit.addEventListener('pointerleave',()=>{tip.style.opacity=0;hair.setAttribute('opacity',0);});
+  hit.addEventListener('focus',()=>show(cur));hit.addEventListener('blur',()=>{tip.style.opacity=0;hair.setAttribute('opacity',0);});
+  hit.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){cur=Math.min(years.length-1,cur+1);show(cur);}if(e.key==='ArrowLeft'){cur=Math.max(0,cur-1);show(cur);}});
+}
+
+function barChart(id, groups, series, opts){
+  const host=document.getElementById(id); host.textContent='';
+  const W=Math.max(300,host.clientWidth), H=W<520?260:300;
+  const m={t:20,r:8,b:30,l:42};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':opts.aria},host);
+  const TK=ticksFor(Math.max(...series.flatMap(s=>s.values.map(v=>v.v)))*1.06,4), ymax=TK.top;
+  const yS=v=>H-m.b-(H-m.t-m.b)*v/ymax;
+  const ax=el('g',{class:'axis'},svg);
+  TK.t.forEach(v=>{const yy=yS(v);el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,'stroke-width':1},ax);txt(ax,Math.round(v*100)+'%',{x:m.l-8,y:yy+4,'text-anchor':'end'});});
+  const gw=(W-m.l-m.r)/groups.length, inner=gw*0.72, bw=(inner-2*(series.length-1))/series.length;
+  const tip=document.createElement('div');tip.className='tip';host.appendChild(tip);
+  groups.forEach((g,gi)=>{
+    const gx=m.l+gi*gw+(gw-inner)/2;
+    txt(ax,g,{x:m.l+gi*gw+gw/2,y:H-m.b+20,'text-anchor':'middle'});
+    series.forEach((s,si)=>{
+      const v=s.values[gi]; const bx=gx+si*(bw+2), y0=yS(0), y1=yS(v.v), h=y0-y1, r=Math.min(4,bw/2,h);
+      const d=`M${bx},${y0}V${y1+r}Q${bx},${y1} ${bx+r},${y1}H${bx+bw-r}Q${bx+bw},${y1} ${bx+bw},${y1+r}V${y0}Z`;
+      const p=el('path',{d,fill:s.color,tabindex:0},svg);
+      if(bw>=26) txt(svg,Math.round(v.v*100)+'%',{x:bx+bw/2,y:y1-5,'text-anchor':'middle',class:'dlabel'});
+      const show=()=>{p.setAttribute('opacity',.82);tip.textContent='';const h1=document.createElement('div');h1.className='t-h';h1.textContent=`${s.label}, ages ${g}`;tip.appendChild(h1);
+        const r1=document.createElement('div');r1.className='row';const k=document.createElement('i');k.style.borderColor=s.color;const b=document.createElement('b');b.textContent=(v.v*100).toFixed(1)+'% hospitalised';const sp=document.createElement('span');sp.textContent='';r1.append(k,b,sp);tip.appendChild(r1);
+        const ci=document.createElement('div');ci.className='ci';ci.style.marginLeft='22px';ci.textContent=`95% CI ${(v.lo*100).toFixed(1)}% to ${(v.hi*100).toFixed(1)}% · ${v.n.toLocaleString('en-US')} records`;tip.appendChild(ci);
+        tip.style.opacity=1;const scale=host.clientWidth/W;let left=(bx+bw)*scale+10;if(left+tip.offsetWidth>host.clientWidth)left=bx*scale-tip.offsetWidth-10;tip.style.left=Math.max(0,left)+'px';tip.style.top=Math.max(0,y1*scale-10)+'px';};
+      const hide=()=>{p.removeAttribute('opacity');tip.style.opacity=0;};
+      p.addEventListener('pointerenter',show);p.addEventListener('pointerleave',hide);p.addEventListener('focus',show);p.addEventListener('blur',hide);
+    });
+  });
+}
+
+function drawAll(){
+  const D=DATA, k=v=>fmtK(v);
+  const get=(dev)=>D.by_device.filter(r=>r.device===dev).sort((a,b)=>a.year-b.year);
+  // tiles
+  const eb=get('E-bike'), es=get('E-scooter');
+  const kids=D.by_age.filter(r=>r.device==='E-bike'&&r.age_group==='0-17').sort((a,b)=>a.year-b.year);
+  const last=a=>a[a.length-1], yr=(a,y)=>a.find(r=>r.year===y);
+  document.getElementById('updated').textContent=D.updated;
+  document.getElementById('t1').textContent=k(last(eb).est);
+  document.getElementById('t1s').textContent=`95% CI ${k(last(eb).lo)}–${k(last(eb).hi)} · up ${Math.round((last(eb).est/yr(eb,2024).est-1)*100)}% from 2024`;
+  document.getElementById('t2').textContent=k(last(kids).est);
+  document.getElementById('t2s').textContent=`${(last(kids).est/yr(kids,2022).est).toFixed(0)}× the 2022 count · ${Math.round(last(kids).est/last(eb).est*100)}% of e-bike injuries`;
+  document.getElementById('t3').textContent=k(last(es).est);
+  document.getElementById('t3s').textContent=`95% CI ${k(last(es).lo)}–${k(last(es).hi)}`;
+  // chart 1
+  const s1=[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}];
+  legend('lg1',[{label:'E-bike',color:css('--s1')},{label:'E-scooter',color:css('--s2')},{label:'Kick scooter',color:css('--s3')},{label:'Unstable estimate',hollow:true}]);
+  lineChart('c1',s1,{band:true,aria:'Line chart of estimated US emergency department visits for e-bikes, e-scooters and kick scooters, 2019 to 2025',fmtAxis:v=>v===0?'0':(v/1000)+'k',fmtTip:v=>k(v)});
+  const devs=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Skateboard','Moped / minibike'];
+  const years=eb.map(r=>r.year);
+  table('tb1',['Device',...years.map(String)],devs.map(d=>[d,...years.map(y=>{const r=D.by_device.find(x=>x.device===d&&x.year===y);return r?k(r.est)+(r.unstable?'*':''):'';})]));
+  // chart 2
+  const ag=g=>D.by_age.filter(r=>r.device==='E-bike'&&r.age_group===g).sort((a,b)=>a.year-b.year);
+  const s2=[{label:'18–64',color:css('--a2'),points:ag('18-64')},{label:'0–17',color:css('--a1'),points:ag('0-17')},{label:'65+',color:css('--a3'),points:ag('65+')}];
+  legend('lg2',[{label:'Children 0–17',color:css('--a1')},{label:'Adults 18–64',color:css('--a2')},{label:'65 and older',color:css('--a3')}]);
+  lineChart('c2',s2,{band:false,right:52,aria:'Line chart of e-bike emergency visits by age group, 2019 to 2025',fmtAxis:v=>v===0?'0':(v/1000)+'k',fmtTip:v=>k(v)});
+  table('tb2',['Age group',...years.map(String)],[['0-17','Children'],['18-64','Adults'],['65+','65+']].map(([g,l])=>[l,...years.map(y=>{const r=D.by_age.find(x=>x.device==='E-bike'&&x.age_group===g&&x.year===y);return r?k(r.est)+(r.unstable?'*':''):'';})]));
+  // chart 3
+  const groups=['0-17','18-64','65+'];
+  const hv=(dev)=>groups.map(g=>{const r=D.hospitalized.find(x=>x.device===dev&&x.age_group===g);return {v:r.share,lo:r.lo,hi:r.hi,n:r.n};});
+  const s3=[{label:'Bicycle',color:css('--ref'),values:hv('Bicycle')},{label:'E-bike',color:css('--s1'),values:hv('E-bike')},{label:'E-scooter',color:css('--s2'),values:hv('E-scooter')}];
+  legend('lg3',[{label:'Bicycle (reference)',color:css('--ref'),rect:true},{label:'E-bike',color:css('--s1'),rect:true},{label:'E-scooter',color:css('--s2'),rect:true}]);
+  barChart('c3',groups.map(g=>g.replace('-','–')),s3,{aria:'Bar chart of the share of injuries leading to hospitalisation, by device and age group'});
+  table('tb3',['Device','0–17','18–64','65+'],s3.map(s=>[s.label,...s.values.map(v=>(v.v*100).toFixed(1)+'%')]));
+}
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(drawAll,120);});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawAll);
+drawAll();
+</script>
+</body>
+</html>

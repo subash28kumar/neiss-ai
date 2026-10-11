@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use NEISS-AI, please cite it as below."
+title: "NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives"
+authors:
+  - family-names: Kumar
+    given-names: Subash
+    orcid: "https://orcid.org/0009-0003-6661-3424"
+version: 1.0.0
+date-released: 2026-10-11
+repository-code: "https://github.com/subash28kumar/neiss-ai"
+url: "https://subash28kumar.github.io/neiss-ai/"
+license: MIT
+type: software
+keywords:
+  - NEISS
+  - injury surveillance
+  - e-bike
+  - e-scooter
+  - micromobility
+  - text classification
+  - survey statistics
