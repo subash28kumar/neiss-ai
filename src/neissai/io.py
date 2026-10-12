@@ -18,7 +18,7 @@ PathLike = Union[str, Path]
 
 #: Best-effort download location for the annual files. CPSC may change it; if a
 #: download fails, download the files by hand from the NEISS page and use --data-dir.
-DOWNLOAD_URL = "https://www.cpsc.gov/cgi-bin/NEISSQuery/Data/Archived%20Data/{year}/neiss{year}.tsv"
+DOWNLOAD_URL = "https://www.cpsc.gov/cgibin/NEISSQuery/Data/Archived%20Data/{year}/neiss{year}.tsv"
 
 STANDARD_COLUMNS = [
     "CPSC_Case_Number", "Treatment_Date", "Age", "Sex", "Body_Part", "Diagnosis",
