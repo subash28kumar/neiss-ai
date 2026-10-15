@@ -105,6 +105,9 @@ select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);ou
 .chip i{width:10px;height:10px;border-radius:3px;display:inline-block}
 .btn{font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.cite{font-size:14px;line-height:1.5;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:0 0 8px;max-width:72ch;overflow-wrap:anywhere}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+a.btn{text-decoration:none;display:inline-block}
 .askbox{display:flex;gap:8px;flex-wrap:wrap}
 .askbox input{flex:1 1 320px;font-size:16px;min-height:44px}
 .answer{border-left:3px solid var(--accent);padding:4px 0 4px 14px;margin:16px 0 8px}
@@ -134,7 +137,7 @@ select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);ou
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a></p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about">Cite this tool</a> · <a href="#about">Share how you use it</a></p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -243,9 +246,22 @@ select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);ou
 neissai micromobility --years 2019-2025 --data-dir data --out-dir results
 neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   </section>
+  <section class="card" id="cite">
+    <h2>Cite this tool</h2>
+    <p class="desc">If NEISS-AI helps your research, teaching or reporting, please cite the software and the method paper.</p>
+    <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0 [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23306745">https://doi.org/10.5281/zenodo.23306745</a></p>
+    <p><button class="btn" type="button" data-copy="cite-sw">Copy software citation</button></p>
+    <p class="cite" id="cite-pp">Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019–2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23354066">https://doi.org/10.5281/zenodo.23354066</a></p>
+    <p><button class="btn" type="button" data-copy="cite-pp">Copy paper citation</button></p>
+  </section>
+  <section class="card" id="feedback">
+    <h2>How are you using NEISS-AI?</h2>
+    <p class="desc">I would love to hear how you use this tool, for research, a class, a news story, a safety program or policy work. A two-line note helps me improve it and keep it free.</p>
+    <p class="actions"><a class="btn primary" href="mailto:nivi05subhash@gmail.com?subject=How%20I%20use%20NEISS-AI&amp;body=Name%3A%0AOrganization%3A%0AHow%20I%20use%20NEISS-AI%3A%0A">Tell me how you use it</a>
+    <a class="btn" href="https://github.com/subash28kumar/neiss-ai/issues/new">Report a problem</a></p>
+  </section>
   <section class="card">
-    <h2>Cite and limits</h2>
-    <p class="desc">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives (software), 2026. <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a>. Method: Kumar S. E-bike injuries among US children surged in 2025 (preprint, medRxiv, 2026).</p>
+    <h2>Limits</h2>
     <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. NEISS has no state or city information. Helmet use is only what the story mentions. Early e-bike estimates (2019–2021) rest on small samples. The question box understands common phrases, not every possible question; check the "Understood as" line under each answer.</p>
   </section>
 </section>
@@ -732,6 +748,15 @@ function redraw(){
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150);});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);
 drawOverview(); route(); loadRecords();
+</script>
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-copy]'); if(!b) return;
+  var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+  var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){prompt('Copy this citation:',t);});}
+  else{prompt('Copy this citation:',t);}
+});
 </script>
 </body>
 </html>
