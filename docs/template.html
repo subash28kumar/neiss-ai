@@ -6,6 +6,12 @@
 <title>NEISS-AI · E-bike injury tracker</title>
 <script data-goatcounter="https://neiss-ai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <meta name="description" content="Free, open national estimates of US e-bike and e-scooter injuries treated in emergency departments, 2019-2025. Explore the data, ask questions in plain English, and search injury stories.">
+<meta property="og:title" content="NEISS-AI: US e-bike and e-scooter injury tracker">
+<meta property="og:description" content="Free national estimates of US e-bike and e-scooter injuries treated in emergency departments, 2019-2025, with 95% confidence intervals.">
+<meta property="og:image" content="https://subash28kumar.github.io/neiss-ai/social.png">
+<meta property="og:url" content="https://subash28kumar.github.io/neiss-ai/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
   color-scheme:light;
@@ -108,6 +114,8 @@ select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);ou
 .cite{font-size:14px;line-height:1.5;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:0 0 8px;max-width:72ch;overflow-wrap:anywhere}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 a.btn{text-decoration:none;display:inline-block}
+.dlrow{display:flex;justify-content:flex-end;margin-top:6px}
+.btn.dl{font-size:13px;padding:5px 10px;font-weight:600;color:var(--text-2)}
 .askbox{display:flex;gap:8px;flex-wrap:wrap}
 .askbox input{flex:1 1 320px;font-size:16px;min-height:44px}
 .answer{border-left:3px solid var(--accent);padding:4px 0 4px 14px;margin:16px 0 8px}
@@ -160,6 +168,7 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="desc">Estimated US visits each year with 95% confidence bands. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
     <div class="legend" id="lg1"></div>
     <div class="chart" id="c1"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
     <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
   </section>
@@ -169,6 +178,7 @@ a.btn{text-decoration:none;display:inline-block}
       <p class="desc">E-bike visits by age group. Children's visits rose sevenfold from 2022 to 2025.</p>
       <div class="legend" id="lg2"></div>
       <div class="chart" id="c2"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="c2">Download chart (PNG)</button></div>
       <details><summary>Show the numbers</summary><div class="tablewrap" id="tb2"></div></details>
     </section>
     <section class="card">
@@ -176,6 +186,7 @@ a.btn{text-decoration:none;display:inline-block}
       <p class="desc">Share of injured riders admitted, transferred or held, 2019–2025. For children, e-bike injuries are more serious than bicycle injuries.</p>
       <div class="legend" id="lg3"></div>
       <div class="chart" id="c3"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="c3">Download chart (PNG)</button></div>
       <details><summary>Show the numbers</summary><div class="tablewrap" id="tb3"></div></details>
     </section>
   </div>
@@ -205,6 +216,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="tiles" id="extiles"></div>
     <div class="legend" id="lgx"></div>
     <div class="chart" id="cx"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="cx">Download chart (PNG)</button></div>
     <p class="note" id="exnote"></p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="dlcsv" type="button">Download CSV</button>
@@ -673,7 +685,7 @@ function askAnswer(q){
   describe(f).concat(mode==='share'?['share '+(f.shareOutcome==='died'?'who died':'with a hospital stay')]:[]).forEach(p=>und.appendChild(h('span',{class:'tag',text:p})));
   out.appendChild(und);
   if(series){const cid='askchart';out.appendChild(h('div',{class:'chart',id:cid,style:'margin-top:8px'}));
-    lineChart(cid,series,{band:true,right:0,height:240,aria:'Trend for this question',fmtAxis:mode==='share'?(v=>Math.round(v*100)+'%'):undefined,fmtTip:mode==='share'?pct:undefined});}
+    lineChart(cid,series,{band:true,right:0,height:240,aria:'Trend for this question',fmtAxis:mode==='share'?(v=>Math.round(v*100)+'%'):undefined,fmtTip:mode==='share'?pct:undefined});out.appendChild(dlButton(cid));}
   const open=h('button',{class:'btn',type:'button',style:'margin-top:10px'},'Open in Explore');
   open.addEventListener('click',()=>{Object.assign(EX,{devices:f.devices,y0:f.y0,y1:f.y1,age:f.age==='custom'?'all':f.age,sex:f.sex,body:f.body,diag:f.diag,outcome:mode==='share'?'any':f.outcome,circ:f.circ});showTab('explore');renderExplore(true);});
   out.appendChild(open);
@@ -698,7 +710,7 @@ async function doSearch(q,dev){
   if(!hits.length) return;
   const series=[{label:'Visits',color:css('--s1'),points:R.years.map((y,yi)=>({year:y,...total(m,yi)}))}];
   out.appendChild(h('div',{class:'chart',id:'searchchart',style:'margin-top:8px'}));
-  lineChart('searchchart',series,{band:true,right:0,height:220,aria:'National estimate by year for stories matching the search'});
+  lineChart('searchchart',series,{band:true,right:0,height:220,aria:'National estimate by year for stories matching the search'});out.appendChild(dlButton('searchchart'));
   out.appendChild(h('h3',{style:'font-size:15px;margin:16px 0 4px',text:'Example stories (random sample)'}));
   const pick=hits.slice().sort(()=>Math.random()-.5).slice(0,8);
   pick.forEach(i=>{
@@ -740,6 +752,49 @@ document.querySelectorAll('a[href="#explore"]').forEach(a=>a.addEventListener('c
 /* ---------- init ---------- */
 (function initExamples(){const E=document.getElementById('examples');EXAMPLES.forEach(q=>{const b=h('button',{type:'button',class:'chip'},q);b.addEventListener('click',async()=>{document.getElementById('askq').value=q;setHash('ask',{q});await loadRecords();askAnswer(q);});E.appendChild(b);});})();
 function initSearchDev(){const s=document.getElementById('searchdev');if(s.options.length)return;s.appendChild(h('option',{value:'all',text:'All devices'}));DEV_ORDER.forEach(d=>s.appendChild(h('option',{value:String(devIdx(d)),text:d})));}
+/* ---------- download chart as PNG (with credit line) ---------- */
+const CREDIT='Source: NEISS-AI (Kumar, 2026), https://doi.org/10.5281/zenodo.23306745 | Data: US CPSC, NEISS';
+function dlButton(id){return h('div',{class:'dlrow'},h('button',{class:'btn dl',type:'button','data-chart':id,text:'Download chart (PNG)'}));}
+function inlineStyles(src,dst){
+  const props=['fill','stroke','stroke-width','stroke-dasharray','stroke-linejoin','stroke-linecap','opacity','fill-opacity','stroke-opacity','font-size','font-family','font-weight','text-anchor','dominant-baseline','visibility'];
+  const a=[src,...src.querySelectorAll('*')],b=[dst,...dst.querySelectorAll('*')];
+  a.forEach((n,i)=>{const cs=getComputedStyle(n);b[i].setAttribute('style',props.map(p=>p+':'+cs.getPropertyValue(p)).join(';'));});
+}
+function chartTitle(host){
+  if(host.id==='askchart'){const q=document.querySelector('#askq, #ask input, input[type=search]');return q&&q.value?q.value:'NEISS-AI estimate';}
+  if(host.id==='searchchart'){return 'Injury stories matching your search';}
+  const card=host.closest('.card');const t=card&&card.querySelector('h2');return t?t.textContent.trim():'NEISS-AI chart';
+}
+function downloadChart(id){
+  const host=document.getElementById(id);if(!host)return;const svg=host.querySelector('svg');if(!svg)return;
+  const vb=svg.viewBox.baseVal;const W=vb.width,H=vb.height;
+  const clone=svg.cloneNode(true);inlineStyles(svg,clone);clone.setAttribute('width',W);clone.setAttribute('height',H);clone.setAttribute('xmlns',NS);
+  const lg=host.previousElementSibling&&host.previousElementSibling.classList.contains('legend')?host.previousElementSibling:null;
+  const items=lg?[...lg.querySelectorAll('span')]:[];
+  const img=new Image();
+  img.onload=()=>{
+    const font=getComputedStyle(document.body).fontFamily;
+    const S=2,pad=24,titleH=44,legH=items.length?26:0,CW=W+pad*2;
+    const m=document.createElement('canvas').getContext('2d');m.font='12px '+font;
+    const credit=m.measureText(CREDIT).width<=CW-pad*2?[CREDIT]:CREDIT.split(' | ');
+    const footH=22+credit.length*17,CH=titleH+legH+H+footH;
+    const c=document.createElement('canvas');c.width=CW*S;c.height=CH*S;const x=c.getContext('2d');x.scale(S,S);
+    x.fillStyle=css('--surface');x.fillRect(0,0,CW,CH);
+    x.fillStyle=css('--text');x.font='600 18px '+font;x.textBaseline='alphabetic';x.fillText(chartTitle(host),pad,30);
+    let lx=pad;const ly=titleH+12;x.font='13px '+font;x.textBaseline='middle';
+    items.forEach(sp=>{const i=sp.querySelector('i');const label=sp.textContent.trim();
+      if(i&&i.classList.contains('hollow')){x.strokeStyle=css('--text-3');x.lineWidth=2;x.beginPath();x.arc(lx+6,ly,5,0,Math.PI*2);x.stroke();lx+=18;}
+      else if(i&&i.classList.contains('rect')){x.fillStyle=i.style.background||getComputedStyle(i).backgroundColor;x.fillRect(lx,ly-6,12,12);lx+=19;}
+      else{x.strokeStyle=i?(i.style.color||getComputedStyle(i).color):css('--text-2');x.lineWidth=2;x.beginPath();x.moveTo(lx,ly);x.lineTo(lx+18,ly);x.stroke();lx+=25;}
+      x.fillStyle=css('--text-2');x.fillText(label,lx,ly);lx+=x.measureText(label).width+18;});
+    x.drawImage(img,pad,titleH+legH,W,H);
+    x.fillStyle=css('--text-3');x.font='12px '+font;x.textBaseline='alphabetic';credit.forEach((ln,k)=>x.fillText(ln,pad,titleH+legH+H+26+k*17));
+    c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='neiss-ai-'+id+'.png';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'download-chart-'+id,title:'Download chart',event:true});}catch(e){}},'image/png');
+  };
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(clone));
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button.dl[data-chart]');if(b)downloadChart(b.getAttribute('data-chart'));});
+
 function redraw(){
   drawOverview();
   if(currentTab==='explore'&&R) renderExplore(false);
