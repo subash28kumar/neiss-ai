@@ -93,11 +93,11 @@ NEISS counts emergency department visits, not riders or miles, so results are co
 
 If you use NEISS-AI, please cite the software (see `CITATION.cff` or "Cite this repository" on GitHub):
 
-> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0. 2026. https://github.com/subash28kumar/neiss-ai
+> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0 [software]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23306745
 
 and the method paper:
 
-> Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019-2025, using machine learning to read injury narratives. medRxiv preprint, 2026.
+> Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019-2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23354066
 
 Data come from the US Consumer Product Safety Commission. CPSC does not endorse this tool.
 

@@ -6,6 +6,7 @@ authors:
     given-names: Subash
     orcid: "https://orcid.org/0009-0003-6661-3424"
 version: 1.1.0
+doi: 10.5281/zenodo.23306745
 date-released: 2026-10-11
 repository-code: "https://github.com/subash28kumar/neiss-ai"
 url: "https://subash28kumar.github.io/neiss-ai/"
