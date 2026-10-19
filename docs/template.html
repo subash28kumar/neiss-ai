@@ -145,7 +145,7 @@ a.btn{text-decoration:none;display:inline-block}
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about">Cite this tool</a> · <a href="#about">Share how you use it</a></p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#about" data-goto="feedback">Share how you use it</a></p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -751,6 +751,7 @@ async function route(){
 TABS.forEach(t=>document.getElementById('tab-'+t).addEventListener('click',async()=>{showTab(t);setHash(t);if(t==='explore'){await loadRecords();renderExplore(false);}}));
 window.addEventListener('hashchange',()=>{if(!suppressHash) route();});
 document.querySelectorAll('a[href="#explore"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();loadRecords().then(()=>{EX.devices=['E-bike','E-scooter','Kick scooter','Bicycle'].map(devIdx);showTab('explore');renderExplore(true);});}));
+document.querySelectorAll('a[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab('about');setHash('about');document.getElementById(a.dataset.goto).scrollIntoView({behavior:'smooth',block:'start'});}));
 
 /* ---------- init ---------- */
 (function initExamples(){const E=document.getElementById('examples');EXAMPLES.forEach(q=>{const b=h('button',{type:'button',class:'chip'},q);b.addEventListener('click',async()=>{document.getElementById('askq').value=q;setHash('ask',{q});await loadRecords();askAnswer(q);});E.appendChild(b);});})();
