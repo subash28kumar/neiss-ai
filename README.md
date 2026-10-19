@@ -99,6 +99,10 @@ and the method paper:
 
 > Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019-2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23354066
 
+and the labeled dataset:
+
+> Kumar S. NEISS-AI device labels for US micromobility injuries, 2019–2025 [dataset]. Version 1.0. Zenodo; 2026. https://doi.org/10.5281/zenodo.23461211
+
 Data come from the US Consumer Product Safety Commission. CPSC does not endorse this tool.
 
 ## Licence
