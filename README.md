@@ -93,7 +93,9 @@ NEISS counts emergency department visits, not riders or miles, so results are co
 
 If you use NEISS-AI, please cite the software (see `CITATION.cff` or "Cite this repository" on GitHub):
 
-> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0 [software]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23306745
+> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.4.0 [software]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23550272
+>
+> To cite all versions, use https://doi.org/10.5281/zenodo.23306744 (always resolves to the latest version).
 
 and the method paper:
 

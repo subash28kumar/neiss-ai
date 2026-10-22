@@ -278,7 +278,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   <section class="card" id="cite">
     <h2>Cite this tool</h2>
     <p class="desc">If NEISS-AI helps your research, teaching or reporting, please cite the software and the method paper.</p>
-    <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.1.0 [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23306745">https://doi.org/10.5281/zenodo.23306745</a></p>
+    <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.4.0 [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23550272">https://doi.org/10.5281/zenodo.23550272</a></p>
     <p><button class="btn" type="button" data-copy="cite-sw">Copy software citation</button></p>
     <p class="cite" id="cite-pp">Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019–2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23354066">https://doi.org/10.5281/zenodo.23354066</a></p>
     <p><button class="btn" type="button" data-copy="cite-pp">Copy paper citation</button></p>
@@ -1717,7 +1717,7 @@ document.querySelectorAll('a[data-goto]').forEach(a=>a.addEventListener('click',
 (function initExamples(){const E=document.getElementById('examples');EXAMPLES.forEach(q=>{const b=h('button',{type:'button',class:'chip'},q);b.addEventListener('click',async()=>{document.getElementById('askq').value=q;setHash('ask',{q});await loadRecords();askAnswer(q);});E.appendChild(b);});})();
 function initSearchDev(){const s=document.getElementById('searchdev');if(s.options.length)return;s.appendChild(h('option',{value:'all',text:'All devices'}));DEV_ORDER.forEach(d=>s.appendChild(h('option',{value:String(devIdx(d)),text:d})));}
 /* ---------- download chart as PNG (with credit line) ---------- */
-const CREDIT='Source: NEISS-AI (Kumar, 2026), https://doi.org/10.5281/zenodo.23306745 | Data: US CPSC, NEISS';
+const CREDIT='Source: NEISS-AI (Kumar, 2026), https://doi.org/10.5281/zenodo.23306744 | Data: US CPSC, NEISS';
 function dlButton(id){return h('div',{class:'dlrow'},h('button',{class:'btn dl',type:'button','data-chart':id,text:'Download chart (PNG)'}));}
 function inlineStyles(src,dst){
   const props=['fill','stroke','stroke-width','stroke-dasharray','stroke-linejoin','stroke-linecap','opacity','fill-opacity','stroke-opacity','font-size','font-family','font-weight','text-anchor','dominant-baseline','visibility'];
