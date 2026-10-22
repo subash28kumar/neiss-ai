@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "neissai"
-version = "1.1.0"
+version = "1.4.0"
 description = "AI-assisted national injury estimates from NEISS emergency department narratives: consistent e-bike and e-scooter counts across product-code changes, with survey-correct confidence intervals."
 readme = "README.md"
 requires-python = ">=3.9"

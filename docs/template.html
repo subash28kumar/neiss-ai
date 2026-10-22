@@ -253,7 +253,7 @@ a.btn{text-decoration:none;display:inline-block}
   </section>
   <section class="card" id="accuracy">
     <h2>How we know it's accurate</h2>
-    <p class="desc">Two independent checks, both repeatable with the open code.</p>
+    <p class="desc">Three checks, all repeatable with the open code.</p>
     <p><b>1. The classifier tells e-bikes and mopeds apart almost perfectly.</b> It was tested on 2024–2025 injury stories it had not seen during training (five-fold cross-validation). Its AUC was <b>0.995</b>: shown one real e-bike story and one real moped story, it ranks the e-bike story higher 99.5 times out of 100. (0.5 would be a coin flip; 1.0 is perfect.)</p>
     <p><b>2. The national totals match CPSC's own published figures.</b> The pre-2024 stories have no answer key, so the test is the total: NEISS-AI's national e-bike estimates for 2022–2024 are within 4% of the figures CPSC published in its 2025 micromobility report.</p>
     <div class="tablewrap"><table>
@@ -265,6 +265,7 @@ a.btn{text-decoration:none;display:inline-block}
       </tbody>
     </table></div>
     <p class="note">E-bike emergency department visits, national estimates, rounded to the nearest 100; differences use unrounded NEISS-AI estimates. CPSC source: <a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">Micromobility Products-Related Deaths, Injuries, and Hazard Patterns: 2017–2024</a> (CPSC, 2025).</p>
+    <p><b>3. Car involvement and helmet use are checked on stories the rules never saw.</b> NEISS does not code whether a motor vehicle was involved or whether the rider wore a helmet, but the injury story often says so. Since version 1.4, NEISS-AI reads both from the story. On a test set of 300 random stories (2019–2025) that were not used to build the rules, it was right for motor vehicle involvement in <b>98%</b> of stories (it found 44 of 47 real cases, and 44 of its 46 flags were correct) and for helmet status in <b>300 of 300</b>. Helmet status has three answers: worn, not worn, or not mentioned; "not mentioned" (about 4 in 5 stories) is never counted as "no helmet". The reference answers came from an independent AI reviewer that never saw the rules, with disagreements settled against the same written definitions; they were not made by a human reviewer.</p>
     <p class="note"><b>Limits:</b> stories are short, so a few are uncertain; NEISS covers emergency department visits only; counts are not risk rates, because the number of riders is not known.</p>
   </section>
   <section class="card">
@@ -293,7 +294,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   </section>
   <section class="card">
     <h2>Limits</h2>
-    <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. NEISS has no state or city information. Helmet use is only what the story mentions. Early e-bike estimates (2019–2021) rest on small samples. The question box understands common phrases, not every possible question; check the "Understood as" line under each answer.</p>
+    <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. NEISS has no state or city information. Helmet use and motor vehicle involvement are only what the story mentions; about 4 in 5 stories do not mention a helmet. Early e-bike estimates (2019–2021) rest on small samples. The question box understands common phrases, not every possible question; check the "Understood as" line under each answer.</p>
   </section>
 </section>
 

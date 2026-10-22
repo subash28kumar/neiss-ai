@@ -2,6 +2,12 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## v1.4.0 — 2026-10-21
+- InjuryCoder: new `circumstances` module reads motor vehicle involvement and helmet status (worn / not worn / not mentioned) from injury stories. Tested on 300 held-out stories: motor vehicle 98.3% correct (sensitivity 93.6%, precision 95.7%); helmet 300/300 (see `validation/`).
+- Fixes: the old motor vehicle flag found only about half of real cases; the old "helmet worn" flag counted unclear wording such as "HELMET NS" as worn. Website data rebuilt with the new flags (national injury counts unchanged).
+- New `helmet_status` column; tests for the new rules.
+- Website: third accuracy check added to "How we know it's accurate".
+
 ## 2026-10-21
 - Website: new "How we know it's accurate" section (classifier AUC 0.995 explained; national e-bike estimates for 2022–2024 compared with CPSC's published figures, all within 4%).
 - Website: neutral link-preview image.

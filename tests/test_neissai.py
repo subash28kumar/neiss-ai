@@ -83,3 +83,39 @@ def test_export_web_data(tmp_path):
     stories = json.loads((tmp_path / "stories.json").read_text())
     assert rec["n"] == info["records"] == len(stories)
     assert len(rec["w"]) == rec["n"] and len(rec["cluster_stratum"]) == info["clusters"]
+
+
+def test_circumstances_motor_vehicle():
+    from neissai.circumstances import motor_vehicle
+    yes = ["22 YOM WAS RIDING HIS BICYCLE WHEN HE WAS HIT BY A CAR",
+           "RIDING E-BIKE, CRASHED INTO A PARKED CAR",
+           "STRUCK ARM ON THE SIDE MIRROR OF A PARKED CAR",
+           "A CAR MADE A TURN AND THE PT CRASHED HEAD ON INTO IT",
+           "COLLIDED WITH A MOVING VEHICLEDX ABRASION",
+           "BICYCLE VS CAR. DX: MVC"]
+    no = ["SWERVED TO AVOID A CAR AND FELL OFF BIKE",
+          "PEDESTRIAN STRUCK BY BICYCLE",
+          "INJURED THUMB WHILE LIFTING DIRT BIKE INTO VEHICLE",
+          "FELL OFF SCOOTER ON SIDEWALK"]
+    assert all(motor_vehicle(t) for t in yes)
+    assert not any(motor_vehicle(t) for t in no)
+
+
+def test_circumstances_helmet():
+    from neissai.circumstances import helmet
+    cases = {"FELL OFF BIKE, NO HELMET": "no", "UNHELMETED RIDER OF E-SCOOTER": "no",
+             "WAS NOT WEARING A HELMET": "no", "-HELMET, -LOC": "no", "NO WEARING A HELMET": "no",
+             "+HELMET, FELL": "yes", "WAS WEARING A HELMETDX FX": "yes", "HER BICYCLE HELMET WAS CRACKED": "yes",
+             "HELMET NS. DX FX": "not mentioned", "? HELMET": "not mentioned", "FELL OFF BIKE": "not mentioned"}
+    for text, want in cases.items():
+        assert helmet(text) == want, text
+
+
+def test_add_outcomes_flags():
+    df = _sample()
+    df.loc[0, "Narrative"] = "14YOM ON BICYCLE HIT BY A CAR, NO HELMET"
+    df.loc[1, "Narrative"] = "30YOF FELL OFF BIKE, HELMET NS"
+    out = neissai.add_outcomes(neissai.label_devices(df))
+    assert out.loc[0, "motor_vehicle"] == 1 and out.loc[0, "helmet_no"] == 1
+    assert out.loc[1, "helmet_no"] == 0 and out.loc[1, "helmet_yes"] == 0
+    assert out.loc[1, "helmet_status"] == "not mentioned"

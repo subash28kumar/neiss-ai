@@ -15,6 +15,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from . import circumstances as _circ
+
 from .classifier import EbikeMopedClassifier
 
 DEVICES = ["E-bike", "E-scooter", "Bicycle", "Kick scooter", "Hoverboard", "Skateboard", "Moped / minibike"]
@@ -100,15 +102,16 @@ def label_devices(df: pd.DataFrame, classifier: EbikeMopedClassifier | None = No
 def add_outcomes(df: pd.DataFrame) -> pd.DataFrame:
     """Add simple outcome and circumstance flags (0/1) and an age group."""
     out = df.copy()
-    narr = out["Narrative"].astype("string").fillna("").str.upper()
     out["hospitalized"] = out["Disposition"].isin(["2", "4", "5", "8"]).astype(int)  # transferred, admitted, held, died
     out["died"] = (out["Disposition"] == "8").astype(int)
     out["head_injury"] = out[["Body_Part", "Body_Part_2"]].isin(["75", "76", "77", "94"]).any(axis=1).astype(int)
-    helmet_no = _kw(narr, r"NO HELMET|UNHELMET|W/?O HELMET|WITHOUT (A )?HELMET|NOT WEARING (A )?HELMET|HELMET:? ?NO")
-    out["helmet_no"] = helmet_no.astype(int)
-    out["helmet_yes"] = (_kw(narr, r"HELMET") & ~helmet_no).astype(int)
-    out["motor_vehicle"] = _kw(narr, r"\bMVC\b|\bMVA\b|STRUCK BY (A )?(CAR|VEHICLE|TRUCK|SUV)|HIT BY (A )?(CAR|VEHICLE|TRUCK|SUV)|"
-                                     r"\bVS\.? (CAR|VEHICLE|AUTO|TRUCK|SUV)|COLLIDED WITH (A )?(CAR|VEHICLE)").astype(int)
+    # Circumstances read from the narrative (InjuryCoder rules, validated in v1.4; see circumstances.py)
+    raw = out["Narrative"].astype("string").fillna("")
+    helmet = raw.map(_circ.helmet)
+    out["helmet_status"] = helmet
+    out["helmet_no"] = (helmet == "no").astype(int)
+    out["helmet_yes"] = (helmet == "yes").astype(int)
+    out["motor_vehicle"] = raw.map(_circ.motor_vehicle).astype(int)
     out["alcohol"] = (out["Alcohol"] == "1").astype(int)
     out["age_group"] = pd.cut(out["Age"], [-1, 17.99, 64.99, 200],
                               labels=["0-17", "18-64", "65+"]).astype("string")

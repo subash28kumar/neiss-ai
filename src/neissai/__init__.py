@@ -10,12 +10,13 @@ Quick start::
                                      where=labeled["device"].isin(neissai.DEVICES))
 """
 from .classifier import EbikeMopedClassifier
+from . import circumstances
 from .devices import DEVICES, add_outcomes, label_devices, micromobility
 from .estimate import national_estimates, proportion, shares, total
 from .io import download, parse_years, read_neiss, read_neiss_file, standardize
 
-__version__ = "1.1.0"
+__version__ = "1.4.0"
 
-__all__ = ["DEVICES", "EbikeMopedClassifier", "add_outcomes", "download", "label_devices",
+__all__ = ["DEVICES", "circumstances", "EbikeMopedClassifier", "add_outcomes", "download", "label_devices",
            "micromobility", "national_estimates", "parse_years", "proportion", "read_neiss",
            "read_neiss_file", "shares", "standardize", "total", "__version__"]
