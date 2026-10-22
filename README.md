@@ -103,7 +103,7 @@ and the method paper:
 
 and the labeled dataset:
 
-> Kumar S. NEISS-AI device labels for US micromobility injuries, 2019–2025 [dataset]. Version 1.0. Zenodo; 2026. https://doi.org/10.5281/zenodo.23461211
+> Kumar S. NEISS-AI device labels for US micromobility injuries, 2019–2025 [dataset]. Version 1.1. Zenodo; 2026. https://doi.org/10.5281/zenodo.23550382
 
 Data come from the US Consumer Product Safety Commission. CPSC does not endorse this tool.
 

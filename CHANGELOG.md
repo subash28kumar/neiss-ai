@@ -7,6 +7,7 @@ All notable changes to NEISS-AI are listed here.
 - Fixes: the old motor vehicle flag found only about half of real cases; the old "helmet worn" flag counted unclear wording such as "HELMET NS" as worn. Website data rebuilt with the new flags (national injury counts unchanged).
 - New `helmet_status` column; tests for the new rules.
 - Website: third accuracy check added to "How we know it's accurate".
+- Device-labels dataset version 1.1 on Zenodo with the corrected helmet and motor vehicle columns (DOI 10.5281/zenodo.23550382); website and README citations updated.
 - Archived on Zenodo (DOI 10.5281/zenodo.23550272); citations on the website, README and CITATION.cff updated to v1.4.0. Chart credit lines use the all-versions DOI 10.5281/zenodo.23306744.
 
 ## 2026-10-21
