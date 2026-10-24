@@ -2,6 +2,11 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Unreleased — 2026-10-24
+- Website: every table now has "Download table (CSV)" (estimate, 95% CI, records, unstable flag) and "Copy citation"; each CSV starts with the title, citation, method note, data date and a link to the view.
+- Website: answers in "Ask a question" show a citation line.
+- Website: overview note explains that the 2024–2025 rise is not a coding effect (both years use CPSC's separate e-bike code).
+
 ## v1.4.0 — 2026-10-21
 - InjuryCoder: new `circumstances` module reads motor vehicle involvement and helmet status (worn / not worn / not mentioned) from injury stories. Tested on 300 held-out stories: motor vehicle 98.3% correct (sensitivity 93.6%, precision 95.7%); helmet 300/300 (see `validation/`).
 - Fixes: the old motor vehicle flag found only about half of real cases; the old "helmet worn" flag counted unclear wording such as "HELMET NS" as worn. Website data rebuilt with the new flags (national injury counts unchanged).
