@@ -343,7 +343,7 @@ function csvTools(id,title,head,rows,file,note){
 function downloadCSV(id){
   const t=CSVS[id]; if(!t) return;
   const q=c=>`"${String(c).replace(/"/g,'""')}"`;
-  const lines=['# '+t.title,'# '+citeLine(),'# Survey-weighted US national estimates with 95% confidence intervals (Taylor linearization). '+(t.note||UNSTABLE_NOTE),'# Data updated '+DATA.updated+'. View online: '+location.href,t.head.join(','),...t.rows.map(r=>r.map(q).join(','))];
+  const lines=[...['# '+t.title,'# '+citeLine(),'# Survey-weighted US national estimates with 95% confidence intervals (Taylor linearization). '+(t.note||UNSTABLE_NOTE),'# Data updated '+DATA.updated+'. View online: '+location.href].map(q),t.head.join(','),...t.rows.map(r=>r.map(q).join(','))];
   const a=h('a',{href:URL.createObjectURL(new Blob([lines.join('\n')+'\n'],{type:'text/csv'})),download:t.file});document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
   try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'download-csv-'+id,title:'Download CSV',event:true});}catch(e){}
 }
