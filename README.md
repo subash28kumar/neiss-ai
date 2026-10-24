@@ -30,10 +30,10 @@ NEISS-AI reads the short injury story in each record:
 ## Install
 
 ```
-pip install git+https://github.com/subash28kumar/neiss-ai
+pip install neissai
 ```
 
-Requires Python 3.9+, pandas and numpy. (scikit-learn is needed only to retrain the classifier: `pip install "neissai[train] @ git+https://github.com/subash28kumar/neiss-ai"`.)
+NEISS-AI is on PyPI: https://pypi.org/project/neissai/. Requires Python 3.9+, pandas and numpy. (scikit-learn is needed only to retrain the classifier: `pip install "neissai[train]"`. For the latest development version: `pip install git+https://github.com/subash28kumar/neiss-ai`.)
 
 ## Use from the command line
 
