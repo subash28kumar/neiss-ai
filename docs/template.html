@@ -81,6 +81,8 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .tip .row span{color:var(--text-2)}
 .tip .ci{grid-column:3;color:var(--text-3);font-size:12px;margin-top:-2px}
 .note{font-size:13px;color:var(--text-3);margin:8px 0 0}
+.tbltools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.citeline{font-size:12px;color:var(--text-3);margin:6px 0 0;overflow-wrap:anywhere}
 details{margin-top:12px}
 summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:600}
 table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px;font-variant-numeric:tabular-nums}
@@ -170,6 +172,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="chart" id="c1"></div>
     <div class="dlrow"><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
     <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
+    <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
   </section>
   <div class="grid2">
@@ -326,6 +329,29 @@ function niceStep(v){const p=Math.pow(10,Math.floor(Math.log10(v)));const m=v/p;
 function ticksFor(max,n){if(!(max>0))max=1;const st=niceStep(max/n);const top=Math.ceil(max/st)*st;const t=[];for(let v=0;v<=top+1e-9;v+=st)t.push(v);return {top,t};}
 function legend(id,items){const L=document.getElementById(id);L.textContent='';items.forEach(it=>{const i=document.createElement('i');if(it.rect){i.className='rect';i.style.background=it.color;}else if(it.hollow){i.className='hollow';}else{i.style.color=it.color;}L.appendChild(h('span',null,i,it.label));});}
 function table(id,head,rows){const W=document.getElementById(id);W.textContent='';const t=h('table');t.appendChild(h('tr',null,head.map(x=>h('th',{text:x}))));rows.forEach(r=>t.appendChild(h('tr',null,r.map(c=>h('td',{text:String(c)})))));W.appendChild(t);}
+/* ---------- table CSV download + citation ---------- */
+const TOOL_DOI='10.5281/zenodo.23550272';
+const UNSTABLE_NOTE='unstable = yes if fewer than 20 records, an estimate under 1,200, or a coefficient of variation above 33% (CPSC rule).';
+function citeLine(){const v=(DATA&&DATA.version)||'1.4.0';return `Source: NEISS-AI v${v} (Kumar 2026), national estimates from CPSC NEISS. https://doi.org/${TOOL_DOI}. Accessed ${new Date().toISOString().slice(0,10)}.`;}
+const CSVS={};
+function csvTools(id,title,head,rows,file,note){
+  CSVS[id]={title,head,rows,file,note};
+  const W=document.getElementById(id);
+  W.appendChild(h('div',{class:'tbltools'},h('button',{class:'btn',type:'button','data-csv':id,text:'Download table (CSV)'}),h('button',{class:'btn',type:'button','data-citecopy':'1',text:'Copy citation'})));
+  W.appendChild(h('p',{class:'citeline',text:citeLine()}));
+}
+function downloadCSV(id){
+  const t=CSVS[id]; if(!t) return;
+  const q=c=>`"${String(c).replace(/"/g,'""')}"`;
+  const lines=['# '+t.title,'# '+citeLine(),'# Survey-weighted US national estimates with 95% confidence intervals (Taylor linearization). '+(t.note||UNSTABLE_NOTE),'# Data updated '+DATA.updated+'. View online: '+location.href,t.head.join(','),...t.rows.map(r=>r.map(q).join(','))];
+  const a=h('a',{href:URL.createObjectURL(new Blob([lines.join('\n')+'\n'],{type:'text/csv'})),download:t.file});document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'download-csv-'+id,title:'Download CSV',event:true});}catch(e){}
+}
+document.addEventListener('click',async e=>{
+  const c=e.target.closest('button[data-csv]'); if(c){downloadCSV(c.getAttribute('data-csv'));return;}
+  const b=e.target.closest('button[data-citecopy]'); if(!b) return;
+  const t=citeLine(); try{await navigator.clipboard.writeText(t);const o=b.textContent;b.textContent='Citation copied';setTimeout(()=>b.textContent=o,1500);}catch(err){prompt('Copy this citation:',t);}
+});
 const fmtAxis=v=>v===0?'0':v>=1000?(v/1000).toLocaleString('en-US')+'k':String(Math.round(v));
 
 /* ---------- charts ---------- */
@@ -422,16 +448,20 @@ function drawOverview(){
   lineChart('c1',[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}],{band:true,aria:'Line chart of estimated US emergency department visits for e-bikes, e-scooters and kick scooters by year'});
   const devs=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Skateboard','Moped / minibike'], years=eb.map(r=>r.year);
   table('tb1',['Device',...years.map(String)],devs.map(d=>[d,...years.map(y=>{const r=D.by_device.find(x=>x.device===d&&x.year===y);return r?k(r.est)+(r.unstable?'*':''):'';})]));
+  const yn=b=>b?'yes':'no';
+  csvTools('tb1','US emergency department visits by device and year',['device','year','estimate','ci_low','ci_high','records','unstable'],devs.flatMap(d=>D.by_device.filter(x=>x.device===d).sort((a,b)=>a.year-b.year).map(r=>[d,r.year,r.est,r.lo,r.hi,r.n,yn(r.unstable)])),'neissai_visits_by_device.csv');
   const ag=g=>D.by_age.filter(r=>r.device==='E-bike'&&r.age_group===g).sort((a,b)=>a.year-b.year);
   legend('lg2',[{label:'Children 0–17',color:css('--a1')},{label:'Adults 18–64',color:css('--a2')},{label:'65 and older',color:css('--a3')}]);
   lineChart('c2',[{label:'18–64',color:css('--a2'),points:ag('18-64')},{label:'0–17',color:css('--a1'),points:ag('0-17')},{label:'65+',color:css('--a3'),points:ag('65+')}],{band:false,right:52,aria:'Line chart of e-bike emergency visits by age group'});
   table('tb2',['Age group',...years.map(String)],[['0-17','Children'],['18-64','Adults'],['65+','65+']].map(([g,l])=>[l,...years.map(y=>{const r=D.by_age.find(x=>x.device==='E-bike'&&x.age_group===g&&x.year===y);return r?k(r.est)+(r.unstable?'*':''):'';})]));
+  csvTools('tb2','E-bike emergency department visits by age group and year',['device','age_group','year','estimate','ci_low','ci_high','records','unstable'],['0-17','18-64','65+'].flatMap(g=>ag(g).map(r=>['E-bike',g,r.year,r.est,r.lo,r.hi,r.n,yn(r.unstable)])),'neissai_ebike_visits_by_age.csv');
   const groups=['0-17','18-64','65+'];
   const hv=dev=>groups.map(g=>{const r=D.hospitalized.find(x=>x.device===dev&&x.age_group===g);return {v:r.share,lo:r.lo,hi:r.hi,n:r.n};});
   const s3=[{label:'Bicycle',color:css('--ref'),values:hv('Bicycle')},{label:'E-bike',color:css('--s1'),values:hv('E-bike')},{label:'E-scooter',color:css('--s2'),values:hv('E-scooter')}];
   legend('lg3',[{label:'Bicycle (reference)',color:css('--ref'),rect:true},{label:'E-bike',color:css('--s1'),rect:true},{label:'E-scooter',color:css('--s2'),rect:true}]);
   barChart('c3',groups.map(g=>g.replace('-','–')),s3,{aria:'Bar chart of the share of injuries leading to hospitalisation, by device and age group'});
   table('tb3',['Device','0–17','18–64','65+'],s3.map(s=>[s.label,...s.values.map(v=>pct(v.v))]));
+  csvTools('tb3','Share of injuries with a hospital stay (admitted, transferred or held), by device and age group, 2019-2025',['device','age_group','share_hospitalized','ci_low','ci_high','records'],s3.flatMap(s=>s.values.map((v,i)=>[s.label,groups[i],v.v,v.lo,v.hi,v.n])),'neissai_hospital_stay_share.csv','Shares are proportions (0-1) of records in each group.');
 }
 
 /* ---------- record data + survey estimator ---------- */
@@ -557,6 +587,7 @@ function renderExplore(push){
   document.getElementById('exnote').textContent=`Showing: ${describe(EX).join(' · ')}.`+(series.length>3?' Confidence bands are hidden when more than three devices are shown; they are in the table and CSV.':'');
   lastRows=[];series.forEach(s=>s.points.forEach(p=>lastRows.push([s.label,p.year,Math.round(p.est),Math.round(p.lo),Math.round(p.hi),p.n,p.unstable?'yes':'no'])));
   table('tbx',['Device','Year','Estimate','95% CI low','95% CI high','Records','Unstable'],lastRows.map(r=>[r[0],r[1],fmt(r[2]),fmt(r[3]),fmt(r[4]),r[5].toLocaleString('en-US'),r[6]]));
+  csvTools('tbx','NEISS-AI national estimates. Filters: '+describe(EX).join('; '),['device','year','estimate','ci_low','ci_high','records','unstable'],lastRows,'neissai_estimates.csv');
 }
 function exploreToParams(){return {dev:EX.devices.join('.'),y0:EX.y0,y1:EX.y1,age:EX.age,sex:EX.sex,body:EX.body,diag:EX.diag,out:EX.outcome,circ:EX.circ};}
 function paramsToExplore(p){
@@ -565,12 +596,7 @@ function paramsToExplore(p){
   if(p.age&&AGE_BANDS[p.age])EX.age=p.age; if(p.sex&&SEX[p.sex])EX.sex=p.sex; if(p.body&&BODY[p.body])EX.body=p.body;
   if(p.diag&&DIAG[p.diag])EX.diag=p.diag; if(p.out&&OUTCOME[p.out])EX.outcome=p.out; if(p.circ&&CIRC[p.circ])EX.circ=p.circ;
 }
-document.getElementById('dlcsv').addEventListener('click',()=>{
-  const head='device,year,estimate,ci_low,ci_high,records,unstable\n';
-  const meta=`# NEISS-AI national estimates. Filters: ${describe(EX).join('; ')}. Source: CPSC NEISS. https://subash28kumar.github.io/neiss-ai/\n`;
-  const body=lastRows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=h('a',{href:URL.createObjectURL(new Blob([meta+head+body],{type:'text/csv'})),download:'neissai_estimates.csv'});document.body.appendChild(a);a.click();a.remove();
-});
+document.getElementById('dlcsv').addEventListener('click',()=>downloadCSV('tbx'));
 document.getElementById('sharelink').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(location.href);e.target.textContent='Link copied';setTimeout(()=>e.target.textContent='Copy link to this view',1500);}catch(err){prompt('Copy this link:',location.href);}});
 
 /* ---------- Ask (plain-English parser) ---------- */
@@ -704,6 +730,7 @@ function askAnswer(q){
   const und=h('div',{class:'understood'},'Understood as:');
   describe(f).concat(mode==='share'?['share '+(f.shareOutcome==='died'?'who died':'with a hospital stay')]:[]).forEach(p=>und.appendChild(h('span',{class:'tag',text:p})));
   out.appendChild(und);
+  out.appendChild(h('p',{class:'citeline'},citeLine()+' ',h('button',{class:'btn',type:'button','data-citecopy':'1',style:'padding:2px 8px;font-size:12px',text:'Copy citation'})));
   if(series){const cid='askchart';out.appendChild(h('div',{class:'chart',id:cid,style:'margin-top:8px'}));
     lineChart(cid,series,{band:true,right:0,height:240,aria:'Trend for this question',fmtAxis:mode==='share'?(v=>Math.round(v*100)+'%'):undefined,fmtTip:mode==='share'?pct:undefined});out.appendChild(dlButton(cid));}
   const open=h('button',{class:'btn',type:'button',style:'margin-top:10px'},'Open in Explore');
