@@ -1,5 +1,7 @@
 # NEISS-AI
 
+[![Tests](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml/badge.svg)](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml) [![PyPI](https://img.shields.io/pypi/v/neissai)](https://pypi.org/project/neissai/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23550272.svg)](https://doi.org/10.5281/zenodo.23550272) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/subash28kumar/neiss-ai/blob/main/notebooks/NEISS-AI_Quickstart.ipynb)
+
 **AI-assisted national injury estimates from US emergency department narratives.**
 
 NEISS-AI turns the US Consumer Product Safety Commission's [NEISS](https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data) data into consistent national estimates for e-bikes, e-scooters, bicycles and other micromobility devices, with survey-correct 95% confidence intervals.
@@ -34,6 +36,10 @@ pip install neissai
 ```
 
 NEISS-AI is on PyPI: https://pypi.org/project/neissai/. Requires Python 3.9+, pandas and numpy. (scikit-learn is needed only to retrain the classifier: `pip install "neissai[train]"`. For the latest development version: `pip install git+https://github.com/subash28kumar/neiss-ai`.)
+
+## Try it in Google Colab (no install)
+
+Open the [quickstart notebook](https://colab.research.google.com/github/subash28kumar/neiss-ai/blob/main/notebooks/NEISS-AI_Quickstart.ipynb) and click **Runtime → Run all**. In a few minutes it downloads the public NEISS files, labels each injury, and reproduces the national estimates by year and device (with 95% confidence intervals), a trend chart and hospital-stay shares. The notebook is also in this repository at `notebooks/NEISS-AI_Quickstart.ipynb`.
 
 ## Use from the command line
 
