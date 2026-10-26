@@ -27,7 +27,7 @@ NEISS-AI reads the short injury story in each record:
 2. **Text classifier.** For code-3215 records whose story is unclear, a classifier trained on 2024-2025 records (where 5045 and 5046 are separate) decides e-bike vs moped. It is TF-IDF + logistic regression, stored as plain JSON and run with numpy only. Five-fold cross-validated AUC: **0.995**.
 3. **National estimates.** NEISS is a stratified sample of hospitals. Estimates use the survey weights and Taylor-linearized standard errors (hospitals as clusters within strata), and are flagged "unstable" by CPSC's rule (fewer than 20 records, an estimate below 1,200, or a coefficient of variation above 33%).
 
-**Validation:** e-bike estimates for 2022-2024 are within 4% of CPSC's published figures (27,800 vs 26,800; 37,600 vs 37,600; 59,000 vs 59,200).
+**Validation:** e-bike estimates for 2022-2024 are within 5% of CPSC's published figures (28,000 vs 26,800; 37,900 vs 37,600; 59,300 vs 59,200).
 
 ## Install
 

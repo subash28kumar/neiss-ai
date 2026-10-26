@@ -3,6 +3,7 @@
 All notable changes to NEISS-AI are listed here.
 
 ## Unreleased — 2026-10-26
+- Data fix: the website is now built from every micromobility record in CPSC's complete annual NEISS files. The earlier site used smaller extracts that missed some records whose product codes appeared in the second or third product field or whose story was the only clue (found by checking the new Colab notebook against the site). E-bike and e-scooter estimates change by less than 1% from 2021 on (2025 e-bike: 101,600, 95% CI 69,700–133,600, up 71% from 2024); bicycle estimates rise about 2–3% and skateboard and hoverboard estimates up to about 14%. Accuracy check updated: 2022–2024 e-bike estimates are within 5% of CPSC's published figures. The Colab notebook and the website now give identical numbers.
 - New Google Colab quickstart notebook (`notebooks/NEISS-AI_Quickstart.ipynb`): installs NEISS-AI, gets the public NEISS files, and reproduces the national estimates by year and device, a trend chart and hospital-stay shares, with a citation cell. "Open in Colab" link in the README.
 - Continuous testing: the test suite now runs automatically on Python 3.10–3.12 for every change (`.github/workflows/tests.yml`); README badges for tests, PyPI, DOI and Colab.
 - Website: new 'Fact sheets' section with Fact Sheet 1, 'E-bike injuries in the United States, 2019–2025' (one-page PDF with citation).
