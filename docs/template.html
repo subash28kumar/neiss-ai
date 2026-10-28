@@ -147,7 +147,7 @@ a.btn{text-decoration:none;display:inline-block}
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -174,6 +174,22 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
     <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
+  </section>
+  <section class="card" id="monthcard">
+    <h2>Injuries by month</h2>
+    <p class="desc">Estimated US emergency department visits in each month of the chosen year, with 95% confidence bands. Switch to "Share of the year" to compare seasons across devices, including regular bicycles.</p>
+    <div class="filters">
+      <label class="field">Year<select id="mYear" aria-label="Year"></select></label>
+      <div class="field">View<div class="chips" role="group" aria-label="View">
+        <button class="chip" type="button" id="mvVisits" aria-pressed="true">Visits</button>
+        <button class="chip" type="button" id="mvShare" aria-pressed="false">Share of the year</button>
+      </div></div>
+    </div>
+    <div class="legend" id="lgm"></div>
+    <div class="chart" id="cm"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="cm">Download chart (PNG)</button></div>
+    <p class="note">Monthly estimates rest on fewer records than yearly ones, so their ranges are wider. In a year when e-bike use grows quickly, later months also tend to be higher for that reason alone.</p>
+    <details><summary>Show the numbers</summary><div class="tablewrap" id="tbm"></div></details>
   </section>
   <div class="grid2">
     <section class="card">
@@ -470,8 +486,38 @@ function drawOverview(){
   barChart('c3',groups.map(g=>g.replace('-','–')),s3,{aria:'Bar chart of the share of injuries leading to hospitalisation, by device and age group'});
   table('tb3',['Device','0–17','18–64','65+'],s3.map(s=>[s.label,...s.values.map(v=>pct(v.v))]));
   csvTools('tb3','Share of injuries with a hospital stay (admitted, transferred or held), by device and age group, 2019-2025',['device','age_group','share_hospitalized','ci_low','ci_high','records'],s3.flatMap(s=>s.values.map((v,i)=>[s.label,groups[i],v.v,v.lo,v.hi,v.n])),'neissai_hospital_stay_share.csv','Shares are proportions (0-1) of records in each group.');
+  drawMonth();
 }
 
+
+/* ---------- injuries by month (precomputed) ---------- */
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MV={year:null,share:false};
+function drawMonth(){
+  const D=DATA; if(!D.by_month||!document.getElementById('cm')) return;
+  const years=[...new Set(D.by_month.map(r=>r.year))].sort((a,b)=>a-b);
+  const sel=document.getElementById('mYear');
+  if(MV.year==null){MV.year=years[years.length-1];
+    years.slice().reverse().forEach(y=>sel.appendChild(h('option',{value:String(y),text:String(y)})));
+    sel.value=String(MV.year);
+    sel.addEventListener('change',()=>{MV.year=+sel.value;drawMonth();});
+    const vb=document.getElementById('mvVisits'), sb=document.getElementById('mvShare');
+    vb.addEventListener('click',()=>{MV.share=false;vb.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');drawMonth();});
+    sb.addEventListener('click',()=>{MV.share=true;sb.setAttribute('aria-pressed','true');vb.setAttribute('aria-pressed','false');drawMonth();});
+  }
+  const pts=dev=>{const rs=D.by_month.filter(r=>r.year===MV.year&&r.device===dev).sort((a,b)=>a.month-b.month);
+    const tot=rs.reduce((a,r)=>a+r.est,0);
+    return rs.map(r=>MV.share?{year:MONTHS[r.month-1],est:r.est/tot,lo:r.est/tot,hi:r.est/tot,unstable:r.unstable}:{year:MONTHS[r.month-1],est:r.est,lo:r.lo,hi:r.hi,unstable:r.unstable});};
+  const devs=MV.share?[['Bicycle','--ref'],['E-scooter','--s2'],['E-bike','--s1']]:[['E-scooter','--s2'],['E-bike','--s1']];
+  const series=devs.map(([d,c])=>({label:d,color:css(c),points:pts(d)})).filter(s=>s.points.length===12);
+  legend('lgm',[...devs.slice().reverse().map(([d,c])=>({label:d+(d==='Bicycle'?' (reference)':''),color:css(c)})),{label:'Unstable estimate',hollow:true}]);
+  const pf=v=>(v*100).toFixed(1)+'%';
+  lineChart('cm',series,MV.share?{band:false,fmtAxis:v=>Math.round(v*100)+'%',fmtTip:pf,aria:`Line chart of the share of each device's ${MV.year} emergency visits that happened in each month`}:{band:true,aria:`Line chart of estimated US emergency department visits by month in ${MV.year}, e-bikes and e-scooters`});
+  const all=['E-bike','E-scooter','Bicycle'];
+  table('tbm',['Device',...MONTHS],all.map(d=>{const rs=D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month);const tot=rs.reduce((a,r)=>a+r.est,0);return [d,...rs.map(r=>MV.share?pf(r.est/tot):fmt(r.est)+(r.unstable?'*':''))];}));
+  const yn=b=>b?'yes':'no';
+  csvTools('tbm',`US emergency department visits by month, ${MV.year}`,['device','year','month','estimate','ci_low','ci_high','records','unstable'],all.flatMap(d=>D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month).map(r=>[d,r.year,r.month,r.est,r.lo,r.hi,r.n,yn(r.unstable)])),`neissai_visits_by_month_${MV.year}.csv`);
+}
 /* ---------- record data + survey estimator ---------- */
 let R=null, STORIES=null, CL_STRATUM=null, STRATUM_CLUSTERS=null;
 const DEV_ORDER=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Skateboard','Moped / minibike'];

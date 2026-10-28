@@ -147,7 +147,7 @@ a.btn{text-decoration:none;display:inline-block}
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -174,6 +174,22 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
     <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
+  </section>
+  <section class="card" id="monthcard">
+    <h2>Injuries by month</h2>
+    <p class="desc">Estimated US emergency department visits in each month of the chosen year, with 95% confidence bands. Switch to "Share of the year" to compare seasons across devices, including regular bicycles.</p>
+    <div class="filters">
+      <label class="field">Year<select id="mYear" aria-label="Year"></select></label>
+      <div class="field">View<div class="chips" role="group" aria-label="View">
+        <button class="chip" type="button" id="mvVisits" aria-pressed="true">Visits</button>
+        <button class="chip" type="button" id="mvShare" aria-pressed="false">Share of the year</button>
+      </div></div>
+    </div>
+    <div class="legend" id="lgm"></div>
+    <div class="chart" id="cm"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="cm">Download chart (PNG)</button></div>
+    <p class="note">Monthly estimates rest on fewer records than yearly ones, so their ranges are wider. In a year when e-bike use grows quickly, later months also tend to be higher for that reason alone.</p>
+    <details><summary>Show the numbers</summary><div class="tablewrap" id="tbm"></div></details>
   </section>
   <div class="grid2">
     <section class="card">
@@ -1255,6 +1271,2528 @@ const DATA = {
    "hi": 0.3131,
    "n": 689
   }
+ ],
+ "by_month": [
+  {
+   "year": 2019,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 18702,
+   "lo": 9149,
+   "hi": 28256,
+   "n": 447,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 1,
+   "device": "E-bike",
+   "est": 126,
+   "lo": 0,
+   "hi": 344,
+   "n": 3,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 536,
+   "lo": 156,
+   "hi": 916,
+   "n": 13,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 18360,
+   "lo": 8450,
+   "hi": 28270,
+   "n": 456,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 2,
+   "device": "E-bike",
+   "est": 124,
+   "lo": 0,
+   "hi": 258,
+   "n": 5,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 435,
+   "lo": 147,
+   "hi": 723,
+   "n": 19,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 26273,
+   "lo": 14363,
+   "hi": 38183,
+   "n": 692,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 3,
+   "device": "E-bike",
+   "est": 270,
+   "lo": 0,
+   "hi": 540,
+   "n": 5,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 835,
+   "lo": 336,
+   "hi": 1334,
+   "n": 31,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 34638,
+   "lo": 23012,
+   "hi": 46265,
+   "n": 1005,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 4,
+   "device": "E-bike",
+   "est": 277,
+   "lo": 42,
+   "hi": 511,
+   "n": 6,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 1368,
+   "lo": 509,
+   "hi": 2226,
+   "n": 38,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 41435,
+   "lo": 31067,
+   "hi": 51803,
+   "n": 1184,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 5,
+   "device": "E-bike",
+   "est": 654,
+   "lo": 42,
+   "hi": 1265,
+   "n": 18,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 1223,
+   "lo": 629,
+   "hi": 1818,
+   "n": 36,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 50083,
+   "lo": 37449,
+   "hi": 62717,
+   "n": 1404,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "device": "E-bike",
+   "est": 627,
+   "lo": 158,
+   "hi": 1096,
+   "n": 12,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 1651,
+   "lo": 595,
+   "hi": 2707,
+   "n": 46,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 50094,
+   "lo": 37714,
+   "hi": 62474,
+   "n": 1412,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "device": "E-bike",
+   "est": 736,
+   "lo": 116,
+   "hi": 1356,
+   "n": 20,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 2824,
+   "lo": 1492,
+   "hi": 4156,
+   "n": 72,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 51277,
+   "lo": 39334,
+   "hi": 63220,
+   "n": 1432,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "device": "E-bike",
+   "est": 666,
+   "lo": 0,
+   "hi": 1356,
+   "n": 23,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 2052,
+   "lo": 828,
+   "hi": 3276,
+   "n": 58,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 46193,
+   "lo": 33870,
+   "hi": 58516,
+   "n": 1360,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 9,
+   "device": "E-bike",
+   "est": 590,
+   "lo": 208,
+   "hi": 971,
+   "n": 20,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 2886,
+   "lo": 1114,
+   "hi": 4658,
+   "n": 74,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 35002,
+   "lo": 24315,
+   "hi": 45688,
+   "n": 900,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 10,
+   "device": "E-bike",
+   "est": 531,
+   "lo": 60,
+   "hi": 1002,
+   "n": 17,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 1786,
+   "lo": 318,
+   "hi": 3254,
+   "n": 39,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 23437,
+   "lo": 14326,
+   "hi": 32548,
+   "n": 637,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 11,
+   "device": "E-bike",
+   "est": 357,
+   "lo": 4,
+   "hi": 711,
+   "n": 10,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 1034,
+   "lo": 310,
+   "hi": 1757,
+   "n": 28,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 20182,
+   "lo": 9640,
+   "hi": 30723,
+   "n": 488,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "month": 12,
+   "device": "E-bike",
+   "est": 214,
+   "lo": 30,
+   "hi": 399,
+   "n": 8,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 920,
+   "lo": 255,
+   "hi": 1584,
+   "n": 22,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 21929,
+   "lo": 10508,
+   "hi": 33349,
+   "n": 585,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 1,
+   "device": "E-bike",
+   "est": 387,
+   "lo": 46,
+   "hi": 728,
+   "n": 8,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 1391,
+   "lo": 154,
+   "hi": 2628,
+   "n": 48,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 22520,
+   "lo": 12499,
+   "hi": 32542,
+   "n": 590,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 2,
+   "device": "E-bike",
+   "est": 132,
+   "lo": 0,
+   "hi": 318,
+   "n": 2,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 1613,
+   "lo": 535,
+   "hi": 2691,
+   "n": 47,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 26950,
+   "lo": 15222,
+   "hi": 38679,
+   "n": 795,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 3,
+   "device": "E-bike",
+   "est": 334,
+   "lo": 0,
+   "hi": 783,
+   "n": 9,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 1181,
+   "lo": 674,
+   "hi": 1688,
+   "n": 45,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 33255,
+   "lo": 21992,
+   "hi": 44518,
+   "n": 1034,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 4,
+   "device": "E-bike",
+   "est": 430,
+   "lo": 76,
+   "hi": 783,
+   "n": 10,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 1015,
+   "lo": 509,
+   "hi": 1521,
+   "n": 38,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 47421,
+   "lo": 34778,
+   "hi": 60065,
+   "n": 1621,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 5,
+   "device": "E-bike",
+   "est": 389,
+   "lo": 4,
+   "hi": 775,
+   "n": 15,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 2206,
+   "lo": 1320,
+   "hi": 3092,
+   "n": 87,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 48344,
+   "lo": 36402,
+   "hi": 60287,
+   "n": 1560,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "device": "E-bike",
+   "est": 1323,
+   "lo": 0,
+   "hi": 3013,
+   "n": 26,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 3548,
+   "lo": 1418,
+   "hi": 5679,
+   "n": 117,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 51883,
+   "lo": 39378,
+   "hi": 64387,
+   "n": 1552,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "device": "E-bike",
+   "est": 836,
+   "lo": 25,
+   "hi": 1646,
+   "n": 16,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 4485,
+   "lo": 1277,
+   "hi": 7693,
+   "n": 125,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 49366,
+   "lo": 37561,
+   "hi": 61171,
+   "n": 1503,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "device": "E-bike",
+   "est": 1269,
+   "lo": 609,
+   "hi": 1929,
+   "n": 31,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 5123,
+   "lo": 1820,
+   "hi": 8425,
+   "n": 165,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 45541,
+   "lo": 34613,
+   "hi": 56469,
+   "n": 1338,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 9,
+   "device": "E-bike",
+   "est": 1027,
+   "lo": 0,
+   "hi": 2065,
+   "n": 20,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 4132,
+   "lo": 1878,
+   "hi": 6385,
+   "n": 148,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 34658,
+   "lo": 24956,
+   "hi": 44360,
+   "n": 1089,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 10,
+   "device": "E-bike",
+   "est": 938,
+   "lo": 283,
+   "hi": 1592,
+   "n": 23,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 3925,
+   "lo": 1879,
+   "hi": 5972,
+   "n": 112,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 24645,
+   "lo": 16203,
+   "hi": 33086,
+   "n": 744,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 11,
+   "device": "E-bike",
+   "est": 696,
+   "lo": 148,
+   "hi": 1244,
+   "n": 17,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 2650,
+   "lo": 938,
+   "hi": 4361,
+   "n": 78,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 17809,
+   "lo": 9327,
+   "hi": 26291,
+   "n": 491,
+   "unstable": false
+  },
+  {
+   "year": 2020,
+   "month": 12,
+   "device": "E-bike",
+   "est": 460,
+   "lo": 19,
+   "hi": 900,
+   "n": 9,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 1728,
+   "lo": 1001,
+   "hi": 2454,
+   "n": 50,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 18120,
+   "lo": 9190,
+   "hi": 27049,
+   "n": 535,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 1,
+   "device": "E-bike",
+   "est": 547,
+   "lo": 0,
+   "hi": 1095,
+   "n": 13,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 1829,
+   "lo": 953,
+   "hi": 2705,
+   "n": 61,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 16893,
+   "lo": 7580,
+   "hi": 26205,
+   "n": 433,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 2,
+   "device": "E-bike",
+   "est": 495,
+   "lo": 90,
+   "hi": 900,
+   "n": 12,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 1350,
+   "lo": 540,
+   "hi": 2160,
+   "n": 39,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 26443,
+   "lo": 16231,
+   "hi": 36655,
+   "n": 813,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 3,
+   "device": "E-bike",
+   "est": 849,
+   "lo": 305,
+   "hi": 1392,
+   "n": 22,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 3158,
+   "lo": 1764,
+   "hi": 4551,
+   "n": 112,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 38843,
+   "lo": 26283,
+   "hi": 51404,
+   "n": 1161,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 4,
+   "device": "E-bike",
+   "est": 1096,
+   "lo": 599,
+   "hi": 1592,
+   "n": 40,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 5484,
+   "lo": 2312,
+   "hi": 8656,
+   "n": 162,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 40291,
+   "lo": 29892,
+   "hi": 50690,
+   "n": 1320,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 5,
+   "device": "E-bike",
+   "est": 1988,
+   "lo": 1039,
+   "hi": 2936,
+   "n": 51,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 6098,
+   "lo": 3509,
+   "hi": 8687,
+   "n": 219,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 44944,
+   "lo": 34340,
+   "hi": 55548,
+   "n": 1329,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "device": "E-bike",
+   "est": 1552,
+   "lo": 329,
+   "hi": 2775,
+   "n": 42,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 6283,
+   "lo": 4123,
+   "hi": 8443,
+   "n": 207,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 43552,
+   "lo": 32411,
+   "hi": 54692,
+   "n": 1226,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "device": "E-bike",
+   "est": 1520,
+   "lo": 379,
+   "hi": 2660,
+   "n": 39,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 7353,
+   "lo": 4210,
+   "hi": 10496,
+   "n": 205,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 38100,
+   "lo": 28796,
+   "hi": 47404,
+   "n": 1113,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "device": "E-bike",
+   "est": 1720,
+   "lo": 0,
+   "hi": 3519,
+   "n": 37,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 5841,
+   "lo": 3120,
+   "hi": 8563,
+   "n": 191,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 37249,
+   "lo": 28124,
+   "hi": 46374,
+   "n": 1150,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 9,
+   "device": "E-bike",
+   "est": 1745,
+   "lo": 508,
+   "hi": 2983,
+   "n": 38,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 6434,
+   "lo": 4059,
+   "hi": 8809,
+   "n": 219,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 31390,
+   "lo": 22115,
+   "hi": 40665,
+   "n": 909,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 10,
+   "device": "E-bike",
+   "est": 2013,
+   "lo": 770,
+   "hi": 3256,
+   "n": 40,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 4620,
+   "lo": 2831,
+   "hi": 6410,
+   "n": 151,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 21099,
+   "lo": 13273,
+   "hi": 28924,
+   "n": 599,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 11,
+   "device": "E-bike",
+   "est": 833,
+   "lo": 338,
+   "hi": 1328,
+   "n": 21,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 3801,
+   "lo": 2275,
+   "hi": 5328,
+   "n": 122,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 16579,
+   "lo": 10340,
+   "hi": 22818,
+   "n": 466,
+   "unstable": false
+  },
+  {
+   "year": 2021,
+   "month": 12,
+   "device": "E-bike",
+   "est": 900,
+   "lo": 172,
+   "hi": 1628,
+   "n": 22,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 2203,
+   "lo": 1372,
+   "hi": 3035,
+   "n": 71,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 17448,
+   "lo": 7127,
+   "hi": 27769,
+   "n": 448,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 1,
+   "device": "E-bike",
+   "est": 835,
+   "lo": 283,
+   "hi": 1387,
+   "n": 21,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 1958,
+   "lo": 983,
+   "hi": 2934,
+   "n": 58,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 20107,
+   "lo": 9546,
+   "hi": 30668,
+   "n": 457,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 2,
+   "device": "E-bike",
+   "est": 1035,
+   "lo": 419,
+   "hi": 1650,
+   "n": 22,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 2417,
+   "lo": 1561,
+   "hi": 3274,
+   "n": 75,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 28262,
+   "lo": 16722,
+   "hi": 39803,
+   "n": 695,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 3,
+   "device": "E-bike",
+   "est": 1908,
+   "lo": 690,
+   "hi": 3126,
+   "n": 40,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 4511,
+   "lo": 2914,
+   "hi": 6109,
+   "n": 135,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 34155,
+   "lo": 21700,
+   "hi": 46611,
+   "n": 852,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 4,
+   "device": "E-bike",
+   "est": 1695,
+   "lo": 840,
+   "hi": 2550,
+   "n": 36,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 5744,
+   "lo": 3422,
+   "hi": 8066,
+   "n": 178,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 40121,
+   "lo": 28938,
+   "hi": 51303,
+   "n": 1122,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 5,
+   "device": "E-bike",
+   "est": 2781,
+   "lo": 758,
+   "hi": 4805,
+   "n": 62,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 7503,
+   "lo": 4771,
+   "hi": 10234,
+   "n": 217,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 44715,
+   "lo": 32961,
+   "hi": 56470,
+   "n": 1183,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "device": "E-bike",
+   "est": 3242,
+   "lo": 1390,
+   "hi": 5093,
+   "n": 78,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 6116,
+   "lo": 3016,
+   "hi": 9216,
+   "n": 185,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 54430,
+   "lo": 39458,
+   "hi": 69403,
+   "n": 1272,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "device": "E-bike",
+   "est": 3250,
+   "lo": 1250,
+   "hi": 5251,
+   "n": 63,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 7399,
+   "lo": 5027,
+   "hi": 9770,
+   "n": 203,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 49765,
+   "lo": 36500,
+   "hi": 63030,
+   "n": 1204,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "device": "E-bike",
+   "est": 3746,
+   "lo": 1935,
+   "hi": 5556,
+   "n": 78,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 6896,
+   "lo": 4291,
+   "hi": 9501,
+   "n": 191,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 40878,
+   "lo": 30264,
+   "hi": 51492,
+   "n": 1117,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 9,
+   "device": "E-bike",
+   "est": 2894,
+   "lo": 1046,
+   "hi": 4743,
+   "n": 68,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 5888,
+   "lo": 3898,
+   "hi": 7877,
+   "n": 201,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 33567,
+   "lo": 23165,
+   "hi": 43968,
+   "n": 837,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 10,
+   "device": "E-bike",
+   "est": 2749,
+   "lo": 823,
+   "hi": 4675,
+   "n": 64,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 5609,
+   "lo": 3568,
+   "hi": 7651,
+   "n": 166,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 23175,
+   "lo": 14463,
+   "hi": 31888,
+   "n": 565,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 11,
+   "device": "E-bike",
+   "est": 2333,
+   "lo": 724,
+   "hi": 3943,
+   "n": 45,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 3785,
+   "lo": 2197,
+   "hi": 5373,
+   "n": 113,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 16595,
+   "lo": 8604,
+   "hi": 24587,
+   "n": 356,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "month": 12,
+   "device": "E-bike",
+   "est": 1519,
+   "lo": 420,
+   "hi": 2618,
+   "n": 33,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 2681,
+   "lo": 1248,
+   "hi": 4115,
+   "n": 68,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 18054,
+   "lo": 7975,
+   "hi": 28133,
+   "n": 443,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 1,
+   "device": "E-bike",
+   "est": 1924,
+   "lo": 694,
+   "hi": 3154,
+   "n": 42,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 3142,
+   "lo": 1614,
+   "hi": 4671,
+   "n": 91,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 19737,
+   "lo": 10745,
+   "hi": 28729,
+   "n": 502,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 2,
+   "device": "E-bike",
+   "est": 1702,
+   "lo": 553,
+   "hi": 2850,
+   "n": 45,
+   "unstable": true
+  },
+  {
+   "year": 2023,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 2725,
+   "lo": 1649,
+   "hi": 3801,
+   "n": 101,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 23723,
+   "lo": 14288,
+   "hi": 33159,
+   "n": 596,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 3,
+   "device": "E-bike",
+   "est": 1761,
+   "lo": 806,
+   "hi": 2715,
+   "n": 41,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 4070,
+   "lo": 2537,
+   "hi": 5603,
+   "n": 127,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 35142,
+   "lo": 24676,
+   "hi": 45608,
+   "n": 927,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 4,
+   "device": "E-bike",
+   "est": 2937,
+   "lo": 1483,
+   "hi": 4392,
+   "n": 66,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 5654,
+   "lo": 3596,
+   "hi": 7711,
+   "n": 165,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 42941,
+   "lo": 32437,
+   "hi": 53445,
+   "n": 1209,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 5,
+   "device": "E-bike",
+   "est": 2805,
+   "lo": 1215,
+   "hi": 4394,
+   "n": 75,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 7446,
+   "lo": 5077,
+   "hi": 9816,
+   "n": 250,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 46353,
+   "lo": 35171,
+   "hi": 57534,
+   "n": 1233,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "device": "E-bike",
+   "est": 3882,
+   "lo": 2263,
+   "hi": 5500,
+   "n": 92,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 6652,
+   "lo": 4574,
+   "hi": 8730,
+   "n": 205,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 50300,
+   "lo": 36715,
+   "hi": 63885,
+   "n": 1322,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "device": "E-bike",
+   "est": 4037,
+   "lo": 2057,
+   "hi": 6016,
+   "n": 92,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 8503,
+   "lo": 5426,
+   "hi": 11580,
+   "n": 272,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 45724,
+   "lo": 34671,
+   "hi": 56777,
+   "n": 1306,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "device": "E-bike",
+   "est": 4037,
+   "lo": 2357,
+   "hi": 5718,
+   "n": 104,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 7959,
+   "lo": 5382,
+   "hi": 10537,
+   "n": 277,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 42215,
+   "lo": 31176,
+   "hi": 53254,
+   "n": 1125,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 9,
+   "device": "E-bike",
+   "est": 4922,
+   "lo": 2408,
+   "hi": 7436,
+   "n": 113,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 7753,
+   "lo": 5195,
+   "hi": 10310,
+   "n": 272,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 33257,
+   "lo": 23622,
+   "hi": 42893,
+   "n": 904,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 10,
+   "device": "E-bike",
+   "est": 4072,
+   "lo": 2307,
+   "hi": 5837,
+   "n": 99,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 5979,
+   "lo": 3861,
+   "hi": 8097,
+   "n": 197,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 25699,
+   "lo": 16229,
+   "hi": 35168,
+   "n": 616,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 11,
+   "device": "E-bike",
+   "est": 2958,
+   "lo": 1357,
+   "hi": 4558,
+   "n": 71,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 4679,
+   "lo": 2849,
+   "hi": 6510,
+   "n": 127,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 20224,
+   "lo": 11299,
+   "hi": 29149,
+   "n": 450,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 12,
+   "device": "E-bike",
+   "est": 2818,
+   "lo": 1205,
+   "hi": 4432,
+   "n": 57,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 3575,
+   "lo": 2183,
+   "hi": 4966,
+   "n": 96,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 17155,
+   "lo": 10458,
+   "hi": 23852,
+   "n": 383,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 1,
+   "device": "E-bike",
+   "est": 2453,
+   "lo": 1372,
+   "hi": 3534,
+   "n": 56,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 4182,
+   "lo": 2221,
+   "hi": 6143,
+   "n": 92,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 21083,
+   "lo": 13403,
+   "hi": 28763,
+   "n": 516,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 2,
+   "device": "E-bike",
+   "est": 2122,
+   "lo": 993,
+   "hi": 3250,
+   "n": 45,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 4926,
+   "lo": 2615,
+   "hi": 7237,
+   "n": 125,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 32334,
+   "lo": 22614,
+   "hi": 42054,
+   "n": 761,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 3,
+   "device": "E-bike",
+   "est": 2328,
+   "lo": 1290,
+   "hi": 3366,
+   "n": 56,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 6871,
+   "lo": 3735,
+   "hi": 10007,
+   "n": 163,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 35570,
+   "lo": 26391,
+   "hi": 44749,
+   "n": 880,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 4,
+   "device": "E-bike",
+   "est": 4492,
+   "lo": 2625,
+   "hi": 6358,
+   "n": 99,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 8859,
+   "lo": 5686,
+   "hi": 12033,
+   "n": 208,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 47611,
+   "lo": 36513,
+   "hi": 58709,
+   "n": 1162,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 5,
+   "device": "E-bike",
+   "est": 5217,
+   "lo": 3206,
+   "hi": 7227,
+   "n": 104,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 11289,
+   "lo": 6825,
+   "hi": 15752,
+   "n": 285,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 52229,
+   "lo": 39617,
+   "hi": 64842,
+   "n": 1247,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "device": "E-bike",
+   "est": 7317,
+   "lo": 4252,
+   "hi": 10383,
+   "n": 150,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 13706,
+   "lo": 6915,
+   "hi": 20497,
+   "n": 333,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 57878,
+   "lo": 43891,
+   "hi": 71865,
+   "n": 1319,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "device": "E-bike",
+   "est": 7457,
+   "lo": 4835,
+   "hi": 10079,
+   "n": 161,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 15061,
+   "lo": 6604,
+   "hi": 23518,
+   "n": 349,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 52325,
+   "lo": 40168,
+   "hi": 64482,
+   "n": 1269,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "device": "E-bike",
+   "est": 7065,
+   "lo": 4400,
+   "hi": 9730,
+   "n": 135,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 14842,
+   "lo": 7468,
+   "hi": 22215,
+   "n": 349,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 47626,
+   "lo": 36205,
+   "hi": 59048,
+   "n": 1175,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 9,
+   "device": "E-bike",
+   "est": 7238,
+   "lo": 4690,
+   "hi": 9785,
+   "n": 165,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 14805,
+   "lo": 7104,
+   "hi": 22507,
+   "n": 372,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 41665,
+   "lo": 31650,
+   "hi": 51679,
+   "n": 1032,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 10,
+   "device": "E-bike",
+   "est": 5561,
+   "lo": 3230,
+   "hi": 7892,
+   "n": 132,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 12700,
+   "lo": 6850,
+   "hi": 18550,
+   "n": 309,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 27072,
+   "lo": 19357,
+   "hi": 34787,
+   "n": 646,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 11,
+   "device": "E-bike",
+   "est": 4181,
+   "lo": 2508,
+   "hi": 5854,
+   "n": 91,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 8726,
+   "lo": 4451,
+   "hi": 13002,
+   "n": 214,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 17646,
+   "lo": 11910,
+   "hi": 23383,
+   "n": 426,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 12,
+   "device": "E-bike",
+   "est": 3919,
+   "lo": 2035,
+   "hi": 5803,
+   "n": 90,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 6727,
+   "lo": 4221,
+   "hi": 9232,
+   "n": 172,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 1,
+   "device": "Bicycle",
+   "est": 17159,
+   "lo": 10880,
+   "hi": 23439,
+   "n": 419,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 1,
+   "device": "E-bike",
+   "est": 3731,
+   "lo": 2004,
+   "hi": 5459,
+   "n": 91,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 1,
+   "device": "E-scooter",
+   "est": 6454,
+   "lo": 3825,
+   "hi": 9084,
+   "n": 158,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 2,
+   "device": "Bicycle",
+   "est": 19702,
+   "lo": 11381,
+   "hi": 28023,
+   "n": 463,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 2,
+   "device": "E-bike",
+   "est": 3043,
+   "lo": 1213,
+   "hi": 4873,
+   "n": 66,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 2,
+   "device": "E-scooter",
+   "est": 5714,
+   "lo": 2787,
+   "hi": 8642,
+   "n": 151,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 3,
+   "device": "Bicycle",
+   "est": 30979,
+   "lo": 22428,
+   "hi": 39530,
+   "n": 788,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 3,
+   "device": "E-bike",
+   "est": 5694,
+   "lo": 3388,
+   "hi": 8001,
+   "n": 134,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 3,
+   "device": "E-scooter",
+   "est": 9770,
+   "lo": 5874,
+   "hi": 13666,
+   "n": 262,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 4,
+   "device": "Bicycle",
+   "est": 38474,
+   "lo": 28787,
+   "hi": 48160,
+   "n": 971,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 4,
+   "device": "E-bike",
+   "est": 7550,
+   "lo": 4890,
+   "hi": 10210,
+   "n": 181,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 4,
+   "device": "E-scooter",
+   "est": 12978,
+   "lo": 7870,
+   "hi": 18085,
+   "n": 341,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 5,
+   "device": "Bicycle",
+   "est": 43098,
+   "lo": 32740,
+   "hi": 53455,
+   "n": 1127,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 5,
+   "device": "E-bike",
+   "est": 9010,
+   "lo": 6201,
+   "hi": 11818,
+   "n": 214,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 5,
+   "device": "E-scooter",
+   "est": 14639,
+   "lo": 9038,
+   "hi": 20240,
+   "n": 388,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "device": "Bicycle",
+   "est": 45635,
+   "lo": 34843,
+   "hi": 56428,
+   "n": 1159,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "device": "E-bike",
+   "est": 10660,
+   "lo": 6678,
+   "hi": 14642,
+   "n": 230,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "device": "E-scooter",
+   "est": 17699,
+   "lo": 9905,
+   "hi": 25494,
+   "n": 446,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "device": "Bicycle",
+   "est": 54745,
+   "lo": 41157,
+   "hi": 68334,
+   "n": 1343,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "device": "E-bike",
+   "est": 12802,
+   "lo": 9125,
+   "hi": 16478,
+   "n": 280,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "device": "E-scooter",
+   "est": 18718,
+   "lo": 9317,
+   "hi": 28119,
+   "n": 510,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "device": "Bicycle",
+   "est": 51391,
+   "lo": 39097,
+   "hi": 63685,
+   "n": 1282,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "device": "E-bike",
+   "est": 11572,
+   "lo": 8062,
+   "hi": 15082,
+   "n": 260,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "device": "E-scooter",
+   "est": 22254,
+   "lo": 11705,
+   "hi": 32803,
+   "n": 555,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 9,
+   "device": "Bicycle",
+   "est": 50872,
+   "lo": 38400,
+   "hi": 63343,
+   "n": 1246,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 9,
+   "device": "E-bike",
+   "est": 11666,
+   "lo": 6885,
+   "hi": 16447,
+   "n": 271,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 9,
+   "device": "E-scooter",
+   "est": 20266,
+   "lo": 11140,
+   "hi": 29392,
+   "n": 513,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 10,
+   "device": "Bicycle",
+   "est": 38649,
+   "lo": 28548,
+   "hi": 48750,
+   "n": 978,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 10,
+   "device": "E-bike",
+   "est": 9925,
+   "lo": 6495,
+   "hi": 13356,
+   "n": 239,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 10,
+   "device": "E-scooter",
+   "est": 17837,
+   "lo": 10091,
+   "hi": 25583,
+   "n": 458,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 11,
+   "device": "Bicycle",
+   "est": 25291,
+   "lo": 18052,
+   "hi": 32531,
+   "n": 631,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 11,
+   "device": "E-bike",
+   "est": 8050,
+   "lo": 4999,
+   "hi": 11102,
+   "n": 191,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 11,
+   "device": "E-scooter",
+   "est": 13471,
+   "lo": 7620,
+   "hi": 19322,
+   "n": 318,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 12,
+   "device": "Bicycle",
+   "est": 18561,
+   "lo": 11876,
+   "hi": 25247,
+   "n": 449,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 12,
+   "device": "E-bike",
+   "est": 7924,
+   "lo": 4655,
+   "hi": 11192,
+   "n": 181,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "month": 12,
+   "device": "E-scooter",
+   "est": 8985,
+   "lo": 4975,
+   "hi": 12995,
+   "n": 243,
+   "unstable": false
+  }
  ]
 };
 /* ---------- theme ---------- */
@@ -1413,8 +3951,38 @@ function drawOverview(){
   barChart('c3',groups.map(g=>g.replace('-','–')),s3,{aria:'Bar chart of the share of injuries leading to hospitalisation, by device and age group'});
   table('tb3',['Device','0–17','18–64','65+'],s3.map(s=>[s.label,...s.values.map(v=>pct(v.v))]));
   csvTools('tb3','Share of injuries with a hospital stay (admitted, transferred or held), by device and age group, 2019-2025',['device','age_group','share_hospitalized','ci_low','ci_high','records'],s3.flatMap(s=>s.values.map((v,i)=>[s.label,groups[i],v.v,v.lo,v.hi,v.n])),'neissai_hospital_stay_share.csv','Shares are proportions (0-1) of records in each group.');
+  drawMonth();
 }
 
+
+/* ---------- injuries by month (precomputed) ---------- */
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MV={year:null,share:false};
+function drawMonth(){
+  const D=DATA; if(!D.by_month||!document.getElementById('cm')) return;
+  const years=[...new Set(D.by_month.map(r=>r.year))].sort((a,b)=>a-b);
+  const sel=document.getElementById('mYear');
+  if(MV.year==null){MV.year=years[years.length-1];
+    years.slice().reverse().forEach(y=>sel.appendChild(h('option',{value:String(y),text:String(y)})));
+    sel.value=String(MV.year);
+    sel.addEventListener('change',()=>{MV.year=+sel.value;drawMonth();});
+    const vb=document.getElementById('mvVisits'), sb=document.getElementById('mvShare');
+    vb.addEventListener('click',()=>{MV.share=false;vb.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');drawMonth();});
+    sb.addEventListener('click',()=>{MV.share=true;sb.setAttribute('aria-pressed','true');vb.setAttribute('aria-pressed','false');drawMonth();});
+  }
+  const pts=dev=>{const rs=D.by_month.filter(r=>r.year===MV.year&&r.device===dev).sort((a,b)=>a.month-b.month);
+    const tot=rs.reduce((a,r)=>a+r.est,0);
+    return rs.map(r=>MV.share?{year:MONTHS[r.month-1],est:r.est/tot,lo:r.est/tot,hi:r.est/tot,unstable:r.unstable}:{year:MONTHS[r.month-1],est:r.est,lo:r.lo,hi:r.hi,unstable:r.unstable});};
+  const devs=MV.share?[['Bicycle','--ref'],['E-scooter','--s2'],['E-bike','--s1']]:[['E-scooter','--s2'],['E-bike','--s1']];
+  const series=devs.map(([d,c])=>({label:d,color:css(c),points:pts(d)})).filter(s=>s.points.length===12);
+  legend('lgm',[...devs.slice().reverse().map(([d,c])=>({label:d+(d==='Bicycle'?' (reference)':''),color:css(c)})),{label:'Unstable estimate',hollow:true}]);
+  const pf=v=>(v*100).toFixed(1)+'%';
+  lineChart('cm',series,MV.share?{band:false,fmtAxis:v=>Math.round(v*100)+'%',fmtTip:pf,aria:`Line chart of the share of each device's ${MV.year} emergency visits that happened in each month`}:{band:true,aria:`Line chart of estimated US emergency department visits by month in ${MV.year}, e-bikes and e-scooters`});
+  const all=['E-bike','E-scooter','Bicycle'];
+  table('tbm',['Device',...MONTHS],all.map(d=>{const rs=D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month);const tot=rs.reduce((a,r)=>a+r.est,0);return [d,...rs.map(r=>MV.share?pf(r.est/tot):fmt(r.est)+(r.unstable?'*':''))];}));
+  const yn=b=>b?'yes':'no';
+  csvTools('tbm',`US emergency department visits by month, ${MV.year}`,['device','year','month','estimate','ci_low','ci_high','records','unstable'],all.flatMap(d=>D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month).map(r=>[d,r.year,r.month,r.est,r.lo,r.hi,r.n,yn(r.unstable)])),`neissai_visits_by_month_${MV.year}.csv`);
+}
 /* ---------- record data + survey estimator ---------- */
 let R=null, STORIES=null, CL_STRATUM=null, STRATUM_CLUSTERS=null;
 const DEV_ORDER=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Skateboard','Moped / minibike'];

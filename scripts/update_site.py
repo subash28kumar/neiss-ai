@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import neissai  # noqa: E402
 from neissai.export import export_web_data  # noqa: E402
+import pandas as pd  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--data-dir", default="data")
@@ -52,6 +53,9 @@ mm = df["device"].isin(neissai.DEVICES)
 by = neissai.national_estimates(df, by=["year", "device"], where=mm)
 age = neissai.national_estimates(df, by=["year", "device", "age_group"],
                                  where=mm & df["age_group"].notna() & df["device"].isin(["E-bike", "E-scooter"]))
+df["month"] = pd.to_datetime(df["Treatment_Date"], errors="coerce").dt.month
+month = neissai.national_estimates(df, by=["year", "month", "device"],
+                                   where=mm & df["month"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))
 hosp = neissai.shares(df, "hospitalized", by=["device", "age_group"],
                       where=mm & df["age_group"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))
 
@@ -65,6 +69,9 @@ today = dt.date.today().isoformat()
 overview = {"updated": today, "source": f"CPSC NEISS annual files {min(available)}-{max(available)}",
             "version": neissai.__version__, "by_device": rows(by, ["year", "device"]),
             "by_age": rows(age, ["year", "device", "age_group"]),
+            "by_month": [{"year": int(r.year), "month": int(r.month), "device": r.device, "est": round(r.estimate),
+                          "lo": round(r.ci_low), "hi": round(r.ci_high), "n": int(r.records), "unstable": bool(r.unstable)}
+                         for r in month.itertuples()],
             "hospitalized": [{"device": r.device, "age_group": r.age_group, "share": round(r.share, 4), "lo": round(r.ci_low, 4),
                               "hi": round(r.ci_high, 4), "n": int(r.records)} for _, r in hosp.iterrows()]}
 docs = ROOT / "docs"
