@@ -56,6 +56,8 @@ age = neissai.national_estimates(df, by=["year", "device", "age_group"],
 df["month"] = pd.to_datetime(df["Treatment_Date"], errors="coerce").dt.month
 month = neissai.national_estimates(df, by=["year", "month", "device"],
                                    where=mm & df["month"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))
+df = neissai.add_ebike_type(df)
+etype = neissai.national_estimates(df, by=["year", "ebike_type"], where=df["device"] == "E-bike")
 hosp = neissai.shares(df, "hospitalized", by=["device", "age_group"],
                       where=mm & df["age_group"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))
 
@@ -72,6 +74,9 @@ overview = {"updated": today, "source": f"CPSC NEISS annual files {min(available
             "by_month": [{"year": int(r.year), "month": int(r.month), "device": r.device, "est": round(r.estimate),
                           "lo": round(r.ci_low), "hi": round(r.ci_high), "n": int(r.records), "unstable": bool(r.unstable)}
                          for r in month.itertuples()],
+            "by_ebike_type": [{"year": int(r.year), "type": r.ebike_type, "est": round(r.estimate), "lo": round(r.ci_low),
+                               "hi": round(r.ci_high), "n": int(r.records), "unstable": bool(r.unstable)}
+                              for r in etype.itertuples()],
             "hospitalized": [{"device": r.device, "age_group": r.age_group, "share": round(r.share, 4), "lo": round(r.ci_low, 4),
                               "hi": round(r.ci_high, 4), "n": int(r.records)} for _, r in hosp.iterrows()]}
 docs = ROOT / "docs"

@@ -867,6 +867,197 @@
    "unstable": false
   }
  ],
+ "by_ebike_type": [
+  {
+   "year": 2019,
+   "type": "likely e-moto",
+   "est": 92,
+   "lo": 0,
+   "hi": 211,
+   "n": 3,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "type": "regular e-bike",
+   "est": 3071,
+   "lo": 1091,
+   "hi": 5051,
+   "n": 99,
+   "unstable": false
+  },
+  {
+   "year": 2019,
+   "type": "unclear",
+   "est": 2010,
+   "lo": 391,
+   "hi": 3630,
+   "n": 45,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "likely e-moto",
+   "est": 154,
+   "lo": 0,
+   "hi": 368,
+   "n": 2,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "regular e-bike",
+   "est": 5792,
+   "lo": 984,
+   "hi": 10600,
+   "n": 129,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "unclear",
+   "est": 2274,
+   "lo": 614,
+   "hi": 3934,
+   "n": 55,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "likely e-moto",
+   "est": 415,
+   "lo": 0,
+   "hi": 899,
+   "n": 8,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "regular e-bike",
+   "est": 11636,
+   "lo": 3936,
+   "hi": 19337,
+   "n": 292,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "unclear",
+   "est": 3205,
+   "lo": 1013,
+   "hi": 5397,
+   "n": 77,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "type": "likely e-moto",
+   "est": 681,
+   "lo": 5,
+   "hi": 1358,
+   "n": 11,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "type": "regular e-bike",
+   "est": 23665,
+   "lo": 10697,
+   "hi": 36632,
+   "n": 523,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "type": "unclear",
+   "est": 3641,
+   "lo": 1648,
+   "hi": 5634,
+   "n": 76,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "type": "likely e-moto",
+   "est": 755,
+   "lo": 143,
+   "hi": 1366,
+   "n": 14,
+   "unstable": true
+  },
+  {
+   "year": 2023,
+   "type": "regular e-bike",
+   "est": 33382,
+   "lo": 18780,
+   "hi": 47984,
+   "n": 806,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "type": "unclear",
+   "est": 3717,
+   "lo": 1918,
+   "hi": 5516,
+   "n": 77,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "type": "likely e-moto",
+   "est": 1295,
+   "lo": 396,
+   "hi": 2194,
+   "n": 31,
+   "unstable": true
+  },
+  {
+   "year": 2024,
+   "type": "regular e-bike",
+   "est": 54474,
+   "lo": 35667,
+   "hi": 73281,
+   "n": 1173,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "type": "unclear",
+   "est": 3580,
+   "lo": 2201,
+   "hi": 4958,
+   "n": 80,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "likely e-moto",
+   "est": 1854,
+   "lo": 1074,
+   "hi": 2634,
+   "n": 48,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "regular e-bike",
+   "est": 94492,
+   "lo": 64481,
+   "hi": 124502,
+   "n": 2163,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "unclear",
+   "est": 5282,
+   "lo": 3334,
+   "hi": 7229,
+   "n": 127,
+   "unstable": false
+  }
+ ],
  "hospitalized": [
   {
    "device": "Bicycle",

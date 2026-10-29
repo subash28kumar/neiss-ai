@@ -77,7 +77,13 @@ mm = df["device"].isin(neissai.DEVICES)
 by_year = neissai.national_estimates(df, by=["year", "device"], where=mm)
 kids = neissai.national_estimates(df, by=["year"], where=(df["device"] == "E-bike") & (df["age_group"] == "0-17"))
 hosp = neissai.shares(df, "hospitalized", by=["device", "age_group"], where=mm)
+
+# Regular e-bike, likely e-moto (e.g. Sur-Ron, Talaria, rider speed over 28 mph) or unclear
+df = neissai.add_ebike_type(df)
+etype = neissai.national_estimates(df, by=["year", "ebike_type"], where=df["device"] == "E-bike")
 ```
+
+The e-bike vs e-moto rule and its check are described in `validation/EBIKE_TYPE.md`.
 
 ## Rebuild the website data
 

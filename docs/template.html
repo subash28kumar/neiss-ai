@@ -191,6 +191,22 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="note">Monthly estimates rest on fewer records than yearly ones, so their ranges are wider. In a year when e-bike use grows quickly, later months also tend to be higher for that reason alone.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbm"></div></details>
   </section>
+  <section class="card" id="emotocard">
+    <h2>Regular e-bikes vs e-motos</h2>
+    <p class="desc">Some "e-bikes" in hospital records are really electric motorcycles (e-motos, such as Sur-Ron or Talaria) or e-bikes ridden well above legal e-bike speeds. NEISS-AI reads each e-bike story and sorts it into three groups. Likely e-motos are about 2% of e-bike visits every year, and that share has not grown, so the e-motos named in hospital stories do not explain the rise in e-bike injuries.</p>
+    <div class="filters">
+      <div class="field">View<div class="chips" role="group" aria-label="View">
+        <button class="chip" type="button" id="evVisits" aria-pressed="true">Visits</button>
+        <button class="chip" type="button" id="evShare" aria-pressed="false">Share of e-bike visits</button>
+      </div></div>
+    </div>
+    <div class="legend" id="lge"></div>
+    <div class="chart" id="ce"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="ce">Download chart (PNG)</button></div>
+    <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the story uses e-moto wording (electric motorcycle or dirt bike, gas- or engine-powered, an e-moto brand) or gives the rider's own speed above 28 mph, the top assisted speed of a legal Class 3 e-bike. <i>Unclear</i>: wording that could mean either ("motorized bike", "motor bike" with no high speed, "dirt bike or e-bike"), a speed range crossing 28 mph, a downhill speed above 28 mph, or "fast" with no speed given. Diagnosis coding phrases are ignored. <i>Regular e-bike</i>: everything else. Speeds of other vehicles ("struck by a car going 30 mph") are ignored. <b>Accuracy.</b> The rule was built on 320 stories, then locked and tested once on 240 new stories from 2019&ndash;2025 that it had never seen. The test stories were labelled blind against written definitions, without seeing the rule. Across all e-bike stories the rule puts 98% in the right group (95% range 97&ndash;99%), and it estimates the share of likely e-motos almost exactly (2.0% by the rule vs 2.0% by the blind labels). Single "likely e-moto" calls are right about 3 times in 4: most misses are "motorized bicycles" ridden over 28 mph, which the definitions count as unclear. Full details: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
+    <p class="note"><b>Read with care.</b> A story names an e-moto only when the writer says so, so "likely e-moto" is a lower bound. CPSC blacks out brand names in the stories ("***"), so most likely e-motos are found from the rider's stated speed; an e-moto described only as an "e-bike" cannot be found. The e-bike class (1, 2 or 3) is almost never written in the story, so classes cannot be counted. Earlier years have more unclear cases because stories then often said "motorized bicycle" rather than "e-bike".</p>
+    <details><summary>Show the numbers</summary><div class="tablewrap" id="tbe"></div></details>
+  </section>
   <div class="grid2">
     <section class="card">
       <h2>Who is getting hurt on e-bikes</h2>
@@ -487,6 +503,7 @@ function drawOverview(){
   table('tb3',['Device','0–17','18–64','65+'],s3.map(s=>[s.label,...s.values.map(v=>pct(v.v))]));
   csvTools('tb3','Share of injuries with a hospital stay (admitted, transferred or held), by device and age group, 2019-2025',['device','age_group','share_hospitalized','ci_low','ci_high','records'],s3.flatMap(s=>s.values.map((v,i)=>[s.label,groups[i],v.v,v.lo,v.hi,v.n])),'neissai_hospital_stay_share.csv','Shares are proportions (0-1) of records in each group.');
   drawMonth();
+  drawEtype();
 }
 
 
@@ -517,6 +534,28 @@ function drawMonth(){
   table('tbm',['Device',...MONTHS],all.map(d=>{const rs=D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month);const tot=rs.reduce((a,r)=>a+r.est,0);return [d,...rs.map(r=>MV.share?pf(r.est/tot):fmt(r.est)+(r.unstable?'*':''))];}));
   const yn=b=>b?'yes':'no';
   csvTools('tbm',`US emergency department visits by month, ${MV.year}`,['device','year','month','estimate','ci_low','ci_high','records','unstable'],all.flatMap(d=>D.by_month.filter(r=>r.year===MV.year&&r.device===d).sort((a,b)=>a.month-b.month).map(r=>[d,r.year,r.month,r.est,r.lo,r.hi,r.n,yn(r.unstable)])),`neissai_visits_by_month_${MV.year}.csv`);
+}
+/* ---------- regular e-bikes vs e-motos (precomputed) ---------- */
+const ET={share:false,init:false};
+const ET_GROUPS=[['regular e-bike','Regular e-bike','--s1'],['unclear','Unclear','--ref'],['likely e-moto','Likely e-moto','--s7']];
+function drawEtype(){
+  const D=DATA; if(!D.by_ebike_type||!document.getElementById('ce')) return;
+  if(!ET.init){ET.init=true;
+    const vb=document.getElementById('evVisits'), sb=document.getElementById('evShare');
+    vb.addEventListener('click',()=>{ET.share=false;vb.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');drawEtype();});
+    sb.addEventListener('click',()=>{ET.share=true;sb.setAttribute('aria-pressed','true');vb.setAttribute('aria-pressed','false');drawEtype();});
+  }
+  const years=[...new Set(D.by_ebike_type.map(r=>r.year))].sort((a,b)=>a-b);
+  const tot={}; years.forEach(y=>{tot[y]=D.by_ebike_type.filter(r=>r.year===y).reduce((a,r)=>a+r.est,0);});
+  const get=(y,t)=>D.by_ebike_type.find(r=>r.year===y&&r.type===t);
+  const pf=v=>(v*100).toFixed(1)+'%';
+  const series=ET_GROUPS.map(([t,l,c])=>({label:l,color:css(c),points:years.map(y=>{const r=get(y,t);
+    return ET.share?{year:y,est:r.est/tot[y],lo:r.est/tot[y],hi:r.est/tot[y],unstable:r.unstable}:{year:y,est:r.est,lo:r.lo,hi:r.hi,unstable:r.unstable};})}));
+  legend('lge',[...ET_GROUPS.map(([t,l,c])=>({label:l,color:css(c)})),{label:'Unstable estimate',hollow:true}]);
+  lineChart('ce',series,ET.share?{band:false,fmtAxis:v=>Math.round(v*100)+'%',fmtTip:pf,aria:'Line chart of the share of US e-bike emergency visits that were regular e-bikes, unclear, or likely e-motos, by year'}:{band:true,aria:'Line chart of estimated US emergency department visits for regular e-bikes, unclear cases and likely e-motos, by year'});
+  table('tbe',['Group',...years.map(String)],ET_GROUPS.map(([t,l])=>[l,...years.map(y=>{const r=get(y,t);return ET.share?pf(r.est/tot[y]):fmt(r.est)+(r.unstable?'*':'');})]));
+  const yn=b=>b?'yes':'no';
+  csvTools('tbe','US e-bike emergency department visits by e-bike type (regular e-bike, unclear, likely e-moto)',['year','type','estimate','ci_low','ci_high','records','unstable','share_of_ebike_visits'],years.flatMap(y=>ET_GROUPS.map(([t])=>{const r=get(y,t);return [y,t,r.est,r.lo,r.hi,r.n,yn(r.unstable),(r.est/tot[y]).toFixed(4)];})),'neissai_ebike_vs_emoto.csv','Likely e-moto is a lower bound: stories name an e-moto only when the writer says so.');
 }
 /* ---------- record data + survey estimator ---------- */
 let R=null, STORIES=null, CL_STRATUM=null, STRATUM_CLUSTERS=null;

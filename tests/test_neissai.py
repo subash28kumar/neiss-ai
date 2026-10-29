@@ -119,3 +119,35 @@ def test_add_outcomes_flags():
     assert out.loc[0, "motor_vehicle"] == 1 and out.loc[0, "helmet_no"] == 1
     assert out.loc[1, "helmet_no"] == 0 and out.loc[1, "helmet_yes"] == 0
     assert out.loc[1, "helmet_status"] == "not mentioned"
+
+
+def test_ebike_type():
+    from neissai.ebike_type import ebike_type
+    cases = {"16YOM RIDING SURRON E-BIKE, FELL": "likely e-moto",
+             "16YOM RIDING SUR-RON E-BIKE, FELL": "likely e-moto",
+             "PT ON TALARIA ELECTRIC BIKE CRASHED": "likely e-moto",
+             "RIDING E-BIKE AT 40 MPH AND FELL": "likely e-moto",
+             "RIDING E-BIKE AT 40 MPH DOWNHILL AND FELL": "unclear",
+             "RIDING E-BIKE 25-35 MPH, LOST CONTROL": "unclear",
+             "ON E-BIKE STRUCK BY A CAR GOING APPROXIMATELY 30 MPH": "regular e-bike",
+             "RIDING MOTORIZED BIKE FELL": "unclear",
+             "GOING FAST ON E-BIKE AND FELL": "unclear",
+             "RIDING E-BIKE ABOUT 15 MPH, TOOK CURVE TOO FAST": "regular e-bike",
+             "FELL OFF E-BIKE": "regular e-bike",
+             "RIDING E-BIKE AT 25MPH, HIT ANOTHER E-BIKE GOING 30MPH": "regular e-bike",
+             "RIDING A DIRT BIKE OR AN ELECTRIC BIKE AT 20 MPH": "unclear",
+             "FELL OFF ELECTRIC BIKE DX: FALL FROM MOTORIZED BIKE": "regular e-bike",
+             "RIDING AN E-BIKE AT 20 TO 30 MPH": "unclear",
+             "RIDING ENGINE MOTORIZED BICYCLE, FELL": "likely e-moto",
+             "WAS GOING 40MPH ON EBIKE AND FELL": "likely e-moto",
+             "RIDING MOTORIZED BICYCLE AT 13 MPH": "unclear",
+             "ON A MOTORIZED BICYCLE / E-BIKE AND FELL": "regular e-bike"}
+    for text, want in cases.items():
+        assert ebike_type(text) == want, text
+
+
+def test_add_ebike_type_only_ebikes():
+    import pandas as pd
+    df = pd.DataFrame({"device": ["E-bike", "Bicycle"], "Narrative": ["SUR-RON CRASH", "SUR-RON CRASH"]})
+    out = neissai.add_ebike_type(df)
+    assert out.loc[0, "ebike_type"] == "likely e-moto" and out.loc[1, "ebike_type"] is None
