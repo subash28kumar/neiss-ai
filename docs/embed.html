@@ -27,15 +27,17 @@
   --s1:#3987e5; --s2:#d95926; --s7:#9085e9; --ref:#8f8e88; --band-op:.22;
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:14px 16px 10px}
+html{height:100%;background:var(--bg)}
+html,body{margin:0}
+body{height:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:14px 16px 10px;max-width:900px;margin:0 auto;max-height:640px}
 h1{font-size:17px;line-height:1.3;margin:0 0 2px;font-weight:700}
 .sub{color:var(--text-2);font-size:13px;margin:0 0 8px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--text-2);margin:0 0 4px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{display:inline-block;width:14px;height:3px;border-radius:2px}
 .legend i.hollow{width:9px;height:9px;border-radius:50%;border:2px solid var(--text-3);background:transparent}
-#chart{flex:1;min-height:180px;position:relative}
+#chart{flex:1;min-height:180px;max-height:480px;position:relative}
 #chart svg{display:block;width:100%;height:100%}
 .axis line{stroke:var(--grid)}
 .axis text{fill:var(--text-3);font-size:11.5px}
@@ -89,7 +91,7 @@ function draw(){
   [...host.querySelectorAll('svg')].forEach(s=>s.remove());
   const W=Math.max(260,host.clientWidth), H=Math.max(180,host.clientHeight);
   const narrow=W<460;
-  const m={t:10,r:narrow?84:104,b:24,l:44};
+  const m={t:10,r:narrow?14:110,b:24,l:44};
   const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,'aria-hidden':'true'}); host.insertBefore(svg,tip);
   const years=SERIES[0].rows.map(r=>r.year);
   const T=ticks(Math.max(...SERIES.flatMap(s=>s.rows.map(r=>r.hi)))), top=T.top;
@@ -109,7 +111,7 @@ function draw(){
     const last=s.rows[s.rows.length-1]; ends.push({y:y(last.est),label:s.label});
   });
   ends.sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<14) ends[i].y=ends[i-1].y+14;
-  ends.forEach(e=>{const t=el('text',{x:W-m.r+8,y:e.y+4,class:'endlab'},svg);t.textContent=e.label;});
+  if(!narrow) ends.forEach(e=>{const t=el('text',{x:W-m.r+8,y:e.y+4,class:'endlab'},svg);t.textContent=e.label;});
   // hover
   const hit=el('rect',{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:'transparent'},svg);
   const guide=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-dasharray':'3 3',visibility:'hidden'},svg);
