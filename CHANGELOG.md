@@ -3,6 +3,7 @@
 All notable changes to NEISS-AI are listed here.
 
 ## Unreleased — 2026-10-28
+- Website: "Embed this chart" — a short HTML snippet lets other websites show a live NEISS-AI chart (e-bike trend, e-bikes and e-scooters, or regular e-bikes vs e-motos) with the source and citation under it (`docs/embed.html?chart=ebike|devices|emoto`, optional `&theme=light|dark`). Embed buttons on the Overview charts and on the For journalists page. Closes #3.
 - New: e-bike vs e-moto. `neissai.ebike_type()` and `neissai.add_ebike_type()` sort each e-bike story into regular e-bike, likely e-moto (e-moto wording such as electric dirt bike or engine-powered, or the rider's own speed above 28 mph) or unclear. Built on 320 stories, then locked and tested once on 240 new stories labelled blind: 98.4% in the right group across all e-bike stories (95% CI 97.2–99.5%); likely e-moto share 2.0% by the rule vs 2.0% by the reviewers. See `validation/EBIKE_TYPE.md`. Likely e-motos are 1.8–2.7% of e-bike emergency visits in every year 2019–2025 (2025: about 1,900 of 101,600), a lower bound because stories name an e-moto only when the writer says so.
 - Website: new "Regular e-bikes vs e-motos" chart on the Overview (visits with 95% bands, or share of e-bike visits), with table and CSV download. `scripts/update_site.py` now also writes `by_ebike_type`.
 

@@ -116,7 +116,10 @@ select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);ou
 .cite{font-size:14px;line-height:1.5;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:0 0 8px;max-width:72ch;overflow-wrap:anywhere}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 a.btn{text-decoration:none;display:inline-block}
-.dlrow{display:flex;justify-content:flex-end;margin-top:6px}
+.dlrow{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:6px}
+.embedbox{margin-top:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13.5px;color:var(--text-2)}
+.embedbox textarea{width:100%;font:12.5px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code-bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px;resize:vertical;min-height:64px;margin:6px 0}
+.embedbox .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .btn.dl{font-size:13px;padding:5px 10px;font-weight:600;color:var(--text-2)}
 .askbox{display:flex;gap:8px;flex-wrap:wrap}
 .askbox input{flex:1 1 320px;font-size:16px;min-height:44px}
@@ -170,7 +173,7 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="desc">Estimated US visits each year with 95% confidence bands. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
     <div class="legend" id="lg1"></div>
     <div class="chart" id="c1"></div>
-    <div class="dlrow"><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
+    <div class="dlrow"><button class="btn dl embed" type="button" data-embed="devices" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
     <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
     <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
@@ -202,7 +205,7 @@ a.btn{text-decoration:none;display:inline-block}
     </div>
     <div class="legend" id="lge"></div>
     <div class="chart" id="ce"></div>
-    <div class="dlrow"><button class="btn dl" type="button" data-chart="ce">Download chart (PNG)</button></div>
+    <div class="dlrow"><button class="btn dl embed" type="button" data-embed="emoto" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="ce">Download chart (PNG)</button></div>
     <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the story uses e-moto wording (electric motorcycle or dirt bike, gas- or engine-powered, an e-moto brand) or gives the rider's own speed above 28 mph, the top assisted speed of a legal Class 3 e-bike. <i>Unclear</i>: wording that could mean either ("motorized bike", "motor bike" with no high speed, "dirt bike or e-bike"), a speed range crossing 28 mph, a downhill speed above 28 mph, or "fast" with no speed given. Diagnosis coding phrases are ignored. <i>Regular e-bike</i>: everything else. Speeds of other vehicles ("struck by a car going 30 mph") are ignored. <b>Accuracy.</b> The rule was built on 320 stories, then locked and tested once on 240 new stories from 2019&ndash;2025 that it had never seen. The test stories were labelled blind against written definitions, without seeing the rule. Across all e-bike stories the rule puts 98% in the right group (95% range 97&ndash;99%), and it estimates the share of likely e-motos almost exactly (2.0% by the rule vs 2.0% by the blind labels). Single "likely e-moto" calls are right about 3 times in 4: most misses are "motorized bicycles" ridden over 28 mph, which the definitions count as unclear. Full details: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
     <p class="note"><b>Read with care.</b> A story names an e-moto only when the writer says so, so "likely e-moto" is a lower bound. CPSC blacks out brand names in the stories ("***"), so most likely e-motos are found from the rider's stated speed; an e-moto described only as an "e-bike" cannot be found. The e-bike class (1, 2 or 3) is almost never written in the story, so classes cannot be counted. Earlier years have more unclear cases because stories then often said "motorized bicycle" rather than "e-bike".</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbe"></div></details>
@@ -4591,6 +4594,25 @@ function downloadChart(id){
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(clone));
 }
 document.addEventListener('click',e=>{const b=e.target.closest('button.dl[data-chart]');if(b)downloadChart(b.getAttribute('data-chart'));});
+/* ---------- embed code ---------- */
+const EMBED_BASE='https://subash28kumar.github.io/neiss-ai/embed.html';
+const EMBED_TITLE={devices:'E-bike and e-scooter injuries in US emergency departments (NEISS-AI)',emoto:'Regular e-bikes vs e-motos in US emergency department visits (NEISS-AI)'};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button.embed[data-embed]'); if(!b) return;
+  const row=b.closest('.dlrow'); let box=row.nextElementSibling;
+  if(box&&box.classList.contains('embedbox')){box.remove();b.setAttribute('aria-expanded','false');return;}
+  const k=b.getAttribute('data-embed'), url=EMBED_BASE+'?chart='+k;
+  const code=`<iframe src="${url}" title="${EMBED_TITLE[k]}" width="100%" height="460" style="border:0;max-width:760px" loading="lazy"></iframe>`;
+  box=h('div',{class:'embedbox'});
+  box.appendChild(h('div',{text:'Paste this HTML into your website to show this chart. It updates when new NEISS data are added, and the source and citation stay under the chart. Add ?theme=dark or ?theme=light to the link to fix the colors.'}));
+  const ta=h('textarea',{readonly:'',rows:'3','aria-label':'Embed code'}); ta.value=code; box.appendChild(ta);
+  const r=h('div',{class:'row'});
+  const cp=h('button',{class:'btn dl',type:'button',text:'Copy code'});
+  cp.addEventListener('click',()=>{ta.select();(navigator.clipboard?navigator.clipboard.writeText(code):Promise.reject()).then(()=>{cp.textContent='Copied';setTimeout(()=>cp.textContent='Copy code',1500);}).catch(()=>{document.execCommand('copy');});});
+  r.appendChild(cp); r.appendChild(h('a',{href:url,target:'_blank',rel:'noopener',text:'Preview'})); box.appendChild(r);
+  row.after(box); b.setAttribute('aria-expanded','true');
+});
+
 
 function redraw(){
   drawOverview();

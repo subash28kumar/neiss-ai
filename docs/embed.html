@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEISS-AI chart</title>
+<meta name="robots" content="noindex">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#fcfcfb; --border:#e2e0da; --grid:#e9e7e2;
+  --text:#0b0b0b; --text-2:#52514e; --text-3:#7a7974; --accent:#2a78d6;
+  --s1:#2a78d6; --s2:#eb6834; --s7:#6250d6; --ref:#8a8984; --band-op:.14;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#1a1a19; --border:#33332f; --grid:#2a2a27;
+    --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5;
+    --s1:#3987e5; --s2:#d95926; --s7:#9085e9; --ref:#8f8e88; --band-op:.22;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#1a1a19; --border:#33332f; --grid:#2a2a27;
+  --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5;
+  --s1:#3987e5; --s2:#d95926; --s7:#9085e9; --ref:#8f8e88; --band-op:.22;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:14px 16px 10px}
+h1{font-size:17px;line-height:1.3;margin:0 0 2px;font-weight:700}
+.sub{color:var(--text-2);font-size:13px;margin:0 0 8px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--text-2);margin:0 0 4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px}
+.legend i.hollow{width:9px;height:9px;border-radius:50%;border:2px solid var(--text-3);background:transparent}
+#chart{flex:1;min-height:180px;position:relative}
+#chart svg{display:block;width:100%;height:100%}
+.axis line{stroke:var(--grid)}
+.axis text{fill:var(--text-3);font-size:11.5px}
+.endlab{fill:var(--text-2);font-size:12px;font-weight:600}
+.tip{position:absolute;pointer-events:none;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12.5px;box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;display:none}
+footer{border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-size:11.5px;color:var(--text-3);line-height:1.4}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.err{color:var(--text-2);font-size:14px;padding:20px 0}
+</style>
+</head>
+<body>
+<h1 id="title">Loading…</h1>
+<p class="sub" id="sub"></p>
+<div class="legend" id="legend"></div>
+<div id="chart" role="img"><div class="tip" id="tip"></div></div>
+<table class="sr" id="table"></table>
+<footer id="credit">Source: <a href="https://subash28kumar.github.io/neiss-ai/" target="_blank" rel="noopener">NEISS-AI</a> (Kumar S., 2026), using US Consumer Product Safety Commission NEISS data. <a href="https://doi.org/10.5281/zenodo.23550272" target="_blank" rel="noopener">doi.org/10.5281/zenodo.23550272</a></footer>
+<script>
+(function(){
+const q=new URLSearchParams(location.search);
+const theme=q.get('theme'); if(theme==='light'||theme==='dark') document.documentElement.setAttribute('data-theme',theme);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const fmt=v=>Math.round(v).toLocaleString('en-US');
+const fmtAxis=v=>v>=1000?(v/1000).toLocaleString('en-US')+'k':String(v);
+const pct=v=>(v*100).toFixed(1)+'%';
+function ticks(max){const raw=max/4,mag=Math.pow(10,Math.floor(Math.log10(raw))),st=[1,2,2.5,5,10].map(s=>s*mag).find(s=>s>=raw);const top=Math.ceil(max/st)*st;const t=[];for(let v=0;v<=top+1e-9;v+=st)t.push(v);return {t,top};}
+
+const CHARTS={
+  'ebike':{title:'E-bike injuries treated in US emergency departments',
+    sub:'Estimated visits per year, with 95% confidence bands',
+    series:D=>[{label:'E-bike',color:'--s1',rows:D.by_device.filter(r=>r.device==='E-bike')}]},
+  'devices':{title:'E-bike and e-scooter injuries treated in US emergency departments',
+    sub:'Estimated visits per year, with 95% confidence bands',
+    series:D=>[{label:'E-scooter',color:'--s2',rows:D.by_device.filter(r=>r.device==='E-scooter')},
+               {label:'E-bike',color:'--s1',rows:D.by_device.filter(r=>r.device==='E-bike')}]},
+  'emoto':{title:'Regular e-bikes vs e-motos in US emergency department visits',
+    sub:'Estimated e-bike visits per year by type, read from hospital injury stories. Likely e-moto is a lower bound.',
+    series:D=>[['likely e-moto','Likely e-moto','--s7'],['unclear','Unclear','--ref'],['regular e-bike','Regular e-bike','--s1']]
+      .map(([t,l,c])=>({label:l,color:c,rows:D.by_ebike_type.filter(r=>r.type===t)}))}
+};
+const key=CHARTS[q.get('chart')]?q.get('chart'):'ebike';
+const C=CHARTS[key];
+let SERIES=null;
+
+function draw(){
+  const host=document.getElementById('chart'), tip=document.getElementById('tip');
+  [...host.querySelectorAll('svg')].forEach(s=>s.remove());
+  const W=Math.max(260,host.clientWidth), H=Math.max(180,host.clientHeight);
+  const narrow=W<460;
+  const m={t:10,r:narrow?84:104,b:24,l:44};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,'aria-hidden':'true'}); host.insertBefore(svg,tip);
+  const years=SERIES[0].rows.map(r=>r.year);
+  const T=ticks(Math.max(...SERIES.flatMap(s=>s.rows.map(r=>r.hi)))), top=T.top;
+  const x=y=>m.l+(W-m.l-m.r)*years.indexOf(y)/(years.length-1);
+  const y=v=>H-m.b-(H-m.t-m.b)*v/top;
+  const ax=el('g',{class:'axis'},svg);
+  T.t.forEach(v=>{el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v)},ax);const t=el('text',{x:m.l-7,y:y(v)+4,'text-anchor':'end'},ax);t.textContent=fmtAxis(v);});
+  const every=narrow&&years.length>5?2:1;
+  years.forEach((yr,i)=>{if(i%every&&i!==years.length-1)return;const t=el('text',{x:x(yr),y:H-6,'text-anchor':'middle'},ax);t.textContent=yr;});
+  const ends=[];
+  SERIES.forEach(s=>{
+    const col=css(s.color);
+    const band=s.rows.map(r=>`${x(r.year)},${y(r.hi)}`).concat(s.rows.slice().reverse().map(r=>`${x(r.year)},${y(Math.max(0,r.lo))}`));
+    el('polygon',{points:band.join(' '),fill:col,'fill-opacity':css('--band-op')},svg);
+    el('polyline',{points:s.rows.map(r=>`${x(r.year)},${y(r.est)}`).join(' '),fill:'none',stroke:col,'stroke-width':2.2,'stroke-linejoin':'round'},svg);
+    s.rows.forEach(r=>el('circle',{cx:x(r.year),cy:y(r.est),r:3.6,fill:r.unstable?css('--bg'):col,stroke:col,'stroke-width':1.8},svg));
+    const last=s.rows[s.rows.length-1]; ends.push({y:y(last.est),label:s.label});
+  });
+  ends.sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<14) ends[i].y=ends[i-1].y+14;
+  ends.forEach(e=>{const t=el('text',{x:W-m.r+8,y:e.y+4,class:'endlab'},svg);t.textContent=e.label;});
+  // hover
+  const hit=el('rect',{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:'transparent'},svg);
+  const guide=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-dasharray':'3 3',visibility:'hidden'},svg);
+  const move=ev=>{const b=svg.getBoundingClientRect();const px=(ev.clientX-b.left)*W/b.width;
+    let i=Math.round((px-m.l)/((W-m.l-m.r)/(years.length-1)));i=Math.max(0,Math.min(years.length-1,i));const yr=years[i];
+    guide.setAttribute('x1',x(yr));guide.setAttribute('x2',x(yr));guide.setAttribute('visibility','visible');
+    tip.innerHTML='<b>'+yr+'</b><br>'+SERIES.slice().reverse().map(s=>{const r=s.rows[i];return s.label+': '+fmt(r.est)+(r.unstable?' *':'');}).join('<br>');
+    tip.style.display='block';const tx=x(yr)*b.width/W;tip.style.left=Math.min(Math.max(0,tx+10),b.width-tip.offsetWidth)+'px';tip.style.top='8px';};
+  hit.addEventListener('mousemove',move);hit.addEventListener('mouseleave',()=>{tip.style.display='none';guide.setAttribute('visibility','hidden');});
+}
+
+fetch('data.json',{cache:'no-cache'}).then(r=>r.json()).then(D=>{
+  SERIES=C.series(D);
+  document.getElementById('title').textContent=C.title;
+  document.getElementById('sub').textContent=C.sub+' · '+(D.source||'CPSC NEISS');
+  document.title=C.title+' · NEISS-AI';
+  const lg=document.getElementById('legend');
+  SERIES.slice().reverse().forEach(s=>{const sp=document.createElement('span');const i=document.createElement('i');i.style.background=css(s.color);sp.append(i,s.label);lg.appendChild(sp);});
+  if(SERIES.some(s=>s.rows.some(r=>r.unstable))){const sp=document.createElement('span');const i=document.createElement('i');i.className='hollow';sp.append(i,'Unstable estimate (*)');lg.appendChild(sp);}
+  const chart=document.getElementById('chart');
+  chart.setAttribute('aria-label',C.title+'. '+SERIES.map(s=>{const a=s.rows[0],b=s.rows[s.rows.length-1];return s.label+': '+fmt(a.est)+' in '+a.year+' to '+fmt(b.est)+' in '+b.year;}).join('; ')+'.');
+  const tb=document.getElementById('table');
+  tb.innerHTML='<caption>'+C.title+'</caption><tr><th>Year</th>'+SERIES.map(s=>'<th>'+s.label+'</th>').join('')+'</tr>'+
+    SERIES[0].rows.map((r,i)=>'<tr><td>'+r.year+'</td>'+SERIES.map(s=>'<td>'+fmt(s.rows[i].est)+' (95% CI '+fmt(s.rows[i].lo)+'–'+fmt(s.rows[i].hi)+')</td>').join('')+'</tr>').join('');
+  draw();
+  let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(draw,120);});
+  if(window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{draw();});
+}).catch(()=>{document.getElementById('title').textContent='NEISS-AI chart';document.getElementById('chart').innerHTML='<p class="err">The chart could not load. View it at <a href="https://subash28kumar.github.io/neiss-ai/" target="_blank" rel="noopener">subash28kumar.github.io/neiss-ai</a>.</p>';});
+})();
+</script>
+</body>
+</html>
