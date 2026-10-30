@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NEISS-AI chart</title>
 <meta name="robots" content="noindex">
+<script>window.goatcounter={no_onload:true};</script>
+<script data-goatcounter="https://neiss-ai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
 :root{
   color-scheme:light;
@@ -84,6 +86,9 @@ const CHARTS={
 };
 const key=CHARTS[q.get('chart')]?q.get('chart'):'ebike';
 const C=CHARTS[key];
+/* count each embed view as 'embed/<chart>'; GoatCounter's referrer shows which website embedded it */
+function countEmbed(n){try{if(window.goatcounter&&goatcounter.count){goatcounter.count({path:'embed/'+key,title:'Embedded chart: '+key,referrer:document.referrer||''});return;}}catch(e){}if(n<20)setTimeout(()=>countEmbed(n+1),500);}
+countEmbed(0);
 let SERIES=null;
 
 function draw(){
