@@ -5,9 +5,9 @@ authors:
   - family-names: Kumar
     given-names: Subash
     orcid: "https://orcid.org/0009-0003-6661-3424"
-version: 1.6.0
+version: 1.6.1
 doi: 10.5281/zenodo.23306744
-date-released: 2026-11-14
+date-released: 2026-11-08
 repository-code: "https://github.com/subash28kumar/neiss-ai"
 url: "https://subash28kumar.github.io/neiss-ai/"
 license: MIT

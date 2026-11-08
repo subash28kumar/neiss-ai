@@ -90,6 +90,28 @@ def _load_product_names() -> dict:
 
 
 PRODUCT_NAMES = _load_product_names()
+
+
+#: US resident population (July 1) for per-population rates; see ``model/us_population.csv``.
+#: Add a row each July when the Census Bureau publishes a new year (years without a row get
+#: no rate, never a wrong one).
+def _load_population() -> dict:
+    path = Path(__file__).with_name("model") / "us_population.csv"
+    try:
+        t = pd.read_csv(path)
+    except FileNotFoundError:  # pragma: no cover
+        return {}
+    return {int(y): float(v) for y, v in zip(t["year"], t["population"])}
+
+
+US_POPULATION = _load_population()
+
+
+def per_100k(estimate, year: int):
+    """Weighted ED visits (or admissions) per 100,000 US residents in ``year``; NaN when the
+    population for that year is not in :data:`US_POPULATION`."""
+    pop = US_POPULATION.get(int(year))
+    return np.asarray(estimate, dtype=float) / pop * 1e5 if pop else np.full(np.shape(estimate), np.nan)
 for _g in CODE_GROUPS:
     PRODUCT_NAMES[_g.id] = f"{_g.name} (CPSC code group)"
 
@@ -531,6 +553,9 @@ def compare(data: dict, year: int, base_year: Optional[int] = None, months: Opti
             "estimate": YB, "se": totB["se"].reindex(prods).to_numpy(), "cv": totB["cv"].reindex(prods).to_numpy(),
             "unstable_base": totA["unstable"].reindex(prods).to_numpy(dtype=bool), "unstable": ~stableB,
             "change": YB - YA, "se_change": se_d, "pct_change": pct,
+            "rate_base": per_100k(YA, base_year), "rate": per_100k(YB, year),
+            "rate_low": per_100k(np.maximum(YB - 1.96 * totB["se"].reindex(prods).to_numpy(), 0), year),
+            "rate_high": per_100k(YB + 1.96 * totB["se"].reindex(prods).to_numpy(), year),
             "all_neiss_ratio": r, "expected": expected, "excess": excess, "se_excess": se_x,
             "excess_pct": excess_pct, "z": z, "p": p, "q": q, "mdc80": mdc,
             "mdc80_pct": np.where(expected > 0, mdc / np.where(expected > 0, expected, 1), np.nan),
@@ -570,7 +595,7 @@ def watch(data: dict, products: Sequence[str], years: Sequence[int], alpha: floa
         r["signal_excess"] = r["p"] < alpha
         rows.append(r)
     keep = ["year", "base_year", "measure", "product", "product_name", "records_base", "records",
-            "estimate_base", "estimate", "cv", "unstable", "change", "se_change", "z_change", "p_change",
+            "estimate_base", "estimate", "rate_base", "rate", "cv", "unstable", "change", "se_change", "z_change", "p_change",
             "signal_change", "excess", "se_excess", "z", "p", "signal_excess", "q", "flag", "note"]
     return pd.concat(rows, ignore_index=True)[keep]
 
@@ -811,6 +836,8 @@ def site_summary(results: pd.DataFrame, words: Optional[pd.DataFrame] = None,
     sig = [{"product": str(r["product"]), "name": str(r["product_name"] or r["product"]),
             "before": float(r["estimate_base"]), "after": float(r["estimate"]),
             "pct": float(r["pct_change"]), "records": int(r["records"]),
+            "rate_before": None if pd.isna(r.get("rate_base")) else round(float(r["rate_base"]), 2),
+            "rate_after": None if pd.isna(r.get("rate")) else round(float(r["rate"]), 2),
             "status": signal_status(r), "note": str(r.get("note", "") or "")} for _, r in f.iterrows()]
     out = {"year": year, "base_year": int(f["base_year"].iloc[0]) if len(f) else year - 1, "signals": sig}
     if words is not None and len(words):

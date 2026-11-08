@@ -76,14 +76,14 @@ neissai hazards --export-dir neissai_hazard_export --years 2020-2025 --out-dir h
 
 | File | Contents |
 |---|---|
-| `hazard_scan_<year>.csv` | every product: estimates for both years, excess change, 95% uncertainty, minimum detectable change, q-value, flag |
+| `hazard_scan_<year>.csv` | every product: estimates and rates per 100,000 residents for both years, excess change, 95% uncertainty, minimum detectable change, q-value, flag |
 | `hazard_flags.csv` | flagged products, all years |
 | `hazard_words_<year>.csv` | short reading list of product and device words in the stories that rose faster than all stories |
 | `emerging_terms_<year>.csv` | every word that passed the screen, with its category (product, clinical, writing style) |
 | `watch_list.csv` | products chosen in advance (e-bikes, e-scooters, mopeds), tested on their own |
 | `code_changes.csv` | product codes that start or stop between years |
 
-2025 results: e-bikes (+72%), e-scooters (+40%) and power workshop grinders (+85%) are flagged; floors are flagged but most likely reflect a 2025 coding change. Looking back, e-bike wording in the stories rose every year from 2021, three years before CPSC's separate e-bike code. Method and limits: `validation/METHODS_hazard_scan.md`. Two-page summary: `docs/NEISS-AI_Hazard_Watch_2025.pdf`. The website's Hazard Watch tab has all result tables and updates itself when CPSC publishes a new year (the monthly refresh reruns the scan).
+2025 results: e-bikes (+72%; 17.5 → 30.0 ED visits per 100,000 people), e-scooters (+40%; 34.9 → 48.5) and power workshop grinders (+85%; 3.0 → 5.5) are flagged; floors are flagged but most likely reflect a 2025 coding change. Looking back, e-bike wording in the stories rose every year from 2021, three years before CPSC's separate e-bike code. Method and limits: `validation/METHODS_hazard_scan.md`. Two-page summary: `docs/NEISS-AI_Hazard_Watch_2025.pdf`. The website's Hazard Watch tab has all result tables and updates itself when CPSC publishes a new year (the monthly refresh reruns the scan).
 
 ## Use from Python
 

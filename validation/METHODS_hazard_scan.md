@@ -118,6 +118,15 @@ showed the rise every year from 2021, three years before CPSC's separate e-bike 
 how I describe the e-bike result: an early signal in the words, supported by the rise of the old
 code when it is watched on its own.
 
+## Rates
+
+Each estimate also comes as a rate per 100,000 US residents, using the Census Bureau's July 1
+population (Vintage 2025 estimates for 2020-2025; the 2010-2020 intercensal series for 2019).
+For 2025: e-bikes 17.5 to 30.0, e-scooters 34.9 to 48.5, power workshop grinders 3.0 to 5.5 ED
+visits per 100,000 people. The flags do not change, because the scan already compares each
+product with all NEISS visits. These rates describe the burden on the population. Risk per rider,
+trip or product sold needs exposure data, which I add only where a public source exists.
+
 ## Limits
 
 - NEISS counts ED visits, not riders, products sold or hours of use, so a rise can mean more

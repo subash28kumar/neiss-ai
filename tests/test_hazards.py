@@ -289,3 +289,11 @@ def test_signal_status_rules():
     assert signal_status({"note": "", "unstable_base": True, "records": 900}) == "Check"
     assert signal_status({"note": "", "unstable_base": False, "records": 40}) == "Check"
     assert signal_status({"note": "", "unstable_base": False, "records": 900}) == "Signal"
+
+
+def test_per_100k_rates():
+    import numpy as np
+    from neissai.hazards import per_100k, US_POPULATION
+    assert US_POPULATION[2025] == 341784857
+    assert abs(float(per_100k(341784.857, 2025)) - 100.0) < 1e-9
+    assert np.isnan(float(per_100k(1000, 1990)))

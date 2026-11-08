@@ -2,7 +2,12 @@
 
 All notable changes to NEISS-AI are listed here.
 
-## v1.6.0 — 2026-11-14
+## v1.6.1 — 2026-11-08
+- Hazard Watch now gives **per-population rates**: ED visits (and admissions) per 100,000 US residents for both years, with a 95% range for the newer year (`rate_base`, `rate`, `rate_low`, `rate_high` in every `hazard_scan_<year>.csv`). Population: US Census Bureau July 1 estimates (Vintage 2025 for 2020–2025; intercensal 2010–2020 series for 2019), in `model/us_population.csv`; years without a population row get no rate.
+- 2025 rates per 100,000: e-bikes 17.5 → 30.0, e-scooters 34.9 → 48.5, power workshop grinders 3.0 → 5.5.
+- Website Hazard Watch table and the two-page brief show the rates. Flags are unchanged (the scan already compares each product with all NEISS visits, which grows with the population).
+
+## v1.6.0 — 2026-11-08
 - New: **Hazard Watch**, an emerging-hazard scan of every NEISS product code (`neissai.hazards`). For each year (or the same months of two years) it compares weighted national ED visits and hospital admissions with the year before and measures the **excess** rise above the change in all of NEISS, so a general weights jump (about +18% in 2024) does not flag every product. Standard errors use Taylor linearization with hospitals as clusters within strata, including hospitals with no cases; single-year totals equal `neissai.total` (bicycles 2025: 420,962, SE 38,649). Flags need a Benjamini–Hochberg false discovery rate below 5% across all products, a rise of at least the minimum detectable change (80% power) and a stable estimate by CPSC's rule.
 - New commands: `neissai hazard-export` builds the scan's input tables (`clusters.csv`, `psu.csv`, `terms.csv`) from the downloaded CPSC files; `neissai hazards` runs the scan. Admissions are dispositions 2, 4, 5 or 8, read correctly when the disposition is stored as text.
 - CPSC code changes: e-bikes/mopeds (3215 → 5045/5046, 2024), scooters and hoverboards (1329/5042 → 5022–5025, 2020) and cribs (1543/1545 → 1552, 2021) are combined only for comparisons that cross the change. Automatic code-change detection finds exactly these three changes in 2019–2025; new codes are never flagged.

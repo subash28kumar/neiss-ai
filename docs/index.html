@@ -290,16 +290,16 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="desc">NEISS-AI checks <b>every product code</b> in the national emergency room data (about 800 products), not only products someone already suspects. A product is flagged when its injuries rose clearly faster than all emergency visits, after checks for chance, small numbers and coding changes. It also reads the injury stories for new words that start appearing more often.</p>
     <h3 id="hz-title">2025 signals, compared with 2024</h3>
     <div class="tablewrap"><table class="hztable">
-      <thead><tr><th style="text-align:left">Product</th><th id="hz-h1">2024</th><th id="hz-h2">2025</th><th>Change</th><th style="text-align:left">Status</th><th style="text-align:left">What it means</th></tr></thead>
+      <thead><tr><th style="text-align:left">Product</th><th id="hz-h1">2024</th><th id="hz-h2">2025</th><th>Change</th><th>Per 100,000 people</th><th style="text-align:left">Status</th><th style="text-align:left">What it means</th></tr></thead>
       <tbody id="hz-rows">
-        <tr><td style="text-align:left"><b>E-bikes</b></td><td>59,600</td><td>102,600</td><td>+72%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Largest real rise. Admissions also rose, but too few cases to pass the strict test alone.</td></tr>
-        <tr><td style="text-align:left"><b>Powered scooters (e-scooters)</b></td><td>118,500</td><td>165,700</td><td>+40%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Second year of fast growth in injury-story wording (&quot;e-scooter&quot;).</td></tr>
-        <tr><td style="text-align:left"><b>Power workshop grinders, buffers or polishers</b></td><td>10,200</td><td>18,800</td><td>+85%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">New signal, spread across many hospitals. Worth a closer look at the stories.</td></tr>
-        <tr><td style="text-align:left"><b>Infant and toddler play centers</b></td><td>400</td><td>1,600</td><td>+304%</td><td style="text-align:left"><span class="hz check">Check</span></td><td style="text-align:left">Small numbers (49 sampled cases in 2025). Could be a real rise or a coding change.</td></tr>
-        <tr><td style="text-align:left"><b>Floors or flooring materials</b></td><td>1.86 M</td><td>3.08 M</td><td>+66%</td><td style="text-align:left"><span class="hz coding">Coding</span></td><td style="text-align:left">Jump starts suddenly in April 2025 at most hospitals: most likely a coding change, not a real rise.</td></tr>
+        <tr><td style="text-align:left"><b>E-bikes</b></td><td>59,600</td><td>102,600</td><td>+72%</td><td>17.5 → 30.0</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Largest real rise. Admissions also rose, but too few cases to pass the strict test alone.</td></tr>
+        <tr><td style="text-align:left"><b>Powered scooters (e-scooters)</b></td><td>118,500</td><td>165,700</td><td>+40%</td><td>34.9 → 48.5</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Second year of fast growth in injury-story wording (&quot;e-scooter&quot;).</td></tr>
+        <tr><td style="text-align:left"><b>Power workshop grinders, buffers or polishers</b></td><td>10,200</td><td>18,800</td><td>+85%</td><td>3.0 → 5.5</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">New signal, spread across many hospitals. Worth a closer look at the stories.</td></tr>
+        <tr><td style="text-align:left"><b>Infant and toddler play centers</b></td><td>400</td><td>1,600</td><td>+304%</td><td>0.12 → 0.48</td><td style="text-align:left"><span class="hz check">Check</span></td><td style="text-align:left">Small numbers (49 sampled cases in 2025). Could be a real rise or a coding change.</td></tr>
+        <tr><td style="text-align:left"><b>Floors or flooring materials</b></td><td>1.86 M</td><td>3.08 M</td><td>+66%</td><td>546 → 901</td><td style="text-align:left"><span class="hz coding">Coding</span></td><td style="text-align:left">Jump starts suddenly in April 2025 at most hospitals: most likely a coding change, not a real rise.</td></tr>
       </tbody>
     </table></div>
-    <p class="note">National estimates of emergency department visits, rounded. Each flag passed a false-discovery check (Benjamini&ndash;Hochberg, 5%) across all products. "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
+    <p class="note">National estimates of emergency department visits, rounded; rates are visits per 100,000 US residents (Census Bureau population estimates). Each flag passed a false-discovery check (Benjamini&ndash;Hochberg, 5%) across all products. "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
   </section>
   <section class="card">
     <h2>Would it have caught e-bikes early?</h2>
@@ -4581,6 +4581,7 @@ const HZ_STATIC_YEAR=2025;
 const HZ_WHY={Signal:'Rose faster than all emergency visits and passed the strict checks. Read the stories to see why.',
   Check:'Small numbers. Could be a real rise or a coding change; read the stories before drawing conclusions.',
   Coding:'Most likely a change in how hospitals record these injuries, not a real rise.'};
+function hzRate(v){return v>=100?Math.round(v).toLocaleString('en-US'):v>=1?v.toFixed(1):v.toFixed(2);}
 function hzNum(x){return x>=1e6?(x/1e6).toFixed(2)+' M':(Math.round(x/100)*100).toLocaleString('en-US');}
 async function loadHazardSummary(){
   try{
@@ -4589,10 +4590,11 @@ async function loadHazardSummary(){
     document.getElementById('hz-title').textContent=`${s.year} signals, compared with ${s.base_year}`;
     document.getElementById('hz-h1').textContent=String(s.base_year); document.getElementById('hz-h2').textContent=String(s.year);
     const tb=document.getElementById('hz-rows'); tb.textContent='';
-    if(!s.signals.length){tb.appendChild(h('tr',null,h('td',{colspan:'6',style:'text-align:left',text:'No product passed the strict checks this year.'})));return;}
+    if(!s.signals.length){tb.appendChild(h('tr',null,h('td',{colspan:'7',style:'text-align:left',text:'No product passed the strict checks this year.'})));return;}
     s.signals.forEach(x=>tb.appendChild(h('tr',null,
       h('td',{style:'text-align:left'},h('b',{text:x.name})), h('td',{text:hzNum(x.before)}), h('td',{text:hzNum(x.after)}),
       h('td',{text:(x.pct>=0?'+':'')+Math.round(x.pct*100)+'%'}),
+      h('td',{text:(x.rate_before!=null&&x.rate_after!=null)?hzRate(x.rate_before)+' → '+hzRate(x.rate_after):'–'}),
       h('td',{style:'text-align:left'},h('span',{class:'hz '+x.status.toLowerCase(),text:x.status})),
       h('td',{style:'text-align:left',text:HZ_WHY[x.status]||''}))));
   }catch(e){/* keep the built-in table */}
