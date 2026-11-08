@@ -1,0 +1,13 @@
+product,first_year,last_year,records,starts,ends,possible_code_change,known_group,product_name
+5024,2020,2025,14163,True,False,True,1329+5042+5022+5023+5024+5025,Scooters (not specified)
+5022,2020,2025,13023,True,False,True,1329+5042+5022+5023+5024+5025,Powered scooters (e-scooters)
+3215,2019,2023,5936,False,True,True,3215+5045+5046,Mopeds or power-assisted cycles (e-bikes coded here until 2023)
+5025,2020,2025,3855,True,False,True,1329+5042+5022+5023+5024+5025,Hoverboards
+5045,2024,2025,3651,True,False,True,3215+5045+5046,E-bikes
+1552,2021,2025,2613,True,False,True,1543+1545+1552,Cribs (code from 2021)
+5023,2020,2025,1908,True,False,True,1329+5042+5022+5023+5024+5025,Scooters (other)
+5046,2024,2025,1859,True,False,True,3215+5045+5046,Other power-assisted cycles
+1329,2019,2019,1611,False,True,True,1329+5042+5022+5023+5024+5025,"Scooters (old code, until 2019)"
+5042,2019,2019,1541,False,True,True,1329+5042+5022+5023+5024+5025,"Powered scooters and hoverboards (old code, until 2019)"
+1545,2019,2020,899,False,True,True,1543+1545+1552,Cribs (old code)
+1543,2019,2020,172,False,True,True,1543+1545+1552,Cribs (old code)

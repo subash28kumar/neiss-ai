@@ -1,0 +1,118 @@
+{
+ "year": 2025,
+ "base_year": 2024,
+ "signals": [
+  {
+   "product": "1550",
+   "name": "Infant and toddler play centers",
+   "before": 402.3698,
+   "after": 1627.5503,
+   "pct": 3.0449116708063078,
+   "records": 49,
+   "status": "Check",
+   "note": "nan"
+  },
+  {
+   "product": "897",
+   "name": "Power workshop grinders, buffers or polishers",
+   "before": 10176.0127,
+   "after": 18791.5401,
+   "pct": 0.8466506139482317,
+   "records": 296,
+   "status": "Signal",
+   "note": "nan"
+  },
+  {
+   "product": "5045",
+   "name": "E-bikes",
+   "before": 59608.2029,
+   "after": 102614.7523,
+   "pct": 0.7214870992193592,
+   "records": 2361,
+   "status": "Signal",
+   "note": "nan"
+  },
+  {
+   "product": "1807",
+   "name": "Floors or flooring materials",
+   "before": 1856496.107,
+   "after": 3079996.3164,
+   "pct": 0.6590373148571327,
+   "records": 70650,
+   "status": "Coding",
+   "note": "large 2025 jump, likely coding practice; label pending check"
+  },
+  {
+   "product": "5022",
+   "name": "Powered scooters (e-scooters)",
+   "before": 118484.9142,
+   "after": 165735.0351,
+   "pct": 0.3987859654457175,
+   "records": 4212,
+   "status": "Signal",
+   "note": "nan"
+  }
+ ],
+ "words": [
+  {
+   "term": "FLOOR INSIDE",
+   "device": "FLOOR",
+   "before": null,
+   "after": 175
+  },
+  {
+   "term": "ELECTRIC BICYCLE",
+   "device": "E-BIKE",
+   "before": 219,
+   "after": 535
+  },
+  {
+   "term": "FLOORING CHI",
+   "device": "FLOORING",
+   "before": 48,
+   "after": 159
+  },
+  {
+   "term": "WHEELCHAIR FLOOR",
+   "device": "WHEELCHAIR",
+   "before": 170,
+   "after": 404
+  },
+  {
+   "term": "ALL-TERRAIN VEHICLE",
+   "device": "ALL-TERRAIN",
+   "before": 12,
+   "after": 71
+  },
+  {
+   "term": "DIAPER RASH",
+   "device": "DIAPER",
+   "before": 18,
+   "after": 83
+  },
+  {
+   "term": "DESCENDING STAIRS",
+   "device": "STAIRS",
+   "before": 26,
+   "after": 91
+  },
+  {
+   "term": "SCOOTER ACCIDENT",
+   "device": "SCOOTER",
+   "before": 293,
+   "after": 575
+  },
+  {
+   "term": "E-SCOOTER",
+   "device": "E-SCOOTER",
+   "before": 259,
+   "after": 490
+  },
+  {
+   "term": "FALL PLAYGROUND",
+   "device": "PLAYGROUND",
+   "before": 121,
+   "after": 239
+  }
+ ]
+}

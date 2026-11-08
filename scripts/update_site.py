@@ -82,6 +82,14 @@ overview = {"updated": today, "source": f"CPSC NEISS annual files {min(available
 docs = ROOT / "docs"
 (docs / "data.json").write_text(json.dumps(overview, indent=1))
 info = export_web_data(df, docs / "data", today, neissai.__version__)
+# Hazard Watch: rescan every product code with the new year (skipped if it fails, so the
+# rest of the refresh still publishes).
+try:
+    from neissai.hazards import update_site_hazards
+    hz = update_site_hazards(df, docs / "data" / "hazards")
+    print(f"Hazard Watch updated for {hz['year']}: {len(hz['signals'])} ED-visit signals.")
+except Exception as exc:  # pragma: no cover - keep the main refresh working
+    print(f"::warning::Hazard Watch not updated: {exc}")
 html = (docs / "template.html").read_text().replace("/*DATA*/null", (docs / "data.json").read_text())
 (docs / "index.html").write_text(html)
 print(f"Site data updated for {min(available)}-{max(available)}: {info['records']:,} records.")

@@ -1,0 +1,1122 @@
+code,name,source
+101,Washing Machines Without Wringers or Oth…,CPSC NEISS format file
+102,Wringer Washing Machines,CPSC NEISS format file
+103,Washing Machines with Unheated Spin Drye…,CPSC NEISS format file
+106,Electric Clothes Dryers Without Washers,CPSC NEISS format file
+107,Gas Clothes Dryers Without Washers,CPSC NEISS format file
+108,Mangle Irons,CPSC NEISS format file
+110,Electric Heating Pads,CPSC NEISS format file
+112,Sewing Machines or Accessories,CPSC NEISS format file
+113,Floor Buffers or Waxers,CPSC NEISS format file
+114,Rug Shampooers,CPSC NEISS format file
+115,Vacuum Cleaners,CPSC NEISS format file
+116,Electric Brooms,CPSC NEISS format file
+118,Gas Water Heaters,CPSC NEISS format file
+119,Electric Water Heaters,CPSC NEISS format file
+125,Water Softeners or Conditioners (applian…,CPSC NEISS format file
+126,"Washing Machines, not Specified",CPSC NEISS format file
+127,"Clothes Dryers, not Specified",CPSC NEISS format file
+131,"Propane, Lp or Butane Gas Tanks or Fitti…",CPSC NEISS format file
+132,Electric Blankets or Sheets,CPSC NEISS format file
+133,Other Water Heaters,CPSC NEISS format file
+134,"Water Heaters, not Specified",CPSC NEISS format file
+135,Washer-dryer Combinations (within One Fr…,CPSC NEISS format file
+136,Drinking Fountains,CPSC NEISS format file
+137,Automatic Doors or Door Openers,CPSC NEISS format file
+138,Automatic Garage Doors or Door Openers,CPSC NEISS format file
+139,Incinerators,CPSC NEISS format file
+140,"Washing Machines, other or not Specified…",CPSC NEISS format file
+202,Electric Counter-mounted Cooking Surface…,CPSC NEISS format file
+204,Gas Counter-mounted Cooking Surfaces,CPSC NEISS format file
+212,Electric Corn Poppers,CPSC NEISS format file
+213,Electric Can Openers,CPSC NEISS format file
+214,Dishwashers,CPSC NEISS format file
+215,Electric Blenders,CPSC NEISS format file
+216,"Electric Counter-top Ovens, Broilers or",CPSC NEISS format file
+217,Electric Coffee Makers or Teapots,CPSC NEISS format file
+218,Electric or Battery-powered Knives,CPSC NEISS format file
+219,Electric Deep Fryers,CPSC NEISS format file
+221,Food Warmers,CPSC NEISS format file
+222,Electric Frying Pans and Skillets,CPSC NEISS format file
+223,Electric Griddles,CPSC NEISS format file
+224,Hot Plates,CPSC NEISS format file
+227,Ice Makers (separate from Refrigerators)…,CPSC NEISS format file
+231,Electric Mixers,CPSC NEISS format file
+232,Electric Scissors,CPSC NEISS format file
+234,Toasters,CPSC NEISS format file
+235,Electric Waffle Irons,CPSC NEISS format file
+236,Faucet Water Heaters,CPSC NEISS format file
+237,Garbage Disposers,CPSC NEISS format file
+238,Dry Heat Irons,CPSC NEISS format file
+239,Steam Irons,CPSC NEISS format file
+240,Electric Knife Sharpeners,CPSC NEISS format file
+241,Rotisseries,CPSC NEISS format file
+242,Electric Immersion Water Heaters,CPSC NEISS format file
+247,"Irons, not Specified",CPSC NEISS format file
+250,Range or Oven Accessories,CPSC NEISS format file
+252,Trash Compactors,CPSC NEISS format file
+255,Clothes Steamers,CPSC NEISS format file
+257,"Counter-mounted Cooking Surfaces, not Sp…",CPSC NEISS format file
+259,Electric Ranges (with Ovens),CPSC NEISS format file
+260,Gas Ranges (with Ovens),CPSC NEISS format file
+261,Electric Ovens,CPSC NEISS format file
+262,Gas Ovens,CPSC NEISS format file
+263,Freezers (separate from Refrigerators),CPSC NEISS format file
+264,Microwave Ovens,CPSC NEISS format file
+265,Other Ovens,CPSC NEISS format file
+266,"Ovens, not Specified",CPSC NEISS format file
+267,Other Ranges (with Ovens),CPSC NEISS format file
+268,Slow Cookers,CPSC NEISS format file
+269,Electric Kettles or Hot Pots,CPSC NEISS format file
+270,Ice Crushers,CPSC NEISS format file
+271,Juicers,CPSC NEISS format file
+273,"Ranges, not Specified",CPSC NEISS format file
+274,Ice Cream Makers,CPSC NEISS format file
+275,Food Processors,CPSC NEISS format file
+276,Refrigerators,NEISS-AI (from CPSC label)
+277,Clothing Irons,CPSC NEISS format file
+278,Electric Ranges or Ovens (excl Counter-t…,CPSC NEISS format file
+279,Gas Ranges or Ovens,CPSC NEISS format file
+280,Other Ranges or Ovens,CPSC NEISS format file
+281,"Ranges or Ovens, not Specified",CPSC NEISS format file
+304,Humidifiers,CPSC NEISS format file
+305,Vaporizers,CPSC NEISS format file
+306,Dehumidifiers,CPSC NEISS format file
+307,Air Purifiers,CPSC NEISS format file
+308,Boilers,CPSC NEISS format file
+309,Coal Furnaces,CPSC NEISS format file
+310,Gas Furnaces,CPSC NEISS format file
+311,Oil Furnaces,CPSC NEISS format file
+312,Electric Baseboard Heaters,CPSC NEISS format file
+316,"Wood Burning Fireplaces, Factory Built",CPSC NEISS format file
+318,Electric Furnaces,CPSC NEISS format file
+322,"Furnaces, not Specified",CPSC NEISS format file
+334,"Gas-burning Fireplaces, Factory Built",CPSC NEISS format file
+336,Built-in Fireplaces,CPSC NEISS format file
+340,Thermostats (for Heating or Cooling Syst…,CPSC NEISS format file
+342,"Fireplaces, not Specified",CPSC NEISS format file
+346,"Electric Fireplaces, Factory Built",CPSC NEISS format file
+348,Portable Electric Heaters,CPSC NEISS format file
+365,Heat Pumps,CPSC NEISS format file
+366,Catalytic Heaters,CPSC NEISS format file
+367,Coal or Wood-burning Stoves,CPSC NEISS format file
+368,Gasoline Heaters (noncatalytic),CPSC NEISS format file
+369,Other Heaters or Heating Systems,CPSC NEISS format file
+370,"Heaters or Heating Systems, not Specifie…",CPSC NEISS format file
+371,Ductwork for Heating or Cooling Systems,CPSC NEISS format file
+372,"Brick, Stone or Masonry Chimneys",CPSC NEISS format file
+373,"Metal Chimneys, Stovepipes or Flues",CPSC NEISS format file
+374,Pipes (excluding Smoking Pipes),CPSC NEISS format file
+378,"Chimneys, not Specified",CPSC NEISS format file
+379,Radiators (excluding Vehicle Radiators),CPSC NEISS format file
+380,Fans,CPSC NEISS format file
+381,Air Conditioners,CPSC NEISS format file
+384,Floor Furnaces (built Into Floor),CPSC NEISS format file
+386,Gas or Lp Floor or Wall Heaters,CPSC NEISS format file
+388,"Electric Heaters, not Elsewhere Classifi…",CPSC NEISS format file
+389,"Gas or Lp Heaters, not Elsewhere Classif…",CPSC NEISS format file
+390,"Heat Tapes, Electric",CPSC NEISS format file
+391,Portable Gas or Lp Heaters,CPSC NEISS format file
+392,"Gas or Lp Heaters, other or not Spec",CPSC NEISS format file
+393,"Heaters or Heating Systems, Other/n.s.",CPSC NEISS format file
+394,Outdoor patio heaters or fire pits,NEISS-AI (from CPSC label)
+399,Kerosene or Oil Heaters,CPSC NEISS format file
+401,Nonelectric Can Openers,CPSC NEISS format file
+405,Unpowered Coffee Makers or Teapots,CPSC NEISS format file
+408,Ironing Boards or Covers,CPSC NEISS format file
+412,Pressure Cookers or Canners,CPSC NEISS format file
+413,"Waste containers, trash baskets or refuse bins",NEISS-AI (from CPSC label)
+416,Corkscrews,CPSC NEISS format file
+417,Flatware (excluding Knives),CPSC NEISS format file
+419,"Tie Racks, Belt Racks or other Clothes H…",CPSC NEISS format file
+420,Manual Scissors,CPSC NEISS format file
+421,Nonelectric Knife Sharpeners,CPSC NEISS format file
+422,Bottle Openers,CPSC NEISS format file
+424,Glass Drinking Glasses,CPSC NEISS format file
+427,Ice Picks,CPSC NEISS format file
+428,"Kitchen Gadgets, not Elsewhere Classifie…",CPSC NEISS format file
+429,Food Skewers,CPSC NEISS format file
+431,Toothpicks or Hors D'oeuvres Picks,CPSC NEISS format file
+432,Trays (excluding Food Warmers),CPSC NEISS format file
+434,Doorstops,CPSC NEISS format file
+435,"Kitchen Mixing Bowls, Canisters or Simil…",CPSC NEISS format file
+436,"Potholders, Oven Mitts or Hot Pads",CPSC NEISS format file
+438,Laundry Baskets,CPSC NEISS format file
+443,Drinking Straws,CPSC NEISS format file
+444,"Knife Sharpeners, not Specified",CPSC NEISS format file
+450,"Scissors, not Specified",CPSC NEISS format file
+452,"Coffee Makers or Teapots, not Specified",CPSC NEISS format file
+453,"Can Openers, not Specified",CPSC NEISS format file
+454,Nonglass Drinking Glasses,CPSC NEISS format file
+459,Manual Cleaning Equipment,CPSC NEISS format file
+460,Metal Cookware (nonelectric),CPSC NEISS format file
+461,Nonmetal Cookware (nonelectric),CPSC NEISS format file
+462,Chafing Dishes or Fondue Pots,CPSC NEISS format file
+463,"Candles, Candlesticks and other Candle H…",CPSC NEISS format file
+464,Knives (not elsewhere classified),NEISS-AI (from CPSC label)
+465,Other Cookware,CPSC NEISS format file
+466,"Cookware, not Specified",CPSC NEISS format file
+469,Slicers and choppers,NEISS-AI (from CPSC label)
+471,Food Grinders,CPSC NEISS format file
+474,Tableware and Accessories,CPSC NEISS format file
+475,"Drinking Glasses, not Specified",CPSC NEISS format file
+477,Thermometers (excluding Medical Thermome…,CPSC NEISS format file
+478,Drinking glasses,NEISS-AI (from CPSC label)
+480,Manual Cleaning Equipment (excl. Buckets…,CPSC NEISS format file
+481,Bread Making Machines,CPSC NEISS format file
+482,"Appliances, other or not Specified",CPSC NEISS format file
+514,Ceramics Supplies or Equipment,CPSC NEISS format file
+519,Television Tables or Stands,CPSC NEISS format file
+529,"Telescopes, Binoculars, Microscopes, Mag…",CPSC NEISS format file
+530,Phonograph Records,CPSC NEISS format file
+531,Recording Tapes,CPSC NEISS format file
+532,Glass Bottle Cutting Equipment,CPSC NEISS format file
+533,Lapidary Equipment,CPSC NEISS format file
+536,Photographic Equipment,CPSC NEISS format file
+545,Amateur Two-way Radios,CPSC NEISS format file
+546,Stereo or Hi-fi Components or Accessorie…,CPSC NEISS format file
+547,Sound Recording or Receiving Equipment,CPSC NEISS format file
+549,Projectors,CPSC NEISS format file
+550,Telephones or Telephone Accessories,CPSC NEISS format file
+552,"Antennas, not Specified",CPSC NEISS format file
+555,Radios (self-contained Units),CPSC NEISS format file
+556,Tape Recorders or Players (self-containe…,CPSC NEISS format file
+557,Computers (equipment and electronic games),NEISS-AI (from CPSC label)
+558,Indoor Antennas (separate),CPSC NEISS format file
+559,"Radios, not Specified",CPSC NEISS format file
+561,Outdoor Antennas (separate),CPSC NEISS format file
+562,Laser Pointers,CPSC NEISS format file
+563,Record Players (self-contained Units),CPSC NEISS format file
+564,Art Supplies or Equipment,CPSC NEISS format file
+565,"Musical Instruments, Electric or Battery…",CPSC NEISS format file
+566,"Musical Instr, not Elec/battery, or Nos",CPSC NEISS format file
+567,Coaxial Cable,CPSC NEISS format file
+569,Art or Ceramic Supplies & Equip,CPSC NEISS format file
+570,Musical Instruments,CPSC NEISS format file
+571,Business and Office Machines,CPSC NEISS format file
+572,Televisions,CPSC NEISS format file
+573,Other Sound Record/repro/recv Equipment,CPSC NEISS format file
+574,"Remote Control, Universal or N.s.",CPSC NEISS format file
+575,Compact Disks(cds) and Dvds,CPSC NEISS format file
+576,Video Players and Recorders(excl.cameras…,CPSC NEISS format file
+601,Bedsprings or Bedframes,CPSC NEISS format file
+604,"Desks, Chests, Bureaus or Buffets",CPSC NEISS format file
+606,Generators or Power Plants,CPSC NEISS format file
+609,Glass Bathtub or Shower Enclosures,CPSC NEISS format file
+610,Nonglass Bathtub or Shower Enclosures,CPSC NEISS format file
+611,Bathtubs or showers,NEISS-AI (from CPSC label)
+612,"Runners, Throw Rugs or Doormats",CPSC NEISS format file
+613,"Room-sized, Wall-to-wall or Outdoor Carp…",CPSC NEISS format file
+617,"Draperies, Curtains, Shower Curtains(fab…",CPSC NEISS format file
+618,Stepladders,CPSC NEISS format file
+619,Straight Ladders,CPSC NEISS format file
+620,Step Stools,CPSC NEISS format file
+623,Butane or Lp Gas Meters,CPSC NEISS format file
+624,Electric Meters (utility),CPSC NEISS format file
+627,Light Bulbs,CPSC NEISS format file
+628,Electric Chandeliers or other Attached L…,CPSC NEISS format file
+638,"Window Shades, Venetian Blinds or Indoor…",CPSC NEISS format file
+639,Flashlights or Battery-powered Lanterns,CPSC NEISS format file
+648,Sinks,CPSC NEISS format file
+649,Toilets,CPSC NEISS format file
+650,Slipcovers,CPSC NEISS format file
+651,Table Linens,CPSC NEISS format file
+652,"Pictures, Picture Frames or Wall Decorat…",CPSC NEISS format file
+653,Artificial Flowers or Plants,CPSC NEISS format file
+654,"Knickknacks, Statues, Vases or Urns",CPSC NEISS format file
+657,Towel Racks or Bars,CPSC NEISS format file
+661,Bunk Beds,CPSC NEISS format file
+662,Waterbeds or Water Pillows,CPSC NEISS format file
+663,Fireplace Equipment,CPSC NEISS format file
+666,Towels or cloths,NEISS-AI (from CPSC label)
+667,"Bedspreads, Throws or Comforters",CPSC NEISS format file
+669,Clothespins,CPSC NEISS format file
+670,Recliner Chair,CPSC NEISS format file
+671,Rocking Chair,CPSC NEISS format file
+672,Laundry Hampers,CPSC NEISS format file
+676,"Rugs or Carpets, not Specified",CPSC NEISS format file
+679,"Sofas, couches and similar seating",NEISS-AI (from CPSC label)
+680,"Convertible Beds, Hideaway Beds or Sofa",CPSC NEISS format file
+684,Unattached Appliance or Lamp Cords,CPSC NEISS format file
+685,Extension Cords,CPSC NEISS format file
+687,Benches,CPSC NEISS format file
+688,Extension Ladders,CPSC NEISS format file
+689,"Blankets, not Specified",CPSC NEISS format file
+692,Magazine Racks or Bookends,CPSC NEISS format file
+693,Footlockers,CPSC NEISS format file
+694,"Beds, not Specified",CPSC NEISS format file
+698,"Whirlpools, Hot Tubs or Home Spas",CPSC NEISS format file
+699,Faucets or Spigots,CPSC NEISS format file
+701,Fire Extinguishers,CPSC NEISS format file
+702,Fire or Smoke Alarms,CPSC NEISS format file
+704,Burglar Alarms,CPSC NEISS format file
+706,"Lightning Rods, Arresters or other Groun…",CPSC NEISS format file
+707,"Padlocks, Chain Locks or other Locks",CPSC NEISS format file
+709,Safes,CPSC NEISS format file
+710,Electric Timers,CPSC NEISS format file
+711,Fire Escape Devices,CPSC NEISS format file
+712,Carbon Monoxide Detectors,CPSC NEISS format file
+713,Fire Sprinklers,CPSC NEISS format file
+803,Power Sanders,CPSC NEISS format file
+804,Power Routers,CPSC NEISS format file
+805,Power Lathes,CPSC NEISS format file
+807,Power Jointers,CPSC NEISS format file
+808,Power Shapers,CPSC NEISS format file
+809,Other Portable or Stationary Power Tools…,CPSC NEISS format file
+812,Electric Welding Equipment,CPSC NEISS format file
+814,"Hoists, Lifts, Jacks or Jack Stands",CPSC NEISS format file
+815,Electrical Testing Equipment,CPSC NEISS format file
+819,Electric Motors (separate),CPSC NEISS format file
+820,Internal Combustion Engines (nonvehicula…,CPSC NEISS format file
+821,Automotive Tools or Accessories,CPSC NEISS format file
+822,Paint Sprayers,CPSC NEISS format file
+823,Air Compressors (separate),CPSC NEISS format file
+827,Hammers,CPSC NEISS format file
+828,Screwdrivers,CPSC NEISS format file
+829,Manual Drills,CPSC NEISS format file
+830,Hand Saws,CPSC NEISS format file
+831,Fuel-burning Welding Equipment,CPSC NEISS format file
+832,Portable circular power saws,NEISS-AI (from CPSC label)
+833,Workshop Compounds or Chemicals,CPSC NEISS format file
+834,Heavy-duty Workshop Staplers,CPSC NEISS format file
+835,Toolboxes or Tool Kits,CPSC NEISS format file
+836,Knives with Replaceable Blades,CPSC NEISS format file
+837,"Wire, not Specified",CPSC NEISS format file
+841,Bench or table saws,NEISS-AI (from CPSC label)
+842,Band Saws,CPSC NEISS format file
+843,Radial Arm Saws,CPSC NEISS format file
+844,Power Hack Saws,CPSC NEISS format file
+845,Saws (not specified),NEISS-AI (from CPSC label)
+847,"Drills, not Specified",CPSC NEISS format file
+852,Rope or String,CPSC NEISS format file
+854,Workshop Furnishings,CPSC NEISS format file
+855,Portable Power Drills and Accessories,CPSC NEISS format file
+856,Stationary Power Drills and Accessories,CPSC NEISS format file
+857,"Pliers, Wire Cutters or Wrenches",CPSC NEISS format file
+858,Reamers,CPSC NEISS format file
+859,"Soldering Equipment, not Specified",CPSC NEISS format file
+862,Manual Filing or Sanding Tools,CPSC NEISS format file
+863,Other Power Saws,CPSC NEISS format file
+864,Sabre Saws,CPSC NEISS format file
+865,"Portable Power Workshop Grinders, Buffer…",CPSC NEISS format file
+866,Electric Soldering Equipment,CPSC NEISS format file
+867,"Welding Equipment, not Specified",CPSC NEISS format file
+868,Nonelectric Soldering Equipment,CPSC NEISS format file
+869,Glue Guns,CPSC NEISS format file
+870,"Awls, Chisels or Planes",CPSC NEISS format file
+871,Power drills or accessories (not specified),NEISS-AI (from CPSC label)
+872,"Power Saws, not Specified",CPSC NEISS format file
+873,"Stationary Power Workshop Grinders, Buff…",CPSC NEISS format file
+874,Cutting Torches,CPSC NEISS format file
+875,Jigsaws,CPSC NEISS format file
+876,"Power Workshop Grinders, Buffers, Polish…",CPSC NEISS format file
+877,Trouble Lights or Extension Work Lights,CPSC NEISS format file
+878,Levels,CPSC NEISS format file
+879,Vises or Workshop Clamps,CPSC NEISS format file
+880,Drain Snakes,CPSC NEISS format file
+881,Other Manual Workshop Tools,CPSC NEISS format file
+882,Nail Guns or Stud Drivers,CPSC NEISS format file
+883,Battery Chargers,CPSC NEISS format file
+884,Batteries,NEISS-AI (from CPSC label)
+885,"Chains, not Elsewhere Classified",CPSC NEISS format file
+886,Stretch Cords or Straps,CPSC NEISS format file
+887,"Painting Equipment, Powered (incl.spraye…",CPSC NEISS format file
+888,"Sprayers, not Elsewhere Classified",CPSC NEISS format file
+889,"Batteries, Motor Vehicle",CPSC NEISS format file
+890,"Torches, not Specified",CPSC NEISS format file
+891,"Batteries, not Specified",CPSC NEISS format file
+892,"Batteries, Non-motor Vehicle",CPSC NEISS format file
+893,"Tools, not Specified",CPSC NEISS format file
+894,Hacksaws,CPSC NEISS format file
+895,"Power Saws, other or not Specified",CPSC NEISS format file
+896,Welding Equipment,CPSC NEISS format file
+897,"Power workshop grinders, buffers or polishers",NEISS-AI (from CPSC label)
+898,"Manual Workshop Grinders, Buffers or Pol…",CPSC NEISS format file
+899,"Workshop Grinders, Buffers or Polishers",CPSC NEISS format file
+904,Floor Waxes,CPSC NEISS format file
+905,Furniture Polishes or Waxes,CPSC NEISS format file
+908,Paint or Varnish Thinners,CPSC NEISS format file
+909,Adhesives,CPSC NEISS format file
+910,Gasoline,CPSC NEISS format file
+913,Lubricants,CPSC NEISS format file
+914,Dry Ice,CPSC NEISS format file
+915,Methyl Alcohol (solvent),CPSC NEISS format file
+917,Charcoal,CPSC NEISS format file
+920,Caulking or Spackling Compounds,CPSC NEISS format file
+921,"Chemicals, other and not Elsewhere Class…",CPSC NEISS format file
+925,"Paint Brushes of Rollers, Manual",CPSC NEISS format file
+926,Photographic Chemicals,CPSC NEISS format file
+927,Tapes (with Adhesive Surfaces),CPSC NEISS format file
+929,Drain Cleaners,CPSC NEISS format file
+930,"Ammonia, Household",CPSC NEISS format file
+931,"Metal Polishes, Tarnish Removers or Prev…",CPSC NEISS format file
+932,Shoe Polishes,CPSC NEISS format file
+933,Turpentine,CPSC NEISS format file
+934,Dishwasher Detergents,CPSC NEISS format file
+936,Acids,CPSC NEISS format file
+937,Rust Removers,CPSC NEISS format file
+938,Swimming Pool Chemicals,CPSC NEISS format file
+940,Lighter Fluids,CPSC NEISS format file
+941,Fuels for Chafing Dishes or Fondue Pots,CPSC NEISS format file
+942,Oven Cleaners,CPSC NEISS format file
+943,Moth Repellents,CPSC NEISS format file
+945,Pine Oil Cleaning and Disinfectant Prepa…,CPSC NEISS format file
+949,Laundry Soaps or Detergents,CPSC NEISS format file
+951,Toilet Bowl Products,CPSC NEISS format file
+952,Fabric Treatment Products,CPSC NEISS format file
+953,Abrasive Cleaners,CPSC NEISS format file
+954,General-purpose household cleaners,NEISS-AI (from CPSC label)
+955,Automotive Chemicals,CPSC NEISS format file
+956,Bleaches (noncosmetic),CPSC NEISS format file
+957,Dyes (noncosmetic),CPSC NEISS format file
+958,Other Polishes,CPSC NEISS format file
+959,"Polishes, not Specified",CPSC NEISS format file
+960,"Paints, varnishes or shellacs",NEISS-AI (from CPSC label)
+961,Rust Preventatives,CPSC NEISS format file
+962,Diesel Fuels,CPSC NEISS format file
+963,Kerosene,CPSC NEISS format file
+964,Lamp Oils,CPSC NEISS format file
+965,"Fuel Oils, not Specified",CPSC NEISS format file
+966,Antifreeze,CPSC NEISS format file
+967,Windshield Wiper Fluids,CPSC NEISS format file
+968,Caustics,CPSC NEISS format file
+969,Lye,CPSC NEISS format file
+970,Wallpaper Cleaners (chemical),CPSC NEISS format file
+971,Wallpaper Steamers,CPSC NEISS format file
+972,"Paint or Varnish Removers, Paintbrush Cl…",CPSC NEISS format file
+973,Liquid Room Deodorizers or Fresheners,CPSC NEISS format file
+974,Solid Room Deodorizers or Fresheners,CPSC NEISS format file
+975,"Room Deodorizers or Fresheners, not Spec…",CPSC NEISS format file
+976,"Detergents, not Specified",CPSC NEISS format file
+977,Spot Removers or Cleaning Fluids,CPSC NEISS format file
+978,"Automotive Waxes, Polishes or Cleaners",CPSC NEISS format file
+979,Dishwashing Liquid,CPSC NEISS format file
+980,Fuel Storage Tanks,CPSC NEISS format file
+981,Gasoline Cans,CPSC NEISS format file
+982,School Laboratory Chemicals,CPSC NEISS format file
+983,Soaps (excl. Laundry Soaps or Detergents…,CPSC NEISS format file
+984,"Solvents, other or not Specified",CPSC NEISS format file
+1001,Electric Fences,CPSC NEISS format file
+1002,Home Pasteurizers,CPSC NEISS format file
+1003,Cream Separators,CPSC NEISS format file
+1004,Farm Tractors,CPSC NEISS format file
+1005,Power Take-offs,CPSC NEISS format file
+1006,Farm Tillage Equipment,CPSC NEISS format file
+1009,Combines or Threshing Machines,CPSC NEISS format file
+1011,Farm Elevators or Conveyors,CPSC NEISS format file
+1012,Farm Wagons,CPSC NEISS format file
+1014,Farm Sprayers,CPSC NEISS format file
+1015,Irrigation Equipment,CPSC NEISS format file
+1016,"Feed Grinders, Mixers or Blenders",CPSC NEISS format file
+1017,Milking Machines,CPSC NEISS format file
+1018,"Tow Chains, Cables or Heavy-duty Chains",CPSC NEISS format file
+1019,Post-hole Augers,CPSC NEISS format file
+1021,Farm Mowers,CPSC NEISS format file
+1022,"Tillage Equipment, not Specified",CPSC NEISS format file
+1023,"Fertilizers, not Specified",CPSC NEISS format file
+1025,Endgate Seeders,CPSC NEISS format file
+1026,Other Crop Processing Equipment,CPSC NEISS format file
+1030,Forage Harvesters,CPSC NEISS format file
+1036,Manure Spreaders,CPSC NEISS format file
+1037,Pump Jacks,CPSC NEISS format file
+1038,Post-hole Drivers,CPSC NEISS format file
+1039,Fertilizer Distributors (granular),CPSC NEISS format file
+1040,Rakes (farm Machinery),CPSC NEISS format file
+1042,Windrowers or Swathers,CPSC NEISS format file
+1043,Crop Choppers,CPSC NEISS format file
+1044,Fork Lifts or Lift Trucks,CPSC NEISS format file
+1052,Stanchions,CPSC NEISS format file
+1053,Fertilizers and other Chemicals for Outd…,CPSC NEISS format file
+1054,Other Planting Equipment,CPSC NEISS format file
+1055,Hay Processing Equipment,CPSC NEISS format file
+1056,"Tobacco Stringers, Harvesters or Sleds",CPSC NEISS format file
+1057,Crop Pickers,CPSC NEISS format file
+1058,Corn Planters or Grain Drills,CPSC NEISS format file
+1059,"Silo Loaders and Unloaders, Screw or Swe…",CPSC NEISS format file
+1060,"Planting Equipment, not Specified",CPSC NEISS format file
+1061,"Crop Processing Equipment, not Specified…",CPSC NEISS format file
+1062,"Tractors, other or not Specified",CPSC NEISS format file
+1102,Vacuum Containers,CPSC NEISS format file
+1103,Self-contained Openers,CPSC NEISS format file
+1107,Other Containers,CPSC NEISS format file
+1112,Metal Containers,CPSC NEISS format file
+1114,Cardboard Products,CPSC NEISS format file
+1116,Containers with Key Openers,CPSC NEISS format file
+1120,Glass Soft Drink Bottles,CPSC NEISS format file
+1122,Glass Alcoholic Beverage Bottles,CPSC NEISS format file
+1123,Plastic Containers (rigid or Semi-rigid)…,CPSC NEISS format file
+1124,Glass Tubing or Test Tubes,CPSC NEISS format file
+1125,Wooden Containers,CPSC NEISS format file
+1127,Nonglass Bottles or Jars,CPSC NEISS format file
+1128,Paper Bags,CPSC NEISS format file
+1130,Plastic Bags,CPSC NEISS format file
+1131,Plastic Wrapping Products,CPSC NEISS format file
+1132,"Plastic Products, not Specified",CPSC NEISS format file
+1133,Aerosol Containers,CPSC NEISS format file
+1134,Other Glass Bottles or Jars,CPSC NEISS format file
+1135,"Bottles or Jars, not Specified",CPSC NEISS format file
+1136,Canning Jars or Lids,CPSC NEISS format file
+1137,Paper Products,CPSC NEISS format file
+1138,Pressurized Containers (nonaerosol),CPSC NEISS format file
+1139,Aluminum Foil Wrapping Products,CPSC NEISS format file
+1140,"Glass Bottles or Jars, not Specified",CPSC NEISS format file
+1141,"Containers, not Specified",CPSC NEISS format file
+1142,Bags (excluding Paper or Plastic Bags),CPSC NEISS format file
+1143,Buckets or Pails,CPSC NEISS format file
+1144,"Bags, not Elsewhere Classified",CPSC NEISS format file
+1145,Other Specified Plastic Products,CPSC NEISS format file
+1200,Sports or recreational activity (not elsewhere classified),NEISS-AI (from CPSC label)
+1202,Bicycles or Accessories,CPSC NEISS format file
+1204,"Baseball (activity, Apparel or Equip.)",CPSC NEISS format file
+1205,Basketball,NEISS-AI (from CPSC label)
+1206,"Bowling (activity, Apparel or Equipment)…",CPSC NEISS format file
+1207,"Boxing (activity, Apparel or Equipment)",CPSC NEISS format file
+1208,"Croquet (activity, Apparel or Equipment)…",CPSC NEISS format file
+1211,Football,NEISS-AI (from CPSC label)
+1212,"Golf (activity, Apparel or Equipment)",CPSC NEISS format file
+1213,Golf Carts,CPSC NEISS format file
+1215,Lacrosse,NEISS-AI (from CPSC label)
+1217,Sleds,NEISS-AI (from CPSC label)
+1232,Electric Charcoal Lighters,CPSC NEISS format file
+1233,Trampolines,CPSC NEISS format file
+1234,Treehouses or Playhouses,CPSC NEISS format file
+1235,"Archery (activity, Apparel or Equipment)…",CPSC NEISS format file
+1237,"Gas, Air or Spring-operated Guns",CPSC NEISS format file
+1239,"Horseback Riding (activity, Apparel, Eq)…",CPSC NEISS format file
+1240,Aquariums or Accessories,CPSC NEISS format file
+1242,Slides or sliding boards,NEISS-AI (from CPSC label)
+1243,See-saws or Teeter Boards,CPSC NEISS format file
+1244,Monkey bars or other playground climbing equipment,NEISS-AI (from CPSC label)
+1246,Wading Pools,CPSC NEISS format file
+1247,Fuel Charcoal Lighters,CPSC NEISS format file
+1248,"Darts (activity, Apparel or Equipment)",CPSC NEISS format file
+1255,Alcohol-fueled Heaters,CPSC NEISS format file
+1257,"Horseshoes (activity, Apparel or Equipme…",CPSC NEISS format file
+1258,"Mountain Climbing (activity, Apparel or",CPSC NEISS format file
+1260,"Billiards or Pool (activity, Apparel or",CPSC NEISS format file
+1261,"Surfing (activity, Apparel or Equipment)…",CPSC NEISS format file
+1264,"Water Skiing (activity, Apparel or Equip…",CPSC NEISS format file
+1266,Volleyball,NEISS-AI (from CPSC label)
+1267,Soccer,NEISS-AI (from CPSC label)
+1268,"Track and Field (activity, Apparel or Eq…",CPSC NEISS format file
+1269,"Table Tennis (activity, Apparel or Equip…",CPSC NEISS format file
+1270,Wrestling,NEISS-AI (from CPSC label)
+1271,Batons,CPSC NEISS format file
+1272,"Gymnastics (activity, Apparel or Equip.)…",CPSC NEISS format file
+1273,Toboggans,CPSC NEISS format file
+1274,Snow Disks,CPSC NEISS format file
+1275,"Scuba Diving (activity, Apparel or Equip…",CPSC NEISS format file
+1276,"Tetherball (activity, Apparel or Equipme…",CPSC NEISS format file
+1277,Swimming Pool Slides,CPSC NEISS format file
+1278,Diving or Diving Boards,CPSC NEISS format file
+1279,Ice hockey,NEISS-AI (from CPSC label)
+1282,"Handball (activity, Apparel or Equipment…",CPSC NEISS format file
+1283,Unicycles,CPSC NEISS format file
+1284,"Swimming Pools, not Specified",CPSC NEISS format file
+1285,"Charcoal Lighters, not Specified",CPSC NEISS format file
+1290,"Snowmobiles (activity, Apparel or Equipm…",CPSC NEISS format file
+1293,Amusement attractions (including rides),NEISS-AI (from CPSC label)
+1294,Bleachers,NEISS-AI (from CPSC label)
+1295,"Field Hockey (activity, Apparel or Equip…",CPSC NEISS format file
+1299,"Snow Tubing (activity, Apparel or Equipm…",CPSC NEISS format file
+1301,Tricycles,CPSC NEISS format file
+1306,Gasoline- or other Fuel-powered Models,CPSC NEISS format file
+1309,Kites or Kite String,CPSC NEISS format file
+1310,Pogo Sticks,CPSC NEISS format file
+1313,Fireworks,NEISS-AI (from CPSC label)
+1314,Rocketry Sets,CPSC NEISS format file
+1317,Flying Toys,CPSC NEISS format file
+1318,Unpowered Models or Parts,CPSC NEISS format file
+1319,Metal or Plastic Molding Sets,CPSC NEISS format file
+1322,"Children's Play Tents, Play Tunnels or",CPSC NEISS format file
+1325,Inflatable Toys,CPSC NEISS format file
+1326,"Blocks, Stacking Toys or Pull Toys",CPSC NEISS format file
+1327,"Nonwheeled Riding Toys, Unpowered",CPSC NEISS format file
+1328,Wagons (children's),CPSC NEISS format file
+1329,"Scooters (old code, until 2019)",NEISS-AI (from CPSC label)
+1330,Powered Riding Toys,CPSC NEISS format file
+1332,Electric Trains or Accessories,CPSC NEISS format file
+1333,Skateboards,NEISS-AI (from CPSC label)
+1334,Electric Toy Ovens,CPSC NEISS format file
+1335,Electric Toy Irons,CPSC NEISS format file
+1338,Toy Bows or Arrows,CPSC NEISS format file
+1342,Costumes or Masks,CPSC NEISS format file
+1344,Toy Musical Instruments,CPSC NEISS format file
+1345,Building Sets,CPSC NEISS format file
+1346,Clacker Balls,CPSC NEISS format file
+1347,Balloons (toy),CPSC NEISS format file
+1349,Stilts,CPSC NEISS format file
+1350,Squeeze or Squeaker Toys,CPSC NEISS format file
+1352,Slingshots or Sling-propelled Toys,CPSC NEISS format file
+1353,Toy Boxes or Chests,CPSC NEISS format file
+1354,Marbles,CPSC NEISS format file
+1356,Engine Fuels for Models,CPSC NEISS format file
+1362,Woodburning Kits,CPSC NEISS format file
+1365,Water Toys,CPSC NEISS format file
+1376,Molding Compounds,CPSC NEISS format file
+1381,"Toys, not Elsewhere Classified",CPSC NEISS format file
+1383,Electric Toy Racing Cars or Accessories,CPSC NEISS format file
+1389,Other Toy Weapons (nonprojectile),CPSC NEISS format file
+1390,"Toy Guns, not Specified",CPSC NEISS format file
+1392,Toy Sports Equipment,CPSC NEISS format file
+1393,Chemistry Sets or Science Kits,CPSC NEISS format file
+1394,"Dolls, Plush Toys, and Action Figures",CPSC NEISS format file
+1395,"Toys, not Specified",CPSC NEISS format file
+1398,"Wheeled Riding Toys, Unpowered",CPSC NEISS format file
+1399,Toy Guns with Projectiles,CPSC NEISS format file
+1401,"Power Lawn Mowers, not Specified",CPSC NEISS format file
+1402,Hand Lawn Mowers,CPSC NEISS format file
+1403,Other Unpowered Garden Tools,CPSC NEISS format file
+1404,Power Lawn Trimmers or Edgers,CPSC NEISS format file
+1405,Garden Tractors,CPSC NEISS format file
+1406,"Snow Throwers, Blowers",CPSC NEISS format file
+1407,Garden Sprayers,CPSC NEISS format file
+1408,Power Tillers or Cultivators,CPSC NEISS format file
+1409,Other Power Garden Tools,CPSC NEISS format file
+1411,Chain saws,NEISS-AI (from CPSC label)
+1413,Greenhouse or Gardening Supplies,CPSC NEISS format file
+1414,"Garden Hoses, Nozzles or Sprinklers",CPSC NEISS format file
+1415,Manual Snow or Ice Removal Tools,CPSC NEISS format file
+1417,Decorative Yard Equipment,CPSC NEISS format file
+1422,Riding Power Lawn Mowers,CPSC NEISS format file
+1425,Wheelbarrows or Lawn Carts,CPSC NEISS format file
+1426,Hatchets or Axes,CPSC NEISS format file
+1427,Power Hedge Trimmers,CPSC NEISS format file
+1430,Seed and Fertilizer Spreaders,CPSC NEISS format file
+1431,Grass and Leaf Catchers (attachments for…,CPSC NEISS format file
+1432,Animal Traps,CPSC NEISS format file
+1433,Power Leaf Mulchers and Grinders,CPSC NEISS format file
+1434,Snow Throwers or Blowers (attachments Fo…,CPSC NEISS format file
+1435,Snow Plows,CPSC NEISS format file
+1439,"Lawn Mowers, not Specified",CPSC NEISS format file
+1441,Lawn Vacuums,CPSC NEISS format file
+1445,Plant Foods or Fertilizers for Potted Pl…,CPSC NEISS format file
+1446,Reel Power Lawn Mowers,CPSC NEISS format file
+1447,Pruning or trimming equipment (not specified),NEISS-AI (from CPSC label)
+1448,Rotary Power Lawn Mowers,CPSC NEISS format file
+1449,Manual Hedge Trimmers,CPSC NEISS format file
+1450,Manual Lawn Trimmers or Edgers,CPSC NEISS format file
+1451,Seeds,CPSC NEISS format file
+1452,Outdoor Electric Lighting Equipment,CPSC NEISS format file
+1453,Other Manual Pruning or Trimming Equipme…,CPSC NEISS format file
+1454,Other Power Pruning or Trimming Equipmen…,CPSC NEISS format file
+1455,"Manual Pruning or Trimming Equipment, No…",CPSC NEISS format file
+1456,"Power Pruning or Trimming Equipment, not…",CPSC NEISS format file
+1457,Log Splitters,CPSC NEISS format file
+1458,Snow Throwers or Blowers (self-contained…,CPSC NEISS format file
+1459,"Snow Throwers or Blowers, not Specified",CPSC NEISS format file
+1460,"Insect Traps, Powered",CPSC NEISS format file
+1461,Leaf Blowers,CPSC NEISS format file
+1462,"Pumps, not Elsewhere Classified",CPSC NEISS format file
+1463,"Brushcutters, Powered",CPSC NEISS format file
+1464,"Lawn Trimmers or Edgers, Powered (exc Br…",CPSC NEISS format file
+1465,"Decorative Yard Equip,excl Water Feature…",CPSC NEISS format file
+1466,"Dec Water Features, Incl Ponds/fountains…",CPSC NEISS format file
+1502,Baby Changing Tables,CPSC NEISS format file
+1505,Baby Carriages,CPSC NEISS format file
+1506,Baby Gates or Barriers,CPSC NEISS format file
+1508,Baby Walkers or Jumpers,CPSC NEISS format file
+1509,Baby Bottles or Nipples,CPSC NEISS format file
+1510,Bottle Warmers,CPSC NEISS format file
+1511,Sterilizers (home Use),CPSC NEISS format file
+1512,Diapers,CPSC NEISS format file
+1513,Playpens,CPSC NEISS format file
+1515,Baby Scales,CPSC NEISS format file
+1517,Baby Rattles,CPSC NEISS format file
+1518,Youth Chairs,CPSC NEISS format file
+1519,Car Seats (for Infants or Children),CPSC NEISS format file
+1520,Baby Exercisers,CPSC NEISS format file
+1522,Baby Strollers,CPSC NEISS format file
+1524,Baby Harnesses,CPSC NEISS format file
+1525,Pacifiers or Teething Rings,CPSC NEISS format file
+1526,Crib Mobiles or Crib Gyms,CPSC NEISS format file
+1527,Baby Carriers or Slings (backpacks),CPSC NEISS format file
+1528,Diaper Pails,CPSC NEISS format file
+1529,Portable Cribs,CPSC NEISS format file
+1531,Baby Carriers (bicycle-mounted),CPSC NEISS format file
+1533,Night-lights,CPSC NEISS format file
+1534,Car Beds for Infants,CPSC NEISS format file
+1535,Potty Chairs or Training Seats,CPSC NEISS format file
+1536,Crib Extender Rails or Youth Bed Rails,CPSC NEISS format file
+1537,Bassinets or Cradles,CPSC NEISS format file
+1539,Shoelace Fasteners (for Infants),CPSC NEISS format file
+1542,Baby Mattresses or Pads,CPSC NEISS format file
+1543,Cribs (old code),NEISS-AI (from CPSC label)
+1544,Baby Baths or Bathinettes,CPSC NEISS format file
+1545,Cribs (old code),NEISS-AI (from CPSC label)
+1548,"Baby Carriers, not Specified",CPSC NEISS format file
+1549,Other Baby Carriers,CPSC NEISS format file
+1550,Infant and toddler play centers,NEISS-AI (from CPSC label)
+1551,Diaper Fasteners,CPSC NEISS format file
+1552,Cribs (code from 2021),NEISS-AI (from CPSC label)
+1553,Portable Baby Swings (for Home Use),CPSC NEISS format file
+1554,Safety Pins,CPSC NEISS format file
+1555,High Chairs,CPSC NEISS format file
+1556,Attachable High Chairs (incl. Booster Se…,CPSC NEISS format file
+1557,Baby Bathtub Seats or Rings (not Toys),CPSC NEISS format file
+1558,Baby Bouncer Seats (excl. Jumpers),CPSC NEISS format file
+1597,Non-poisoning Death - Under 5 - No Prod,CPSC NEISS format file
+1598,Overlay Deaths - No Product Specified,CPSC NEISS format file
+1599,Infant Suffocation (code for Ipii Only),CPSC NEISS format file
+1602,Hair Dryers,CPSC NEISS format file
+1604,Cigarette or Pipe Lighters,CPSC NEISS format file
+1605,"Wigs, Falls or Hairpieces",CPSC NEISS format file
+1606,Eyeglasses,CPSC NEISS format file
+1607,Eye Protection Devices,CPSC NEISS format file
+1608,Powered Toothbrushes or Oral Irrigators,CPSC NEISS format file
+1609,Sun Lamps,CPSC NEISS format file
+1610,Massage Devices or Vibrators,CPSC NEISS format file
+1612,Saunas,CPSC NEISS format file
+1613,Electric Shoe Polishers,CPSC NEISS format file
+1615,Footwear,CPSC NEISS format file
+1616,Jewelry,NEISS-AI (from CPSC label)
+1617,Ear Protection Devices,CPSC NEISS format file
+1618,Respiratory protection devices,NEISS-AI (from CPSC label)
+1619,Personal Protection Devices,CPSC NEISS format file
+1620,Hearing Aids,CPSC NEISS format file
+1622,Watches,CPSC NEISS format file
+1623,Luggage,CPSC NEISS format file
+1624,Contact Lenses,CPSC NEISS format file
+1625,Lighted Make-up Mirrors,CPSC NEISS format file
+1629,Nonelectric Toothbrushes,CPSC NEISS format file
+1630,Paper Money or Coins,CPSC NEISS format file
+1634,Heat or Infrared Lamps,CPSC NEISS format file
+1635,Dentures or False Teeth,CPSC NEISS format file
+1636,Orthodontic Braces,CPSC NEISS format file
+1637,Electric Combs,CPSC NEISS format file
+1638,"Combs or Hairbrushes, Unpowered",CPSC NEISS format file
+1641,Clothesbrushes,CPSC NEISS format file
+1643,"Keys, Key Rings or Key Chains",CPSC NEISS format file
+1644,Nightwear,CPSC NEISS format file
+1645,Day Wear,CPSC NEISS format file
+1646,Outerwear,CPSC NEISS format file
+1647,Clothing Accessories,CPSC NEISS format file
+1650,Desk Supplies,CPSC NEISS format file
+1651,"Combs, not Specified",CPSC NEISS format file
+1654,Paper Cutters,CPSC NEISS format file
+1658,"Clothing, not Specified",CPSC NEISS format file
+1659,Manicuring Devices,CPSC NEISS format file
+1660,Umbrellas,CPSC NEISS format file
+1661,Nonelectric Razors or Shavers,CPSC NEISS format file
+1662,Hair Grooming Equipment or Accessories,CPSC NEISS format file
+1664,Electric Razors or Shavers,CPSC NEISS format file
+1666,"Teeth Cleaning Devices, not Specified",CPSC NEISS format file
+1667,"Razors or Shavers, not Specified",CPSC NEISS format file
+1669,Pins and Needles,CPSC NEISS format file
+1671,Sewing Basket Articles,CPSC NEISS format file
+1674,Hard Contact Lenses,CPSC NEISS format file
+1675,Soft Contact Lenses,CPSC NEISS format file
+1676,"Contact Lenses, not Specified",CPSC NEISS format file
+1677,Other Clothing,CPSC NEISS format file
+1678,Bath or Facial Brushes,CPSC NEISS format file
+1679,Grocery or Shopping Carts,CPSC NEISS format file
+1680,"Dollies, Handtrucks or Luggage Carriers",CPSC NEISS format file
+1681,Suntan Booths,CPSC NEISS format file
+1682,"Hair Curlers, Curling Irons, Clips & Hai…",CPSC NEISS format file
+1683,Hair Clippers and Trimmers,CPSC NEISS format file
+1684,"Carts, other or not Specified",CPSC NEISS format file
+1685,Pens and Pencils,CPSC NEISS format file
+1686,Coins,CPSC NEISS format file
+1687,"Lighters, not Specified",CPSC NEISS format file
+1688,Fuel Multi-purpose Lighters (inc. Micro,CPSC NEISS format file
+1689,Electric Multi-purpose Lighters,CPSC NEISS format file
+1690,"Multi-purpose Lighters, not Spec.",CPSC NEISS format file
+1701,Artificial Christmas Trees,CPSC NEISS format file
+1705,Ashtrays,CPSC NEISS format file
+1706,"Crutches, Canes or Walkers",CPSC NEISS format file
+1707,Wheelchairs,CPSC NEISS format file
+1708,Special Beds or Orthopedic Beds,CPSC NEISS format file
+1710,First Aid Equipment,CPSC NEISS format file
+1711,Christmas Tree Lights,CPSC NEISS format file
+1712,Christmas Tree Stands or Supports,CPSC NEISS format file
+1714,Seasonal Decorations,CPSC NEISS format file
+1715,Pet Supplies,CPSC NEISS format file
+1716,Hypodermic Needles or Syringes,CPSC NEISS format file
+1717,Orthopedic Braces,CPSC NEISS format file
+1718,Flares,CPSC NEISS format file
+1719,Lunch Boxes or Pails,CPSC NEISS format file
+1720,Party Favors,CPSC NEISS format file
+1724,Lasers,CPSC NEISS format file
+1725,Cathode-ray Tubes,CPSC NEISS format file
+1726,Lockers,CPSC NEISS format file
+1727,Traffic Control Devices,CPSC NEISS format file
+1728,Matchbooks,CPSC NEISS format file
+1729,Christmas Decorations (nonelectric),CPSC NEISS format file
+1730,Wooden Matches,CPSC NEISS format file
+1731,"Matches, not Specified",CPSC NEISS format file
+1732,Tombstones or Grave Markers,CPSC NEISS format file
+1733,Vending Machines,CPSC NEISS format file
+1734,Music Boxes or Chimes,CPSC NEISS format file
+1735,Coin-operated Car-washing Equipment,CPSC NEISS format file
+1736,Electric Christmas Decorations (excl. Tr…,CPSC NEISS format file
+1737,Houseplants,CPSC NEISS format file
+1738,"Public Equipment, not Elsewhere Classifi…",CPSC NEISS format file
+1739,"Ashtrays, Electric or Battery Operated",CPSC NEISS format file
+1740,"Ashtrays, not Elec/battery, or Nos",CPSC NEISS format file
+1741,Tarpaulins,CPSC NEISS format file
+1742,Heating or Cooling Comfort Packs (nonele…,CPSC NEISS format file
+1743,"Thermometers, Medical",CPSC NEISS format file
+1744,"Motorized Vehicles, Nec (3 or More Whls)…",CPSC NEISS format file
+1803,Thermal or Sound Insulation Materials,CPSC NEISS format file
+1807,Floors or flooring materials,NEISS-AI (from CPSC label)
+1808,Outdoor Awnings or Shutters,CPSC NEISS format file
+1811,Bricks or Concrete Blocks (not Part of S…,CPSC NEISS format file
+1812,"Gutters, Drainpipes, Downspouts or Run-o…",CPSC NEISS format file
+1814,Elevators or other Lifts,CPSC NEISS format file
+1816,Scaffolding,CPSC NEISS format file
+1817,"Porches, Balconies, Open-side Floors or",CPSC NEISS format file
+1818,"Cisterns, Cesspools or Septic Tanks",CPSC NEISS format file
+1819,"Nails, Screws, Tacks or Bolts",CPSC NEISS format file
+1820,Cabinet or Door Hardware,CPSC NEISS format file
+1821,Clotheslines or Clothes Drying Racks,CPSC NEISS format file
+1823,Storm Doors with Glass Panels,CPSC NEISS format file
+1825,Sliding Glass Doors or Panels,CPSC NEISS format file
+1826,Storm Windows,CPSC NEISS format file
+1827,Screen Doors,CPSC NEISS format file
+1828,Window Screens,CPSC NEISS format file
+1829,"Handrails, Railings or Banisters",CPSC NEISS format file
+1830,Separate Garages or Tool Sheds,CPSC NEISS format file
+1836,Jalousie Glass Windows,CPSC NEISS format file
+1838,"Lumber, Boards or Paneling Pieces (not P…",CPSC NEISS format file
+1840,Pull-down or Folding Stairs,CPSC NEISS format file
+1841,Mobile/manufactured Homes,CPSC NEISS format file
+1842,Stairs or steps,NEISS-AI (from CPSC label)
+1843,Ramps or Landings,CPSC NEISS format file
+1845,Panel Doors (flush or Slab),CPSC NEISS format file
+1849,"Doors, not Specified",CPSC NEISS format file
+1854,Plastic Panels for Doors or Windows,CPSC NEISS format file
+1855,"Plastic Products, not Elsewhere Classifi…",CPSC NEISS format file
+1857,Artificial Turf,CPSC NEISS format file
+1858,Storm Doors Without Glass Panels,CPSC NEISS format file
+1863,Wallpaper,CPSC NEISS format file
+1864,Counters or Countertops,CPSC NEISS format file
+1865,Poles,CPSC NEISS format file
+1866,General Home or Room Involvement in Fire…,CPSC NEISS format file
+1867,Fixed Floor-length Glass Panels,CPSC NEISS format file
+1870,Window Sills or Frames,CPSC NEISS format file
+1871,Fences or Fence Posts,CPSC NEISS format file
+1873,"Windows or Window Glass, not Specified",CPSC NEISS format file
+1875,Other Windows or Window Glass,CPSC NEISS format file
+1876,House Repair or Construction Mat'l Nec,CPSC NEISS format file
+1878,Door Sills or Frames,CPSC NEISS format file
+1879,Other Nonglass Doors (nongarage),CPSC NEISS format file
+1880,"Nonglass Doors (nongarage), not Specifie…",CPSC NEISS format file
+1882,Other Glass Doors,CPSC NEISS format file
+1883,"Glass Doors, not Specified",CPSC NEISS format file
+1884,Ceilings and Walls (part of Completed St…,CPSC NEISS format file
+1885,Wood Paneling and Particleboard,CPSC NEISS format file
+1886,Garage Doors (excl. Automatic Garage Doo…,CPSC NEISS format file
+1887,Tool Sheds,CPSC NEISS format file
+1888,Window or Door Security Barriers,CPSC NEISS format file
+1889,Elevators or other Lifts (excl. Escalato…,CPSC NEISS format file
+1890,Escalators,CPSC NEISS format file
+1891,Moving Walks,CPSC NEISS format file
+1892,Glass Doors or Doors W/glass Panels,CPSC NEISS format file
+1893,"Doors, other or not Specified",CPSC NEISS format file
+1894,Windows and window glass,NEISS-AI (from CPSC label)
+1895,Tree Stands (hunting),CPSC NEISS format file
+1898,Gas Fumes or Vapors of Unknown Origin,CPSC NEISS format file
+1899,Co Poisoning (source Unknown),CPSC NEISS format file
+1901,Motor Vehicles or Parts (licensed 4+ Whe…,CPSC NEISS format file
+1902,Trains,CPSC NEISS format file
+1903,Alcohol (beverage),CPSC NEISS format file
+1906,Aircraft,CPSC NEISS format file
+1909,"Cigarettes, Cigars, Pipes or Tobacco",CPSC NEISS format file
+1910,2-wheel Motor Vehicles (licensed; Excl.,CPSC NEISS format file
+1913,"Cosmetics, Incl Facial & Eye Make-up Deo…",CPSC NEISS format file
+1914,Veterinary Medicines,CPSC NEISS format file
+1915,Liniments or Rubbing Compounds,CPSC NEISS format file
+1916,Preparations Containing Iron Salts,CPSC NEISS format file
+1923,Aspirin or Aspirin Compounds,CPSC NEISS format file
+1926,Pesticides,CPSC NEISS format file
+1927,Liquid Drugs,CPSC NEISS format file
+1928,Antihistamines,CPSC NEISS format file
+1929,"Drugs or Medications, not Specified",CPSC NEISS format file
+1930,Aspirin Substitutes,CPSC NEISS format file
+1931,Tablet or Capsule Drugs,CPSC NEISS format file
+1932,Other Drugs or Medications,CPSC NEISS format file
+1933,Foods (excluding Hot Water),CPSC NEISS format file
+1934,Hot Water,CPSC NEISS format file
+1935,Gunpowder or Ammunition (excl Bb's),CPSC NEISS format file
+1936,Bb's or Pellets,CPSC NEISS format file
+1937,"Air Bags, Deployed (for Nhtsa Study)",CPSC NEISS format file
+1939,"Illegal Drugs (incl Cocaine, Crack, Hero…",CPSC NEISS format file
+1940,Mouthwashes/mouth Rinses (excl Peroxide)…,CPSC NEISS format file
+2000,"No Product, Injury Only",CPSC NEISS format file
+2001,Animal Induced Injury,CPSC NEISS format file
+2002,"Plants, Trees, and Shrubs",CPSC NEISS format file
+2003,Insect Induced Injuries,CPSC NEISS format file
+2200,Industrial Equipment,CPSC NEISS format file
+2288,No Product Involved (occupational Injuri…,CPSC NEISS format file
+2300,School Equipment,CPSC NEISS format file
+2400,Medical Equipment,CPSC NEISS format file
+2401,Radiographic Equipment,CPSC NEISS format file
+2402,Fluoroscopic Equipment,CPSC NEISS format file
+2403,Therapeutic Equipment,CPSC NEISS format file
+2404,Germicidal Lamps,CPSC NEISS format file
+2405,"Diathermy Equipment (short Wave, Microwa…",CPSC NEISS format file
+2406,Bracing or Supporting Devices,CPSC NEISS format file
+2407,Baths (medical Equipment),CPSC NEISS format file
+2408,Catheters,CPSC NEISS format file
+2409,"Contraceptive Devices, Including Iud's",CPSC NEISS format file
+2415,Dental Pads or Reliners,CPSC NEISS format file
+2420,Ear Piercing Devices,CPSC NEISS format file
+2423,"Heart Valves, Artificial",CPSC NEISS format file
+2425,Traction Equipment (home Use),CPSC NEISS format file
+2429,Invitro Diagnostic Kits,CPSC NEISS format file
+2430,Kidney Dialysis Machines,CPSC NEISS format file
+2431,Introcular Devices,CPSC NEISS format file
+2435,Oxygen Administration Apparatus,CPSC NEISS format file
+2437,"Pacemakers, Cardiac",CPSC NEISS format file
+2439,"Stimulators, Electrical",CPSC NEISS format file
+2440,"Support Garments and Stockings, Medical",CPSC NEISS format file
+2443,"Sterilizers, Medical",CPSC NEISS format file
+2447,Radiation Therapy Equipment,CPSC NEISS format file
+2448,Ostomy Appliances,CPSC NEISS format file
+2450,"Anesthesiological Devices, not Elsewhere…",CPSC NEISS format file
+2452,"Cardiovascular Devices, not Elsewhere Cl…",CPSC NEISS format file
+2454,"Dental Devices, not Elsewhere Classified…",CPSC NEISS format file
+2456,"Ear, Nose and Throat Devices, not Elsewh…",CPSC NEISS format file
+2458,Gastroenterological or Urological Device…,CPSC NEISS format file
+2460,General or Plastic Surgery Devices,CPSC NEISS format file
+2462,Other Hospital or Personal Use Medical D…,CPSC NEISS format file
+2464,"Neurological Devices, not Elsewhere Clas…",CPSC NEISS format file
+2466,Obstetrical or Gynecological Devices,CPSC NEISS format file
+2468,"Ophthalmic Devices, not Elsewhere Classi…",CPSC NEISS format file
+2470,"Physiatric Devices, not Elsewhere Classi…",CPSC NEISS format file
+2472,"Radiological Devices, not Elsewhere Clas…",CPSC NEISS format file
+2474,Artificial Limbs,CPSC NEISS format file
+2475,Atomizing Devices,CPSC NEISS format file
+2476,"Monitoring Systems, Medical",CPSC NEISS format file
+2477,Medical Gloves,CPSC NEISS format file
+2478,Adult Bed Rails,CPSC NEISS format file
+2479,"Prosthetic Devices, other",CPSC NEISS format file
+2480,"Respiratory Devices, N.e.c.",CPSC NEISS format file
+2500,Antiperspirants and Deodorants (underarm…,CPSC NEISS format file
+2510,Bath Products,CPSC NEISS format file
+2511,Bubble Baths,CPSC NEISS format file
+2520,Depilatories or Hair Removers,CPSC NEISS format file
+2531,Eye Mascaras,CPSC NEISS format file
+2532,Eyeliners,CPSC NEISS format file
+2533,Other Eye Make-up Preparations,CPSC NEISS format file
+2534,"Eye Make-up Preparations, not Specified",CPSC NEISS format file
+2540,Face Care Preparations,CPSC NEISS format file
+2541,Face Hormone Creams,CPSC NEISS format file
+2550,"Fragrance Preparations, Excl. Powders",CPSC NEISS format file
+2560,Hand and Body Creams or Lotions,CPSC NEISS format file
+2571,Hair Coloring Shampoos,CPSC NEISS format file
+2572,Hair Dyes (permanent Dark Tones),CPSC NEISS format file
+2573,Hair Lighteners with Color (permanent Bl…,CPSC NEISS format file
+2574,"Hair Coloring Preparations, not Specifie…",CPSC NEISS format file
+2575,Other Hair Coloring Preparations,CPSC NEISS format file
+2580,Hair Grooming Preparations,CPSC NEISS format file
+2590,Noncoloring Hair Shampoos,CPSC NEISS format file
+2600,Hair Sprays,CPSC NEISS format file
+2610,Hair Waving Preparations or Straightener…,CPSC NEISS format file
+2621,Make-up Preparations,CPSC NEISS format file
+2630,Nail Preparations,CPSC NEISS format file
+2631,Nail Hardeners,CPSC NEISS format file
+2640,Oral Hygiene Products,CPSC NEISS format file
+2650,Genital Area Products,CPSC NEISS format file
+2660,Powder Preparations,CPSC NEISS format file
+2670,Shaving Preparations,CPSC NEISS format file
+2680,Soaps,CPSC NEISS format file
+2690,Suntan or Sunscreen Preparations,CPSC NEISS format file
+3200,Water tubing,NEISS-AI (from CPSC label)
+3202,Pedal-powered Adult Vehicles (three or M…,CPSC NEISS format file
+3203,"Skeet Shooting (activity, Apparel or Equ…",CPSC NEISS format file
+3211,Water Slides,CPSC NEISS format file
+3214,Camping Equipment,CPSC NEISS format file
+3215,Mopeds or power-assisted cycles (e-bikes coded here until 2023),NEISS-AI (from CPSC label)
+3216,Roller skating,NEISS-AI (from CPSC label)
+3217,"Skating (activity, Apparel or Equipment)…",CPSC NEISS format file
+3218,Charcoal or Wood-burning Grills,CPSC NEISS format file
+3219,Other playground equipment,NEISS-AI (from CPSC label)
+3220,"Volleyball (activity, Apparel or Equipme…",CPSC NEISS format file
+3221,Above-ground Swimming Pools,CPSC NEISS format file
+3222,"Badminton (activity, Apparel or Equipmen…",CPSC NEISS format file
+3223,Fishing,NEISS-AI (from CPSC label)
+3224,Other Guns or Firearms,CPSC NEISS format file
+3225,"Organized Soccer (activity, Apparel or E…",CPSC NEISS format file
+3226,"Basketball (activity, Apparel or Equipme…",CPSC NEISS format file
+3227,"Informal Football (activity, Apparel or",CPSC NEISS format file
+3228,"Organized Baseball (activity, Apparel or…",CPSC NEISS format file
+3229,Electric Grills,CPSC NEISS format file
+3230,Kerosene Grills or Stoves,CPSC NEISS format file
+3231,"Gymnastics (activity, Apparel or Equipme…",CPSC NEISS format file
+3233,Other Grills or Stoves,CPSC NEISS format file
+3234,Rugby,NEISS-AI (from CPSC label)
+3235,Other ball sports,NEISS-AI (from CPSC label)
+3236,"Ball Sports (activity, Apparel or Equipm…",CPSC NEISS format file
+3237,"Organized Gymnastics (activity, Apparel",CPSC NEISS format file
+3240,"Informal Baseball (activity, Apparel or",CPSC NEISS format file
+3241,"Informal Soccer (activity, Apparel or Eq…",CPSC NEISS format file
+3242,"Organized Basketball (activity, Apparel",CPSC NEISS format file
+3243,"Organized Volleyball (activity, Apparel",CPSC NEISS format file
+3244,"Football (activity, Apparel or Equipment…",CPSC NEISS format file
+3245,"Street Hockey (activity, Apparel or Equi…",CPSC NEISS format file
+3246,Swings or Swing Sets,CPSC NEISS format file
+3247,"Ice or Snow Boating (activity, Apparel O…",CPSC NEISS format file
+3248,Gas or Lp Grills or Stoves,CPSC NEISS format file
+3249,"Grills, not Specified",CPSC NEISS format file
+3250,Portable Food or Beverage Coolers,CPSC NEISS format file
+3251,Built-in Swimming Pools,CPSC NEISS format file
+3252,Sleeping Bags,CPSC NEISS format file
+3253,"Guns, not Specified",CPSC NEISS format file
+3254,Cheerleading,NEISS-AI (from CPSC label)
+3255,"Ice Skating (activity, Apparel or Equipm…",CPSC NEISS format file
+3256,"Squash, Racquet Ball or Paddle Ball",CPSC NEISS format file
+3257,Martial arts,NEISS-AI (from CPSC label)
+3258,Minibikes or Trail Bikes,CPSC NEISS format file
+3259,Go-carts,CPSC NEISS format file
+3260,"Fencing (activity, Apparel or Equipment)…",CPSC NEISS format file
+3261,"Shuffleboard (activity, Apparel or Equip…",CPSC NEISS format file
+3262,Swimming Pool Equipment,CPSC NEISS format file
+3263,"Informal Gymnastics (activity, Apparel O…",CPSC NEISS format file
+3265,Weight lifting,NEISS-AI (from CPSC label)
+3267,"Informal Basketball (activity, Apparel O…",CPSC NEISS format file
+3268,"Informal Volleyball (activity, Apparel O…",CPSC NEISS format file
+3269,"Organized Football (activity, Apparel or…",CPSC NEISS format file
+3270,"Baseball (activity, Apparel or Equip.)",CPSC NEISS format file
+3271,"Soccer (activity, Apparel or Equipment)",CPSC NEISS format file
+3272,Hockey (not specified),NEISS-AI (from CPSC label)
+3273,Playground equipment (not specified),NEISS-AI (from CPSC label)
+3274,"Swimming (activity, Apparel or Equipment…",CPSC NEISS format file
+3276,"Water Polo (activity, Apparel or Equipme…",CPSC NEISS format file
+3277,Exercise Equipment,CPSC NEISS format file
+3278,"Dancing (activity, Apparel or Equipment)…",CPSC NEISS format file
+3279,Flotation Toys (excl. Official Life Savi…,CPSC NEISS format file
+3282,"Curling (activity, Apparel or Equipment)…",CPSC NEISS format file
+3283,"Snow Skiing (activity, Apparel or Equipm…",CPSC NEISS format file
+3284,"Tennis (activity, Apparel or Equipment)",CPSC NEISS format file
+3285,"All-terrain Vehicles, 3 Wheels Only, Exc…",CPSC NEISS format file
+3286,"All-terrain vehicles, 4 wheels",NEISS-AI (from CPSC label)
+3287,"All-terrain vehicles, number of wheels not specified",NEISS-AI (from CPSC label)
+3288,Dune Buggies,CPSC NEISS format file
+3289,"Darts, Indoor Use (activity or Equip.)",CPSC NEISS format file
+3290,"Darts, Lawn (activity or Equipment)",CPSC NEISS format file
+3291,"Darts, not Specified",CPSC NEISS format file
+3292,"Personal Watercraft, Powered",CPSC NEISS format file
+3293,"Water Slides, not Elsewhere Classified",CPSC NEISS format file
+3294,"Water Slides, Backyard/home (not Swimmin…",CPSC NEISS format file
+3295,Public water slides,NEISS-AI (from CPSC label)
+3296,All Terrain Vehicles (more than 4 Wheels…,CPSC NEISS format file
+3297,In-line skating,NEISS-AI (from CPSC label)
+3298,Boats and Boating Activity,CPSC NEISS format file
+3299,"Exercise (activity or Apparel, W/o Equip…",CPSC NEISS format file
+4002,"Bedding, not Specified",CPSC NEISS format file
+4003,"Stools, not Specified",CPSC NEISS format file
+4004,Mirrors or Mirror Glass,CPSC NEISS format file
+4005,Filters,CPSC NEISS format file
+4008,Nonelectric Blankets,CPSC NEISS format file
+4009,Nonbaby Mattresses,CPSC NEISS format file
+4010,"Mattresses, not Specified",CPSC NEISS format file
+4011,Inflatable Furniture,CPSC NEISS format file
+4013,Other Furniture,CPSC NEISS format file
+4014,"Furniture, not Specified",CPSC NEISS format file
+4015,"Upholstered Footstools, Ottomans or Hass…",CPSC NEISS format file
+4016,Beach Chairs or Folding Chairs,CPSC NEISS format file
+4017,Nonupholstered Recliner Chairs,CPSC NEISS format file
+4018,Nonupholstered Rocking Chairs,CPSC NEISS format file
+4019,Upholstered Recliner Chairs,CPSC NEISS format file
+4020,Upholstered Rocking Chairs,CPSC NEISS format file
+4021,Other Chairs,CPSC NEISS format file
+4022,"Chairs, not Specified",CPSC NEISS format file
+4023,"Recliner Chairs, not Specified",CPSC NEISS format file
+4024,"Rocking Chairs, not Specified",CPSC NEISS format file
+4025,Barstools or Kitchen Stools,CPSC NEISS format file
+4026,Other Stools,CPSC NEISS format file
+4030,"Bathtub or Shower Enclosures, not Specif…",CPSC NEISS format file
+4032,Other Ladders,CPSC NEISS format file
+4033,"Ladders, not Specified",CPSC NEISS format file
+4036,"Electric Table Lamps, Floor Lamps or Des…",CPSC NEISS format file
+4039,Other Electric Lighting Equipment,CPSC NEISS format file
+4041,"Electric Lighting Equipment, not Specifi…",CPSC NEISS format file
+4042,"Lighting Equipment, not Specified",CPSC NEISS format file
+4043,Clocks,CPSC NEISS format file
+4045,Fabrics (not Part of Finished Item),CPSC NEISS format file
+4047,"Books, Magazines, Albums or Scrapbooks",CPSC NEISS format file
+4050,Pillows,CPSC NEISS format file
+4051,Sheets or Pillowcases,CPSC NEISS format file
+4052,Other Upholstered Chairs,CPSC NEISS format file
+4053,"Upholstered Chairs, not Specified",CPSC NEISS format file
+4054,Other Bedding,CPSC NEISS format file
+4055,"Drapery or Curtain Rods, Hooks or Rings",CPSC NEISS format file
+4056,"Cabinets, Racks, Room Dividers and Shelv…",CPSC NEISS format file
+4057,"Tables, not Elsewhere Classified",CPSC NEISS format file
+4058,"Bars and Bar Accessories, not Elsewhere",CPSC NEISS format file
+4059,Scales (excl. Baby Scales),CPSC NEISS format file
+4060,Fuel-burning Lighting Equipment,CPSC NEISS format file
+4061,Electrical Outlets or Receptacles,CPSC NEISS format file
+4062,Electric Wire or Wiring Systems (excl. P…,CPSC NEISS format file
+4063,"Panelboards, Circuit Breakers, Gfci's",CPSC NEISS format file
+4064,Futons,CPSC NEISS format file
+4065,"Clocks, Electric or Battery Operated",CPSC NEISS format file
+4066,"Scales, Electric or Battery Operated. Ex…",CPSC NEISS format file
+4067,"Clocks, not Elec/battery, or Nos",CPSC NEISS format file
+4068,"Scales, not Elec/battery, or Nos",CPSC NEISS format file
+4069,Cots,CPSC NEISS format file
+4070,"Floor or Table Lamps, Halogen",CPSC NEISS format file
+4071,"Floor or Table Lamps, Electric Excl Halo…",CPSC NEISS format file
+4072,Bedsprings or Bedframes Excl Bunk Beds &…,CPSC NEISS format file
+4073,Adult Bed Rails,CPSC NEISS format file
+4074,"Chairs, other or not Specified",CPSC NEISS format file
+4075,Bed Rails,CPSC NEISS format file
+4076,Beds or bed frames (other or not specified),NEISS-AI (from CPSC label)
+4077,Extension or Straight Ladders,CPSC NEISS format file
+4078,Ladders (other or not specified),NEISS-AI (from CPSC label)
+4079,"Footstools, Ottomans or Hassocks",CPSC NEISS format file
+4080,"Stools, other or not Specified",CPSC NEISS format file
+4081,"Cords, Electrical, other or not Spec",CPSC NEISS format file
+4082,Toddler Beds,CPSC NEISS format file
+4083,Surge Suppressors or Power Strips,CPSC NEISS format file
+4084,Residential Alternative Energy Systems,CPSC NEISS format file
+4802,"Straps, Non-stretch, Other, or not Spec",CPSC NEISS format file
+5001,Other Toy Weapons (projectile),CPSC NEISS format file
+5004,"Toys, not Elsewhere Classified",CPSC NEISS format file
+5005,"Riding Toys, not Specified",CPSC NEISS format file
+5006,Other Toy Guns,CPSC NEISS format file
+5007,"Toy Weapons, not Specified",CPSC NEISS format file
+5010,Crayons or Chalk,CPSC NEISS format file
+5011,Book Bags or Back Carriers (excl. Baby C…,CPSC NEISS format file
+5013,Toy Make-up Kits or Cosmetics,CPSC NEISS format file
+5015,"Toy Caps, Cap Toys or Cap Guns",CPSC NEISS format file
+5016,"Balls, other or not Specified",CPSC NEISS format file
+5017,Flying Discs and Boomerangs,CPSC NEISS format file
+5018,Doll Houses and other Play Scenes,CPSC NEISS format file
+5019,Games or Game Parts (excl Marbles & Comp…,CPSC NEISS format file
+5020,"Pretend Electronics,tools,hsewrs&applian…",CPSC NEISS format file
+5021,Toy Vehicles (excluding Riding Toys),CPSC NEISS format file
+5022,Powered scooters (e-scooters),NEISS-AI (from CPSC label)
+5023,Scooters (other),NEISS-AI (from CPSC label)
+5024,Scooters (not specified),NEISS-AI (from CPSC label)
+5025,Hoverboards,NEISS-AI (from CPSC label)
+5029,"Camping Equip (excl Trailers, Lighting E…",CPSC NEISS format file
+5030,Track and field,NEISS-AI (from CPSC label)
+5031,"Snowboarding (activity, Apparel, Equip.)…",CPSC NEISS format file
+5032,"Roller Hockey (activity, Apparel, Equip.…",CPSC NEISS format file
+5033,Mountain or all-terrain bicycles,NEISS-AI (from CPSC label)
+5034,Softball,NEISS-AI (from CPSC label)
+5035,"Minibikes, Powered",CPSC NEISS format file
+5036,Two-wheeled powered off-road vehicles (dirt bikes),NEISS-AI (from CPSC label)
+5037,Hammocks,CPSC NEISS format file
+5040,Bicycles (excluding mountain bikes),NEISS-AI (from CPSC label)
+5041,Baseball,NEISS-AI (from CPSC label)
+5042,"Powered scooters and hoverboards (old code, until 2019)",NEISS-AI (from CPSC label)
+5043,Portable Swimming Pools,CPSC NEISS format file
+5044,Utility Vehicles,CPSC NEISS format file
+5045,E-bikes,NEISS-AI (from CPSC label)
+5046,Other power-assisted cycles,NEISS-AI (from CPSC label)
+5555,<5 Poisoning - No other Code,CPSC NEISS format file
+6666,Inhaled/abused Substance,CPSC NEISS format file
+7001,Yard/home Imprv Equip-consumer Use,CPSC NEISS format file
+7777,Other Product (not Neiss),CPSC NEISS format file
+7878,No Product or Non-cpsc Product W/no Code…,CPSC NEISS format file
+8888,No Product Involved,CPSC NEISS format file
+9000,Assigned Case with Out-of-scope Product,CPSC NEISS format file
+9001,"Mental Health Svcs Provided,ages 201-021…",CPSC NEISS format file
+9002,Sexual Violence,CPSC NEISS format file
+9003,Nonsexual Intimate Partner Violence,CPSC NEISS format file
+9100,Out of Scope Product - Retailer Report,CPSC NEISS format file
+9200,Drywall Study Control Group,CPSC NEISS format file
+9999,Uncategorized Product (to Be Assigned),CPSC NEISS format file

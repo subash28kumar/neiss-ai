@@ -90,6 +90,10 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;whi
 th:first-child,td:first-child{text-align:left}
 th{color:var(--text-2);font-weight:600}
 .tablewrap{overflow-x:auto}
+.hztable td:last-child{white-space:normal;min-width:16em}
+.hz{display:inline-block;font-size:12px;font-weight:600;border-radius:6px;padding:1px 7px;border:1px solid}
+.hz.signal{color:var(--accent);border-color:var(--accent)}
+.hz.check,.hz.coding{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .steps{counter-reset:s;list-style:none;padding:0;margin:0}
 .steps li{position:relative;padding-left:40px;margin:0 0 14px;color:var(--text-2)}
@@ -158,6 +162,7 @@ a.btn{text-decoration:none;display:inline-block}
   <button role="tab" id="tab-ask" aria-controls="p-ask" aria-selected="false">Ask a question</button>
   <button role="tab" id="tab-explore" aria-controls="p-explore" aria-selected="false">Explore the data</button>
   <button role="tab" id="tab-search" aria-controls="p-search" aria-selected="false">Search injury stories</button>
+  <button role="tab" id="tab-hazards" aria-controls="p-hazards" aria-selected="false">Hazard Watch</button>
   <button role="tab" id="tab-about" aria-controls="p-about" aria-selected="false">How it works</button>
 </nav>
 
@@ -275,6 +280,55 @@ a.btn{text-decoration:none;display:inline-block}
       <button class="btn primary" type="submit">Search</button>
     </form>
     <div id="searchout"></div>
+  </section>
+</section>
+
+<!-- ===== Hazard Watch ===== -->
+<section class="panel" id="p-hazards" role="tabpanel" aria-labelledby="tab-hazards" hidden>
+  <section class="card">
+    <h2>Hazard Watch: which products started hurting more people?</h2>
+    <p class="desc">NEISS-AI checks <b>every product code</b> in the national emergency room data (about 800 products), not only products someone already suspects. A product is flagged when its injuries rose clearly faster than all emergency visits, after checks for chance, small numbers and coding changes. It also reads the injury stories for new words that start appearing more often.</p>
+    <h3 id="hz-title">2025 signals, compared with 2024</h3>
+    <div class="tablewrap"><table class="hztable">
+      <thead><tr><th style="text-align:left">Product</th><th id="hz-h1">2024</th><th id="hz-h2">2025</th><th>Change</th><th style="text-align:left">Status</th><th style="text-align:left">What it means</th></tr></thead>
+      <tbody id="hz-rows">
+        <tr><td style="text-align:left"><b>E-bikes</b></td><td>59,600</td><td>102,600</td><td>+72%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Largest real rise. Admissions also rose, but too few cases to pass the strict test alone.</td></tr>
+        <tr><td style="text-align:left"><b>Powered scooters (e-scooters)</b></td><td>118,500</td><td>165,700</td><td>+40%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">Second year of fast growth in injury-story wording (&quot;e-scooter&quot;).</td></tr>
+        <tr><td style="text-align:left"><b>Power workshop grinders, buffers or polishers</b></td><td>10,200</td><td>18,800</td><td>+85%</td><td style="text-align:left"><span class="hz signal">Signal</span></td><td style="text-align:left">New signal, spread across many hospitals. Worth a closer look at the stories.</td></tr>
+        <tr><td style="text-align:left"><b>Infant and toddler play centers</b></td><td>400</td><td>1,600</td><td>+304%</td><td style="text-align:left"><span class="hz check">Check</span></td><td style="text-align:left">Small numbers (49 sampled cases in 2025). Could be a real rise or a coding change.</td></tr>
+        <tr><td style="text-align:left"><b>Floors or flooring materials</b></td><td>1.86 M</td><td>3.08 M</td><td>+66%</td><td style="text-align:left"><span class="hz coding">Coding</span></td><td style="text-align:left">Jump starts suddenly in April 2025 at most hospitals: most likely a coding change, not a real rise.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">National estimates of emergency department visits, rounded. Each flag passed a false-discovery check (Benjamini&ndash;Hochberg, 5%) across all products. "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
+  </section>
+  <section class="card">
+    <h2>Would it have caught e-bikes early?</h2>
+    <p class="desc">Yes, through the injury stories. Words such as "electric bike" and "e-bike" rose faster than all stories every year from 2021, three years before CPSC created a separate e-bike product code in 2024. Checked on its own, the old moped and power-assisted cycle code (where e-bikes were counted) also rose in 2021&ndash;2023; in the all-product scan those yearly numbers were too uncertain to pass the strict test, which is why the word check matters.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th style="text-align:left">Year</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+      <tbody><tr><td style="text-align:left">Stories with e-bike wording</td><td>55</td><td>106</td><td>269</td><td>488</td><td>711</td><td>1,108</td><td>2,124</td></tr></tbody>
+    </table></div>
+    <p class="note">Mentions of "e-bike", "ebike", "electric bike" and "electric bicycle" in sampled stories (a story can use more than one). First flagged in 2021. The scan also flagged e-scooter injuries in 2021 (+74%), the first year after their new code, and "water beads" in 2023.</p>
+  </section>
+  <section class="card">
+    <h2>Download the results</h2>
+    <p class="desc">Every product and every year, with 95% uncertainty, the flag list, the new-word lists and the code-change table (CSV files).</p>
+    <p class="actions">
+      <a class="btn primary" href="NEISS-AI_Hazard_Watch_2025.pdf">Hazard Watch 2025 brief (PDF)</a>
+      <a class="btn" href="data/hazards/hazard_flags.csv" download>All flags, 2020&ndash;2025</a>
+      <a class="btn" href="data/hazards/hazard_scan_2025.csv" download>All products, 2025</a>
+      <a class="btn" href="data/hazards/hazard_words_2025.csv" download>New words, 2025</a>
+      <a class="btn" href="data/hazards/code_changes.csv" download>CPSC code changes</a>
+    </p>
+    <p class="note">Earlier years: <a href="data/hazards/hazard_scan_2024.csv" download>2024</a> · <a href="data/hazards/hazard_scan_2023.csv" download>2023</a> · <a href="data/hazards/hazard_scan_2022.csv" download>2022</a> · <a href="data/hazards/hazard_scan_2021.csv" download>2021</a> · <a href="data/hazards/hazard_scan_2020.csv" download>2020</a>. Source: NEISS-AI (Kumar, 2026), doi:10.5281/zenodo.23306744.</p>
+  </section>
+  <section class="card">
+    <h2>Limits, and how to run it yourself</h2>
+    <p class="desc">National and yearly by default: a single month is much less sensitive (for e-bikes in 2025, one month needs about a 50% rise to be detected, a full year about 28%). 2024 shows no flags because NEISS hospital weights rose sharply that year. 2020&ndash;2021 are pandemic years, so many sports and activity products swing up and down. Coding practice can look like a hazard (floors in 2025). Emergency visits only, so all counts are a floor.</p>
+<pre><code>pip install -U neissai
+neissai download --years 2019-2025 --data-dir data
+neissai hazard-export --years 2019-2025 --data-dir data
+neissai hazards --years 2020-2025</code></pre>
   </section>
 </section>
 
@@ -866,8 +920,31 @@ async function doSearch(q,dev){
 }
 document.getElementById('searchform').addEventListener('submit',e=>{e.preventDefault();const q=document.getElementById('searchq').value, dev=document.getElementById('searchdev').value;setHash('search',{q,dev});doSearch(q,dev);});
 
+/* ---------- Hazard Watch: show the newest year when the monthly refresh has rescanned ---------- */
+const HZ_STATIC_YEAR=2025;
+const HZ_WHY={Signal:'Rose faster than all emergency visits and passed the strict checks. Read the stories to see why.',
+  Check:'Small numbers. Could be a real rise or a coding change; read the stories before drawing conclusions.',
+  Coding:'Most likely a change in how hospitals record these injuries, not a real rise.'};
+function hzNum(x){return x>=1e6?(x/1e6).toFixed(2)+' M':(Math.round(x/100)*100).toLocaleString('en-US');}
+async function loadHazardSummary(){
+  try{
+    const r=await fetch('data/hazards/summary.json',{cache:'no-store'}); if(!r.ok) return;
+    const s=await r.json(); if(!s||!s.year||s.year===HZ_STATIC_YEAR||!Array.isArray(s.signals)) return;
+    document.getElementById('hz-title').textContent=`${s.year} signals, compared with ${s.base_year}`;
+    document.getElementById('hz-h1').textContent=String(s.base_year); document.getElementById('hz-h2').textContent=String(s.year);
+    const tb=document.getElementById('hz-rows'); tb.textContent='';
+    if(!s.signals.length){tb.appendChild(h('tr',null,h('td',{colspan:'6',style:'text-align:left',text:'No product passed the strict checks this year.'})));return;}
+    s.signals.forEach(x=>tb.appendChild(h('tr',null,
+      h('td',{style:'text-align:left'},h('b',{text:x.name})), h('td',{text:hzNum(x.before)}), h('td',{text:hzNum(x.after)}),
+      h('td',{text:(x.pct>=0?'+':'')+Math.round(x.pct*100)+'%'}),
+      h('td',{style:'text-align:left'},h('span',{class:'hz '+x.status.toLowerCase(),text:x.status})),
+      h('td',{style:'text-align:left',text:HZ_WHY[x.status]||''}))));
+  }catch(e){/* keep the built-in table */}
+}
+loadHazardSummary();
+
 /* ---------- tabs + routing ---------- */
-const TABS=['overview','ask','explore','search','about'];
+const TABS=['overview','ask','explore','search','hazards','about'];
 let currentTab='overview', suppressHash=false;
 function showTab(name){
   currentTab=name;

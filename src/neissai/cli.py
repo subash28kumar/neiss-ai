@@ -3,6 +3,8 @@
     neissai download     --years 2019-2025 --data-dir data
     neissai micromobility --years 2019-2025 --data-dir data --out-dir results
     neissai classify "14YOM RIDING ELECTRIC BIKE FELL OFF"
+    neissai hazard-export --years 2019-2025 --data-dir data --out-dir neissai_hazard_export
+    neissai hazards --export-dir neissai_hazard_export --years 2020-2025 --out-dir hazards
 """
 from __future__ import annotations
 
@@ -16,7 +18,7 @@ from . import __version__
 from .classifier import EbikeMopedClassifier
 from .devices import DEVICES, add_outcomes, label_devices
 from .estimate import national_estimates, shares
-from .io import download, read_neiss
+from .io import download, parse_years, read_neiss
 
 
 def _fmt(x: float) -> str:
@@ -69,6 +71,29 @@ def cmd_classify(a: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_hazards(a: argparse.Namespace) -> int:
+    from . import hazards
+    data = hazards.read_hazard_export(a.export_dir)
+    years = parse_years(a.years)
+    counts = hazards.write_scan_outputs(data, a.out_dir, years, cluster=a.cluster)
+    print("Emerging-hazard scan: products flagged (excess rise over all-NEISS volume, BH-FDR 5%)")
+    for y in years:
+        c = counts.get(y, {})
+        print(f"  {y}: ED visits {int(c.get('ed_visits', 0))}, admissions {int(c.get('admissions', 0))}"
+              + ("  (pandemic year, interpret with caution)" if y in hazards.PANDEMIC_YEARS else ""))
+    print(f"Saved results to {Path(a.out_dir).resolve()}")
+    return 0
+
+
+def cmd_hazard_export(a: argparse.Namespace) -> int:
+    from . import hazards
+    df = read_neiss(a.data_dir, a.years)
+    out = hazards.build_hazard_export(df, a.out_dir)
+    print(f"Saved clusters.csv, psu.csv and terms.csv for {len(df):,} records to {out.resolve()}")
+    print(f"Next: neissai hazards --export-dir {a.out_dir}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="neissai", description="AI-assisted national injury estimates from NEISS narratives.")
     ap.add_argument("--version", action="version", version=f"neissai {__version__}")
@@ -89,6 +114,20 @@ def main(argv: list[str] | None = None) -> int:
     c = sub.add_parser("classify", help="e-bike vs moped probability for narrative text")
     c.add_argument("text", nargs="+")
     c.set_defaults(func=cmd_classify)
+
+    e = sub.add_parser("hazard-export", help="make the hazard scan's input tables from downloaded NEISS files")
+    e.add_argument("--years", default="2019-2025")
+    e.add_argument("--data-dir", default="data")
+    e.add_argument("--out-dir", default="neissai_hazard_export")
+    e.set_defaults(func=cmd_hazard_export)
+
+    h = sub.add_parser("hazards", help="emerging-hazard scan of every product code (run hazard-export first)")
+    h.add_argument("--export-dir", default="neissai_hazard_export",
+                   help="folder with clusters.csv, psu.csv and terms.csv")
+    h.add_argument("--years", default="2020-2025", help="years to compare with the year before")
+    h.add_argument("--out-dir", default="hazards")
+    h.add_argument("--cluster", default="hospital", choices=["hospital", "stratum_psu"])
+    h.set_defaults(func=cmd_hazards)
 
     a = ap.parse_args(argv)
     return a.func(a)

@@ -64,6 +64,27 @@ Check a single story:
 neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"
 ```
 
+## Emerging-hazard scan (Hazard Watch)
+
+New in v1.6.0. Checks **every NEISS product code** (about 800) and flags products whose injuries rose clearly faster than all emergency visits, after strict checks (design-based standard errors, Benjamini–Hochberg false discovery rate across all products, CPSC's reporting rule, and automatic handling of CPSC product-code changes). It also lists new words in the injury stories that started appearing more often.
+
+```
+neissai download --years 2019-2025 --data-dir data
+neissai hazard-export --years 2019-2025 --data-dir data --out-dir neissai_hazard_export
+neissai hazards --export-dir neissai_hazard_export --years 2020-2025 --out-dir hazards
+```
+
+| File | Contents |
+|---|---|
+| `hazard_scan_<year>.csv` | every product: estimates for both years, excess change, 95% uncertainty, minimum detectable change, q-value, flag |
+| `hazard_flags.csv` | flagged products, all years |
+| `hazard_words_<year>.csv` | short reading list of product and device words in the stories that rose faster than all stories |
+| `emerging_terms_<year>.csv` | every word that passed the screen, with its category (product, clinical, writing style) |
+| `watch_list.csv` | products chosen in advance (e-bikes, e-scooters, mopeds), tested on their own |
+| `code_changes.csv` | product codes that start or stop between years |
+
+2025 results: e-bikes (+72%), e-scooters (+40%) and power workshop grinders (+85%) are flagged; floors are flagged but most likely reflect a 2025 coding change. Looking back, e-bike wording in the stories rose every year from 2021, three years before CPSC's separate e-bike code. Method and limits: `validation/METHODS_hazard_scan.md`. Two-page summary: `docs/NEISS-AI_Hazard_Watch_2025.pdf`. The website's Hazard Watch tab has all result tables and updates itself when CPSC publishes a new year (the monthly refresh reruns the scan).
+
 ## Use from Python
 
 ```python
