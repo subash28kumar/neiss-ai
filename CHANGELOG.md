@@ -2,6 +2,10 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11
+- New: CDC age groups (5–9, 10–14, 15–19) and tween/teen groups (11–14, 15–17) in the Explore tab's Age menu. Children's numbers can now be compared directly with CDC injury reports and with school-age groups. Any other age range still works in "Ask a question" (for example "e-bike injuries ages 10 to 14 in 2025").
+- Fix: the CPSC micromobility report (2017–2024) is now dated correctly as April 2026.
+
 ## v1.6.1 — 2026-11-08
 - Hazard Watch now gives **per-population rates**: ED visits (and admissions) per 100,000 US residents for both years, with a 95% range for the newer year (`rate_base`, `rate`, `rate_low`, `rate_high` in every `hazard_scan_<year>.csv`). Population: US Census Bureau July 1 estimates (Vintage 2025 for 2020–2025; intercensal 2010–2020 series for 2019), in `model/us_population.csv`; years without a population row get no rate.
 - 2025 rates per 100,000: e-bikes 17.5 → 30.0, e-scooters 34.9 → 48.5, power workshop grinders 3.0 → 5.5.
