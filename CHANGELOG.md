@@ -2,6 +2,9 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-17 (2)
+- New: **one-page report (PDF)** for any Explore view and any Ask answer. It opens a print-ready page with the key numbers, the chart (always in light colours), a compact table (each cell is the estimate with its 95% confidence interval), a short "what these numbers mean" note and the citation with a link back to the exact view; "Print / Save as PDF" saves it. The title can be edited before printing. Fits on one US Letter page and works on phones, tablets and computers.
+
 ## Website update — 2026-11-17
 - New: **Request a free custom analysis.** A short call-to-action on the Overview ("Need numbers for a report, grant, presentation or news story?") with buttons to Ask a question, Explore the data or request a custom analysis; a request box under every Explore view and every Ask answer; and a "Request a free custom analysis" section in How it works (what can and cannot be answered from NEISS). The request opens an email with the current view or question and a link already filled in.
 - New: Explore now shows a citation line for the current view, with a "Copy citation" button.
