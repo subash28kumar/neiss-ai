@@ -272,6 +272,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="dlcsv" type="button">Download CSV</button>
       <button class="btn" id="sharelink" type="button">Copy link to this view</button>
+      <button class="btn primary" type="button" data-report="explore">One-page report (PDF)</button>
     </div>
     <p class="citeline" id="excite"></p>
     <div class="reqbox">
@@ -780,6 +781,127 @@ function paramsToExplore(p){
 document.getElementById('dlcsv').addEventListener('click',()=>downloadCSV('tbx'));
 document.getElementById('sharelink').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(location.href);e.target.textContent='Link copied';setTimeout(()=>e.target.textContent='Copy link to this view',1500);}catch(err){prompt('Copy this link:',location.href);}});
 
+/* ---------- one-page report (opens a print-ready page; "Save as PDF" in the print dialog) ---------- */
+const escH=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function svgForReport(hostId){
+  const host=document.getElementById(hostId); const svg=host&&host.querySelector('svg'); if(!svg) return '';
+  const vb=svg.viewBox.baseVal; const clone=svg.cloneNode(true); inlineStyles(svg,clone);
+  clone.setAttribute('xmlns',NS); clone.setAttribute('width','100%'); clone.removeAttribute('height');
+  clone.setAttribute('viewBox',`0 0 ${vb.width} ${vb.height}`); clone.setAttribute('preserveAspectRatio','xMidYMid meet');
+  return new XMLSerializer().serializeToString(clone);
+}
+function legendForReport(id){
+  const L=document.getElementById(id); if(!L) return '';
+  return [...L.querySelectorAll('span')].map(sp=>{const i=sp.querySelector('i');let mark;
+    if(i&&i.classList.contains('hollow')) mark='<i style="display:inline-block;width:9px;height:9px;border:2px solid #777;border-radius:50%"></i>';
+    else if(i&&i.classList.contains('rect')) mark=`<i style="display:inline-block;width:11px;height:11px;border-radius:2px;background:${escH(getComputedStyle(i).backgroundColor)}"></i>`;
+    else mark=`<i style="display:inline-block;width:18px;border-top:2px solid ${escH(i?getComputedStyle(i).color:'#555')}"></i>`;
+    return `<span>${mark} ${escH(sp.textContent.trim())}</span>`;}).join('');
+}
+function collectReport(kind){
+  const r={kind,link:location.href,notes:[]};
+  if(kind==='explore'){
+    const parts=describe(EX);
+    r.title=(EX.devices.length===R.devices.length?'Micromobility':EX.devices.map(d=>R.devices[d]).join(', '))+' injuries treated in US emergency departments';
+    r.subtitle=parts.join(' · ');
+    r.tiles=[...document.querySelectorAll('#extiles .tile')].map(t=>({label:t.querySelector('.label').textContent,num:t.querySelector('.num').textContent,sub:t.querySelector('.sub').textContent}));
+    r.chart=svgForReport('cx'); r.legend=legendForReport('lgx');
+    // compact table: one row per device, one column per year; each cell = estimate with its 95% CI under it
+    const yrs=[...new Set(lastRows.map(x=>x[1]))], devs=[...new Set(lastRows.map(x=>x[0]))];
+    r.head=['Device',...yrs.map(String)];
+    r.rows=devs.map(d=>[d,...yrs.map(y=>{const x=lastRows.find(z=>z[0]===d&&z[1]===y);
+      return x?{html:`${escH(fmt(x[2]))}${x[6]==='yes'?'*':''}<br><span class="cil">${escH(fmt(x[3]))}–${escH(fmt(x[4]))}</span>`}:'';})]);
+    r.tableNote='Each cell: estimated visits, with the 95% confidence interval below. * = unstable estimate (CPSC rule). Full table with record counts: CSV download on the website.';
+    const n=document.getElementById('exnote').textContent.replace(/^Showing:[^.]*\.\s*/,''); if(n) r.notes.push(n);
+  } else {
+    const out=document.getElementById('askout');
+    const q=document.getElementById('askq').value.trim();
+    r.title=q||'NEISS-AI answer'; r.subtitle='Answer to a plain-English question, computed from NEISS records';
+    r.answer=(out.querySelector('.answer .big')||{}).textContent||''; r.ci=(out.querySelector('.answer .ci')||{}).textContent||'';
+    r.understood=[...out.querySelectorAll('.understood .tag')].map(t=>t.textContent);
+    out.querySelectorAll('.warnbox').forEach(w=>r.notes.push(w.textContent));
+    r.chart=svgForReport('askchart'); r.legend='';
+  }
+  return r;
+}
+function reportHtml(r){
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const maxRows=20, rows=r.rows||[], shown=rows.slice(0,maxRows);
+  const swCite=(document.getElementById('cite-sw')||{}).innerText||'';
+  const tiles=(r.tiles||[]).map(t=>`<div class="tile"><div class="tl">${escH(t.label)}</div><div class="tn">${escH(t.num)}</div><div class="ts">${escH(t.sub)}</div></div>`).join('');
+  const table=shown.length?`<div class="tw"><table><thead><tr>${r.head.map(x=>`<th>${escH(x)}</th>`).join('')}</tr></thead><tbody>${shown.map(row=>`<tr>${row.map(c=>`<td>${c&&c.html!=null?c.html:escH(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`+(r.tableNote?`<p class="small">${escH(r.tableNote)}</p>`:'')+(rows.length>maxRows?`<p class="small">Showing ${maxRows} of ${rows.length} rows. The full table is in the CSV download on the website (link below).</p>`:''):'';
+  const answer=r.kind==='ask'?`<div class="answer"><p class="big">${escH(r.answer)}</p><p class="ci">${escH(r.ci)}</p>${r.understood&&r.understood.length?`<p class="small">Understood as: ${r.understood.map(escH).join(' · ')}</p>`:''}</div>`:'';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escH(r.title)} - NEISS-AI report</title>
+<style>
+@page{size:letter;margin:0.5in}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1b1b1b;margin:0;background:#eef0f3}
+.page{background:#fff;max-width:8.5in;margin:16px auto;padding:0.5in;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+.bar{max-width:8.5in;margin:12px auto 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
+.bar button{font:inherit;font-weight:600;border-radius:8px;padding:9px 14px;border:1px solid #c9ced6;background:#fff;cursor:pointer}
+.bar button.primary{background:#2a78d6;border-color:#2a78d6;color:#fff}
+.kicker{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2a78d6;font-weight:700;margin:0}
+h1{font-size:22px;line-height:1.25;margin:4px 0 2px;outline:none}
+h1:hover{background:#fffbe6}
+.sub{font-size:13px;color:#555;margin:0 0 4px}
+.meta{font-size:11px;color:#777;margin:0 0 12px}
+.tiles{display:flex;gap:10px;margin:8px 0 12px}
+.tile{flex:1;border:1px solid #dde1e6;border-radius:8px;padding:8px 10px}
+.tl{font-size:11px;color:#555}.tn{font-size:22px;font-weight:700;margin:2px 0}.ts{font-size:10.5px;color:#666}
+.answer{border-left:3px solid #2a78d6;padding:2px 0 2px 12px;margin:8px 0 12px}
+.answer .big{font-size:16px;font-weight:600;margin:0 0 4px}.answer .ci{font-size:12px;color:#555;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11.5px;color:#444;margin:4px 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.chart svg{width:100%;height:auto;max-height:${rows.length>4?'2.6in':'3.1in'}}
+.cil{font-size:8.5px;color:#777}
+table{border-collapse:collapse;width:100%;font-size:10px;margin:6px 0 4px}
+th,td{border-bottom:1px solid #e3e6ea;padding:2px 6px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{background:#f3f5f8;font-weight:600}
+h2{font-size:13px;margin:12px 0 4px}
+ul{margin:0;padding-left:18px;font-size:11px;color:#333}
+.small{font-size:10.5px;color:#666;margin:2px 0}
+.cite{background:#eaf2fd;border:1px solid #c9dcf5;border-radius:6px;padding:8px 10px;font-size:10.5px;margin-top:10px;overflow-wrap:anywhere}
+.foot{font-size:9.5px;color:#888;margin-top:8px}
+@media screen and (max-width:700px){.page{padding:16px;margin:8px}.tiles{flex-wrap:wrap}.tile{min-width:45%}.tw{overflow-x:auto}.bar{padding:0 8px}}
+.tw{max-width:100%}
+@media print{body{background:#fff}.bar{display:none}.page{box-shadow:none;margin:0;max-width:none;padding:0}h1:hover{background:none}}
+</style></head><body>
+<div class="bar"><button class="primary" onclick="window.print()">Print / Save as PDF</button><button onclick="window.close()">Close</button><span>Tip: click the title to edit it before printing. In the print window choose "Save as PDF".</span></div>
+<div class="page">
+<p class="kicker">NEISS-AI · National injury estimate</p>
+<h1 contenteditable="true" spellcheck="false">${escH(r.title)}</h1>
+<p class="sub">${escH(r.subtitle||'')}</p>
+<p class="meta">Prepared ${escH(today)} with NEISS-AI · Data: US Consumer Product Safety Commission, NEISS</p>
+${answer}${tiles?`<div class="tiles">${tiles}</div>`:''}
+${r.legend?`<div class="legend">${r.legend}</div>`:''}${r.chart?`<div class="chart">${r.chart}</div>`:''}
+${table}
+${r.notes.length?`<p class="small">${r.notes.map(escH).join(' ')}</p>`:''}
+<h2>What these numbers mean</h2>
+<ul>
+<li>National estimates of injuries treated in US hospital emergency departments, from a national sample of about 100 hospitals (CPSC NEISS), with 95% confidence intervals.</li>
+<li>"Unstable" estimates rest on few records or have wide intervals (CPSC's rule): treat them as rough.</li>
+<li>These are counts of emergency visits, not risk per rider, and NEISS has no state or city information.</li>
+</ul>
+<div class="cite"><b>Please cite:</b> ${escH(swCite)}<br>${escH(citeLine())}<br><b>This view:</b> ${escH(r.link)}</div>
+<p class="foot">NEISS-AI is free and open source (https://subash28kumar.github.io/neiss-ai/). An independent project; CPSC does not endorse it. Need a different breakdown? Request a free custom analysis on the website.</p>
+</div>
+<script>window.addEventListener('load',function(){setTimeout(function(){try{window.focus();window.print();}catch(e){}},500);});<\/script>
+</body></html>`;
+}
+function makeReport(kind){
+  if(!R) return;
+  const root=document.documentElement, oldTheme=root.getAttribute('data-theme');
+  root.setAttribute('data-theme','light'); redraw();             // print in light colours whatever the screen theme
+  let r; try{ r=collectReport(kind); } finally { if(oldTheme) root.setAttribute('data-theme',oldTheme); else root.removeAttribute('data-theme'); redraw(); }
+  const w=window.open('','_blank');
+  if(!w){ const b=document.querySelector(`[data-report="${kind}"]`); if(b){b.textContent='Allow pop-ups for this site, then tap again';} return; }
+  w.document.open(); w.document.write(reportHtml(r)); w.document.close();
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'report-'+kind,title:'One-page report',event:true});}catch(e){}
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-report]'); if(b) makeReport(b.dataset.report);});
+
 /* ---------- free data pack (Google Form; the email it sends carries the citation) ---------- */
 const PACK_FORM='';
 (function(){if(!PACK_FORM) return;
@@ -950,6 +1072,7 @@ function askAnswer(q){
   const open=h('button',{class:'btn',type:'button',style:'margin-top:10px'},'Open in Explore');
   open.addEventListener('click',()=>{Object.assign(EX,{devices:f.devices,y0:f.y0,y1:f.y1,age:f.age==='custom'?'all':f.age,sex:f.sex,body:f.body,diag:f.diag,outcome:mode==='share'?'any':f.outcome,circ:f.circ});showTab('explore');renderExplore(true);});
   out.appendChild(open);
+  out.appendChild(h('button',{class:'btn primary',type:'button','data-report':'ask',style:'margin:10px 0 0 8px'},'One-page report (PDF)'));
   out.appendChild(h('div',{class:'reqbox'},h('p',null,h('b',{text:'Need more than this answer?'}),' Request a free custom analysis: a table, chart or ready-to-use sentences for your report. I usually reply within 1–2 working days.'),
     h('p',{class:'actions'},h('a',{class:'btn primary',href:'#','data-req':'ask'},'Request a custom analysis'))));
 }
