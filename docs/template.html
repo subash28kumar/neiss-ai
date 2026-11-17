@@ -904,7 +904,7 @@ function makeReport(kind){
 document.addEventListener('click',e=>{const b=e.target.closest('button[data-report]'); if(b) makeReport(b.dataset.report);});
 
 /* ---------- free data pack (Google Form; the email it sends carries the citation) ---------- */
-const PACK_FORM='';
+const PACK_FORM='https://docs.google.com/forms/d/e/1FAIpQLSf89w13Auhd_B3DOoOQaraIuMT8ha4UMxaEI6Yd42d_F3gtGg/viewform';
 (function(){if(!PACK_FORM) return;
   document.querySelectorAll('a[data-packform]').forEach(a=>{a.href=PACK_FORM;a.target='_blank';a.rel='noopener';a.hidden=false;
     a.addEventListener('click',()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'datapack-form',title:'Data pack form',event:true});}catch(e){}});});
