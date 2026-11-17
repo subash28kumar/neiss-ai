@@ -314,6 +314,7 @@ a.btn{text-decoration:none;display:inline-block}
       </tbody>
     </table></div>
     <p class="note">National estimates of emergency department visits, rounded; rates are visits per 100,000 US residents (Census Bureau population estimates). Each flag passed a false-discovery check (Benjamini&ndash;Hochberg, 5%) across all products. "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
+    <p class="note"><b>Why is the e-bike number here (102,600 in 2025) a little different from the Overview (101,600)?</b> They are counted two ways. Hazard Watch compares CPSC product codes, so it counts records with CPSC's e-bike code. The Overview and Explore use NEISS-AI's reading of each injury story to decide which records are e-bikes. The two differ by about 1%.</p>
   </section>
   <section class="card">
     <h2>Would it have caught e-bikes early?</h2>
@@ -391,7 +392,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   <section class="card" id="cite">
     <h2>Cite this tool</h2>
     <p class="desc">If NEISS-AI helps your research, teaching or reporting, please cite the software and the method paper.</p>
-    <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.4.0 [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23550272">https://doi.org/10.5281/zenodo.23550272</a></p>
+    <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23306744">https://doi.org/10.5281/zenodo.23306744</a></p>
     <p><button class="btn" type="button" data-copy="cite-sw">Copy software citation</button></p>
     <p class="cite" id="cite-pp">Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019–2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23354066">https://doi.org/10.5281/zenodo.23354066</a></p>
     <p><button class="btn" type="button" data-copy="cite-pp">Copy paper citation</button></p>
@@ -4113,9 +4114,9 @@ function ticksFor(max,n){if(!(max>0))max=1;const st=niceStep(max/n);const top=Ma
 function legend(id,items){const L=document.getElementById(id);L.textContent='';items.forEach(it=>{const i=document.createElement('i');if(it.rect){i.className='rect';i.style.background=it.color;}else if(it.hollow){i.className='hollow';}else{i.style.color=it.color;}L.appendChild(h('span',null,i,it.label));});}
 function table(id,head,rows){const W=document.getElementById(id);W.textContent='';const t=h('table');t.appendChild(h('tr',null,head.map(x=>h('th',{text:x}))));rows.forEach(r=>t.appendChild(h('tr',null,r.map(c=>h('td',{text:String(c)})))));W.appendChild(t);}
 /* ---------- table CSV download + citation ---------- */
-const TOOL_DOI='10.5281/zenodo.23550272';
+const TOOL_DOI='10.5281/zenodo.23306744';   // concept DOI: always the latest version, so every citation counts together
 const UNSTABLE_NOTE='unstable = yes if fewer than 20 records, an estimate under 1,200, or a coefficient of variation above 33% (CPSC rule).';
-function citeLine(){const v=(DATA&&DATA.version)||'1.4.0';return `Source: NEISS-AI v${v} (Kumar 2026), national estimates from CPSC NEISS. https://doi.org/${TOOL_DOI}. Accessed ${new Date().toISOString().slice(0,10)}.`;}
+function citeLine(){return `Source: NEISS-AI (Kumar 2026), national estimates from CPSC NEISS. https://doi.org/${TOOL_DOI}. Accessed ${new Date().toISOString().slice(0,10)}.`;}
 const CSVS={};
 function csvTools(id,title,head,rows,file,note){
   CSVS[id]={title,head,rows,file,note};

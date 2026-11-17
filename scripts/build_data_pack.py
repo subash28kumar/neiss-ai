@@ -34,7 +34,7 @@ def _cff():
 
 VERSION, DOI, TITLE = _cff()
 DOI_URL = f"https://doi.org/{DOI}"
-CITATION = f"Kumar S. {TITLE}. Version {VERSION} [software]. Zenodo; 2026. {DOI_URL}"
+CITATION = f"Kumar S. {TITLE} [software]. Zenodo; 2026. {DOI_URL}"   # concept DOI: same citation as the website
 SOURCE_LINE = f"Source: NEISS-AI (Kumar, 2026), {DOI_URL}. Data: US Consumer Product Safety Commission, NEISS."
 
 HDR_FILL = PatternFill("solid", fgColor="1F3864")

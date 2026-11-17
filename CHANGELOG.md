@@ -2,6 +2,10 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-17 (3)
+- Citation: the website, press page, BibTeX/RIS files, README, notebook and data pack now all cite NEISS-AI the same way, with the main DOI https://doi.org/10.5281/zenodo.23306744, which always resolves to the latest version, so every citation counts together.
+- Hazard Watch: a note explains why its 2025 e-bike number (102,600, counted by CPSC's e-bike product code) differs by about 1% from the Overview (101,600, from NEISS-AI's reading of each injury story).
+
 ## Website update — 2026-11-17 (2)
 - New: **one-page report (PDF)** for any Explore view and any Ask answer. It opens a print-ready page with the key numbers, the chart (always in light colours), a compact table (each cell is the estimate with its 95% confidence interval), a short "what these numbers mean" note and the citation with a link back to the exact view; "Print / Save as PDF" saves it. The title can be edited before printing. Fits on one US Letter page and works on phones, tablets and computers.
 
