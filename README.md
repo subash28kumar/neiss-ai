@@ -1,6 +1,6 @@
 # NEISS-AI
 
-[![Tests](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml/badge.svg)](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml) [![PyPI](https://img.shields.io/pypi/v/neissai)](https://pypi.org/project/neissai/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23550272.svg)](https://doi.org/10.5281/zenodo.23550272) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/subash28kumar/neiss-ai/blob/main/notebooks/NEISS-AI_Quickstart.ipynb)
+[![Tests](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml/badge.svg)](https://github.com/subash28kumar/neiss-ai/actions/workflows/tests.yml) [![PyPI](https://img.shields.io/pypi/v/neissai)](https://pypi.org/project/neissai/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23306744.svg)](https://doi.org/10.5281/zenodo.23306744) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/subash28kumar/neiss-ai/blob/main/notebooks/NEISS-AI_Quickstart.ipynb)
 
 **AI-assisted national injury estimates from US emergency department narratives.**
 
@@ -126,9 +126,9 @@ NEISS counts emergency department visits, not riders or miles, so results are co
 
 If you use NEISS-AI, please cite the software (see `CITATION.cff` or "Cite this repository" on GitHub):
 
-> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives. Version 1.4.0 [software]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23550272
+> Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives [software]. Zenodo; 2026. https://doi.org/10.5281/zenodo.23306744
 >
-> To cite all versions, use https://doi.org/10.5281/zenodo.23306744 (always resolves to the latest version).
+> This DOI always resolves to the latest version, so all citations count together. To cite one specific version, use that version's DOI on Zenodo.
 
 and the method paper:
 
