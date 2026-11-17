@@ -2,6 +2,11 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-17
+- New: **Request a free custom analysis.** A short call-to-action on the Overview ("Need numbers for a report, grant, presentation or news story?") with buttons to Ask a question, Explore the data or request a custom analysis; a request box under every Explore view and every Ask answer; and a "Request a free custom analysis" section in How it works (what can and cannot be answered from NEISS). The request opens an email with the current view or question and a link already filled in.
+- New: Explore now shows a citation line for the current view, with a "Copy citation" button.
+- New: **free data pack** (`docs/NEISS-AI_DataPack.xlsx`): the website's main national estimates in one Excel file (visits by device, age group and month; hospital stays; e-bike vs e-moto; latest Hazard Watch signals), with 95% confidence intervals and the citation and DOI link at the top of every sheet. Built by `scripts/build_data_pack.py`; the monthly refresh rebuilds it when a new NEISS year arrives (the refresh job now installs openpyxl). Visitors can get it by email through a short sign-up form (optional; every number stays free on the website).
+
 ## Website update — 2026-11
 - New: CDC age groups (5–9, 10–14, 15–19) and tween/teen groups (11–14, 15–17) in the Explore tab's Age menu. Children's numbers can now be compared directly with CDC injury reports and with school-age groups. Any other age range still works in "Ask a question" (for example "e-bike injuries ages 10 to 14 in 2025").
 - Fix: the CPSC micromobility report (2017–2024) is now dated correctly as April 2026.
