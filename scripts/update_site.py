@@ -90,6 +90,16 @@ try:
     print(f"Hazard Watch updated for {hz['year']}: {len(hz['signals'])} ED-visit signals.")
 except Exception as exc:  # pragma: no cover - keep the main refresh working
     print(f"::warning::Hazard Watch not updated: {exc}")
+# Data pack: the same numbers as one Excel file with the citation on every sheet (emailed to people who
+# ask for it). Skipped with a warning if it fails, so the rest of the refresh still publishes.
+try:
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location("build_data_pack", ROOT / "scripts" / "build_data_pack.py")
+    _mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    print("Data pack written:", _mod.build())
+except Exception as exc:  # pragma: no cover - keep the main refresh working
+    print(f"::warning::Data pack not updated: {exc}")
 html = (docs / "template.html").read_text().replace("/*DATA*/null", (docs / "data.json").read_text())
 (docs / "index.html").write_text(html)
 print(f"Site data updated for {min(available)}-{max(available)}: {info['records']:,} records.")

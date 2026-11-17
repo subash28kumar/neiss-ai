@@ -53,6 +53,7 @@ nav.tabs{display:flex;gap:4px;margin:24px 0 4px;border-bottom:1px solid var(--bo
 nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--text-2);cursor:pointer;white-space:nowrap}
 nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
 .panel[hidden]{display:none}
+[data-packform][hidden],.card[hidden]{display:none}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 4px}
 .tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
 .tile .label{font-size:13px;color:var(--text-2);margin:0 0 6px}
@@ -83,6 +84,9 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .note{font-size:13px;color:var(--text-3);margin:8px 0 0}
 .tbltools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
 .citeline{font-size:12px;color:var(--text-3);margin:6px 0 0;overflow-wrap:anywhere}
+.reqbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}
+.reqbox p{margin:0;font-size:14px;max-width:64ch}
+.reqbox .actions{margin:0}
 details{margin-top:12px}
 summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:600}
 table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px;font-variant-numeric:tabular-nums}
@@ -154,7 +158,7 @@ a.btn{text-decoration:none;display:inline-block}
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="custom">Request a free custom analysis</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -172,6 +176,10 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="tile"><p class="label">E-bike emergency visits, 2025</p><div class="num" id="t1"></div><div class="sub" id="t1s"></div></div>
     <div class="tile"><p class="label">Children (0–17) hurt on e-bikes, 2025</p><div class="num" id="t2"></div><div class="sub" id="t2s"></div></div>
     <div class="tile"><p class="label">E-scooter emergency visits, 2025</p><div class="num" id="t3"></div><div class="sub" id="t3s"></div></div>
+  </div>
+  <div class="reqbox" id="needbox">
+    <p><b>Need numbers for a report, grant, presentation or news story?</b> Ask a question in plain English, build your own table in Explore, or request a free custom analysis.</p>
+    <p class="actions"><button class="btn" type="button" data-tabgo="ask">Ask a question</button><button class="btn" type="button" data-tabgo="explore">Explore the data</button><a class="btn" href="#" data-packform hidden>Get the free data pack (Excel)</a><a class="btn primary" href="#about" data-goto="custom">Request a custom analysis</a></p>
   </div>
   <section class="card">
     <h2>Emergency department visits by device</h2>
@@ -264,6 +272,11 @@ a.btn{text-decoration:none;display:inline-block}
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="dlcsv" type="button">Download CSV</button>
       <button class="btn" id="sharelink" type="button">Copy link to this view</button>
+    </div>
+    <p class="citeline" id="excite"></p>
+    <div class="reqbox">
+      <p><b>Need a breakdown this view can't make?</b> For example, other age ranges, several filters at once, or a ready-to-use table for a report. Request a free custom analysis; I usually reply within 1–2 working days.</p>
+      <p class="actions"><a class="btn primary" href="#" data-req="explore">Request a custom analysis</a></p>
     </div>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbx"></div></details>
   </section>
@@ -385,6 +398,22 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
     <p><button class="btn" type="button" data-copy="cite-ds">Copy dataset citation</button></p>
     <p class="desc">For reference managers: <a class="btn" href="neiss-ai.bib" download>Download BibTeX</a> <a class="btn" href="neiss-ai.ris" download>Download RIS (EndNote, Zotero, Mendeley)</a></p>
     
+  </section>
+  <section class="card" id="datapack" hidden>
+    <h2>Get the free data pack by email</h2>
+    <p class="desc">All the main national estimates in one Excel file: visits by device, age group and month, hospital stays, e-bikes vs e-motos and the latest Hazard Watch signals, each with a 95% confidence interval and the citation on every sheet. Leave your email and it arrives in a minute, along with a few updates a year when new data comes out.</p>
+    <p class="actions"><a class="btn primary" href="#" data-packform>Get the free data pack</a></p>
+    <p class="note">Your email is used only for the data pack and NEISS-AI updates; it is never shared. Every number on this website stays free without signing up.</p>
+  </section>
+  <section class="card" id="custom">
+    <h2>Request a free custom analysis</h2>
+    <p class="desc">If the Ask and Explore tabs can't answer your question, I can run a custom analysis of the NEISS data for you, free of charge. I usually reply within 1–2 working days.</p>
+    <ul>
+      <li><b>What I can make:</b> national estimates for any mix of device (e-bike, e-scooter, bicycle and others), years, age range, sex, injury type and body part, with 95% confidence intervals; a table or chart for your report; and two or three ready-to-use sentences with a citation.</li>
+      <li><b>What NEISS cannot answer:</b> state or city numbers (NEISS is a national sample) and risk per rider or per mile (NEISS counts emergency visits, not riders).</li>
+    </ul>
+    <p class="actions"><a class="btn primary" href="#" data-req="about">Request a custom analysis</a></p>
+    <p class="note">Please include who you are, what you need and when you need it. All numbers come from the US Consumer Product Safety Commission's public NEISS data.</p>
   </section>
   <section class="card" id="feedback">
     <h2>How are you using NEISS-AI?</h2>
@@ -4392,6 +4421,8 @@ function renderExplore(push){
   lineChart('cx',series,{band:series.length<=3,aria:'Line chart of estimated visits by device and year for the selected filters'});
   document.getElementById('exnote').textContent=`Showing: ${describe(EX).join(' · ')}.`+(series.length>3?' Confidence bands are hidden when more than three devices are shown; they are in the table and CSV.':'');
   lastRows=[];series.forEach(s=>s.points.forEach(p=>lastRows.push([s.label,p.year,Math.round(p.est),Math.round(p.lo),Math.round(p.hi),p.n,p.unstable?'yes':'no'])));
+  const ec=document.getElementById('excite'); ec.textContent='';
+  ec.append(citeLine()+' View: '+describe(EX).join(', ')+'. ',h('button',{class:'btn',type:'button','data-citecopy':'1',style:'padding:2px 8px;font-size:12px',text:'Copy citation'}));
   table('tbx',['Device','Year','Estimate','95% CI low','95% CI high','Records','Unstable'],lastRows.map(r=>[r[0],r[1],fmt(r[2]),fmt(r[3]),fmt(r[4]),r[5].toLocaleString('en-US'),r[6]]));
   csvTools('tbx','NEISS-AI national estimates. Filters: '+describe(EX).join('; '),['device','year','estimate','ci_low','ci_high','records','unstable'],lastRows,'neissai_estimates.csv');
 }
@@ -4404,6 +4435,39 @@ function paramsToExplore(p){
 }
 document.getElementById('dlcsv').addEventListener('click',()=>downloadCSV('tbx'));
 document.getElementById('sharelink').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(location.href);e.target.textContent='Link copied';setTimeout(()=>e.target.textContent='Copy link to this view',1500);}catch(err){prompt('Copy this link:',location.href);}});
+
+/* ---------- free data pack (Google Form; the email it sends carries the citation) ---------- */
+const PACK_FORM='';
+(function(){if(!PACK_FORM) return;
+  document.querySelectorAll('a[data-packform]').forEach(a=>{a.href=PACK_FORM;a.target='_blank';a.rel='noopener';a.hidden=false;
+    a.addEventListener('click',()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'datapack-form',title:'Data pack form',event:true});}catch(e){}});});
+  const c=document.getElementById('datapack'); if(c) c.hidden=false;})();
+
+/* ---------- custom analysis requests ---------- */
+const REQ_TO='nivi05subhash@gmail.com';
+function reqMail(context){
+  const lines=['Name:','Organization:','What I need (devices, ages, years, outcome):','When I need it by:',
+    'How I will use it (report, grant, presentation, news story, class...):',''];
+  if(context) lines.push('Starting point: '+context);
+  lines.push('Link: '+location.href);
+  return 'mailto:'+REQ_TO+'?subject='+encodeURIComponent('NEISS-AI custom analysis request')+'&body='+encodeURIComponent(lines.join('\n'));
+}
+function reqContext(where){
+  if(where==='explore'&&R&&EX.devices) return 'Explore view - '+describe(EX).join(', ');
+  if(where==='ask'){const q=document.getElementById('askq').value.trim();return q?'Question - '+q:'';}
+  return '';
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[data-req]'); if(!a) return;
+  a.href=reqMail(reqContext(a.dataset.req));
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'request-custom-'+a.dataset.req,title:'Request custom analysis',event:true});}catch(err){}
+});
+document.querySelectorAll('button[data-tabgo]').forEach(b=>b.addEventListener('click',async()=>{
+  const t=b.dataset.tabgo; showTab(t);
+  if(t==='explore'){await loadRecords();if(!EX.devices)EX.devices=['E-bike','E-scooter','Kick scooter','Bicycle'].map(devIdx);renderExplore(true);}
+  else {setHash(t); if(t==='ask') document.getElementById('askq').focus();}
+  window.scrollTo({top:document.querySelector('nav.tabs').offsetTop,behavior:'smooth'});
+}));
 
 /* ---------- Ask (plain-English parser) ---------- */
 const EXAMPLES=['How many children were hurt on e-bikes in 2025?','How many teenagers broke a bone on an e-scooter in 2025?','What share of e-bike injuries led to a hospital stay for kids?','E-bike head injuries by year','How many e-scooter riders were hit by a car in 2024?','How many older adults were hurt on bicycles since 2022?'];
@@ -4542,6 +4606,8 @@ function askAnswer(q){
   const open=h('button',{class:'btn',type:'button',style:'margin-top:10px'},'Open in Explore');
   open.addEventListener('click',()=>{Object.assign(EX,{devices:f.devices,y0:f.y0,y1:f.y1,age:f.age==='custom'?'all':f.age,sex:f.sex,body:f.body,diag:f.diag,outcome:mode==='share'?'any':f.outcome,circ:f.circ});showTab('explore');renderExplore(true);});
   out.appendChild(open);
+  out.appendChild(h('div',{class:'reqbox'},h('p',null,h('b',{text:'Need more than this answer?'}),' Request a free custom analysis: a table, chart or ready-to-use sentences for your report. I usually reply within 1–2 working days.'),
+    h('p',{class:'actions'},h('a',{class:'btn primary',href:'#','data-req':'ask'},'Request a custom analysis'))));
 }
 document.getElementById('askform').addEventListener('submit',async e=>{e.preventDefault();const q=document.getElementById('askq').value;setHash('ask',{q});await loadRecords();askAnswer(q);});
 

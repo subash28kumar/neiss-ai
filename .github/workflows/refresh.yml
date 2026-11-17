@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install NEISS-AI
-        run: pip install -e .
+        run: pip install -e . openpyxl
       - name: Work out which years to try
         id: yrs
         run: |
