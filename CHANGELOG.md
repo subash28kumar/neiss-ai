@@ -2,6 +2,9 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-17 (4)
+- The "Get the free data pack" button is now live (Overview and How it works). It opens a short sign-up form; the data pack link and the citation arrive by email within a minute.
+
 ## Website update — 2026-11-17 (3)
 - Citation: the website, press page, BibTeX/RIS files, README, notebook and data pack now all cite NEISS-AI the same way, with the main DOI https://doi.org/10.5281/zenodo.23306744, which always resolves to the latest version, so every citation counts together.
 - Hazard Watch: a note explains why its 2025 e-bike number (102,600, counted by CPSC's e-bike product code) differs by about 1% from the Overview (101,600, from NEISS-AI's reading of each injury story).
