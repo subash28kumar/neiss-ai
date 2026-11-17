@@ -133,6 +133,9 @@ def build(out: Path = OUT) -> Path:
     for i, (t, kind) in enumerate(lines, 1):
         c = ws.cell(row=i, column=1, value=t)
         c.alignment = Alignment(wrap_text=True, vertical="top")
+        # explicit row height so long lines show in full in Excel Online too (it does not auto-fit wrapped rows)
+        if t and kind != "title":
+            ws.row_dimensions[i].height = 15 * max(1, -(-len(t) // 110))
         if kind == "title":
             c.font = Font(name=FONT, size=14, bold=True)
         elif kind == "head":
