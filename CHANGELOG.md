@@ -2,6 +2,11 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-18
+- New "Your state" tab: pick a state (or click it on the map) to see about how many e-bike, e-scooter and bicycle emergency department visits it would have if it matched the national pattern, for 2020-2025. Expected visits = national estimate x the state's share of the US population (US Census Bureau Vintage 2025, NST-EST2025-POP; states add up exactly to the US total). Clearly labelled as estimates, not counts, because NEISS has no state information. Includes a tile map, a copy-ready sentence for reports, a link to each state's view, a table for every state with CSV download, and a custom-analysis request.
+- Data pack: new "Expected by state" sheet with the same numbers.
+- Ask: questions that name a state now point to the Your state tab.
+
 ## Website update — 2026-11-17 (5)
 - "Used NEISS-AI? Tell me": the How it works section now invites people who used the numbers in a report, grant, safety plan, presentation, class or news story to send the link or title. The button opens an email with short fields already filled in (including whether the use may be mentioned on the site). The Cite section links to it, and every one-page report now ends with a short "Used these numbers in your work? Please tell me" line.
 
