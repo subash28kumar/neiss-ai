@@ -102,6 +102,9 @@ th{color:var(--text-2);font-weight:600}
 .status.done{color:var(--accent);border-color:var(--accent)}
 .status.next{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
 .acclist li{margin:6px 0}
+.playrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:10px 0 2px}
+.playcap{margin:0;font-size:15px;font-variant-numeric:tabular-nums}
+.playcap b{font-size:18px}
 .tile.tileon{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .maptitle{font-size:15px;margin:16px 0 6px}
 @media (max-width:720px){
@@ -202,6 +205,7 @@ a.btn{text-decoration:none;display:inline-block}
   <section class="card">
     <h2>Emergency department visits by device</h2>
     <p class="desc">Estimated US visits each year with 95% confidence bands. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
+    <div class="playrow"><button class="btn primary" type="button" id="playbtn" aria-controls="c1">&#9654; Play 2019 &rarr; 2025</button><p class="playcap" id="playcap" aria-live="polite"></p></div>
     <div class="legend" id="lg1"></div>
     <div class="chart" id="c1"></div>
     <div class="dlrow"><button class="btn dl embed" type="button" data-embed="devices" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
@@ -596,6 +600,7 @@ function lineChart(id, series, opts){
   const m={t:12,r:opts.right||100,b:30,l:52};
   const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':opts.aria},host);
   const years=series[0].points.map(p=>p.year);
+  const U=opts.upto==null?years.length-1:Math.min(opts.upto,years.length-1), P=s=>s.points.slice(0,U+1);
   const TK=ticksFor(Math.max(...series.flatMap(s=>s.points.map(p=>opts.band?p.hi:p.est))),4), ymax=TK.top;
   const x=y=>years.length===1? (m.l+W-m.r)/2 : m.l+(W-m.l-m.r)*(years.indexOf(y))/(years.length-1);
   const yS=v=>H-m.b-(H-m.t-m.b)*v/ymax;
@@ -603,21 +608,22 @@ function lineChart(id, series, opts){
   TK.t.forEach(v=>{const yy=yS(v);el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,'stroke-width':1},ax);txt(ax,opts.fmtAxis?opts.fmtAxis(v):fmtAxis(v),{x:m.l-8,y:yy+4,'text-anchor':'end'});});
   const every=years.length>1&&((W-m.l-m.r)/(years.length-1))<44?2:1;
   years.forEach((yv,i)=>{if((years.length-1-i)%every===0)txt(ax,String(yv),{x:x(yv),y:H-m.b+20,'text-anchor':'middle'});});
-  if(opts.band) series.forEach(s=>{const d=s.points.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.hi)}`).join('')+s.points.slice().reverse().map(p=>`L${x(p.year)},${yS(p.lo)}`).join('')+'Z';el('path',{d,fill:s.color,'fill-opacity':css('--band-op'),stroke:'none'},svg);});
+  if(opts.band) series.forEach(s=>{const d=P(s).map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.hi)}`).join('')+P(s).reverse().map(p=>`L${x(p.year)},${yS(p.lo)}`).join('')+'Z';el('path',{d,fill:s.color,'fill-opacity':css('--band-op'),stroke:'none'},svg);});
   series.forEach(s=>{
-    el('path',{d:s.points.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.est)}`).join(''),fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
-    s.points.forEach(p=>el('circle',{cx:x(p.year),cy:yS(p.est),r:4,fill:p.unstable?css('--surface'):s.color,stroke:p.unstable?s.color:css('--surface'),'stroke-width':2},svg));
+    el('path',{d:P(s).map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.est)}`).join(''),fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    P(s).forEach(p=>el('circle',{cx:x(p.year),cy:yS(p.est),r:4,fill:p.unstable?css('--surface'):s.color,stroke:p.unstable?s.color:css('--surface'),'stroke-width':2},svg));
   });
   if(opts.right!==0){
-    const ends=series.map(s=>({s,y:yS(s.points[s.points.length-1].est)})).sort((a,b)=>a.y-b.y);
+    const ends=series.map(s=>({s,y:yS(s.points[U].est)})).sort((a,b)=>a.y-b.y);
+    const lx=x(years[U]);
     for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<15) ends[i].y=ends[i-1].y+15;
-    ends.forEach(e=>txt(svg,e.s.label,{x:W-m.r+10,y:e.y+4,class:'dlabel'}));
+    ends.forEach(e=>txt(svg,e.s.label,{x:(U===years.length-1?W-m.r:lx)+10,y:e.y+4,class:'dlabel'}));
   }
   const hair=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:0},svg);
   const tip=h('div',{class:'tip'});host.appendChild(tip);
   const hit=el('rect',{x:m.l-20,y:m.t,width:W-m.l-m.r+40,height:H-m.t-m.b,fill:'transparent',tabindex:0},svg);
   function show(i){
-    const yv=years[i];const px=x(yv);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.setAttribute('opacity',1);
+    i=Math.min(i,U);const yv=years[i];const px=x(yv);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.setAttribute('opacity',1);
     tip.textContent='';tip.appendChild(h('div',{class:'t-h',text:String(yv)}));
     series.slice().sort((a,b)=>b.points[i].est-a.points[i].est).forEach(s=>{const p=s.points[i];
       const k=h('i');k.style.borderColor=s.color;
@@ -629,11 +635,11 @@ function lineChart(id, series, opts){
     const scale=host.clientWidth/W; let left=px*scale+14; if(left+tip.offsetWidth>host.clientWidth) left=px*scale-tip.offsetWidth-14;
     tip.style.left=Math.max(0,left)+'px';tip.style.top='8px';
   }
-  let cur=years.length-1;
+  let cur=U;
   const hide=()=>{tip.style.opacity=0;hair.setAttribute('opacity',0);};
   hit.addEventListener('pointermove',ev=>{const r=svg.getBoundingClientRect();const px=(ev.clientX-r.left)*W/r.width;let best=0,bd=1e9;years.forEach((yv,i)=>{const d=Math.abs(x(yv)-px);if(d<bd){bd=d;best=i;}});cur=best;show(best);});
   hit.addEventListener('pointerleave',hide);hit.addEventListener('focus',()=>show(cur));hit.addEventListener('blur',hide);
-  hit.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){cur=Math.min(years.length-1,cur+1);show(cur);}if(e.key==='ArrowLeft'){cur=Math.max(0,cur-1);show(cur);}});
+  hit.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){cur=Math.min(U,cur+1);show(cur);}if(e.key==='ArrowLeft'){cur=Math.max(0,cur-1);show(cur);}});
 }
 function barChart(id, groups, series, opts){
   const host=document.getElementById(id); host.textContent='';
@@ -665,6 +671,27 @@ function barChart(id, groups, series, opts){
 }
 
 /* ---------- overview (precomputed) ---------- */
+let C1S=null; const C1ARIA='Line chart of estimated US emergency department visits for e-bikes, e-scooters and kick scooters by year';
+const PLAY={on:false,timer:null};
+function playCap(i){
+  const eb=C1S[1].points, p=eb[i], c=document.getElementById('playcap'); c.textContent='';
+  if(i<eb.length-1){c.appendChild(h('b',{text:String(p.year)}));c.appendChild(document.createTextNode(` · e-bike visits: about ${fmt(p.est)}`+(p.unstable?' (few records, less certain)':'')));return;}
+  const f=eb[0], ratio=Math.round(p.est/f.est);
+  c.appendChild(h('b',{text:`About ${ratio} times more`}));
+  c.appendChild(document.createTextNode(` e-bike emergency visits: from about ${fmt(f.est)} in ${f.year} to ${fmt(p.est)} in ${p.year}.`+(f.unstable?` The ${f.year} number rests on few records, so it is less certain.`:'')));
+}
+function playStop(){clearTimeout(PLAY.timer);PLAY.on=false;const b=document.getElementById('playbtn');b.innerHTML='&#9654; Play again';}
+document.getElementById('playbtn').addEventListener('click',()=>{
+  if(!C1S) return;
+  if(PLAY.on){playStop();lineChart('c1',C1S,{band:true,aria:C1ARIA});return;}
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'play-trend',title:'Play 2019-2025',event:true});}catch(e){}
+  const n=C1S[1].points.length;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){lineChart('c1',C1S,{band:true,aria:C1ARIA});playCap(n-1);playStop();return;}
+  PLAY.on=true; document.getElementById('playbtn').innerHTML='&#9632; Stop';
+  let i=0; const step=()=>{lineChart('c1',C1S,{band:true,aria:C1ARIA,upto:i});playCap(i);
+    if(i<n-1){i++;PLAY.timer=setTimeout(step,1000);} else playStop();};
+  step();
+});
 function drawOverview(){
   const D=DATA, k=fmt;
   const get=dev=>D.by_device.filter(r=>r.device===dev).sort((a,b)=>a.year-b.year);
@@ -679,7 +706,8 @@ function drawOverview(){
   document.getElementById('t3').textContent=k(last(es).est);
   document.getElementById('t3s').textContent=`95% CI ${k(last(es).lo)}–${k(last(es).hi)}`;
   legend('lg1',[{label:'E-bike',color:css('--s1')},{label:'E-scooter',color:css('--s2')},{label:'Kick scooter',color:css('--s3')},{label:'Unstable estimate',hollow:true}]);
-  lineChart('c1',[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}],{band:true,aria:'Line chart of estimated US emergency department visits for e-bikes, e-scooters and kick scooters by year'});
+  C1S=[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}];
+  if(!PLAY.on) lineChart('c1',C1S,{band:true,aria:C1ARIA});
   const devs=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Skateboard','Moped / minibike'], years=eb.map(r=>r.year);
   table('tb1',['Device',...years.map(String)],devs.map(d=>[d,...years.map(y=>{const r=D.by_device.find(x=>x.device===d&&x.year===y);return r?k(r.est)+(r.unstable?'*':''):'';})]));
   const yn=b=>b?'yes':'no';

@@ -3,6 +3,7 @@
 All notable changes to NEISS-AI are listed here.
 
 ## Website update — 2026-11-18
+- Overview: new "Play 2019 → 2025" button draws the device chart one year at a time with a running caption, ending with the e-bike change since 2019 (and a note that the 2019 figure rests on few records). The axes stay fixed so years compare fairly; users who prefer reduced motion see the final chart at once.
 - Your state: the map now has a title naming the device and year it shows, and the matching number box is outlined ("shown on the map"), so the map is not confused with the other two boxes.
 - New "Accuracy" tab: one report card for every check in NEISS-AI (national e-bike totals vs CPSC's published figures, the e-bike/moped classifier, the e-bike/e-moto rule, motor vehicle and helmet reading, Hazard Watch back-testing, and how uncertainty is handled), with links to the methods notes and test files. It says plainly who made the answer keys (independent AI reviewers, not yet human experts), lists the known limits, and invites injury researchers to label the test stories blind ("Offer to help"). The "How it works" accuracy section now points to the new tab, and the header links to it.
 - Your state: real US map with state outlines (default), with labelled call-out boxes for the small eastern states (VT, NH, MA, RI, CT, NJ, DE, MD, DC) so they are easy to tap; the square grid stays available as "Grid (easier to tap)". Map shapes from us-atlas (US Census Bureau cartographic boundaries, ISC license).
