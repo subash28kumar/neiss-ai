@@ -102,6 +102,12 @@ th{color:var(--text-2);font-weight:600}
 .status.done{color:var(--accent);border-color:var(--accent)}
 .status.next{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
 .acclist li{margin:6px 0}
+.sband .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}
+.sband .sbig{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0;color:var(--accent)}
+.sband .stext{font-size:16px;margin:6px 0 0;max-width:40ch}
+.people{display:flex;flex-wrap:wrap;gap:3px;margin:10px 0 2px;max-width:380px}
+.people svg{width:15px;height:30px}
+@media (max-width:720px){.sband .sgrid{grid-template-columns:1fr}.sband .sbig{font-size:28px}.people{gap:2px}.people svg{width:12px;height:24px}}
 .playrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:10px 0 2px}
 .playcap{margin:0;font-size:15px;font-variant-numeric:tabular-nums}
 .playcap b{font-size:18px}
@@ -198,6 +204,12 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="tile"><p class="label">Children (0–17) hurt on e-bikes, 2025</p><div class="num" id="t2"></div><div class="sub" id="t2s"></div></div>
     <div class="tile"><p class="label">E-scooter emergency visits, 2025</p><div class="num" id="t3"></div><div class="sub" id="t3s"></div></div>
   </div>
+  <section class="card sband" id="storyband" aria-label="The story in two facts">
+    <div class="sgrid">
+      <div class="sfact"><p class="sbig" id="sbEvery"></p><p class="stext" id="sbEveryT"></p><p class="note" id="sbEveryN"></p></div>
+      <div class="sfact"><p class="sbig" id="sbKids"></p><div class="people" id="sbPeople"></div><p class="stext" id="sbKidsT"></p><p class="note" id="sbKidsN"></p></div>
+    </div>
+  </section>
   <div class="reqbox" id="needbox">
     <p><b>Need numbers for a report, grant, presentation or news story?</b> Ask a question in plain English, build your own table in Explore, or request a free custom analysis.</p>
     <p class="actions"><button class="btn" type="button" data-tabgo="ask">Ask a question</button><button class="btn" type="button" data-tabgo="explore">Explore the data</button><button class="btn" type="button" data-tabgo="state">Your state</button><a class="btn" href="#" data-packform hidden>Get the free data pack (Excel)</a><a class="btn primary" href="#about" data-goto="custom">Request a custom analysis</a></p>
@@ -670,6 +682,26 @@ function barChart(id, groups, series, opts){
   });
 }
 
+/* ---------- overview story band ---------- */
+function drawStory(eb,es,kids){
+  const b=eb[eb.length-1], s=es[es.length-1], k=kids.find(r=>r.year===b.year), y=b.year;
+  const minsYear=((y%4===0&&y%100!==0)||y%400===0?366:365)*24*60, every=v=>minsYear/v;
+  const mE=Math.round(every(b.est)), mS=Math.round(every(s.est));
+  document.getElementById('sbEvery').textContent=`Every ${mE} minutes`;
+  document.getElementById('sbEveryT').textContent=`In ${y}, about every ${mE} minutes someone in the US went to an emergency department after an e-bike injury. For e-scooters: about every ${mS} minutes.`;
+  document.getElementById('sbEveryN').textContent=`From the national estimate of ${fmt(b.est)} e-bike visits in ${y}. Allowing for the 95% confidence interval (${fmt(b.lo)} to ${fmt(b.hi)}), between every ${Math.round(every(b.hi))} and every ${Math.round(every(b.lo))} minutes. This is an average over the year, not a live count.`;
+  const sh=k.est/b.est, n=Math.round(1/sh), oneIn=Math.abs(1/n-sh)<0.02;
+  document.getElementById('sbKids').textContent=oneIn?`1 in ${n}`:`${Math.round(sh*100)}%`;
+  document.getElementById('sbKidsT').textContent=`${oneIn?'1 in '+n:Math.round(sh*100)+'%'} people hurt on e-bikes in ${y} ${oneIn?'was':'were'} a child (age 0–17).`;
+  document.getElementById('sbKidsN').textContent=`About ${fmt(k.est)} of ${fmt(b.est)} e-bike emergency visits (${Math.round(sh*100)}%). Each figure stands for 5% of injured riders.`;
+  const P=document.getElementById('sbPeople');P.textContent='';P.setAttribute('role','img');
+  const lit=Math.round(sh*20);P.setAttribute('aria-label',`${lit} of 20 figures highlighted: children`);
+  const acc=css('--accent'), off=css('--text-3');
+  for(let i=0;i<20;i++){const sv=el('svg',{viewBox:'0 0 12 24','aria-hidden':'true'},P);const c=i<lit?acc:off, o=i<lit?1:.45;
+    el('circle',{cx:6,cy:4,r:3.2,fill:c,'fill-opacity':o},sv);
+    el('path',{d:'M2 9.5Q2 8 3.5 8H8.5Q10 8 10 9.5V15H8.3V23H6.6V17H5.4V23H3.7V15H2Z',fill:c,'fill-opacity':o},sv);}
+}
+
 /* ---------- overview (precomputed) ---------- */
 let C1S=null; const C1ARIA='Line chart of estimated US emergency department visits for e-bikes, e-scooters and kick scooters by year';
 const PLAY={on:false,timer:null};
@@ -704,6 +736,7 @@ function drawOverview(){
   document.getElementById('t2').textContent=k(last(kids).est);
   document.getElementById('t2s').textContent=`${(last(kids).est/yr(kids,2022).est).toFixed(0)}× the 2022 count · ${Math.round(last(kids).est/last(eb).est*100)}% of e-bike injuries`;
   document.getElementById('t3').textContent=k(last(es).est);
+  drawStory(eb,es,kids);
   document.getElementById('t3s').textContent=`95% CI ${k(last(es).lo)}–${k(last(es).hi)}`;
   legend('lg1',[{label:'E-bike',color:css('--s1')},{label:'E-scooter',color:css('--s2')},{label:'Kick scooter',color:css('--s3')},{label:'Unstable estimate',hollow:true}]);
   C1S=[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}];
