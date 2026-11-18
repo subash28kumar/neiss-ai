@@ -114,6 +114,8 @@ def build(out: Path = OUT) -> Path:
         (f"Hospital stays: share of ED visits that led to a hospital stay, by device and age group ({span} combined).", None),
         ("E-bike vs e-moto: e-bike visits split into regular e-bikes, likely e-motos and unclear stories.", None),
         ("By month: visits per month for bicycles, e-bikes and e-scooters.", None),
+        ("Expected by state: e-bike, e-scooter and bicycle visits each state would have if it matched the national "
+         "pattern (national estimate x the state's share of US population). These are estimates, not counts.", None),
         ("Hazard Watch: consumer products whose ED visits rose much faster than all ED visits in the latest year.", None),
         ("", None),
         ("About the numbers", "head"),
@@ -124,7 +126,8 @@ def build(out: Path = OUT) -> Path:
          "consistent across CPSC's 2024 product-code change), then uses the NEISS survey weights with "
          "Taylor-linearized 95% confidence intervals. Full method and code: " + SITE, None),
         ("Limits: these are counts of ED visits, not risk rates (the number of riders is not known). NEISS has no "
-         "state or city information. Early e-bike estimates (2019-2021) rest on small samples.", None),
+         "state or city information, so the 'Expected by state' sheet scales national rates by population. Early e-bike "
+         "estimates (2019-2021) rest on small samples.", None),
         ("", None),
         (f"Data updated: {updated}. NEISS-AI version {VERSION}. Free to use, share and adapt with the citation above.", None),
         (f"Need a different breakdown? Request a free custom analysis: {SITE}#about", None),
@@ -187,6 +190,35 @@ def build(out: Path = OUT) -> Path:
             for r in sorted(data["by_month"], key=lambda r: (r["device"], r["year"], r["month"]))]
     _table(ws, ["Year", "Month", "Device", "Estimated visits", "95% CI low", "95% CI high", "NEISS records", "Unstable"],
            rows, {4: "#,##0", 5: "#,##0", 6: "#,##0", 7: "#,##0"}, [8, 8, 12, 16, 13, 13, 14, 10])
+
+    # ---- Expected by state (national rate x state population; NOT counts)
+    pop_file = ROOT / "src" / "neissai" / "model" / "state_population.csv"
+    if pop_file.exists():
+        import csv
+        pops = list(csv.DictReader(pop_file.open(encoding="utf-8")))
+        us = {}
+        for r in pops:
+            us[r["year"]] = us.get(r["year"], 0) + int(r["population"])
+        nat = {(r["device"], str(r["year"])): r for r in data["by_device"]}
+        rows = []
+        for r in sorted(pops, key=lambda r: (r["state"], -int(r["year"]))):
+            for dev in ("E-bike", "E-scooter", "Bicycle"):
+                n = nat.get((dev, r["year"]))
+                if not n:
+                    continue
+                f = int(r["population"]) / us[r["year"]]
+                rows.append([r["state"], int(r["year"]), dev, int(r["population"]),
+                             round(n["est"] * f), round(n["lo"] * f), round(n["hi"] * f)])
+        ws = wb.create_sheet("Expected by state")
+        _top(ws, "Expected emergency department visits by state if each state matched the national pattern "
+                 "(ESTIMATES, NOT COUNTS)", updated, 7)
+        _table(ws, ["State", "Year", "Device", "Population (July 1)", "Expected visits", "Range low", "Range high"],
+               rows, {4: "#,##0", 5: "#,##0", 6: "#,##0", 7: "#,##0"}, [22, 8, 12, 18, 15, 12, 12])
+        note = 5 + len(rows) + 4
+        ws.cell(row=note, column=1, value="How calculated: national NEISS-AI estimate for that device and year x the "
+                "state's share of US population (US Census Bureau, Vintage 2025, NST-EST2025-POP). NEISS has no state "
+                "information, so real state numbers can be higher or lower. The range reflects only the uncertainty "
+                "in the national estimate.").font = Font(name=FONT, size=9, italic=True, color="555555")
 
     # ---- Hazard Watch (latest year)
     hz_file = DOCS / "data" / "hazards" / "summary.json"

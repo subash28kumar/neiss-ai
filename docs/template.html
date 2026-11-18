@@ -165,6 +165,7 @@ a.btn{text-decoration:none;display:inline-block}
   <button role="tab" id="tab-overview" aria-controls="p-overview" aria-selected="true">Overview</button>
   <button role="tab" id="tab-ask" aria-controls="p-ask" aria-selected="false">Ask a question</button>
   <button role="tab" id="tab-explore" aria-controls="p-explore" aria-selected="false">Explore the data</button>
+  <button role="tab" id="tab-state" aria-controls="p-state" aria-selected="false">Your state</button>
   <button role="tab" id="tab-search" aria-controls="p-search" aria-selected="false">Search injury stories</button>
   <button role="tab" id="tab-hazards" aria-controls="p-hazards" aria-selected="false">Hazard Watch</button>
   <button role="tab" id="tab-about" aria-controls="p-about" aria-selected="false">How it works</button>
@@ -179,7 +180,7 @@ a.btn{text-decoration:none;display:inline-block}
   </div>
   <div class="reqbox" id="needbox">
     <p><b>Need numbers for a report, grant, presentation or news story?</b> Ask a question in plain English, build your own table in Explore, or request a free custom analysis.</p>
-    <p class="actions"><button class="btn" type="button" data-tabgo="ask">Ask a question</button><button class="btn" type="button" data-tabgo="explore">Explore the data</button><a class="btn" href="#" data-packform hidden>Get the free data pack (Excel)</a><a class="btn primary" href="#about" data-goto="custom">Request a custom analysis</a></p>
+    <p class="actions"><button class="btn" type="button" data-tabgo="ask">Ask a question</button><button class="btn" type="button" data-tabgo="explore">Explore the data</button><button class="btn" type="button" data-tabgo="state">Your state</button><a class="btn" href="#" data-packform hidden>Get the free data pack (Excel)</a><a class="btn primary" href="#about" data-goto="custom">Request a custom analysis</a></p>
   </div>
   <section class="card">
     <h2>Emergency department visits by device</h2>
@@ -280,6 +281,33 @@ a.btn{text-decoration:none;display:inline-block}
       <p class="actions"><a class="btn primary" href="#" data-req="explore">Request a custom analysis</a></p>
     </div>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbx"></div></details>
+  </section>
+</section>
+
+<!-- ===== Your state ===== -->
+<section class="panel" id="p-state" role="tabpanel" aria-labelledby="tab-state" hidden>
+  <section class="card">
+    <h2>Expected injuries in your state</h2>
+    <p class="desc">Pick a state to see about how many emergency department visits it would have if it matched the national pattern: the national rate per person times the state's population. Click a state on the map or choose it from the list.</p>
+    <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates.</div>
+    <div class="filters">
+      <label class="field">State<select id="stSel" aria-label="State"></select></label>
+      <label class="field">Year<select id="stYear" aria-label="Year"></select></label>
+      <label class="field">Map shows<select id="stDev" aria-label="Device shown on the map"></select></label>
+    </div>
+    <div class="tiles" id="sttiles"></div>
+    <div class="chart" id="stmap" aria-label="Map of US states"></div>
+    <p class="note" id="stnote"></p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="stcopy" type="button">Copy a sentence for my report</button>
+      <button class="btn" id="stshare" type="button">Copy link to this state</button>
+    </div>
+    <p class="citeline" id="stcite"></p>
+    <div class="reqbox">
+      <p><b>Need more for your state?</b> For example, age groups, a different set of devices or years, or a short summary for a grant or briefing. Request a free custom analysis; I usually reply within 1–2 working days.</p>
+      <p class="actions"><a class="btn primary" href="#" data-req="state">Request a custom analysis</a></p>
+    </div>
+    <details><summary>Show the numbers for every state</summary><div class="tablewrap" id="tbst"></div></details>
   </section>
 </section>
 
@@ -926,6 +954,7 @@ function reqMail(context){
 function reqContext(where){
   if(where==='explore'&&R&&EX.devices) return 'Explore view - '+describe(EX).join(', ');
   if(where==='ask'){const q=document.getElementById('askq').value.trim();return q?'Question - '+q:'';}
+  if(where==='state'&&ST.abbr) return 'Your state view - '+STATE_POP[ST.abbr].n+', '+ST.year;
   return '';
 }
 document.addEventListener('click',e=>{
@@ -947,6 +976,7 @@ document.addEventListener('click',e=>{
 document.querySelectorAll('button[data-tabgo]').forEach(b=>b.addEventListener('click',async()=>{
   const t=b.dataset.tabgo; showTab(t);
   if(t==='explore'){await loadRecords();if(!EX.devices)EX.devices=['E-bike','E-scooter','Kick scooter','Bicycle'].map(devIdx);renderExplore(true);}
+  else if(t==='state'){renderState(true);}
   else {setHash(t); if(t==='ask') document.getElementById('askq').focus();}
   window.scrollTo({top:document.querySelector('nav.tabs').offsetTop,behavior:'smooth'});
 }));
@@ -1031,7 +1061,7 @@ function parseQuestion(q){
   if(/what share|what percent|percentage|proportion|how often|how likely|what fraction|\brate\b|chance/.test(t) && outcomeWord){mode='share';}
   else if(outcomeWord) f.outcome=outcomeWord;
   if(mode==='share') f.shareOutcome=outcomeWord;
-  if(STATES.test(t)) notes.push('NEISS has no state or city information, so this answer is for the whole United States.');
+  if(STATES.test(t)) notes.push('NEISS has no state or city information, so this answer is for the whole United States. For an estimate for one state based on national rates, open the Your state tab.');
   if(/battery|delivery|brake|pothole|dog|speed/.test(t)) notes.push('For words like these, try "Search injury stories" for a direct story search.');
   return {f,mode,trend,notes};
 }
@@ -1150,8 +1180,78 @@ async function loadHazardSummary(){
 }
 loadHazardSummary();
 
+/* ---------- Your state: expected visits = national estimate x state share of US population ---------- */
+const STATE_POP={"AL":{"n":"Alabama","p":{"2020":5032962,"2021":5050058,"2022":5076868,"2023":5117850,"2024":5163055,"2025":5193088}},"AK":{"n":"Alaska","p":{"2020":732906,"2021":734590,"2022":733659,"2023":734654,"2024":736537,"2025":737270}},"AZ":{"n":"Arizona","p":{"2020":7186647,"2021":7274022,"2022":7370065,"2023":7452073,"2024":7556424,"2025":7623818}},"AR":{"n":"Arkansas","p":{"2020":3014399,"2021":3027127,"2022":3047429,"2023":3069856,"2024":3096080,"2025":3114791}},"CA":{"n":"California","p":{"2020":39527808,"2021":39152927,"2022":39125347,"2023":39181667,"2024":39364774,"2025":39355309}},"CO":{"n":"Colorado","p":{"2020":5786873,"2021":5814368,"2022":5853355,"2023":5912240,"2024":5988502,"2025":6012561}},"CT":{"n":"Connecticut","p":{"2020":3579643,"2021":3607765,"2022":3618707,"2023":3641369,"2024":3674449,"2025":3688496}},"DE":{"n":"Delaware","p":{"2020":991890,"2021":1005130,"2022":1020279,"2023":1035354,"2024":1050123,"2025":1059952}},"DC":{"n":"District of Columbia","p":{"2020":670958,"2021":669637,"2022":674501,"2023":682559,"2024":691310,"2025":693645}},"FL":{"n":"Florida","p":{"2020":21591325,"2021":21836698,"2022":22413989,"2023":22929248,"2024":23265838,"2025":23462518}},"GA":{"n":"Georgia","p":{"2020":10732595,"2021":10793038,"2022":10929992,"2023":11063669,"2024":11204208,"2025":11302748}},"HI":{"n":"Hawaii","p":{"2020":1451130,"2021":1446909,"2022":1437812,"2023":1434950,"2024":1434952,"2025":1432820}},"ID":{"n":"Idaho","p":{"2020":1849328,"2021":1904855,"2022":1942951,"2023":1970497,"2024":2000872,"2025":2029733}},"IL":{"n":"Illinois","p":{"2020":12795348,"2021":12703354,"2022":12609577,"2023":12633389,"2024":12703033,"2025":12719141}},"IN":{"n":"Indiana","p":{"2020":6790290,"2021":6814223,"2022":6841491,"2023":6881373,"2024":6934754,"2025":6973333}},"IA":{"n":"Iowa","p":{"2020":3191081,"2021":3199037,"2022":3201890,"2023":3214739,"2024":3230454,"2025":3238387}},"KS":{"n":"Kansas","p":{"2020":2938274,"2021":2938966,"2022":2938034,"2023":2949749,"2024":2965252,"2025":2977220}},"KY":{"n":"Kentucky","p":{"2020":4508271,"2021":4508348,"2022":4521238,"2023":4549953,"2024":4584046,"2025":4606864}},"LA":{"n":"Louisiana","p":{"2020":4652145,"2021":4628595,"2022":4600892,"2023":4598777,"2024":4614878,"2025":4618189}},"ME":{"n":"Maine","p":{"2020":1364546,"2021":1379009,"2022":1391585,"2023":1401992,"2024":1408438,"2025":1414874}},"MD":{"n":"Maryland","p":{"2020":6178387,"2021":6176035,"2022":6183257,"2023":6204927,"2024":6245314,"2025":6265347}},"MA":{"n":"Massachusetts","p":{"2020":6985320,"2021":6996721,"2022":7025465,"2023":7073479,"2024":7138560,"2025":7154084}},"MI":{"n":"Michigan","p":{"2020":10072294,"2021":10042362,"2022":10043906,"2023":10062124,"2024":10099962,"2025":10127884}},"MN":{"n":"Minnesota","p":{"2020":5710562,"2021":5714055,"2022":5727565,"2023":5752998,"2024":5797405,"2025":5830405}},"MS":{"n":"Mississippi","p":{"2020":2958385,"2021":2947603,"2022":2941237,"2023":2942470,"2024":2950172,"2025":2954160}},"MO":{"n":"Missouri","p":{"2020":6155074,"2021":6172551,"2022":6179285,"2023":6205956,"2024":6243544,"2025":6270541}},"MT":{"n":"Montana","p":{"2020":1087156,"2021":1106416,"2022":1121533,"2023":1130612,"2024":1137557,"2025":1144694}},"NE":{"n":"Nebraska","p":{"2020":1963318,"2021":1964697,"2022":1972595,"2023":1988172,"2024":2005591,"2025":2018006}},"NV":{"n":"Nevada","p":{"2020":3116851,"2021":3148472,"2022":3177672,"2023":3211077,"2024":3253543,"2025":3282188}},"NH":{"n":"New Hampshire","p":{"2020":1378752,"2021":1387907,"2022":1396647,"2023":1401530,"2024":1408518,"2025":1415342}},"NJ":{"n":"New Jersey","p":{"2020":9270476,"2021":9266509,"2022":9298402,"2023":9395315,"2024":9506354,"2025":9548215}},"NM":{"n":"New Mexico","p":{"2020":2118446,"2021":2117300,"2022":2112859,"2023":2119349,"2024":2126774,"2025":2125498}},"NY":{"n":"New York","p":{"2020":20122262,"2021":19835345,"2022":19713025,"2023":19786543,"2024":20001419,"2025":20002427}},"NC":{"n":"North Carolina","p":{"2020":10450215,"2021":10565503,"2022":10705768,"2023":10871849,"2024":11052061,"2025":11197968}},"ND":{"n":"North Dakota","p":{"2020":779612,"2021":777977,"2022":780191,"2023":787071,"2024":793387,"2025":799358}},"OH":{"n":"Ohio","p":{"2020":11798534,"2021":11761443,"2022":11764950,"2023":11808390,"2024":11860621,"2025":11900510}},"OK":{"n":"Oklahoma","p":{"2020":3965243,"2021":3992760,"2022":4025327,"2023":4062716,"2024":4097758,"2025":4123288}},"OR":{"n":"Oregon","p":{"2020":4243544,"2021":4254691,"2022":4245964,"2023":4250392,"2024":4265324,"2025":4273586}},"PA":{"n":"Pennsylvania","p":{"2020":12995576,"2021":13016628,"2022":12984655,"2023":13009406,"2024":13045848,"2025":13059432}},"RI":{"n":"Rhode Island","p":{"2020":1096487,"2021":1097381,"2022":1098275,"2023":1101183,"2024":1110415,"2025":1114521}},"SC":{"n":"South Carolina","p":{"2020":5131992,"2021":5194346,"2022":5288957,"2023":5390798,"2024":5490316,"2025":5570274}},"SD":{"n":"South Dakota","p":{"2020":887808,"2021":896303,"2022":909156,"2023":917739,"2024":927110,"2025":935094}},"TN":{"n":"Tennessee","p":{"2020":6927736,"2021":6966687,"2022":7063325,"2023":7153029,"2024":7251291,"2025":7315076}},"TX":{"n":"Texas","p":{"2020":29237895,"2021":29572672,"2022":30118002,"2023":30719247,"2024":31318578,"2025":31709821}},"UT":{"n":"Utah","p":{"2020":3283970,"2021":3339874,"2022":3393928,"2023":3449259,"2024":3502983,"2025":3538904}},"VT":{"n":"Vermont","p":{"2020":642965,"2021":647238,"2022":647614,"2023":647722,"2024":646521,"2025":644663}},"VA":{"n":"Virginia","p":{"2020":8637303,"2021":8660007,"2022":8681038,"2023":8732034,"2024":8819642,"2025":8880107}},"WA":{"n":"Washington","p":{"2020":7726812,"2021":7744316,"2022":7786828,"2023":7838655,"2024":7927958,"2025":8001020}},"WV":{"n":"West Virginia","p":{"2020":1791670,"2021":1785921,"2022":1774003,"2023":1770036,"2024":1767402,"2025":1766147}},"WI":{"n":"Wisconsin","p":{"2020":5897371,"2021":5882128,"2022":5903472,"2023":5930350,"2024":5957168,"2025":5972787}},"WY":{"n":"Wyoming","p":{"2020":577669,"2021":579662,"2022":581742,"2023":584666,"2024":586722,"2025":588753}}};
+const TILEGRID=[['AK',0,0],['ME',10,0],['WI',5,1],['VT',9,1],['NH',10,1],['WA',0,2],['ID',1,2],['MT',2,2],['ND',3,2],['MN',4,2],['IL',5,2],['MI',6,2],['NY',8,2],['MA',9,2],
+['OR',0,3],['NV',1,3],['WY',2,3],['SD',3,3],['IA',4,3],['IN',5,3],['OH',6,3],['PA',7,3],['NJ',8,3],['CT',9,3],['RI',10,3],
+['CA',0,4],['UT',1,4],['CO',2,4],['NE',3,4],['MO',4,4],['KY',5,4],['WV',6,4],['VA',7,4],['MD',8,4],['DE',9,4],
+['AZ',1,5],['NM',2,5],['KS',3,5],['AR',4,5],['TN',5,5],['NC',6,5],['SC',7,5],['DC',8,5],['OK',3,6],['LA',4,6],['MS',5,6],['AL',6,6],['GA',7,6],['HI',0,7],['TX',3,7],['FL',8,7]];
+const ST={abbr:'',year:2025,dev:'E-bike'};
+const ST_DEVS=['E-bike','E-scooter','Bicycle','Kick scooter','Hoverboard','Moped / minibike','Skateboard'];
+function usPop(y){let t=0;for(const a in STATE_POP)t+=STATE_POP[a].p[y]||0;return t;}
+function natRow(dev,y){return DATA.by_device.find(r=>r.device===dev&&r.year===y);}
+function stExp(abbr,dev,y){const r=natRow(dev,y);if(!r)return null;const f=STATE_POP[abbr].p[y]/usPop(y);return {est:r.est*f,lo:r.lo*f,hi:r.hi*f,rate:r.est/usPop(y)*1e5,unstable:r.unstable};}
+function stInit(){
+  const ss=document.getElementById('stSel');if(ss.options.length)return;
+  ss.appendChild(h('option',{value:'',text:'Choose a state'}));
+  Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).forEach(a=>ss.appendChild(h('option',{value:a,text:STATE_POP[a].n})));
+  const ys=document.getElementById('stYear');[2025,2024,2023,2022,2021,2020].forEach(y=>ys.appendChild(h('option',{value:y,text:String(y)})));
+  const ds=document.getElementById('stDev');ST_DEVS.forEach(d=>ds.appendChild(h('option',{value:d,text:d})));
+  ss.addEventListener('change',()=>{ST.abbr=ss.value;renderState(true);stCount();});
+  ys.addEventListener('change',()=>{ST.year=+ys.value;renderState(true);});
+  ds.addEventListener('change',()=>{ST.dev=ds.value;renderState(true);});
+  document.getElementById('stcopy').addEventListener('click',()=>{const t=stSentence();if(!t)return;const b=document.getElementById('stcopy');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy a sentence for my report',1500);}).catch(()=>{window.prompt('Copy this sentence:',t);});});
+  document.getElementById('stshare').addEventListener('click',()=>{const b=document.getElementById('stshare');(navigator.clipboard?navigator.clipboard.writeText(location.href):Promise.reject()).then(()=>{b.textContent='Link copied';setTimeout(()=>b.textContent='Copy link to this state',1500);}).catch(()=>{window.prompt('Copy this link:',location.href);});});
+}
+function stCount(){try{if(ST.abbr&&window.goatcounter&&goatcounter.count)goatcounter.count({path:'state-'+ST.abbr,title:'Your state: '+STATE_POP[ST.abbr].n,event:true});}catch(e){}}
+function paramsToState(p){stInit();if(p.s&&STATE_POP[p.s])ST.abbr=p.s;if(p.y&&+p.y>=2020&&+p.y<=2025)ST.year=+p.y;if(p.d&&ST_DEVS.includes(p.d))ST.dev=p.d;}
+function stSentence(){
+  if(!ST.abbr)return '';const n=STATE_POP[ST.abbr].n,eb=stExp(ST.abbr,'E-bike',ST.year),es=stExp(ST.abbr,'E-scooter',ST.year);
+  return `If ${n} matched the national pattern, about ${fmt(eb.est)} e-bike injury visits (range ${fmt(eb.lo)} to ${fmt(eb.hi)}) and about ${fmt(es.est)} e-scooter injury visits (range ${fmt(es.lo)} to ${fmt(es.hi)}) to emergency departments would be expected in ${ST.year}. These are estimates based on national rates and state population, not counts. `+citeLine();
+}
+function renderState(push){
+  stInit();
+  document.getElementById('stSel').value=ST.abbr;document.getElementById('stYear').value=ST.year;document.getElementById('stDev').value=ST.dev;
+  if(push)setHash('state',{s:ST.abbr,y:ST.year,d:ST.dev});
+  const y=ST.year, T=document.getElementById('sttiles');T.textContent='';
+  const pick=ST.abbr;
+  [['E-bike','E-bike visits'],['E-scooter','E-scooter visits'],['Bicycle','Bicycle visits']].forEach(([d,lab])=>{
+    let num='',sub='';
+    if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
+    else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
+    T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub})));
+  });
+  // map
+  const W=document.getElementById('stmap');W.textContent='';
+  const cw=Math.min(W.clientWidth||560,560), cols=11, gap=4, sz=Math.floor((cw-gap*(cols-1))/cols), H=8*(sz+gap)-gap;
+  const svg=el('svg',{viewBox:`0 0 ${cols*(sz+gap)-gap} ${H}`,width:'100%',style:'max-width:560px;display:block',role:'img','aria-label':`Map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
+  let max=0;TILEGRID.forEach(([a])=>{const e=stExp(a,ST.dev,y);if(e&&e.est>max)max=e.est;});
+  const acc=css('--accent'),txtc=css('--text');
+  TILEGRID.forEach(([a,c,r])=>{
+    const e=stExp(a,ST.dev,y); const v=e?Math.sqrt(e.est/max):0; const op=0.12+0.88*v;
+    const g=el('g',{tabindex:'0',role:'button','aria-label':`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} ${ST.dev} visits`,style:'cursor:pointer'},svg);
+    const x=c*(sz+gap), yy=r*(sz+gap);
+    el('rect',{x,y:yy,width:sz,height:sz,rx:4,fill:acc,'fill-opacity':op.toFixed(2),stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
+    txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:op>0.55?'#ffffff':txtc});
+    const t=el('title',{},g);t.textContent=`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} (${e?fmt(e.lo):''} to ${e?fmt(e.hi):''})`;
+    const go=()=>{ST.abbr=a;renderState(true);stCount();};
+    g.addEventListener('click',go);g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go();}});
+  });
+  // legend
+  W.appendChild(h('p',{class:'note',text:`The stronger the blue, the more expected ${ST.dev.toLowerCase()} visits in ${y}. The strongest are mostly the most populous states.`}));
+  const r=natRow(ST.dev,y);
+  document.getElementById('stnote').textContent=`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
+  document.getElementById('stcite').textContent=citeLine();
+  // table
+  const rows=Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).map(a=>{const e1=stExp(a,'E-bike',y),e2=stExp(a,'E-scooter',y),e3=stExp(a,'Bicycle',y);
+    return [STATE_POP[a].n,STATE_POP[a].p[y].toLocaleString('en-US'),fmt(e1.est),fmt(e1.lo)+' to '+fmt(e1.hi),fmt(e2.est),fmt(e2.lo)+' to '+fmt(e2.hi),fmt(e3.est),fmt(e3.lo)+' to '+fmt(e3.hi)];});
+  const head=['State','Population','E-bike visits (expected)','E-bike range','E-scooter visits (expected)','E-scooter range','Bicycle visits (expected)','Bicycle range'];
+  table('tbst',head,rows);
+  csvTools('tbst',`Expected emergency department visits by state, ${y} (national rate x state population)`,head,rows,`neiss-ai_expected_by_state_${y}.csv`,'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
+}
+
 /* ---------- tabs + routing ---------- */
-const TABS=['overview','ask','explore','search','hazards','about'];
+const TABS=['overview','ask','explore','state','search','hazards','about'];
 let currentTab='overview', suppressHash=false;
 function showTab(name){
   currentTab=name;
@@ -1169,10 +1269,11 @@ function parseHash(){
 async function route(){
   const {tab,p}=parseHash(); showTab(tab);
   if(tab==='explore'){await loadRecords();paramsToExplore(p);renderExplore(false);}
+  if(tab==='state'){paramsToState(p);renderState(false);}
   if(tab==='ask'){await loadRecords(); if(p.q){document.getElementById('askq').value=p.q;askAnswer(p.q);}}
   if(tab==='search'){await loadRecords(); if(p.q){document.getElementById('searchq').value=p.q;if(p.dev)document.getElementById('searchdev').value=p.dev;doSearch(p.q,p.dev||'all');}}
 }
-TABS.forEach(t=>document.getElementById('tab-'+t).addEventListener('click',async()=>{showTab(t);setHash(t);if(t==='explore'){await loadRecords();renderExplore(false);}}));
+TABS.forEach(t=>document.getElementById('tab-'+t).addEventListener('click',async()=>{showTab(t);setHash(t);if(t==='explore'){await loadRecords();renderExplore(false);}if(t==='state')renderState(true);}));
 window.addEventListener('hashchange',()=>{if(!suppressHash) route();});
 document.querySelectorAll('a[href="#explore"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();loadRecords().then(()=>{EX.devices=['E-bike','E-scooter','Kick scooter','Bicycle'].map(devIdx);showTab('explore');renderExplore(true);});}));
 document.querySelectorAll('a[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab('about');setHash('about');document.getElementById(a.dataset.goto).scrollIntoView({behavior:'smooth',block:'start'});}));
@@ -1245,6 +1346,7 @@ document.addEventListener('click',e=>{
 function redraw(){
   drawOverview();
   if(currentTab==='explore'&&R) renderExplore(false);
+  if(currentTab==='state') renderState(false);
   if(currentTab==='ask'&&R&&document.getElementById('askq').value) askAnswer(document.getElementById('askq').value);
 }
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150);});
