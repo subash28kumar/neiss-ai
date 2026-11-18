@@ -102,6 +102,27 @@ th{color:var(--text-2);font-weight:600}
 .status.done{color:var(--accent);border-color:var(--accent)}
 .status.next{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
 .acclist li{margin:6px 0}
+.rdbox{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:12px 0}
+.rdmeta{margin:0 0 4px;font-size:12px;color:var(--text-3)}
+.rdstory{margin:0;font:15px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-word}
+.rdstory mark{color:var(--text);border-radius:3px;padding:1px 1px;background:color-mix(in srgb,var(--hc) 24%,transparent);border-bottom:2px solid var(--hc)}
+.rdout{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.rdrow{border-left:4px solid var(--hc);padding:2px 0 2px 10px}
+.rdrow .k{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.03em;margin:0}
+.rdrow .v{font-size:17px;font-weight:650;margin:0}
+.rdrow .w{font-size:14px;color:var(--text-2);margin:2px 0 0}
+.rdbars{grid-column:1/-1;margin-top:4px}
+.rdbars h3{font-size:14px;margin:6px 0 6px}
+.rdbar{display:grid;grid-template-columns:1fr 9em 1fr;align-items:center;gap:6px;font-size:13px;margin:3px 0}
+.rdbar .t{text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rdbar .l,.rdbar .r{height:14px;display:flex}
+.rdbar .l{justify-content:flex-end}
+.rdbar .l i,.rdbar .r i{display:block;height:100%;border-radius:3px}
+.rdbar .l i{background:var(--s2)}.rdbar .r i{background:var(--s1)}
+.rdaxis{display:grid;grid-template-columns:1fr 9em 1fr;font-size:12px;color:var(--text-3);gap:6px}
+.rdaxis span:first-child{text-align:right}.rdaxis span:last-child{text-align:left}
+.chip.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+@media (max-width:720px){.rdout{grid-template-columns:1fr}.rdbar,.rdaxis{grid-template-columns:1fr 7em 1fr}}
 .sband .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}
 .sband .sbig{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0;color:var(--accent)}
 .sband .stext{font-size:16px;margin:6px 0 0;max-width:40ch}
@@ -183,7 +204,7 @@ a.btn{text-decoration:none;display:inline-block}
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
   <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
-  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#accuracy">How accurate it is</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="custom">Request a free custom analysis</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
+  <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#accuracy">How accurate it is</a> · <a href="#reads">How it reads a story</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="custom">Request a free custom analysis</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
@@ -413,7 +434,7 @@ neissai hazards --years 2020-2025</code></pre>
 <section class="panel" id="p-accuracy" role="tabpanel" aria-labelledby="tab-accuracy" hidden>
   <section class="card">
     <h2>How accurate is NEISS-AI?</h2>
-    <p class="desc">Every check below was done in one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. All of them can be repeated with the open code and the test files.</p>
+    <p class="desc"><a href="#reads">See how NEISS-AI reads a real injury story</a>, then check how often it gets it right below. Every check below was done in one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. All of them can be repeated with the open code and the test files.</p>
     <div class="tiles">
       <div class="tile"><p class="label">Matches CPSC's published totals</p><div class="num">within 5%</div><p class="sub">E-bike visits, 2022–2024</p></div>
       <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">AUC 0.995</div><p class="sub">Text classifier, tested on stories it did not train on</p></div>
@@ -481,6 +502,15 @@ neissai hazards --years 2020-2025</code></pre>
 
 <!-- ===== About ===== -->
 <section class="panel" id="p-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+  <section class="card" id="reads">
+    <h2>See how NEISS-AI reads a story</h2>
+    <p class="desc">Real injury stories written by hospital emergency department staff (public CPSC data). Pick one to see which words NEISS-AI used and what it decided. These are the tool's own rules and classifier weights, not a simplified copy.</p>
+    <div class="examples" id="rdChips" aria-label="Example stories"></div>
+    <p class="actions" style="margin-top:8px"><button class="btn" type="button" id="rdMore">Show another story</button></p>
+    <div class="rdbox"><p class="rdmeta" id="rdMeta"></p><p class="rdstory" id="rdStory" aria-live="polite"><span class="loading">Loading example stories…</span></p></div>
+    <div class="rdout" id="rdOut"></div>
+    <p class="note">Each highlighted phrase is what the rule matched. How often these rules are right is on the <a href="#accuracy">Accuracy</a> tab; like any rule, they sometimes miss. The site shows a set of stories already read by the tool; the open-source code reads any story: <code>neissai classify "16YOM FELL OFF HIS E-BIKE"</code>.</p>
+  </section>
   <section class="card">
     <h2>How NEISS-AI works</h2>
     <ol class="steps">
@@ -1415,6 +1445,51 @@ document.addEventListener('click',e=>{
   try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'check-offer-'+a.dataset.check,title:'Offer to help check accuracy',event:true});}catch(err){}
 });
 
+/* ---------- How NEISS-AI reads a story ---------- */
+let RD=null, RDi=-1;
+const RD_PARTS=[['device','Device','--s1'],['type','E-bike or e-moto','--s2'],['helmet','Helmet','--s3'],['mv','Motor vehicle involved','--s7']];
+const RD_VAL={device:v=>v,type:v=>({'regular e-bike':'Regular e-bike','likely e-moto':'Likely e-moto','unclear':'Unclear'}[v]||v),
+  helmet:v=>({yes:'Worn',no:'Not worn','not mentioned':'Not mentioned'}[v]||v),mv:v=>v?'Yes':'No'};
+async function rdLoad(){
+  if(RD) return RD;
+  try{RD=await (await fetch('data/explain.json')).json();}catch(e){document.getElementById('rdStory').textContent='Could not load the example stories.';return null;}
+  const C=document.getElementById('rdChips');C.textContent='';
+  RD.featured.forEach((f,i)=>{const b=h('button',{type:'button',class:'chip',text:f.title});b.addEventListener('click',()=>rdShow(f,b));C.appendChild(b);});
+  return RD;
+}
+function rdShow(x,chip){
+  document.querySelectorAll('#rdChips .chip').forEach(c=>c.classList.toggle('on',c===chip));
+  const n=x.text.length, cat=new Array(n).fill(-1);
+  RD_PARTS.forEach(([k],pi)=>{(x[k].spans||[]).forEach(([s,e])=>{for(let i=s;i<e&&i<n;i++) if(cat[i]<0) cat[i]=pi;});});
+  const S=document.getElementById('rdStory');S.textContent='';
+  let i=0;while(i<n){let j=i;while(j<n&&cat[j]===cat[i])j++;const seg=x.text.slice(i,j);
+    if(cat[i]<0) S.appendChild(document.createTextNode(seg));
+    else{const m=h('mark',{text:seg,title:RD_PARTS[cat[i]][1]});m.style.setProperty('--hc',`var(${RD_PARTS[cat[i]][2]})`);S.appendChild(m);}
+    i=j;}
+  document.getElementById('rdMeta').textContent=`Injury story, ${x.year} · as written by hospital staff`;
+  const O=document.getElementById('rdOut');O.textContent='';
+  RD_PARTS.forEach(([k,lab,col])=>{const r=h('div',{class:'rdrow'},h('p',{class:'k',text:lab}),h('p',{class:'v',text:RD_VAL[k](x[k].label)}),h('p',{class:'w',text:x[k].why}));
+    r.style.setProperty('--hc',`var(${col})`);O.appendChild(r);});
+  const d=x.device;
+  if(d.how==='classifier'&&d.terms&&d.terms.length){
+    const mx=Math.max(...d.terms.map(t=>Math.abs(t.weight)));
+    const B=h('div',{class:'rdbars'},h('h3',{text:`Words that pushed the classifier (result: ${Math.round(d.p*100)}% e-bike)`}),
+      h('div',{class:'rdaxis'},h('span',{text:'← toward moped'}),h('span'),h('span',{text:'toward e-bike →'})));
+    d.terms.forEach(t=>{const wd=Math.round(Math.abs(t.weight)/mx*100)+'%';const bar=h('i');bar.style.width=wd;
+      const L=h('div',{class:'l'}),R=h('div',{class:'r'});(t.weight<0?L:R).appendChild(bar);
+      B.appendChild(h('div',{class:'rdbar',title:`${t.term}: ${t.weight>0?'+':''}${t.weight}`},L,h('div',{class:'t',text:t.term}),R));});
+    B.appendChild(h('p',{class:'note',text:'Longer bars pushed harder. Words and two-word phrases were learned from 2024–2025 stories, when CPSC coded e-bikes and mopeds separately. Lower-case abbreviations come from the stories (for example "chi" = closed head injury).'}));
+    O.appendChild(B);
+  }
+}
+async function rdInit(first){
+  const D=await rdLoad(); if(!D) return;
+  if(first&&RDi<0){RDi=0;rdShow(D.featured[0],document.querySelector('#rdChips .chip'));}
+}
+document.getElementById('rdMore').addEventListener('click',async()=>{const D=await rdLoad();if(!D)return;
+  const all=D.pool;let k;do{k=Math.floor(Math.random()*all.length);}while(all.length>1&&k===RDi);RDi=k;rdShow(all[k],null);
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'reads-another',title:'Show another story',event:true});}catch(e){}});
+
 /* ---------- tabs + routing ---------- */
 const TABS=['overview','ask','explore','state','search','hazards','accuracy','about'];
 let currentTab='overview', suppressHash=false;
@@ -1429,19 +1504,21 @@ function setHash(tab,params){
 function parseHash(){
   const raw=location.hash.slice(1); const [tab,qs]=raw.split('?'); const p={};
   (qs||'').split('&').filter(Boolean).forEach(kv=>{const [k,v]=kv.split('=');p[decodeURIComponent(k)]=decodeURIComponent(v||'');});
+  if(tab==='reads') return {tab:'about',p,reads:true};
   return {tab:TABS.includes(tab)?tab:'overview',p};
 }
 async function route(){
-  const {tab,p}=parseHash(); showTab(tab);
+  const {tab,p,reads}=parseHash(); showTab(tab);
+  if(tab==='about'){rdInit(true); if(reads) setTimeout(()=>document.getElementById('reads').scrollIntoView({block:'start'}),50);}
   if(tab==='explore'){await loadRecords();paramsToExplore(p);renderExplore(false);}
   if(tab==='state'){paramsToState(p);renderState(false);}
   if(tab==='ask'){await loadRecords(); if(p.q){document.getElementById('askq').value=p.q;askAnswer(p.q);}}
   if(tab==='search'){await loadRecords(); if(p.q){document.getElementById('searchq').value=p.q;if(p.dev)document.getElementById('searchdev').value=p.dev;doSearch(p.q,p.dev||'all');}}
 }
-TABS.forEach(t=>document.getElementById('tab-'+t).addEventListener('click',async()=>{showTab(t);setHash(t);if(t==='explore'){await loadRecords();renderExplore(false);}if(t==='state')renderState(true);}));
+TABS.forEach(t=>document.getElementById('tab-'+t).addEventListener('click',async()=>{showTab(t);setHash(t);if(t==='about')rdInit(true);if(t==='explore'){await loadRecords();renderExplore(false);}if(t==='state')renderState(true);}));
 window.addEventListener('hashchange',()=>{if(!suppressHash) route();});
 document.querySelectorAll('a[href="#explore"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();loadRecords().then(()=>{EX.devices=['E-bike','E-scooter','Kick scooter','Bicycle'].map(devIdx);showTab('explore');renderExplore(true);});}));
-document.querySelectorAll('a[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab('about');setHash('about');document.getElementById(a.dataset.goto).scrollIntoView({behavior:'smooth',block:'start'});}));
+document.querySelectorAll('a[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab('about');setHash('about');rdInit(true);document.getElementById(a.dataset.goto).scrollIntoView({behavior:'smooth',block:'start'});}));
 
 /* ---------- init ---------- */
 (function initExamples(){const E=document.getElementById('examples');EXAMPLES.forEach(q=>{const b=h('button',{type:'button',class:'chip'},q);b.addEventListener('click',async()=>{document.getElementById('askq').value=q;setHash('ask',{q});await loadRecords();askAnswer(q);});E.appendChild(b);});})();

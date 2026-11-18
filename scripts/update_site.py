@@ -90,6 +90,16 @@ try:
     print(f"Hazard Watch updated for {hz['year']}: {len(hz['signals'])} ED-visit signals.")
 except Exception as exc:  # pragma: no cover - keep the main refresh working
     print(f"::warning::Hazard Watch not updated: {exc}")
+# "How NEISS-AI reads a story": real e-bike stories read by the tool's own rules (skipped with a
+# warning if it fails, so the rest of the refresh still publishes).
+try:
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location("build_explainer", ROOT / "scripts" / "build_explainer.py")
+    _mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    print("Story explainer written:", _mod.build())
+except Exception as exc:  # pragma: no cover - keep the main refresh working
+    print(f"::warning::Story explainer not updated: {exc}")
 # Data pack: the same numbers as one Excel file with the citation on every sheet (emailed to people who
 # ask for it). Skipped with a warning if it fails, so the rest of the refresh still publishes.
 try:

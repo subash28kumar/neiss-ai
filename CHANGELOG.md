@@ -3,6 +3,7 @@
 All notable changes to NEISS-AI are listed here.
 
 ## Website update — 2026-11-18
+- New "See how NEISS-AI reads a story" (How it works tab; link: `#reads`): real e-bike injury stories with the matched words highlighted and the four decisions explained (device, e-bike or e-moto, helmet, motor vehicle). For pre-2024 stories decided by the classifier, a bar chart shows the words that pushed the decision and by how much. Built by `scripts/build_explainer.py` with the new `neissai.explain` module, which uses the tool's own rules and model weights; every explanation is checked against the tool's own label (new tests in `tests/test_explain.py`), and the monthly refresh rebuilds it.
 - Overview: new story band at the top with two facts worked out from the national estimates: how often someone goes to an emergency department after an e-bike (and e-scooter) injury ("every 5 minutes", with the range from the 95% confidence interval and a note that it is a yearly average, not a live count), and the share of injured e-bike riders who are children, shown as 20 figures.
 - Overview: new "Play 2019 → 2025" button draws the device chart one year at a time with a running caption, ending with the e-bike change since 2019 (and a note that the 2019 figure rests on few records). The axes stay fixed so years compare fairly; users who prefer reduced motion see the final chart at once.
 - Your state: the map now has a title naming the device and year it shows, and the matching number box is outlined ("shown on the map"), so the map is not confused with the other two boxes.
