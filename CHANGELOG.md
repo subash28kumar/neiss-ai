@@ -3,6 +3,7 @@
 All notable changes to NEISS-AI are listed here.
 
 ## Website update — 2026-11-18
+- Your state: real US map with state outlines (default), with labelled call-out boxes for the small eastern states (VT, NH, MA, RI, CT, NJ, DE, MD, DC) so they are easy to tap; the square grid stays available as "Grid (easier to tap)". Map shapes from us-atlas (US Census Bureau cartographic boundaries, ISC license).
 - New "Your state" tab: pick a state (or click it on the map) to see about how many e-bike, e-scooter and bicycle emergency department visits it would have if it matched the national pattern, for 2020-2025. Expected visits = national estimate x the state's share of the US population (US Census Bureau Vintage 2025, NST-EST2025-POP; states add up exactly to the US total). Clearly labelled as estimates, not counts, because NEISS has no state information. Includes a tile map, a copy-ready sentence for reports, a link to each state's view, a table for every state with CSV download, and a custom-analysis request.
 - Data pack: new "Expected by state" sheet with the same numbers.
 - Ask: questions that name a state now point to the Your state tab.
