@@ -102,6 +102,8 @@ th{color:var(--text-2);font-weight:600}
 .status.done{color:var(--accent);border-color:var(--accent)}
 .status.next{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
 .acclist li{margin:6px 0}
+.tile.tileon{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.maptitle{font-size:15px;margin:16px 0 6px}
 @media (max-width:720px){
   .rctable thead{display:none}
   .rctable tr{display:block;border-bottom:1px solid var(--border);padding:8px 0}
@@ -4953,10 +4955,12 @@ function renderState(push){
     let num='',sub='';
     if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
     else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
-    T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub})));
+    const on=d===ST.dev;
+    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub})));
   });
   // map
   const W=document.getElementById('stmap');W.textContent='';
+  W.appendChild(h('h3',{class:'maptitle',text:`Map: expected ${ST.dev.toLowerCase()} emergency department visits by state, ${y}`}));
   let max=0;Object.keys(STATE_POP).forEach(a=>{const e=stExp(a,ST.dev,y);if(e&&e.est>max)max=e.est;});
   const acc=css('--accent'),txtc=css('--text'),bg=css('--surface');
   const shade=a=>{const e=stExp(a,ST.dev,y);return {e,op:0.12+0.88*(e?Math.sqrt(e.est/max):0)};};
