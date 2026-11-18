@@ -398,6 +398,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
     <p><button class="btn" type="button" data-copy="cite-pp">Copy paper citation</button></p>
         <p class="cite" id="cite-ds">Kumar S. NEISS-AI device labels for US micromobility injuries, 2019–2025 [dataset]. Version 1.1. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23550382">https://doi.org/10.5281/zenodo.23550382</a></p>
     <p><button class="btn" type="button" data-copy="cite-ds">Copy dataset citation</button></p>
+    <p class="desc"><b>Used NEISS-AI in your work?</b> <a href="#about" data-goto="feedback">Tell me where</a>. I would love to see it.</p>
     <p class="desc">For reference managers: <a class="btn" href="neiss-ai.bib" download>Download BibTeX</a> <a class="btn" href="neiss-ai.ris" download>Download RIS (EndNote, Zotero, Mendeley)</a></p>
     
   </section>
@@ -418,10 +419,11 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
     <p class="note">Please include who you are, what you need and when you need it. All numbers come from the US Consumer Product Safety Commission's public NEISS data.</p>
   </section>
   <section class="card" id="feedback">
-    <h2>How are you using NEISS-AI?</h2>
-    <p class="desc">I would love to hear how you use this tool, for research, a class, a news story, a safety program or policy work. A two-line note helps me improve it and keep it free.</p>
-    <p class="actions"><a class="btn primary" href="mailto:nivi05subhash@gmail.com?subject=How%20I%20use%20NEISS-AI&amp;body=Name%3A%0AOrganization%3A%0AHow%20I%20use%20NEISS-AI%3A%0A">Tell me how you use it</a>
+    <h2>Used NEISS-AI? Tell me</h2>
+    <p class="desc">Did these numbers end up in a report, grant application, safety plan, presentation, class or news story? Please send me the link or the title. It takes a minute, and it helps keep this tool free and growing.</p>
+    <p class="actions"><a class="btn primary" href="#" data-used="about">Tell me how you used it</a>
     <a class="btn" href="https://github.com/subash28kumar/neiss-ai/issues/new">Report a problem</a></p>
+    <p class="note">I read every note and reply personally. I will only mention your work publicly if you say yes.</p>
   </section>
   <section class="card">
     <h2>Limits</h2>
@@ -864,6 +866,7 @@ h2{font-size:13px;margin:12px 0 4px}
 ul{margin:0;padding-left:18px;font-size:11px;color:#333}
 .small{font-size:10.5px;color:#666;margin:2px 0}
 .cite{background:#eaf2fd;border:1px solid #c9dcf5;border-radius:6px;padding:8px 10px;font-size:10.5px;margin-top:10px;overflow-wrap:anywhere}
+.used{font-size:10px;color:#555;margin:4px 0 0}
 .foot{font-size:9.5px;color:#888;margin-top:8px}
 @media screen and (max-width:700px){.page{padding:16px;margin:8px}.tiles{flex-wrap:wrap}.tile{min-width:45%}.tw{overflow-x:auto}.bar{padding:0 8px}}
 .tw{max-width:100%}
@@ -886,6 +889,7 @@ ${r.notes.length?`<p class="small">${r.notes.map(escH).join(' ')}</p>`:''}
 <li>These are counts of emergency visits, not risk per rider, and NEISS has no state or city information.</li>
 </ul>
 <div class="cite"><b>Please cite:</b> ${escH(swCite)}<br>${escH(citeLine())}<br><b>This view:</b> ${escH(r.link)}</div>
+<p class="used">Used these numbers in your work? Please tell me: ${escH(REQ_TO)}</p>
 <p class="foot">NEISS-AI is free and open source (https://subash28kumar.github.io/neiss-ai/). An independent project; CPSC does not endorse it. Need a different breakdown? Request a free custom analysis on the website.</p>
 </div>
 <script>window.addEventListener('load',function(){setTimeout(function(){try{window.focus();window.print();}catch(e){}},500);});<\/script>
@@ -928,6 +932,17 @@ document.addEventListener('click',e=>{
   const a=e.target.closest('a[data-req]'); if(!a) return;
   a.href=reqMail(reqContext(a.dataset.req));
   try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'request-custom-'+a.dataset.req,title:'Request custom analysis',event:true});}catch(err){}
+});
+/* ---------- "Used NEISS-AI? Tell me" notes ---------- */
+function usedMail(){
+  const lines=['Name:','Organization:','Where I used NEISS-AI (report, grant, safety plan, presentation, class, news story...):',
+    'Link or title:','May I mention it on the NEISS-AI website? (yes / no):','','Sent from: '+location.href];
+  return 'mailto:'+REQ_TO+'?subject='+encodeURIComponent('I used NEISS-AI')+'&body='+encodeURIComponent(lines.join('\n'));
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[data-used]'); if(!a) return;
+  a.href=usedMail();
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'used-tell-'+a.dataset.used,title:'Tell me how you used it',event:true});}catch(err){}
 });
 document.querySelectorAll('button[data-tabgo]').forEach(b=>b.addEventListener('click',async()=>{
   const t=b.dataset.tabgo; showTab(t);

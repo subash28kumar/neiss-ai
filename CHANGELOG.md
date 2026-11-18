@@ -2,6 +2,9 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-17 (5)
+- "Used NEISS-AI? Tell me": the How it works section now invites people who used the numbers in a report, grant, safety plan, presentation, class or news story to send the link or title. The button opens an email with short fields already filled in (including whether the use may be mentioned on the site). The Cite section links to it, and every one-page report now ends with a short "Used these numbers in your work? Please tell me" line.
+
 ## Website update — 2026-11-17 (4)
 - The "Get the free data pack" button is now live (Overview and How it works). It opens a short sign-up form; the data pack link and the citation arrive by email within a minute.
 
