@@ -3,7 +3,7 @@
     python validation/check_learning.py            # exit code 1 if any accuracy drops
 
 Compares NEISS-AI's rules alone with rules + human memory (validation/learning/human_memory.json)
-on the locked test sets: 240 e-bike/e-moto stories and 300 motor vehicle/helmet stories. These
+on the locked test sets: 240 e-bike/e-moto stories (fresh v2 test) and 300 motor vehicle/helmet stories. These
 stories are never learned from, so memory can only reach them through a closest match.
 Writes validation/learning/check_report.md. Deterministic.
 """
@@ -38,7 +38,7 @@ def score(rows, key, rule, mem, q):
 
 def main():
     mem = L.HumanMemory.load()
-    e = list(csv.DictReader(open(HERE / "ebike_type_TEST_240.csv", newline="")))
+    e = list(csv.DictReader(open(HERE / "ebike_type_v2" / "ebike_type_TEST2_240.csv", newline="")))
     a = list(csv.DictReader(open(HERE / "injurycoder_test_300.csv", newline="")))
     res = {
         "E-bike vs e-moto (240)": score(e, "reference_label", ebike_type, mem, "etype"),
@@ -50,7 +50,7 @@ def main():
              "| Test | Rules alone | Rules + human memory | Answers changed by memory |", "| --- | --- | --- | --- |"]
     for name, (base, new, ch, tot) in res.items():
         lines.append(f"| {name} | {base}/{tot} ({base / tot:.1%}) | {new}/{tot} ({new / tot:.1%}) | {ch} |")
-    lines += ["", "Counts are unweighted. The website's e-bike vs e-moto figure (98.4%) is weighted by how common "
+    lines += ["", "Counts are unweighted. The website's e-bike vs e-moto figure (98.9%) is weighted by how common "
               "each kind of story is, because the test set over-samples hard stories.",
               "", "PASS: no accuracy drop. The memory may go live." if ok else
               "FAIL: accuracy dropped. Do not publish this memory; review the closest matches."]

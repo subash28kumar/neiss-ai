@@ -49,7 +49,7 @@ CLOSE = 0.90           # closest-match similarity needed to reuse a human answer
 ROOT = Path(__file__).resolve().parents[2]
 VAL = ROOT / "validation"
 LOCKED_FILES = ("ebike_type_TEST_240.csv", "ebike_type_dev1_200.csv", "ebike_type_dev2_120.csv",
-                "injurycoder_test_300.csv")
+                "injurycoder_test_300.csv", "ebike_type_v2/ebike_type_dev3_360.csv", "ebike_type_v2/ebike_type_TEST2_240.csv")
 
 
 def norm_text(text: str) -> str:
