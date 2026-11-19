@@ -24,7 +24,7 @@ deterministic: the same inputs always give the same result.
    - locked test stories (the validation test and development sets) are never learned from.
    Output: `human_memory.json` (no names) and `ingest_report.md` (reviewers shown as numbers).
 4. **Gate:** `python validation/check_learning.py` compares rules alone with rules + memory on the
-   locked tests (240 e-bike/e-moto, 300 motor vehicle/helmet stories). If any accuracy drops, it
+   locked tests (the fresh 240 e-bike/e-moto test from v2, 300 motor vehicle/helmet stories). If any accuracy drops, it
    fails and the memory must not be published. Report: `check_report.md`.
 5. **Use:** `scripts/update_site.py` applies the memory (`neissai.learn.apply_human_memory`):
    the same story gets the reviewers' answer; a near-identical story (word and phrase similarity at
@@ -39,5 +39,5 @@ Every memory version is in git history, so any change can be undone.
 
 - The website's "How NEISS-AI reads a story" panel has an "Is an answer wrong? Tell me" button.
   Reports are reviewed by hand and, if useful, the story is added to a future Set C.
-- Known issue logged 2026-11-18 (not fixed yet, because the story is in the locked test): the
-  e-moto rule trusts guessed speeds ("BYSTANDERS THOUGHT HE WAS GOING 30 MPH").
+- Fixed in rule v2 (2026-11-18): the e-moto rule no longer trusts guessed speeds ("BYSTANDERS
+  THOUGHT HE WAS GOING 30 MPH"). See validation/ebike_type_v2/RESULTS.md.

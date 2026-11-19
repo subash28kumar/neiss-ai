@@ -264,7 +264,7 @@ a.btn{text-decoration:none;display:inline-block}
   </section>
   <section class="card" id="emotocard">
     <h2>Regular e-bikes vs e-motos</h2>
-    <p class="desc">Some "e-bikes" in hospital records are really electric motorcycles (e-motos, such as Sur-Ron or Talaria) or e-bikes ridden well above legal e-bike speeds. NEISS-AI reads each e-bike story and sorts it into three groups. Likely e-motos are about 2% of e-bike visits every year, and that share has not grown, so the e-motos named in hospital stories do not explain the rise in e-bike injuries.</p>
+    <p class="desc">Some "e-bikes" in hospital records are really electric motorcycles (e-motos, such as Sur-Ron or Talaria) or e-bikes ridden well above legal e-bike speeds. NEISS-AI reads each e-bike story and sorts it into three groups. Likely e-motos are about 1–2% of e-bike visits every year, and that share has not grown, so the e-motos named in hospital stories do not explain the rise in e-bike injuries.</p>
     <div class="filters">
       <div class="field">View<div class="chips" role="group" aria-label="View">
         <button class="chip" type="button" id="evVisits" aria-pressed="true">Visits</button>
@@ -274,7 +274,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="legend" id="lge"></div>
     <div class="chart" id="ce"></div>
     <div class="dlrow"><button class="btn dl embed" type="button" data-embed="emoto" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="ce">Download chart (PNG)</button></div>
-    <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the story uses e-moto wording (electric motorcycle or dirt bike, gas- or engine-powered, an e-moto brand) or gives the rider's own speed above 28 mph, the top assisted speed of a legal Class 3 e-bike. <i>Unclear</i>: wording that could mean either ("motorized bike", "motor bike" with no high speed, "dirt bike or e-bike"), a speed range crossing 28 mph, a downhill speed above 28 mph, or "fast" with no speed given. Diagnosis coding phrases are ignored. <i>Regular e-bike</i>: everything else. Speeds of other vehicles ("struck by a car going 30 mph") are ignored. <b>Accuracy.</b> The rule was built on 320 stories, then locked and tested once on 240 new stories from 2019&ndash;2025 that it had never seen. The test stories were labelled blind against written definitions, without seeing the rule. Across all e-bike stories the rule puts 98% in the right group (95% range 97&ndash;99%), and it estimates the share of likely e-motos almost exactly (2.0% by the rule vs 2.0% by the blind labels). Single "likely e-moto" calls are right about 3 times in 4: most misses are "motorized bicycles" ridden over 28 mph, which the definitions count as unclear. Full details: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
+    <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the story uses e-moto wording (electric motorcycle or dirt bike, gas- or engine-powered, an e-moto brand) or gives the rider's own speed above 28 mph, the top assisted speed of a legal Class 3 e-bike. <i>Unclear</i>: "motorized bike" or "motor bike" wording at any speed, wording that could mean either ("dirt bike or e-bike"), a speed range crossing 28 mph, a downhill or second-hand speed above 28 mph, or "fast" with no speed given. Diagnosis coding phrases are ignored. <i>Regular e-bike</i>: everything else. Speeds of other vehicles ("struck by a car going 30 mph") are ignored. <b>Accuracy.</b> The rule (version 2, November 2026) was rebuilt on 920 stories, then locked and tested once on 240 new stories from 2019&ndash;2025 that it had never seen. The test stories were labelled blind against written definitions, without seeing the rule. Across all e-bike stories the rule puts 98.9% in the right group (95% range 97.9&ndash;99.7%), and it estimates the share of likely e-motos closely (1.7% by the rule vs 1.6% by the blind labels). Single "likely e-moto" calls were right about 19 times in 20. Full details: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
     <p class="note"><b>Read with care.</b> A story names an e-moto only when the writer says so, so "likely e-moto" is a lower bound. CPSC blacks out brand names in the stories ("***"), so most likely e-motos are found from the rider's stated speed; an e-moto described only as an "e-bike" cannot be found. The e-bike class (1, 2 or 3) is almost never written in the story, so classes cannot be counted. Earlier years have more unclear cases because stories then often said "motorized bicycle" rather than "e-bike".</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbe"></div></details>
   </section>
@@ -438,7 +438,7 @@ neissai hazards --years 2020-2025</code></pre>
     <div class="tiles">
       <div class="tile"><p class="label">Matches CPSC's published totals</p><div class="num">within 5%</div><p class="sub">E-bike visits, 2022–2024</p></div>
       <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">AUC 0.995</div><p class="sub">Text classifier, tested on stories it did not train on</p></div>
-      <div class="tile"><p class="label">E-bike vs e-moto</p><div class="num">98.4%</div><p class="sub">Stories in the right group, 240-story final test</p></div>
+      <div class="tile"><p class="label">E-bike vs e-moto</p><div class="num">98.9%</div><p class="sub">Stories in the right group, fresh 240-story test</p></div>
       <div class="tile"><p class="label">Motor vehicle involved</p><div class="num">98.3%</div><p class="sub">295 of 300 test stories right</p></div>
       <div class="tile"><p class="label">Helmet worn / not worn / not said</p><div class="num">300 / 300</div><p class="sub">Test stories right</p></div>
       <div class="tile"><p class="label">Hazard Watch, tested on the past</p><div class="num">2021</div><p class="sub">Year the word scan first flagged "electric bike", three years before CPSC's e-bike code</p></div>
@@ -453,7 +453,7 @@ neissai hazards --years 2020-2025</code></pre>
       <tbody>
         <tr><td data-label="What is checked">National e-bike totals</td><td data-label="How it was tested">NEISS-AI's estimates compared with the figures CPSC published for the same years</td><td data-label="Result">+4.4% (2022), +0.7% (2023), +0.3% (2024)</td><td data-label="Details"><a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">CPSC report</a></td></tr>
         <tr><td data-label="What is checked">E-bike or moped, before 2024</td><td data-label="How it was tested">Before 2024 e-bikes and mopeds shared one product code. A classifier trained on 2024–2025 stories (where the codes are separate) was tested by five-fold cross-validation</td><td data-label="Result">AUC 0.995: shown one e-bike story and one moped story, it ranks the e-bike story higher 99.5 times in 100</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/scripts/train_classifier.py">Training code</a></td></tr>
-        <tr><td data-label="What is checked">Regular e-bike or e-moto</td><td data-label="How it was tested">Rule built on 320 stories, then locked (its code fingerprint recorded) and tested once on 240 new stories from 2019–2025</td><td data-label="Result">98.4% right [97.2–99.5]. Share of likely e-motos: 2.0% by the rule vs 2.0% by the answer key. A single "likely e-moto" call is right about 3 times in 4</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_TEST_240.csv">Test file</a></td></tr>
+        <tr><td data-label="What is checked">Regular e-bike or e-moto</td><td data-label="How it was tested">Rule rebuilt on 920 stories (v2, November 2026), then locked (its code fingerprint recorded) and tested once on 240 new stories from 2019–2025</td><td data-label="Result">98.9% right [97.9–99.7]; 233 of 240 raw. Share of likely e-motos: 1.7% by the rule vs 1.6% by the answer key. A single "likely e-moto" call was right about 19 times in 20 (previous version: 3 in 4)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/ebike_type_TEST2_240.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Motor vehicle involved</td><td data-label="How it was tested">Rules frozen, then tested once on 300 random stories (2019–2025) never used to build them</td><td data-label="Result">98.3% right [96.2–99.3]. Found 44 of 47 real cases; 44 of its 46 flags were correct</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/injurycoder_test_300.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Helmet status</td><td data-label="How it was tested">Same 300 test stories. Three answers: worn, not worn, not mentioned. "Not mentioned" is never counted as "no helmet"</td><td data-label="Result">300 of 300 right [98.7–100]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a></td></tr>
         <tr><td data-label="What is checked">Hazard Watch</td><td data-label="How it was tested">Totals checked against NEISS-AI's own national estimates; the word scan was run on past years to see whether it would have caught known new hazards</td><td data-label="Result">Totals identical (bicycles 2025: 420,962). The scan flagged e-bike words in 2021, 2022 and 2023 (before CPSC's 2024 e-bike code), water beads in 2023 and e-scooters in 2024</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/METHODS_hazard_scan.md">Methods</a></td></tr>
@@ -1460,64 +1460,64 @@ const DATA = {
   {
    "year": 2019,
    "type": "likely e-moto",
-   "est": 92,
+   "est": 73,
    "lo": 0,
-   "hi": 211,
-   "n": 3,
+   "hi": 187,
+   "n": 2,
    "unstable": true
   },
   {
    "year": 2019,
    "type": "regular e-bike",
-   "est": 3071,
-   "lo": 1091,
-   "hi": 5051,
-   "n": 99,
+   "est": 3033,
+   "lo": 1082,
+   "hi": 4984,
+   "n": 97,
    "unstable": false
   },
   {
    "year": 2019,
    "type": "unclear",
-   "est": 2010,
-   "lo": 391,
-   "hi": 3630,
-   "n": 45,
+   "est": 2067,
+   "lo": 437,
+   "hi": 3696,
+   "n": 48,
    "unstable": true
   },
   {
    "year": 2020,
    "type": "likely e-moto",
-   "est": 154,
+   "est": 76,
    "lo": 0,
-   "hi": 368,
-   "n": 2,
+   "hi": 225,
+   "n": 1,
    "unstable": true
   },
   {
    "year": 2020,
    "type": "regular e-bike",
-   "est": 5792,
-   "lo": 984,
-   "hi": 10600,
-   "n": 129,
+   "est": 5775,
+   "lo": 968,
+   "hi": 10582,
+   "n": 128,
    "unstable": true
   },
   {
    "year": 2020,
    "type": "unclear",
-   "est": 2274,
-   "lo": 614,
-   "hi": 3934,
-   "n": 55,
+   "est": 2369,
+   "lo": 704,
+   "hi": 4034,
+   "n": 57,
    "unstable": true
   },
   {
    "year": 2021,
    "type": "likely e-moto",
-   "est": 415,
+   "est": 301,
    "lo": 0,
-   "hi": 899,
-   "n": 8,
+   "hi": 754,
+   "n": 6,
    "unstable": true
   },
   {
@@ -1532,118 +1532,118 @@ const DATA = {
   {
    "year": 2021,
    "type": "unclear",
-   "est": 3205,
-   "lo": 1013,
-   "hi": 5397,
-   "n": 77,
+   "est": 3319,
+   "lo": 1053,
+   "hi": 5584,
+   "n": 79,
    "unstable": true
   },
   {
    "year": 2022,
    "type": "likely e-moto",
-   "est": 681,
-   "lo": 5,
-   "hi": 1358,
+   "est": 569,
+   "lo": 0,
+   "hi": 1226,
+   "n": 10,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "type": "regular e-bike",
+   "est": 23600,
+   "lo": 10634,
+   "hi": 36566,
+   "n": 522,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "type": "unclear",
+   "est": 3818,
+   "lo": 1721,
+   "hi": 5915,
+   "n": 78,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "type": "likely e-moto",
+   "est": 530,
+   "lo": 92,
+   "hi": 967,
    "n": 11,
    "unstable": true
   },
   {
-   "year": 2022,
-   "type": "regular e-bike",
-   "est": 23665,
-   "lo": 10697,
-   "hi": 36632,
-   "n": 523,
-   "unstable": false
-  },
-  {
-   "year": 2022,
-   "type": "unclear",
-   "est": 3641,
-   "lo": 1648,
-   "hi": 5634,
-   "n": 76,
-   "unstable": false
-  },
-  {
-   "year": 2023,
-   "type": "likely e-moto",
-   "est": 755,
-   "lo": 143,
-   "hi": 1366,
-   "n": 14,
-   "unstable": true
-  },
-  {
    "year": 2023,
    "type": "regular e-bike",
-   "est": 33382,
-   "lo": 18780,
-   "hi": 47984,
-   "n": 806,
+   "est": 33321,
+   "lo": 18603,
+   "hi": 48039,
+   "n": 804,
    "unstable": false
   },
   {
    "year": 2023,
    "type": "unclear",
-   "est": 3717,
-   "lo": 1918,
-   "hi": 5516,
-   "n": 77,
+   "est": 4003,
+   "lo": 2117,
+   "hi": 5890,
+   "n": 82,
    "unstable": false
   },
   {
    "year": 2024,
    "type": "likely e-moto",
-   "est": 1295,
-   "lo": 396,
-   "hi": 2194,
-   "n": 31,
+   "est": 1112,
+   "lo": 261,
+   "hi": 1963,
+   "n": 27,
    "unstable": true
   },
   {
    "year": 2024,
    "type": "regular e-bike",
-   "est": 54474,
-   "lo": 35667,
-   "hi": 73281,
-   "n": 1173,
+   "est": 54318,
+   "lo": 35583,
+   "hi": 73053,
+   "n": 1169,
    "unstable": false
   },
   {
    "year": 2024,
    "type": "unclear",
-   "est": 3580,
-   "lo": 2201,
-   "hi": 4958,
-   "n": 80,
+   "est": 3918,
+   "lo": 2412,
+   "hi": 5425,
+   "n": 88,
    "unstable": false
   },
   {
    "year": 2025,
    "type": "likely e-moto",
-   "est": 1854,
-   "lo": 1074,
-   "hi": 2634,
-   "n": 48,
+   "est": 1561,
+   "lo": 824,
+   "hi": 2298,
+   "n": 42,
    "unstable": false
   },
   {
    "year": 2025,
    "type": "regular e-bike",
-   "est": 94492,
-   "lo": 64481,
-   "hi": 124502,
-   "n": 2163,
+   "est": 94320,
+   "lo": 64353,
+   "hi": 124286,
+   "n": 2161,
    "unstable": false
   },
   {
    "year": 2025,
    "type": "unclear",
-   "est": 5282,
-   "lo": 3334,
-   "hi": 7229,
-   "n": 127,
+   "est": 5747,
+   "lo": 3636,
+   "hi": 7858,
+   "n": 135,
    "unstable": false
   }
  ],

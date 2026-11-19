@@ -126,3 +126,11 @@ def test_set_c_has_no_locked_stories_and_valid_spot_checks():
     assert len(spot) >= L.SPOT_MIN and all(r[q] in L.VALUES[q] for r in spot for q in L.QUESTIONS)
     ids = {r["id"] for r in items}
     assert all(r["id"] in ids for r in spot)
+
+
+def test_ebike_rule_matches_locked_fingerprint():
+    """The e-moto rule code must not change after its fresh test without a new test."""
+    import hashlib
+    s = (ROOT / "src" / "neissai" / "ebike_type.py").read_text()
+    h = hashlib.sha256(s[s.index("from __future__"):].encode()).hexdigest()
+    assert h in (LD.parent / "ebike_type_v2" / "LOCK.txt").read_text()

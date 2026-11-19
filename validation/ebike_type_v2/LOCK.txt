@@ -1,0 +1,3 @@
+Rule v2 locked before the fresh test was scored.
+SHA-256 of src/neissai/ebike_type.py from 'from __future__' down: 46a20f60bb68af545e8e0a0a1d5bd9aa54a78d590778f1cfea73438096f84771
+Locked at: 2026-11-18T20:53:09-05:00

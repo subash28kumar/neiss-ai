@@ -2,6 +2,17 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## E-bike vs e-moto rule v2 — 2026-11-18
+
+- Rebuilt on 920 development stories (old 240-story test retired into development, plus 360 new
+  stories labelled blind), then locked and tested once on 240 fresh stories: 98.9% in the right
+  group (95% CI 97.9–99.7%; raw 233/240), up from 98.6% / 229 for v1.4 on the same stories.
+  Single "likely e-moto" calls right about 19 times in 20 (was 3 in 4).
+- Fixes: "motorized bike" is unclear at any speed; guessed or downhill speeds are unclear;
+  "bike vs e-bike" is unclear; clutch = e-moto; "fast"/speeds of other vehicles ignored.
+- E-bike type estimates on the website recalculated (2025 likely e-moto 1,600, 1.5%).
+- Rule fingerprint is checked by a test so it cannot change silently.
+
 ## Website update — 2026-11-18 (learning from people)
 
 - New **Set C: help train** on the labelling page: the 200 hardest e-bike stories, chosen by a

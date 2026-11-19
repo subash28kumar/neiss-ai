@@ -1,5 +1,45 @@
 # E-bike or e-moto? How the rule was built and tested
 
+## Version 2 (November 2026) — current
+
+The v1.4 rule (below) scored 99.5% on the stories it was built from but 94.6% raw on its test,
+so it was rebuilt properly:
+
+1. **Retired the old test.** The 240 v1.4 test stories had been looked at, so they became
+   development data. Development set for v2: 200 + 120 + 240 old stories + **360 new stories**
+   (`ebike_type_v2/ebike_type_dev3_360.csv`) = 920.
+2. **New stories, drawn deterministically** (`ebike_type_v2/sample.py`; ranked by SHA-1, no random
+   seed; none from any earlier set): 360 for development and **240 for a fresh test**
+   (`ebike_type_v2/ebike_type_TEST2_240.csv`), sampled by group (25 likely e-moto, 75 unclear,
+   60 regular with clue words, 80 regular) and weighted back to all 5,839 e-bike stories.
+3. **Labelled blind** by two AI reviewers per story who saw only the written definitions
+   (`ebike_type_v2/DEFINITIONS.md`, fixed before labelling) and never the rule; a third settled
+   disagreements (dev 359/360 agreed, test 239/240). Same kind of AI system, so not as independent
+   as two human readers; the outside human check (labelling page) remains the next step.
+4. **Rule fixes, made on development stories only:** "motorized bike/bicycle" wording is unclear at
+   any speed (as the definitions say); second-hand guessed speeds and downhill slopes/inclines are
+   unclear; "bike vs e-bike" is unclear; a clutch means e-moto; "fast" or a speed that belongs to
+   another vehicle is ignored; "motorized electric bicycle" and "e-bike/motorbike" are treated as
+   e-bikes.
+5. **Locked** (SHA-256 in `ebike_type_v2/LOCK.txt`; a test checks it), then **scored once** on the
+   fresh test (`ebike_type_v2/evaluate.py` -> `ebike_type_v2/RESULTS.md`). The rule was not changed
+   after the test; its 7 misses are listed there for the next version.
+
+| Fresh test, 240 stories | v2 (new) | v1.4 (old) |
+|---|---|---|
+| Right group, weighted to all e-bike stories | **98.9%** (95% CI 97.9–99.7%) | 98.6% (97.5–99.4%) |
+| Right group, raw | 233/240 (97.1%) | 229/240 (95.4%) |
+| Likely e-moto precision / recall (weighted) | 95.2% / 100% | see RESULTS.md |
+| Likely e-moto share: rule vs reviewers | 1.7% vs 1.6% | |
+
+National estimates with v2, 2025: regular e-bike 94,300 (92.8%), unclear 5,700 (5.7%), likely
+e-moto 1,600 (1.5%; 95% CI 800–2,300). Likely e-motos were 0.9–2.0% of e-bike visits in every
+year 2019–2025.
+
+---
+
+## Version 1.4 (October 2026) — history
+
 `neissai.ebike_type()` sorts each NEISS e-bike story into **regular e-bike**, **likely e-moto**
 or **unclear** (rules in `src/neissai/ebike_type.py`; definitions in its docstring).
 
