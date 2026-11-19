@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import neissai  # noqa: E402
 from neissai.export import export_web_data  # noqa: E402
+from neissai.learn import apply_human_memory  # noqa: E402
 import pandas as pd  # noqa: E402
 
 ap = argparse.ArgumentParser()
@@ -57,6 +58,7 @@ df["month"] = pd.to_datetime(df["Treatment_Date"], errors="coerce").dt.month
 month = neissai.national_estimates(df, by=["year", "month", "device"],
                                    where=mm & df["month"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))
 df = neissai.add_ebike_type(df)
+df = apply_human_memory(df)  # trusted human answers (validation/learning); no change while memory is empty
 etype = neissai.national_estimates(df, by=["year", "ebike_type"], where=df["device"] == "E-bike")
 hosp = neissai.shares(df, "hospitalized", by=["device", "age_group"],
                       where=mm & df["age_group"].notna() & df["device"].isin(["E-bike", "E-scooter", "Bicycle"]))

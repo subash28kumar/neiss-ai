@@ -1,0 +1,4 @@
+
+# Reviewer submissions and the approved-reviewer list hold names; keep them private
+validation/learning/submissions/*.csv
+validation/learning/trusted_labellers.csv

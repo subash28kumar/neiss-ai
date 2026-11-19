@@ -2,6 +2,19 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Website update — 2026-11-18 (learning from people)
+
+- New **Set C: help train** on the labelling page: the 200 hardest e-bike stories, chosen by a
+  fixed scoring rule, plus 22 spot-check stories with known answers.
+- New `neissai.learn`: trusted human answers become a "human memory" with guardrails (approved
+  reviewers only, spot checks, at least two people agreeing, locked test stories never learned).
+  Same story -> the reviewers' answer; near-identical story -> the closest labelled story's
+  answer; otherwise the rules answer as before.
+- New `validation/ingest_human_labels.py` and `validation/check_learning.py` (a new memory is
+  published only if accuracy on the locked tests does not drop). See `validation/learning/README.md`.
+- "Is an answer wrong? Tell me" button on the story explainer.
+- No numbers on the site change yet: the memory is empty until reviewers send labels.
+
 ## Website update — 2026-11-18
 - New blind labelling page (`label.html`, linked from the Accuracy tab: "Start labelling stories"): outside reviewers read the 300 motor-vehicle/helmet test stories or the 240 e-bike/e-moto test stories and choose answers without seeing NEISS-AI's answers (the page holds only case numbers and stories; `scripts/build_label_sets.py`). Progress is saved in the browser; the reviewer downloads a CSV and emails it. `validation/score_human_labels.py` scores it against NEISS-AI and the existing answer key (agreement, 95% CI, Cohen's kappa, list of disagreements).
 - New "See how NEISS-AI reads a story" (How it works tab; link: `#reads`): real e-bike injury stories with the matched words highlighted and the four decisions explained (device, e-bike or e-moto, helmet, motor vehicle). For pre-2024 stories decided by the classifier, a bar chart shows the words that pushed the decision and by how much. Built by `scripts/build_explainer.py` with the new `neissai.explain` module, which uses the tool's own rules and model weights; every explanation is checked against the tool's own label (new tests in `tests/test_explain.py`), and the monthly refresh rebuilds it.

@@ -1,0 +1,12 @@
+{
+ "entries": [],
+ "n_files": 0,
+ "rules": {
+  "closest_match": 0.9,
+  "min_agree": 2,
+  "min_share": 0.75,
+  "spot_min": 5,
+  "spot_pass": 0.9
+ },
+ "version": 1
+}
