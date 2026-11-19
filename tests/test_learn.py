@@ -134,3 +134,29 @@ def test_ebike_rule_matches_locked_fingerprint():
     s = (ROOT / "src" / "neissai" / "ebike_type.py").read_text()
     h = hashlib.sha256(s[s.index("from __future__"):].encode()).hexdigest()
     assert h in (LD.parent / "ebike_type_v2" / "LOCK.txt").read_text()
+
+
+def test_labelling_page_uses_only_untouched_test_sets():
+    """Outside reviewers must check stories the rules were NOT built from.
+
+    Set B must be the current locked e-moto test, and no Set A/B story may appear in any
+    development file (old v1.4 sets, the retired v1.4 test, or the v2 development set)."""
+    sets = {s["id"]: s for s in json.loads((ROOT / "docs" / "data" / "label_sets.json").read_text())["sets"]}
+    assert sets["B"]["file"] == "ebike_type_v2/ebike_type_TEST2_240.csv"
+    dev = set()
+    for name in ("ebike_type_dev1_200.csv", "ebike_type_dev2_120.csv", "ebike_type_TEST_240.csv",
+                 "ebike_type_v2/ebike_type_dev3_360.csv"):
+        with open(ROOT / "validation" / name, newline="") as f:
+            dev |= {L.story_id(r["narrative"]) for r in csv.DictReader(f)}
+    for sid in ("B",):  # Set A (motor vehicle, helmet) rules were not built from these e-moto files
+        assert not any(L.story_id(it["text"]) in dev for it in sets[sid]["items"]), f"Set {sid} has development stories"
+    gate = (ROOT / "validation" / "check_learning.py").read_text()
+    assert "ebike_type_TEST2_240.csv" in gate and '"ebike_type_TEST_240.csv"' not in gate
+
+
+def test_set_c_on_page_matches_learning_files():
+    """The stories reviewers see in Set C must be exactly the ones the learning step accepts."""
+    sets = {s["id"]: s for s in json.loads((ROOT / "docs" / "data" / "label_sets.json").read_text())["sets"]}
+    page = [it["id"] for it in sets["C"]["items"]]
+    files = [r["id"] for r in csv.DictReader(open(LD / "set_c_items.csv", newline=""))]
+    assert page == files
