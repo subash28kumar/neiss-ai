@@ -107,7 +107,10 @@ function gc(path,title){try{if(window.goatcounter&&goatcounter.count)goatcounter
 function cur(){return SETS.find(s=>s.id===S.set);}
 function akey(id){return S.set+':'+id;}
 async function init(){
-  try{SETS=(await (await fetch('data/label_sets.json')).json()).sets;}catch(e){$('setup').insertAdjacentHTML('beforeend','<p class="warnbox">Could not load the stories. Please try again later.</p>');return;}
+  try{SETS=(await (await fetch('data/label_sets.json',{cache:'no-cache'})).json()).sets;
+  const valid=new Set(SETS.flatMap(s=>s.items.map(it=>s.id+':'+it.id)));
+  Object.keys(S.ans).forEach(k=>{if(!valid.has(k)) delete S.ans[k];});
+  S.sig=S.sig||{};SETS.forEach(s=>{const g=s.items.length+':'+s.items[0].id+':'+s.items[s.items.length-1].id;if(S.sig[s.id]!==g){S.pos[s.id]=0;S.sig[s.id]=g;}});save();}catch(e){$('setup').insertAdjacentHTML('beforeend','<p class="warnbox">Could not load the stories. Please try again later.</p>');return;}
   SETS.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title;$('setSel').appendChild(o);});
   $('nm').value=S.who.nm||'';$('org').value=S.who.org||'';$('role').value=S.who.role||'';$('setSel').value=S.set;
   const note=()=>{const s=SETS.find(x=>x.id===$('setSel').value);$('setNote').textContent=s&&s.note?s.note:'';};
