@@ -6,8 +6,8 @@ How it works (all steps are deterministic: same inputs -> same outputs, no rando
 2. ``build_memory`` applies the guardrails below and keeps only labels people agree on.
 3. ``HumanMemory.lookup`` answers a story from that memory:
    * the same story (exact text match)  -> the people's answer, source "human";
-   * a near-identical story (closest match, cosine similarity >= ``CLOSE``) -> the answer of the
-     closest labelled story, source "closest human match";
+   * a near-identical story (closest match: cosine similarity of word and two-word-phrase TF-IDF
+     vectors >= ``CLOSE``) -> the answer of the closest labelled story, source "closest human match";
    * otherwise nothing, and NEISS-AI's own rules answer as before.
 4. A new memory only goes live if ``validation/check_learning.py`` shows no drop in accuracy on
    the locked test sets (stories that are never learned from).
@@ -28,6 +28,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import math
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -189,19 +190,39 @@ def build_memory(rows: list[dict], items: dict[str, str], spot_key: dict[str, di
     return memory, report
 
 
+_TOK = re.compile(r"[A-Z0-9]+")
+
+
+def _features(text: str) -> Counter:
+    """Words and two-word phrases of a story (upper-case), with counts."""
+    w = _TOK.findall(norm_text(text))
+    return Counter(w + [a + " " + b for a, b in zip(w, w[1:])])
+
+
 class HumanMemory:
-    """Answers stories from trusted human labels: same story first, then the closest match."""
+    """Answers stories from trusted human labels: same story first, then the closest match.
+
+    Closest match = cosine similarity of TF-IDF vectors of words and two-word phrases (no extra
+    libraries; deterministic). Ties are broken by story id.
+    """
 
     def __init__(self, entries: list[dict] | None = None, close: float = CLOSE):
         self.entries = sorted(entries or [], key=lambda e: e["id"])
         self.close = close
         self.by_id = {e["id"]: e for e in self.entries}
-        self._vec = self._mat = None
-        if self.entries:
-            from sklearn.feature_extraction.text import TfidfVectorizer
-            self._vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), lowercase=False,
-                                        sublinear_tf=True, dtype=float)
-            self._mat = self._vec.fit_transform([e["text"] for e in self.entries])
+        feats = [_features(e["text"]) for e in self.entries]
+        n = len(feats)
+        df = Counter(f for fs in feats for f in fs)
+        self.idf = {f: math.log((1 + n) / (1 + d)) + 1.0 for f, d in df.items()}
+        self.index = defaultdict(list)          # feature -> [(entry number, weight)]
+        for i, fs in enumerate(feats):
+            for f, wt in self._vector(fs).items():
+                self.index[f].append((i, wt))
+
+    def _vector(self, fs: Counter) -> dict:
+        v = {f: (1.0 + math.log(c)) * self.idf[f] for f, c in fs.items() if f in self.idf}
+        norm = math.sqrt(sum(x * x for x in v.values())) or 1.0
+        return {f: x / norm for f, x in v.items()}
 
     @classmethod
     def load(cls, path: Path | None = None) -> "HumanMemory":
@@ -221,49 +242,30 @@ class HumanMemory:
         e = self.by_id.get(sid)
         if e and question in e:
             return {"label": e[question], "source": "human", "match_id": sid, "similarity": 1.0}
-        sims = (self._mat @ self._vec.transform([norm_text(text)]).T).toarray().ravel()
-        best = None
-        for i in sorted(range(len(sims)), key=lambda j: (-sims[j], self.entries[j]["id"])):
-            if sims[i] < self.close:
-                break
+        scores = defaultdict(float)
+        for f, x in self._vector(_features(text)).items():
+            for i, wt in self.index.get(f, ()):
+                scores[i] += x * wt
+        for i, sim in sorted(scores.items(), key=lambda kv: (-kv[1], self.entries[kv[0]]["id"])):
+            if sim < self.close - 1e-12:
+                return None
             if question in self.entries[i]:
-                best = i
-                break
-        if best is None:
-            return None
-        e = self.entries[best]
-        return {"label": e[question], "source": "closest human match", "match_id": e["id"],
-                "similarity": round(float(sims[best]), 3)}
+                e = self.entries[i]
+                return {"label": e[question], "source": "closest human match", "match_id": e["id"],
+                        "similarity": round(min(sim, 1.0), 3)}
+        return None
 
     def lookup_many(self, texts: list[str], question: str) -> list[dict | None]:
-        """Vectorised ``lookup`` for many stories (same answers, much faster)."""
-        if not self.entries or not len(texts):
+        """``lookup`` for many stories; repeated stories are looked up once."""
+        if not self.entries:
             return [None] * len(texts)
-        have = [i for i, e in enumerate(self.entries) if question in e]
-        if not have:
-            return [None] * len(texts)
-        sub = self._mat[have]
+        cache = {}
         out = []
-        X = self._vec.transform([norm_text(t) for t in texts])
-        S = (X @ sub.T).tocsr()
-        for r, t in enumerate(texts):
-            sid = story_id(t)
-            e = self.by_id.get(sid)
-            if e and question in e:
-                out.append({"label": e[question], "source": "human", "match_id": sid, "similarity": 1.0})
-                continue
-            row = S.getrow(r)
-            best = None
-            for j, v in sorted(zip(row.indices, row.data), key=lambda kv: (-kv[1], self.entries[have[kv[0]]]["id"])):
-                if v >= self.close:
-                    best = (j, v)
-                break
-            if best is None:
-                out.append(None)
-            else:
-                e = self.entries[have[best[0]]]
-                out.append({"label": e[question], "source": "closest human match", "match_id": e["id"],
-                            "similarity": round(float(best[1]), 3)})
+        for t in texts:
+            k = norm_text(t)
+            if k not in cache:
+                cache[k] = self.lookup(k, question)
+            out.append(cache[k])
         return out
 
 

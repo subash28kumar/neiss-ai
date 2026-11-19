@@ -27,7 +27,7 @@ deterministic: the same inputs always give the same result.
    locked tests (240 e-bike/e-moto, 300 motor vehicle/helmet stories). If any accuracy drops, it
    fails and the memory must not be published. Report: `check_report.md`.
 5. **Use:** `scripts/update_site.py` applies the memory (`neissai.learn.apply_human_memory`):
-   the same story gets the reviewers' answer; a near-identical story (character similarity at
+   the same story gets the reviewers' answer; a near-identical story (word and phrase similarity at
    least 0.90) gets the answer of its closest labelled story; everything else keeps the rule
    answer. With an empty memory nothing changes.
 6. **Fix the rules.** Patterns in the reviewers' answers are also used to improve the rules
