@@ -92,7 +92,7 @@ class EbikeMopedClassifier:
         vec = TfidfVectorizer(ngram_range=(1, 2), min_df=min_df, sublinear_tf=True)
         X = vec.fit_transform(texts)
         lr = LogisticRegression(max_iter=2000, C=C, class_weight="balanced")
-        auc = float(cross_val_score(lr, X, is_ebike, cv=cv_folds, scoring="roc_auc").mean())
+        auc = float(cross_val_score(lr, X, is_ebike, cv=cv_folds, scoring="roc_auc").mean()) if cv_folds else float("nan")
         lr.fit(X, is_ebike)
         vocab = vec.get_feature_names_out()
         idf = dict(zip(vocab, vec.idf_.tolist()))
