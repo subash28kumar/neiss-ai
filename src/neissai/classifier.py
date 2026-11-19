@@ -78,7 +78,7 @@ class EbikeMopedClassifier:
 
     @classmethod
     def load_default(cls) -> "EbikeMopedClassifier":
-        text = resources.files("neissai").joinpath("model/ebike_moped_v1.json").read_text()
+        text = resources.files("neissai").joinpath("model/ebike_moped_v2.json").read_text()
         return cls.from_json(text)
 
     # ---------- training (needs scikit-learn) ----------

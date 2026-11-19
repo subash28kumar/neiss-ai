@@ -50,7 +50,7 @@ def test_labels_rules():
 def test_classifier_loads_and_separates():
     clf = neissai.EbikeMopedClassifier.load_default()
     p = clf.predict_proba(["16YOM FELL OFF ELECTRIC BIKE PEDAL ASSIST", "35YOM GAS MOPED CRASHED ON HIGHWAY"])
-    assert clf.meta["cv_auc"] > 0.98
+    assert clf.meta["test_auc"] > 0.98  # scored once on a locked 15% test set
     assert p[0] > 0.5 > p[1]
 
 
