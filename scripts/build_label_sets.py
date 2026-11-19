@@ -31,8 +31,8 @@ def items(name, id_col, seed):
 sets = [
     {"id": "A", "file": "injurycoder_test_300.csv", "title": "Set A: motor vehicle and helmet (300 stories)",
      "questions": ["mv", "helmet"], "items": items("injurycoder_test_300.csv", "cpsc_case_number", 12)},
-    {"id": "B", "file": "ebike_type_TEST_240.csv", "title": "Set B: regular e-bike or e-moto (240 stories)",
-     "questions": ["etype"], "items": items("ebike_type_TEST_240.csv", "CPSC_Case_Number", 13)},
+    {"id": "B", "file": "ebike_type_v2/ebike_type_TEST2_240.csv", "title": "Set B: regular e-bike or e-moto (240 stories)",
+     "questions": ["etype"], "items": items("ebike_type_v2/ebike_type_TEST2_240.csv", "id", 13)},
 ]
 for s in sets:
     s["note"] = "Blind accuracy check: these are locked test stories that NEISS-AI never learns from."

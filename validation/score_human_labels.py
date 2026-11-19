@@ -52,9 +52,9 @@ def load_reference():
             ref[("A", r["cpsc_case_number"])] = {
                 "text": t, "mv_key": norm(r["motor_vehicle"]), "helmet_key": norm(r["helmet"]),
                 "mv_tool": "yes" if C.motor_vehicle(t) else "no", "helmet_tool": C.helmet(t)}
-    with open(HERE / "ebike_type_TEST_240.csv", newline="") as f:
+    with open(HERE / "ebike_type_v2" / "ebike_type_TEST2_240.csv", newline="") as f:  # fresh locked test (rule v2)
         for r in csv.DictReader(f):
-            ref[("B", r["CPSC_Case_Number"])] = {
+            ref[("B", r["id"])] = {
                 "text": r["narrative"], "etype_key": norm(r["reference_label"]), "etype_tool": E.ebike_type(r["narrative"])}
     return ref
 
