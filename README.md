@@ -24,7 +24,7 @@ In January 2024, CPSC gave e-bikes their own product code (5045). Before then, e
 NEISS-AI reads the short injury story in each record:
 
 1. **Rules.** Product codes and whole-word keywords label each injury (e-bike, e-scooter, bicycle, kick scooter, hoverboard, skateboard or moped). Whole-word matching matters: "the bike" is not an "e bike".
-2. **Text classifier.** For code-3215 records whose story is unclear, a classifier trained on 2024-2025 records (where 5045 and 5046 are separate) decides e-bike vs moped. It is TF-IDF + logistic regression, stored as plain JSON and run with numpy only. Five-fold cross-validated AUC: **0.995**.
+2. **Text classifier.** For code-3215 records whose story is unclear, a classifier trained on 2024-2025 records (where 5045 and 5046 are separate) decides e-bike vs moped. It is TF-IDF + logistic regression, stored as plain JSON and run with numpy only. Trained with a fixed 70/15/15 train/validation/test split and scored once on the locked test (833 stories): AUC **0.998**, accuracy 98.0% (see `validation/classifier_v2/RESULTS.md`).
 3. **National estimates.** NEISS is a stratified sample of hospitals. Estimates use the survey weights and Taylor-linearized standard errors (hospitals as clusters within strata), and are flagged "unstable" by CPSC's rule (fewer than 20 records, an estimate below 1,200, or a coefficient of variation above 33%).
 
 **Validation:** e-bike estimates for 2022-2024 are within 5% of CPSC's published figures (28,000 vs 26,800; 37,900 vs 37,600; 59,300 vs 59,200).

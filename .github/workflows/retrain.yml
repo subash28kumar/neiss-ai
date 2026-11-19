@@ -1,0 +1,34 @@
+# Retrains the e-bike vs moped classifier with a 70/15/15 split (needs the CPSC files, which
+# can only be downloaded here). Run it from the Actions tab when the model should be retrained.
+# If validation/classifier_v2/ADOPT exists, it also rebuilds the website with the new model.
+name: Retrain classifier (train/validation/test)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: pip install -e ".[train]" openpyxl
+      - name: Download NEISS 2024-2025
+        run: python -c "import neissai; neissai.download([2024, 2025], 'data')"
+      - name: Train, tune on validation, score once on locked test
+        run: python scripts/train_classifier_split.py --data-dir data --years 2024-2025
+      - name: Rebuild website with the new model (only when ADOPT is present)
+        if: hashFiles('validation/classifier_v2/ADOPT') != ''
+        run: python scripts/update_site.py --data-dir data --years 2019-2025 --download --force
+      - name: Commit results back to the branch
+        run: |
+          git config user.name "neissai-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/neissai/model validation/classifier_v2 docs
+          if git diff --cached --quiet; then echo "No change."; else git commit -m "Classifier v2: training results ($(date +%Y-%m-%d))" && git push; fi

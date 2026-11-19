@@ -24,6 +24,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--data-dir", default="data")
 ap.add_argument("--years", default="2019-2025")
 ap.add_argument("--download", action="store_true", help="try to download missing files from CPSC first")
+ap.add_argument("--force", action="store_true", help="rebuild even if there is no new year (e.g. after a model change)")
 a = ap.parse_args()
 
 years = neissai.parse_years(a.years)
@@ -44,7 +45,7 @@ if not available or missing:
     print(f"::warning::Skipping update: missing NEISS files for {missing or years}. "
           "If CPSC changed its download links, update DOWNLOAD_URL in src/neissai/io.py.")
     sys.exit(0)
-if max(available) <= max(required or [0]) and published.exists():
+if max(available) <= max(required or [0]) and published.exists() and not a.force:
     print(f"No new year of data (latest available {max(available)}); site unchanged.")
     sys.exit(0)
 
