@@ -6,8 +6,8 @@
    "product": "1550",
    "name": "Infant and toddler play centers",
    "before": 402.3698,
-   "after": 1627.5503,
-   "pct": 3.0449116708063078,
+   "after": 1627.5502999999999,
+   "pct": 3.0449116708063073,
    "records": 49,
    "rate_before": 0.12,
    "rate_after": 0.48,
@@ -18,7 +18,7 @@
    "product": "897",
    "name": "Power workshop grinders, buffers or polishers",
    "before": 10176.0127,
-   "after": 18791.5401,
+   "after": 18791.540100000002,
    "pct": 0.8466506139482317,
    "records": 296,
    "rate_before": 2.99,
@@ -41,7 +41,7 @@
   {
    "product": "1807",
    "name": "Floors or flooring materials",
-   "before": 1856496.107,
+   "before": 1856496.1069999998,
    "after": 3079996.3164,
    "pct": 0.6590373148571327,
    "records": 70650,
@@ -55,7 +55,7 @@
    "name": "Powered scooters (e-scooters)",
    "before": 118484.9142,
    "after": 165735.0351,
-   "pct": 0.3987859654457175,
+   "pct": 0.39878596544571754,
    "records": 4212,
    "rate_before": 34.85,
    "rate_after": 48.49,
@@ -77,16 +77,10 @@
    "after": 535
   },
   {
-   "term": "FLOORING CHI",
-   "device": "FLOORING",
-   "before": 48,
-   "after": 159
-  },
-  {
    "term": "WHEELCHAIR FLOOR",
    "device": "WHEELCHAIR",
-   "before": 170,
-   "after": 404
+   "before": 159,
+   "after": 394
   },
   {
    "term": "ALL-TERRAIN VEHICLE",
@@ -104,13 +98,13 @@
    "term": "DESCENDING STAIRS",
    "device": "STAIRS",
    "before": 26,
-   "after": 91
+   "after": 90
   },
   {
    "term": "SCOOTER ACCIDENT",
    "device": "SCOOTER",
    "before": 293,
-   "after": 575
+   "after": 574
   },
   {
    "term": "E-SCOOTER",
@@ -119,10 +113,16 @@
    "after": 490
   },
   {
+   "term": "FLOORING",
+   "device": "FLOORING",
+   "before": 445,
+   "after": 781
+  },
+  {
    "term": "FALL PLAYGROUND",
    "device": "PLAYGROUND",
-   "before": 121,
-   "after": 239
+   "before": 119,
+   "after": 236
   }
  ]
 }

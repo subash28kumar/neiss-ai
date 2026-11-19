@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-26",
+ "updated": "2026-11-19",
  "source": "CPSC NEISS annual files 2019-2025",
- "version": "1.4.0",
+ "version": "1.6.1",
  "by_device": [
   {
    "year": 2019,
@@ -15,10 +15,10 @@
   {
    "year": 2019,
    "device": "E-bike",
-   "est": 5173,
-   "lo": 1728,
-   "hi": 8617,
-   "n": 147,
+   "est": 5112,
+   "lo": 1687,
+   "hi": 8536,
+   "n": 144,
    "unstable": true
   },
   {
@@ -51,10 +51,10 @@
   {
    "year": 2019,
    "device": "Moped / minibike",
-   "est": 20217,
-   "lo": 12019,
-   "hi": 28415,
-   "n": 512,
+   "est": 20278,
+   "lo": 12077,
+   "hi": 28480,
+   "n": 515,
    "unstable": false
   },
   {
@@ -78,10 +78,10 @@
   {
    "year": 2020,
    "device": "E-bike",
-   "est": 8220,
-   "lo": 1839,
-   "hi": 14601,
-   "n": 186,
+   "est": 8147,
+   "lo": 1727,
+   "hi": 14567,
+   "n": 185,
    "unstable": true
   },
   {
@@ -114,10 +114,10 @@
   {
    "year": 2020,
    "device": "Moped / minibike",
-   "est": 26001,
-   "lo": 8800,
-   "hi": 43203,
-   "n": 656,
+   "est": 26075,
+   "lo": 8895,
+   "hi": 43254,
+   "n": 657,
    "unstable": true
   },
   {
@@ -141,10 +141,10 @@
   {
    "year": 2021,
    "device": "E-bike",
-   "est": 15257,
-   "lo": 5832,
-   "hi": 24681,
-   "n": 377,
+   "est": 15139,
+   "lo": 5818,
+   "hi": 24459,
+   "n": 375,
    "unstable": false
   },
   {
@@ -177,10 +177,10 @@
   {
    "year": 2021,
    "device": "Moped / minibike",
-   "est": 37398,
-   "lo": 4767,
-   "hi": 70029,
-   "n": 925,
+   "est": 37516,
+   "lo": 4788,
+   "hi": 70244,
+   "n": 927,
    "unstable": true
   },
   {
@@ -204,10 +204,10 @@
   {
    "year": 2022,
    "device": "E-bike",
-   "est": 27987,
-   "lo": 12766,
-   "hi": 43208,
-   "n": 610,
+   "est": 27889,
+   "lo": 12703,
+   "hi": 43074,
+   "n": 608,
    "unstable": false
   },
   {
@@ -240,10 +240,10 @@
   {
    "year": 2022,
    "device": "Moped / minibike",
-   "est": 40813,
-   "lo": 1935,
-   "hi": 79691,
-   "n": 899,
+   "est": 40911,
+   "lo": 2022,
+   "hi": 79801,
+   "n": 901,
    "unstable": true
   },
   {
@@ -267,9 +267,9 @@
   {
    "year": 2023,
    "device": "E-bike",
-   "est": 37854,
-   "lo": 22121,
-   "hi": 53587,
+   "est": 37789,
+   "lo": 22128,
+   "hi": 53450,
    "n": 897,
    "unstable": false
   },
@@ -303,9 +303,9 @@
   {
    "year": 2023,
    "device": "Moped / minibike",
-   "est": 53198,
+   "est": 53263,
    "lo": 0,
-   "hi": 116276,
+   "hi": 116355,
    "n": 1210,
    "unstable": true
   },
@@ -450,9 +450,9 @@
    "year": 2019,
    "device": "E-bike",
    "age_group": "0-17",
-   "est": 598,
-   "lo": 232,
-   "hi": 963,
+   "est": 561,
+   "lo": 202,
+   "hi": 920,
    "n": 14,
    "unstable": true
   },
@@ -460,10 +460,10 @@
    "year": 2019,
    "device": "E-bike",
    "age_group": "18-64",
-   "est": 4443,
-   "lo": 1119,
-   "hi": 7767,
-   "n": 128,
+   "est": 4418,
+   "lo": 1124,
+   "hi": 7712,
+   "n": 125,
    "unstable": true
   },
   {
@@ -520,10 +520,10 @@
    "year": 2020,
    "device": "E-bike",
    "age_group": "18-64",
-   "est": 7015,
-   "lo": 1091,
-   "hi": 12939,
-   "n": 143,
+   "est": 6942,
+   "lo": 973,
+   "hi": 12910,
+   "n": 142,
    "unstable": true
   },
   {
@@ -580,20 +580,20 @@
    "year": 2021,
    "device": "E-bike",
    "age_group": "18-64",
-   "est": 11746,
-   "lo": 3544,
-   "hi": 19947,
-   "n": 277,
+   "est": 11644,
+   "lo": 3555,
+   "hi": 19733,
+   "n": 276,
    "unstable": true
   },
   {
    "year": 2021,
    "device": "E-bike",
    "age_group": "65+",
-   "est": 2202,
-   "lo": 1174,
-   "hi": 3229,
-   "n": 46,
+   "est": 2185,
+   "lo": 1159,
+   "hi": 3211,
+   "n": 45,
    "unstable": false
   },
   {
@@ -630,20 +630,20 @@
    "year": 2022,
    "device": "E-bike",
    "age_group": "0-17",
-   "est": 3743,
-   "lo": 1871,
-   "hi": 5615,
-   "n": 100,
+   "est": 3651,
+   "lo": 1796,
+   "hi": 5507,
+   "n": 99,
    "unstable": false
   },
   {
    "year": 2022,
    "device": "E-bike",
    "age_group": "18-64",
-   "est": 20997,
-   "lo": 7629,
-   "hi": 34366,
-   "n": 447,
+   "est": 20991,
+   "lo": 7622,
+   "hi": 34359,
+   "n": 446,
    "unstable": false
   },
   {
@@ -700,20 +700,20 @@
    "year": 2023,
    "device": "E-bike",
    "age_group": "18-64",
-   "est": 27816,
-   "lo": 15863,
-   "hi": 39768,
-   "n": 660,
+   "est": 27677,
+   "lo": 15824,
+   "hi": 39530,
+   "n": 659,
    "unstable": false
   },
   {
    "year": 2023,
    "device": "E-bike",
    "age_group": "65+",
-   "est": 3379,
-   "lo": 1969,
-   "hi": 4788,
-   "n": 70,
+   "est": 3453,
+   "lo": 2025,
+   "hi": 4882,
+   "n": 71,
    "unstable": false
   },
   {
@@ -867,271 +867,6 @@
    "unstable": false
   }
  ],
- "by_ebike_type": [
-  {
-   "year": 2019,
-   "type": "likely e-moto",
-   "est": 73,
-   "lo": 0,
-   "hi": 187,
-   "n": 2,
-   "unstable": true
-  },
-  {
-   "year": 2019,
-   "type": "regular e-bike",
-   "est": 3033,
-   "lo": 1082,
-   "hi": 4984,
-   "n": 97,
-   "unstable": false
-  },
-  {
-   "year": 2019,
-   "type": "unclear",
-   "est": 2067,
-   "lo": 437,
-   "hi": 3696,
-   "n": 48,
-   "unstable": true
-  },
-  {
-   "year": 2020,
-   "type": "likely e-moto",
-   "est": 76,
-   "lo": 0,
-   "hi": 225,
-   "n": 1,
-   "unstable": true
-  },
-  {
-   "year": 2020,
-   "type": "regular e-bike",
-   "est": 5775,
-   "lo": 968,
-   "hi": 10582,
-   "n": 128,
-   "unstable": true
-  },
-  {
-   "year": 2020,
-   "type": "unclear",
-   "est": 2369,
-   "lo": 704,
-   "hi": 4034,
-   "n": 57,
-   "unstable": true
-  },
-  {
-   "year": 2021,
-   "type": "likely e-moto",
-   "est": 301,
-   "lo": 0,
-   "hi": 754,
-   "n": 6,
-   "unstable": true
-  },
-  {
-   "year": 2021,
-   "type": "regular e-bike",
-   "est": 11636,
-   "lo": 3936,
-   "hi": 19337,
-   "n": 292,
-   "unstable": true
-  },
-  {
-   "year": 2021,
-   "type": "unclear",
-   "est": 3319,
-   "lo": 1053,
-   "hi": 5584,
-   "n": 79,
-   "unstable": true
-  },
-  {
-   "year": 2022,
-   "type": "likely e-moto",
-   "est": 569,
-   "lo": 0,
-   "hi": 1226,
-   "n": 10,
-   "unstable": true
-  },
-  {
-   "year": 2022,
-   "type": "regular e-bike",
-   "est": 23600,
-   "lo": 10634,
-   "hi": 36566,
-   "n": 522,
-   "unstable": false
-  },
-  {
-   "year": 2022,
-   "type": "unclear",
-   "est": 3818,
-   "lo": 1721,
-   "hi": 5915,
-   "n": 78,
-   "unstable": false
-  },
-  {
-   "year": 2023,
-   "type": "likely e-moto",
-   "est": 530,
-   "lo": 92,
-   "hi": 967,
-   "n": 11,
-   "unstable": true
-  },
-  {
-   "year": 2023,
-   "type": "regular e-bike",
-   "est": 33321,
-   "lo": 18603,
-   "hi": 48039,
-   "n": 804,
-   "unstable": false
-  },
-  {
-   "year": 2023,
-   "type": "unclear",
-   "est": 4003,
-   "lo": 2117,
-   "hi": 5890,
-   "n": 82,
-   "unstable": false
-  },
-  {
-   "year": 2024,
-   "type": "likely e-moto",
-   "est": 1112,
-   "lo": 261,
-   "hi": 1963,
-   "n": 27,
-   "unstable": true
-  },
-  {
-   "year": 2024,
-   "type": "regular e-bike",
-   "est": 54318,
-   "lo": 35583,
-   "hi": 73053,
-   "n": 1169,
-   "unstable": false
-  },
-  {
-   "year": 2024,
-   "type": "unclear",
-   "est": 3918,
-   "lo": 2412,
-   "hi": 5425,
-   "n": 88,
-   "unstable": false
-  },
-  {
-   "year": 2025,
-   "type": "likely e-moto",
-   "est": 1561,
-   "lo": 824,
-   "hi": 2298,
-   "n": 42,
-   "unstable": false
-  },
-  {
-   "year": 2025,
-   "type": "regular e-bike",
-   "est": 94320,
-   "lo": 64353,
-   "hi": 124286,
-   "n": 2161,
-   "unstable": false
-  },
-  {
-   "year": 2025,
-   "type": "unclear",
-   "est": 5747,
-   "lo": 3636,
-   "hi": 7858,
-   "n": 135,
-   "unstable": false
-  }
- ],
- "hospitalized": [
-  {
-   "device": "Bicycle",
-   "age_group": "0-17",
-   "share": 0.0594,
-   "lo": 0.049,
-   "hi": 0.0698,
-   "n": 32914
-  },
-  {
-   "device": "Bicycle",
-   "age_group": "18-64",
-   "share": 0.1416,
-   "lo": 0.1167,
-   "hi": 0.1665,
-   "n": 37546
-  },
-  {
-   "device": "Bicycle",
-   "age_group": "65+",
-   "share": 0.2941,
-   "lo": 0.2399,
-   "hi": 0.3483,
-   "n": 7326
-  },
-  {
-   "device": "E-bike",
-   "age_group": "0-17",
-   "share": 0.1052,
-   "lo": 0.0693,
-   "hi": 0.1411,
-   "n": 1421
-  },
-  {
-   "device": "E-bike",
-   "age_group": "18-64",
-   "share": 0.1653,
-   "lo": 0.1155,
-   "hi": 0.2151,
-   "n": 3938
-  },
-  {
-   "device": "E-bike",
-   "age_group": "65+",
-   "share": 0.2634,
-   "lo": 0.1879,
-   "hi": 0.3388,
-   "n": 480
-  },
-  {
-   "device": "E-scooter",
-   "age_group": "0-17",
-   "share": 0.0832,
-   "lo": 0.0632,
-   "hi": 0.1033,
-   "n": 4636
-  },
-  {
-   "device": "E-scooter",
-   "age_group": "18-64",
-   "share": 0.1395,
-   "lo": 0.1186,
-   "hi": 0.1604,
-   "n": 9254
-  },
-  {
-   "device": "E-scooter",
-   "age_group": "65+",
-   "share": 0.2636,
-   "lo": 0.2142,
-   "hi": 0.3131,
-   "n": 689
-  }
- ],
  "by_month": [
   {
    "year": 2019,
@@ -1267,10 +1002,10 @@
    "year": 2019,
    "month": 5,
    "device": "E-bike",
-   "est": 654,
-   "lo": 42,
-   "hi": 1265,
-   "n": 18,
+   "est": 636,
+   "lo": 25,
+   "hi": 1248,
+   "n": 17,
    "unstable": true
   },
   {
@@ -1297,10 +1032,10 @@
    "year": 2019,
    "month": 6,
    "device": "E-bike",
-   "est": 627,
-   "lo": 158,
-   "hi": 1096,
-   "n": 12,
+   "est": 481,
+   "lo": 83,
+   "hi": 879,
+   "n": 10,
    "unstable": true
   },
   {
@@ -1327,10 +1062,10 @@
    "year": 2019,
    "month": 7,
    "device": "E-bike",
-   "est": 736,
-   "lo": 116,
-   "hi": 1356,
-   "n": 20,
+   "est": 718,
+   "lo": 107,
+   "hi": 1328,
+   "n": 19,
    "unstable": true
   },
   {
@@ -1357,10 +1092,10 @@
    "year": 2019,
    "month": 8,
    "device": "E-bike",
-   "est": 666,
-   "lo": 0,
-   "hi": 1356,
-   "n": 23,
+   "est": 860,
+   "lo": 54,
+   "hi": 1666,
+   "n": 26,
    "unstable": true
   },
   {
@@ -1387,10 +1122,10 @@
    "year": 2019,
    "month": 9,
    "device": "E-bike",
-   "est": 590,
-   "lo": 208,
-   "hi": 971,
-   "n": 20,
+   "est": 608,
+   "lo": 220,
+   "hi": 996,
+   "n": 21,
    "unstable": true
   },
   {
@@ -1417,10 +1152,10 @@
    "year": 2019,
    "month": 10,
    "device": "E-bike",
-   "est": 531,
-   "lo": 60,
-   "hi": 1002,
-   "n": 17,
+   "est": 511,
+   "lo": 47,
+   "hi": 976,
+   "n": 16,
    "unstable": true
   },
   {
@@ -1477,10 +1212,10 @@
    "year": 2019,
    "month": 12,
    "device": "E-bike",
-   "est": 214,
-   "lo": 30,
-   "hi": 399,
-   "n": 8,
+   "est": 142,
+   "lo": 0,
+   "hi": 296,
+   "n": 6,
    "unstable": true
   },
   {
@@ -1507,10 +1242,10 @@
    "year": 2020,
    "month": 1,
    "device": "E-bike",
-   "est": 387,
-   "lo": 46,
-   "hi": 728,
-   "n": 8,
+   "est": 331,
+   "lo": 38,
+   "hi": 623,
+   "n": 7,
    "unstable": true
   },
   {
@@ -1567,10 +1302,10 @@
    "year": 2020,
    "month": 3,
    "device": "E-bike",
-   "est": 334,
+   "est": 278,
    "lo": 0,
-   "hi": 783,
-   "n": 9,
+   "hi": 722,
+   "n": 8,
    "unstable": true
   },
   {
@@ -1597,10 +1332,10 @@
    "year": 2020,
    "month": 4,
    "device": "E-bike",
-   "est": 430,
-   "lo": 76,
-   "hi": 783,
-   "n": 10,
+   "est": 373,
+   "lo": 32,
+   "hi": 715,
+   "n": 9,
    "unstable": true
   },
   {
@@ -1718,8 +1453,8 @@
    "month": 8,
    "device": "E-bike",
    "est": 1269,
-   "lo": 609,
-   "hi": 1929,
+   "lo": 611,
+   "hi": 1928,
    "n": 31,
    "unstable": false
   },
@@ -1747,10 +1482,10 @@
    "year": 2020,
    "month": 9,
    "device": "E-bike",
-   "est": 1027,
-   "lo": 0,
-   "hi": 2065,
-   "n": 20,
+   "est": 1044,
+   "lo": 5,
+   "hi": 2082,
+   "n": 21,
    "unstable": true
   },
   {
@@ -1807,10 +1542,10 @@
    "year": 2020,
    "month": 11,
    "device": "E-bike",
-   "est": 696,
-   "lo": 148,
-   "hi": 1244,
-   "n": 17,
+   "est": 774,
+   "lo": 205,
+   "hi": 1344,
+   "n": 18,
    "unstable": true
   },
   {
@@ -1927,9 +1662,9 @@
    "year": 2021,
    "month": 3,
    "device": "E-bike",
-   "est": 849,
-   "lo": 305,
-   "hi": 1392,
+   "est": 903,
+   "lo": 342,
+   "hi": 1464,
    "n": 22,
    "unstable": true
   },
@@ -1957,10 +1692,10 @@
    "year": 2021,
    "month": 4,
    "device": "E-bike",
-   "est": 1096,
-   "lo": 599,
-   "hi": 1592,
-   "n": 40,
+   "est": 1112,
+   "lo": 610,
+   "hi": 1614,
+   "n": 41,
    "unstable": true
   },
   {
@@ -1987,9 +1722,9 @@
    "year": 2021,
    "month": 5,
    "device": "E-bike",
-   "est": 1988,
-   "lo": 1039,
-   "hi": 2936,
+   "est": 1946,
+   "lo": 1013,
+   "hi": 2879,
    "n": 51,
    "unstable": false
   },
@@ -2017,10 +1752,10 @@
    "year": 2021,
    "month": 6,
    "device": "E-bike",
-   "est": 1552,
-   "lo": 329,
-   "hi": 2775,
-   "n": 42,
+   "est": 1536,
+   "lo": 314,
+   "hi": 2758,
+   "n": 41,
    "unstable": true
   },
   {
@@ -2047,10 +1782,10 @@
    "year": 2021,
    "month": 7,
    "device": "E-bike",
-   "est": 1520,
-   "lo": 379,
-   "hi": 2660,
-   "n": 39,
+   "est": 1446,
+   "lo": 332,
+   "hi": 2560,
+   "n": 38,
    "unstable": true
   },
   {
@@ -2167,10 +1902,10 @@
    "year": 2021,
    "month": 11,
    "device": "E-bike",
-   "est": 833,
-   "lo": 338,
-   "hi": 1328,
-   "n": 21,
+   "est": 776,
+   "lo": 347,
+   "hi": 1206,
+   "n": 20,
    "unstable": true
   },
   {
@@ -2377,10 +2112,10 @@
    "year": 2022,
    "month": 6,
    "device": "E-bike",
-   "est": 3242,
-   "lo": 1390,
-   "hi": 5093,
-   "n": 78,
+   "est": 3161,
+   "lo": 1328,
+   "hi": 4993,
+   "n": 77,
    "unstable": false
   },
   {
@@ -2497,10 +2232,10 @@
    "year": 2022,
    "month": 10,
    "device": "E-bike",
-   "est": 2749,
-   "lo": 823,
-   "hi": 4675,
-   "n": 64,
+   "est": 2732,
+   "lo": 807,
+   "hi": 4656,
+   "n": 63,
    "unstable": true
   },
   {
@@ -2767,10 +2502,10 @@
    "year": 2023,
    "month": 7,
    "device": "E-bike",
-   "est": 4037,
-   "lo": 2057,
-   "hi": 6016,
-   "n": 92,
+   "est": 4202,
+   "lo": 2174,
+   "hi": 6230,
+   "n": 95,
    "unstable": false
   },
   {
@@ -2797,9 +2532,9 @@
    "year": 2023,
    "month": 8,
    "device": "E-bike",
-   "est": 4037,
-   "lo": 2357,
-   "hi": 5718,
+   "est": 3974,
+   "lo": 2292,
+   "hi": 5655,
    "n": 104,
    "unstable": false
   },
@@ -2857,10 +2592,10 @@
    "year": 2023,
    "month": 10,
    "device": "E-bike",
-   "est": 4072,
-   "lo": 2307,
-   "hi": 5837,
-   "n": 99,
+   "est": 3927,
+   "lo": 2253,
+   "hi": 5601,
+   "n": 97,
    "unstable": false
   },
   {
@@ -2917,10 +2652,10 @@
    "year": 2023,
    "month": 12,
    "device": "E-bike",
-   "est": 2818,
-   "lo": 1205,
-   "hi": 4432,
-   "n": 57,
+   "est": 2797,
+   "lo": 1185,
+   "hi": 4409,
+   "n": 56,
    "unstable": false
   },
   {
@@ -3652,6 +3387,271 @@
    "hi": 12995,
    "n": 243,
    "unstable": false
+  }
+ ],
+ "by_ebike_type": [
+  {
+   "year": 2019,
+   "type": "likely e-moto",
+   "est": 73,
+   "lo": 0,
+   "hi": 187,
+   "n": 2,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "type": "regular e-bike",
+   "est": 2912,
+   "lo": 983,
+   "hi": 4841,
+   "n": 94,
+   "unstable": true
+  },
+  {
+   "year": 2019,
+   "type": "unclear",
+   "est": 2126,
+   "lo": 502,
+   "hi": 3751,
+   "n": 48,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "likely e-moto",
+   "est": 76,
+   "lo": 0,
+   "hi": 225,
+   "n": 1,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "regular e-bike",
+   "est": 5775,
+   "lo": 968,
+   "hi": 10582,
+   "n": 128,
+   "unstable": true
+  },
+  {
+   "year": 2020,
+   "type": "unclear",
+   "est": 2296,
+   "lo": 582,
+   "hi": 4010,
+   "n": 56,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "likely e-moto",
+   "est": 301,
+   "lo": 0,
+   "hi": 754,
+   "n": 6,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "regular e-bike",
+   "est": 11636,
+   "lo": 3936,
+   "hi": 19337,
+   "n": 292,
+   "unstable": true
+  },
+  {
+   "year": 2021,
+   "type": "unclear",
+   "est": 3201,
+   "lo": 1080,
+   "hi": 5321,
+   "n": 77,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "type": "likely e-moto",
+   "est": 569,
+   "lo": 0,
+   "hi": 1226,
+   "n": 10,
+   "unstable": true
+  },
+  {
+   "year": 2022,
+   "type": "regular e-bike",
+   "est": 23583,
+   "lo": 10617,
+   "hi": 36549,
+   "n": 521,
+   "unstable": false
+  },
+  {
+   "year": 2022,
+   "type": "unclear",
+   "est": 3737,
+   "lo": 1655,
+   "hi": 5819,
+   "n": 77,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "type": "likely e-moto",
+   "est": 530,
+   "lo": 92,
+   "hi": 967,
+   "n": 11,
+   "unstable": true
+  },
+  {
+   "year": 2023,
+   "type": "regular e-bike",
+   "est": 33265,
+   "lo": 18552,
+   "hi": 47979,
+   "n": 803,
+   "unstable": false
+  },
+  {
+   "year": 2023,
+   "type": "unclear",
+   "est": 3994,
+   "lo": 2175,
+   "hi": 5813,
+   "n": 83,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "type": "likely e-moto",
+   "est": 1112,
+   "lo": 261,
+   "hi": 1963,
+   "n": 27,
+   "unstable": true
+  },
+  {
+   "year": 2024,
+   "type": "regular e-bike",
+   "est": 54318,
+   "lo": 35583,
+   "hi": 73053,
+   "n": 1169,
+   "unstable": false
+  },
+  {
+   "year": 2024,
+   "type": "unclear",
+   "est": 3918,
+   "lo": 2412,
+   "hi": 5425,
+   "n": 88,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "likely e-moto",
+   "est": 1561,
+   "lo": 824,
+   "hi": 2298,
+   "n": 42,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "regular e-bike",
+   "est": 94320,
+   "lo": 64353,
+   "hi": 124286,
+   "n": 2161,
+   "unstable": false
+  },
+  {
+   "year": 2025,
+   "type": "unclear",
+   "est": 5747,
+   "lo": 3636,
+   "hi": 7858,
+   "n": 135,
+   "unstable": false
+  }
+ ],
+ "hospitalized": [
+  {
+   "device": "Bicycle",
+   "age_group": "0-17",
+   "share": 0.0594,
+   "lo": 0.049,
+   "hi": 0.0698,
+   "n": 32914
+  },
+  {
+   "device": "Bicycle",
+   "age_group": "18-64",
+   "share": 0.1416,
+   "lo": 0.1167,
+   "hi": 0.1665,
+   "n": 37546
+  },
+  {
+   "device": "Bicycle",
+   "age_group": "65+",
+   "share": 0.2941,
+   "lo": 0.2399,
+   "hi": 0.3483,
+   "n": 7326
+  },
+  {
+   "device": "E-bike",
+   "age_group": "0-17",
+   "share": 0.1051,
+   "lo": 0.0689,
+   "hi": 0.1413,
+   "n": 1420
+  },
+  {
+   "device": "E-bike",
+   "age_group": "18-64",
+   "share": 0.1647,
+   "lo": 0.116,
+   "hi": 0.2134,
+   "n": 3931
+  },
+  {
+   "device": "E-bike",
+   "age_group": "65+",
+   "share": 0.2651,
+   "lo": 0.1886,
+   "hi": 0.3416,
+   "n": 480
+  },
+  {
+   "device": "E-scooter",
+   "age_group": "0-17",
+   "share": 0.0832,
+   "lo": 0.0632,
+   "hi": 0.1033,
+   "n": 4636
+  },
+  {
+   "device": "E-scooter",
+   "age_group": "18-64",
+   "share": 0.1395,
+   "lo": 0.1186,
+   "hi": 0.1604,
+   "n": 9254
+  },
+  {
+   "device": "E-scooter",
+   "age_group": "65+",
+   "share": 0.2636,
+   "lo": 0.2142,
+   "hi": 0.3131,
+   "n": 689
   }
  ]
 }
