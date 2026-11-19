@@ -1,11 +1,9 @@
 # Retrains the e-bike vs moped classifier with a 70/15/15 split (needs the CPSC files, which
-# can only be downloaded here). Runs on pushes to the classifier-split branch and on demand.
+# can only be downloaded here). Run it from the Actions tab when the model should be retrained.
 # If validation/classifier_v2/ADOPT exists, it also rebuilds the website with the new model.
 name: Retrain classifier (train/validation/test)
 
 on:
-  push:
-    branches: [classifier-split]
   workflow_dispatch:
 
 permissions:
@@ -33,4 +31,4 @@ jobs:
           git config user.name "neissai-bot"
           git config user.email "actions@users.noreply.github.com"
           git add src/neissai/model validation/classifier_v2 docs
-          if git diff --cached --quiet; then echo "No change."; else git commit -m "Classifier v2: training results ($(date +%Y-%m-%d))" && git push origin HEAD:classifier-split; fi
+          if git diff --cached --quiet; then echo "No change."; else git commit -m "Classifier v2: training results ($(date +%Y-%m-%d))" && git push; fi

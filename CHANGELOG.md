@@ -2,6 +2,16 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## E-bike vs moped classifier v2 — 2026-11-19
+
+- Retrained with a deterministic 70/15/15 train/validation/test split (by case number): trained on
+  70%, regularisation chosen on the 15% validation set, final model fit on 85%, scored once on the
+  locked 15% test (833 stories): AUC 0.998 (95% CI 0.996–0.999), accuracy 98.0%, sensitivity
+  98.6%, specificity 96.6%. Replaces the five-fold cross-validated v1 (AUC 0.995), which had no
+  untouched test set.
+- Website rebuilt with the new model: e-bike estimates for 2019–2023 change by 0.2–1.2% (40
+  records switch between e-bike and moped); 2024–2025 unchanged.
+
 ## E-bike vs e-moto rule v2 — 2026-11-18
 
 - Rebuilt on 920 development stories (old 240-story test retired into development, plus 360 new
