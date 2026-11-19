@@ -58,6 +58,7 @@ summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px}
   <label class="f" for="role">Role or background</label><input type="text" id="role" placeholder="e.g. injury epidemiologist, emergency physician, graduate student">
   <h2 style="margin-top:16px">2. Choose a set</h2>
   <label class="f" for="setSel">Story set</label><select id="setSel"></select>
+  <p class="note" id="setNote"></p>
   <p class="note">Each story takes about 15–30 seconds. Label as many as you like (even 50 helps); your progress is saved in this browser, so you can stop and come back.</p>
   <div class="actions"><button class="btn primary" type="button" id="start">Start labelling</button></div>
   <p class="note">The stories are public US CPSC NEISS data. They describe injuries in plain clinical language.</p>
@@ -97,7 +98,8 @@ const DEFS={
      '<b>Unclear</b>: wording that could mean either ("motorized bike" or "motor bike" at any speed, "dirt bike or e-bike"), a speed range that crosses 28 mph, a downhill speed above 28 mph, or "fast" or "high speed" with no number.',
      '<b>Regular e-bike</b>: everything else. Ignore speeds that belong to another vehicle or rider ("struck by a car going 30 mph").']
 };
-let SETS=null, S=load()||{who:{},set:'A',pos:{A:0,B:0},ans:{}};
+DEFS.C=DEFS.A.concat(DEFS.B);
+let SETS=null, S=load()||{who:{},set:'A',pos:{A:0,B:0,C:0},ans:{}};
 function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const $=id=>document.getElementById(id);
@@ -108,6 +110,8 @@ async function init(){
   try{SETS=(await (await fetch('data/label_sets.json')).json()).sets;}catch(e){$('setup').insertAdjacentHTML('beforeend','<p class="warnbox">Could not load the stories. Please try again later.</p>');return;}
   SETS.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title;$('setSel').appendChild(o);});
   $('nm').value=S.who.nm||'';$('org').value=S.who.org||'';$('role').value=S.who.role||'';$('setSel').value=S.set;
+  const note=()=>{const s=SETS.find(x=>x.id===$('setSel').value);$('setNote').textContent=s&&s.note?s.note:'';};
+  $('setSel').addEventListener('change',note);note();
   const done=Object.keys(S.ans).length; if(done) $('start').textContent=`Continue labelling (${done} done)`;
 }
 function who(){S.who={nm:$('nm').value.trim(),org:$('org').value.trim(),role:$('role').value.trim()};save();}

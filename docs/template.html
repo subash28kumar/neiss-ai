@@ -478,6 +478,7 @@ neissai hazards --years 2020-2025</code></pre>
       <li><span class="status done">Done</span> <b>National totals</b> were checked against CPSC's own published figures, an official source independent of NEISS-AI.</li>
       <li><span class="status done">Done</span> <b>Story-level tests</b> (e-moto, motor vehicle, helmet) used answer keys made by independent AI reviewers that never saw NEISS-AI's rules and worked only from the written definitions. Where two reviewers were used they agreed closely, but because they were the same kind of system this is not as independent as two people reading the stories.</li>
       <li><span class="status next">Next</span> <b>An outside human check.</b> I am looking for injury researchers to label the test stories blind (without seeing NEISS-AI's answers). The results will be published here, whatever they show.</li>
+      <li><span class="status next">Next</span> <b>Learning from people.</b> The hardest e-bike stories are on the <a href="label.html">labelling page</a> as Set C. When at least two approved reviewers agree on an answer, NEISS-AI uses it for that story and for near-identical stories. Guardrails: reviewers are approved by name, stories with known answers check each reviewer's care, the locked test stories are never learned from, and a new version is published only if accuracy on those locked tests does not drop. Every version is kept, so a change can be undone.</li>
     </ul>
   </section>
 
@@ -509,6 +510,7 @@ neissai hazards --years 2020-2025</code></pre>
     <p class="actions" style="margin-top:8px"><button class="btn" type="button" id="rdMore">Show another story</button></p>
     <div class="rdbox"><p class="rdmeta" id="rdMeta"></p><p class="rdstory" id="rdStory" aria-live="polite"><span class="loading">Loading example stories…</span></p></div>
     <div class="rdout" id="rdOut"></div>
+    <p class="actions" style="margin-top:8px"><a class="btn" href="#" id="rdFlag">Is an answer wrong? Tell me</a></p>
     <p class="note">Each highlighted phrase is what the rule matched. How often these rules are right is on the <a href="#accuracy">Accuracy</a> tab; like any rule, they sometimes miss. The site shows a set of stories already read by the tool; the open-source code reads any story: <code>neissai classify "16YOM FELL OFF HIS E-BIKE"</code>.</p>
   </section>
   <section class="card">
@@ -1457,7 +1459,9 @@ async function rdLoad(){
   RD.featured.forEach((f,i)=>{const b=h('button',{type:'button',class:'chip',text:f.title});b.addEventListener('click',()=>rdShow(f,b));C.appendChild(b);});
   return RD;
 }
+let RDcur=null;
 function rdShow(x,chip){
+  RDcur=x;
   document.querySelectorAll('#rdChips .chip').forEach(c=>c.classList.toggle('on',c===chip));
   const n=x.text.length, cat=new Array(n).fill(-1);
   RD_PARTS.forEach(([k],pi)=>{(x[k].spans||[]).forEach(([s,e])=>{for(let i=s;i<e&&i<n;i++) if(cat[i]<0) cat[i]=pi;});});
@@ -1489,6 +1493,14 @@ async function rdInit(first){
 document.getElementById('rdMore').addEventListener('click',async()=>{const D=await rdLoad();if(!D)return;
   const all=D.pool;let k;do{k=Math.floor(Math.random()*all.length);}while(all.length>1&&k===RDi);RDi=k;rdShow(all[k],null);
   try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'reads-another',title:'Show another story',event:true});}catch(e){}});
+
+document.getElementById('rdFlag').addEventListener('click',e=>{
+  const x=RDcur; if(!x){e.preventDefault();return;}
+  const lines=['Story ('+x.year+'): '+x.text,'',"NEISS-AI's answers:",...RD_PARTS.map(([k,lab])=>'- '+lab+': '+RD_VAL[k](x[k].label)),'',
+    'Which answer is wrong, and what should it be?:','','Your name and role (optional):','','Reports are reviewed by hand; a fix is made only after a check on stories the tool never learned from.','Sent from: '+location.href.split('#')[0]+'#reads'];
+  e.currentTarget.href='mailto:'+REQ_TO+'?subject='+encodeURIComponent('NEISS-AI: possible wrong answer')+'&body='+encodeURIComponent(lines.join('\n'));
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'reads-flag',title:'Report a wrong answer',event:true});}catch(err){}
+});
 
 /* ---------- tabs + routing ---------- */
 const TABS=['overview','ask','explore','state','search','hazards','accuracy','about'];
