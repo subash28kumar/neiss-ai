@@ -2,6 +2,26 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State briefs and age-adjusted state estimates — 2026-11-20
+
+- **"Your state" is now age-adjusted.** For each of 7 age groups (under 5, 5–13, 14–17, 18–24,
+  25–44, 45–64, 65+), the national estimate for that age group is multiplied by the state's share of
+  the US population in that age group, then added up. A younger state gets a higher expected number
+  than population alone suggests (Utah e-bikes +6%), an older one a lower number (Maine −4%). The
+  population-only number is still shown beside it for comparison.
+- 95% ranges use the same survey-correct method as every national estimate (each record's weight is
+  multiplied by its age group's state factor; Taylor linearization, hospitals as clusters within
+  strata). The 51 age-adjusted state estimates add up exactly to the national estimate.
+- Population: US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6 (July 1 resident population by
+  single year of age). `scripts/import_census_age.py` checks that every state-year (51 × 2020–2025)
+  adds up exactly to the official totals already used by the site (NST-EST2025-POP).
+- **New one-page PDF brief for every state** (`docs/briefs/`), linked from the state view
+  ("Download one-page brief"): e-bike, e-scooter and bicycle numbers with 95% ranges, the
+  2020–2025 trend, e-bike visits by age, method, limits and a ready-to-use citation.
+- New module `neissai.state`, scripts `build_state_estimates.py` and `build_state_briefs.py`,
+  and tests (`tests/test_state_estimates.py`). The Data Pack "Expected by state" sheet now uses the
+  age-adjusted numbers.
+
 ## E-bike vs moped classifier v2 — 2026-11-19
 
 - Retrained with a deterministic 70/15/15 train/validation/test split (by case number): trained on

@@ -342,8 +342,8 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-state" role="tabpanel" aria-labelledby="tab-state" hidden>
   <section class="card">
     <h2>Expected injuries in your state</h2>
-    <p class="desc">Pick a state to see about how many emergency department visits it would have if it matched the national pattern: the national rate per person times the state's population. Click a state on the map or choose it from the list.</p>
-    <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates.</div>
+    <p class="desc">Pick a state to see about how many emergency department visits it would have if its people were hurt at the national rate for their age group. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or choose it from the list.</p>
+    <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates and the state's age mix.</div>
     <div class="filters">
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
       <label class="field">Year<select id="stYear" aria-label="Year"></select></label>
@@ -356,6 +356,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="stcopy" type="button">Copy a sentence for my report</button>
       <button class="btn" id="stshare" type="button">Copy link to this state</button>
+      <a class="btn primary" id="stbrief" href="#" download hidden>Download one-page brief (PDF)</a>
     </div>
     <p class="citeline" id="stcite"></p>
     <div class="reqbox">
@@ -5017,7 +5018,15 @@ const ST_CALLOUTS=['VT','NH','MA','RI','CT','NJ','DE','MD','DC'];
 const ST_DEVS=['E-bike','E-scooter','Bicycle','Kick scooter','Hoverboard','Moped / minibike','Skateboard'];
 function usPop(y){let t=0;for(const a in STATE_POP)t+=STATE_POP[a].p[y]||0;return t;}
 function natRow(dev,y){return DATA.by_device.find(r=>r.device===dev&&r.year===y);}
-function stExp(abbr,dev,y){const r=natRow(dev,y);if(!r)return null;const f=STATE_POP[abbr].p[y]/usPop(y);return {est:r.est*f,lo:r.lo*f,hi:r.hi*f,rate:r.est/usPop(y)*1e5,unstable:r.unstable};}
+let STE=null;   // age-adjusted state estimates (data/state_estimates.json); false if unavailable
+function loadStateEst(){if(STE!==null)return Promise.resolve(STE);return fetch('data/state_estimates.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{STE=j||false;return STE;});}
+function stExp(abbr,dev,y){const r=natRow(dev,y);if(!r)return null;const f=STATE_POP[abbr].p[y]/usPop(y);
+  const simple={est:r.est*f,lo:r.lo*f,hi:r.hi*f};
+  const a=STE&&STE.states[abbr]&&STE.states[abbr].e[dev]&&STE.states[abbr].e[dev][y];
+  if(a){const pop=STE.states[abbr].pop[y].reduce((s,v)=>s+v,0);
+    return {est:a[0],lo:a[1],hi:a[2],simple:a[3],rate:a[0]/pop*1e5,natRate:r.est/usPop(y)*1e5,adjusted:true,unstable:r.unstable};}
+  return {...simple,simple:simple.est,rate:r.est/usPop(y)*1e5,natRate:r.est/usPop(y)*1e5,adjusted:false,unstable:r.unstable};}
+function stBriefUrl(abbr){return 'briefs/NEISS-AI_State_Brief_'+abbr+'_2025.pdf';}
 function stInit(){
   const ss=document.getElementById('stSel');if(ss.options.length)return;
   ss.appendChild(h('option',{value:'',text:'Choose a state'}));
@@ -5035,10 +5044,12 @@ function stCount(){try{if(ST.abbr&&window.goatcounter&&goatcounter.count)goatcou
 function paramsToState(p){stInit();if(p.s&&STATE_POP[p.s])ST.abbr=p.s;if(p.y&&+p.y>=2020&&+p.y<=2025)ST.year=+p.y;if(p.d&&ST_DEVS.includes(p.d))ST.dev=p.d;if(p.v==='grid'||p.v==='map')ST.view=p.v;}
 function stSentence(){
   if(!ST.abbr)return '';const n=STATE_POP[ST.abbr].n,eb=stExp(ST.abbr,'E-bike',ST.year),es=stExp(ST.abbr,'E-scooter',ST.year);
-  return `If ${n} matched the national pattern, about ${fmt(eb.est)} e-bike injury visits (range ${fmt(eb.lo)} to ${fmt(eb.hi)}) and about ${fmt(es.est)} e-scooter injury visits (range ${fmt(es.lo)} to ${fmt(es.hi)}) to emergency departments would be expected in ${ST.year}. These are estimates based on national rates and state population, not counts. `+citeLine();
+  const how=eb.adjusted?'national rates for each age group and the state\'s age mix':'national rates and state population';
+  return `If people in ${n} were hurt at the national rate for their age group, about ${fmt(eb.est)} e-bike injury visits (range ${fmt(eb.lo)} to ${fmt(eb.hi)}) and about ${fmt(es.est)} e-scooter injury visits (range ${fmt(es.lo)} to ${fmt(es.hi)}) to emergency departments would be expected in ${ST.year}. These are estimates based on ${how}, not counts. `+citeLine();
 }
 function renderState(push){
   stInit();
+  if(STE===null){loadStateEst().then(()=>renderState(false));}
   document.getElementById('stSel').value=ST.abbr;document.getElementById('stYear').value=ST.year;document.getElementById('stDev').value=ST.dev;
   document.getElementById('stView').value=ST.view;
   if(push)setHash('state',{s:ST.abbr,y:ST.year,d:ST.dev,v:ST.view==='grid'?'grid':''});
@@ -5046,10 +5057,11 @@ function renderState(push){
   const pick=ST.abbr;
   [['E-bike','E-bike visits'],['E-scooter','E-scooter visits'],['Bicycle','Bicycle visits']].forEach(([d,lab])=>{
     let num='',sub='';
-    if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
+    if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=e.adjusted?`age-adjusted · range ${fmt(e.lo)} to ${fmt(e.hi)} · ${e.rate.toFixed(1)} per 100,000 residents`:`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
     else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
     const on=d===ST.dev;
-    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub})));
+    const extra=(pick&&stExp(pick,d,y).adjusted)?h('div',{class:'sub',text:'Population only: '+fmt(stExp(pick,d,y).simple)}):null;
+    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub}),extra));
   });
   // map
   const W=document.getElementById('stmap');W.textContent='';
@@ -5080,15 +5092,21 @@ function renderState(push){
       txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:op>0.55?'#ffffff':txtc});hook(g,a,e);});
   }
   W.appendChild(h('p',{class:'note',text:`The stronger the blue, the more expected ${ST.dev.toLowerCase()} visits in ${y}. The strongest are mostly the most populous states.`}));
-  const r=natRow(ST.dev,y);
-  document.getElementById('stnote').textContent=`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
+  const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
+  const B=document.getElementById('stbrief');
+  if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
+    B.onclick=()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'brief-'+pick,title:'State brief PDF: '+STATE_POP[pick].n,event:true});}catch(e){}};}
+  else{B.hidden=true;}
+  document.getElementById('stnote').textContent=(adj?`How it is calculated: for each of 7 age groups, the national estimate for ${ST.dev.toLowerCase()} visits in ${y} for that age group times the state's share of the US population in that age group (US Census Bureau, Vintage 2025, July 1), added up over the age groups. The national total is ${fmt(r.est)} (95% CI ${fmt(r.lo)} to ${fmt(r.hi)}). "Population only" is the national estimate times the state's share of the whole US population. The range carries the national sampling uncertainty into the state number; real differences between states (how many people ride, where, and how) are not included.`
+    :`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`)+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
   document.getElementById('stcite').textContent=citeLine();
   // table
   const rows=Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).map(a=>{const e1=stExp(a,'E-bike',y),e2=stExp(a,'E-scooter',y),e3=stExp(a,'Bicycle',y);
-    return [STATE_POP[a].n,STATE_POP[a].p[y].toLocaleString('en-US'),fmt(e1.est),fmt(e1.lo)+' to '+fmt(e1.hi),fmt(e2.est),fmt(e2.lo)+' to '+fmt(e2.hi),fmt(e3.est),fmt(e3.lo)+' to '+fmt(e3.hi)];});
-  const head=['State','Population','E-bike visits (expected)','E-bike range','E-scooter visits (expected)','E-scooter range','Bicycle visits (expected)','Bicycle range'];
+    return [STATE_POP[a].n,STATE_POP[a].p[y].toLocaleString('en-US'),fmt(e1.est),fmt(e1.lo)+' to '+fmt(e1.hi),fmt(e1.simple),fmt(e2.est),fmt(e2.lo)+' to '+fmt(e2.hi),fmt(e2.simple),fmt(e3.est),fmt(e3.lo)+' to '+fmt(e3.hi),fmt(e3.simple)];});
+  const lab=adj?' (age-adjusted)':' (expected)';
+  const head=['State','Population','E-bike visits'+lab,'E-bike range','E-bike (population only)','E-scooter visits'+lab,'E-scooter range','E-scooter (population only)','Bicycle visits'+lab,'Bicycle range','Bicycle (population only)'];
   table('tbst',head,rows);
-  csvTools('tbst',`Expected emergency department visits by state, ${y} (national rate x state population)`,head,rows,`neiss-ai_expected_by_state_${y}.csv`,'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
+  csvTools('tbst',`Expected emergency department visits by state, ${y}`+(adj?' (age-adjusted, with population-only for comparison)':' (national rate x state population)'),head,rows,`neiss-ai_expected_by_state_${y}.csv`,adj?'Estimates, not counts. Age-adjusted: national NEISS-AI estimate for each age group times the state share of US population in that age group (US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6), summed. Population only: national estimate times the state share of US population. Ranges reflect national sampling uncertainty only.':'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
 }
 
 /* ---------- "Help check NEISS-AI" offers ---------- */
