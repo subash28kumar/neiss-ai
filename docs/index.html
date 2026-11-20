@@ -246,6 +246,19 @@ a.btn{text-decoration:none;display:inline-block}
     <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
   </section>
+  <section class="card" id="fccard" hidden>
+    <h2>Looking ahead: forecast for 2026–2030</h2>
+    <p class="desc">Where recent trends point if growth keeps slowing, the way it does for most new products. The method was tested on past years (see "How accurate is it?"). These are forecasts from trends, not predictions of what any law will do.</p>
+    <div class="filters"><div class="field">Device<div class="chips" role="group" aria-label="Device" id="fcChips"></div></div></div>
+    <div class="tiles" id="fctiles"></div>
+    <div class="legend" id="lgfc"></div>
+    <div class="chart" id="cfc"></div>
+    <div class="dlrow"><button class="btn dl" type="button" data-chart="cfc">Download chart (PNG)</button></div>
+    <p class="note" id="fcnote"></p>
+    <details><summary>How accurate is it? (tested on past years)</summary><div id="fcacc"></div></details>
+    <details><summary>Show the numbers</summary><div class="tablewrap" id="tbfc"></div></details>
+    <p class="note" id="fclock"></p>
+  </section>
   <section class="card" id="monthcard">
     <h2>Injuries by month</h2>
     <p class="desc">Estimated US emergency department visits in each month of the chosen year, with 95% confidence bands. Switch to "Share of the year" to compare seasons across devices, including regular bicycles.</p>
@@ -342,8 +355,8 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-state" role="tabpanel" aria-labelledby="tab-state" hidden>
   <section class="card">
     <h2>Expected injuries in your state</h2>
-    <p class="desc">Pick a state to see about how many emergency department visits it would have if it matched the national pattern: the national rate per person times the state's population. Click a state on the map or choose it from the list.</p>
-    <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates.</div>
+    <p class="desc">Pick a state to see about how many emergency department visits it would have if its people were hurt at the national rate for their age group. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or choose it from the list.</p>
+    <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates and the state's age mix.</div>
     <div class="filters">
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
       <label class="field">Year<select id="stYear" aria-label="Year"></select></label>
@@ -356,6 +369,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="stcopy" type="button">Copy a sentence for my report</button>
       <button class="btn" id="stshare" type="button">Copy link to this state</button>
+      <a class="btn primary" id="stbrief" href="#" download hidden>Download one-page brief (PDF)</a>
     </div>
     <p class="citeline" id="stcite"></p>
     <div class="reqbox">
@@ -4447,6 +4461,80 @@ function drawOverview(){
   csvTools('tb3','Share of injuries with a hospital stay (admitted, transferred or held), by device and age group, 2019-2025',['device','age_group','share_hospitalized','ci_low','ci_high','records'],s3.flatMap(s=>s.values.map((v,i)=>[s.label,groups[i],v.v,v.lo,v.hi,v.n])),'neissai_hospital_stay_share.csv','Shares are proportions (0-1) of records in each group.');
   drawMonth();
   drawEtype();
+  drawForecast();
+}
+
+/* ---------- forecast (data/forecast.json, built by scripts/build_forecast.py) ---------- */
+let FC=null, FCDEV='E-bike';
+function drawForecast(){
+  if(FC===null){FC=false;fetch('data/forecast.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{if(j){FC=j;drawForecast();}}).catch(()=>{});return;}
+  if(!FC)return;
+  const card=document.getElementById('fccard');card.hidden=false;
+  const devs=Object.keys(FC.devices), C=document.getElementById('fcChips');
+  if(!C.childElementCount)devs.forEach(d=>{const b=h('button',{class:'chip',type:'button',text:d});b.addEventListener('click',()=>{FCDEV=d;drawForecast();});C.appendChild(b);});
+  [...C.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===FCDEV?'true':'false'));
+  const D=FC.devices[FCDEV], A=D.actual, F=D.forecast, last=FC.last_data_year, f1=F[0];
+  const lastA=A[A.length-1], tested=FC.method.tested_years_ahead, fT=F[tested-1], col=css(DEV_COLOR_BY_NAME[FCDEV]||'--s1');
+  const T=document.getElementById('fctiles');T.textContent='';
+  const lock=(FC.locked||[]).find(l=>l.year===f1.year);
+  T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:`${FCDEV} visits, ${f1.year} forecast`}),h('div',{class:'num',text:'about '+fmt(f1.central)}),h('div',{class:'sub',text:`80% range ${fmt(f1.lo80)} to ${fmt(f1.hi80)}`+(lock?` · locked ${lock.locked_on}`:'')})));
+  T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:`${FCDEV} visits, ${fT.year} forecast`}),h('div',{class:'num',text:'about '+fmt(fT.central)}),h('div',{class:'sub',text:`80% range ${fmt(fT.lo80)} to ${fmt(fT.hi80)} · ${lastA.year}: ${fmt(lastA.est)}`})));
+  if(FCDEV==='E-bike'){const sh=FC.ebike_vs_bicycle, a=sh.find(r=>r.year===last), b=sh.find(r=>r.year===fT.year);
+    T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:'E-bike visits as a share of bicycle visits'}),h('div',{class:'num',text:`${Math.round(a.share*100)}% → ${Math.round(b.share*100)}%`}),h('div',{class:'sub',text:`${last} actual → ${fT.year} forecast (central path)`})));}
+  else{const g=f1.central/lastA.est-1;T.appendChild(h('div',{class:'tile'},h('p',{class:'label',text:`Growth expected in ${f1.year}`}),h('div',{class:'num',text:(g>=0?'+':'')+Math.round(g*100)+'%'}),h('div',{class:'sub',text:'central path, slowing each year after'})));}
+  legend('lgfc',[{label:FCDEV+' (NEISS-AI estimate)',color:col},{label:'Forecast: dashed line',color:col},{label:'Unstable estimate',hollow:true}]);
+  // chart
+  const host=document.getElementById('cfc');host.textContent='';
+  const W=Math.max(300,host.clientWidth),H=W<520?270:330,m={t:22,r:W<520?14:24,b:30,l:52};
+  const years=[...A.map(r=>r.year),...F.map(r=>r.year)];
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':`Line chart of ${FCDEV} emergency department visits, ${years[0]} to ${years[years.length-1]}, with forecast`},host);
+  const TK=ticksFor(Math.max(...A.map(r=>r.hi),...F.map(r=>r.hi80)),4),ymax=TK.top;
+  const x=y=>m.l+(W-m.l-m.r)*(y-years[0])/(years[years.length-1]-years[0]), yS=v=>H-m.b-(H-m.t-m.b)*v/ymax;
+  const ax=el('g',{class:'axis'},svg);
+  TK.t.forEach(v=>{const yy=yS(v);el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,'stroke-width':1},ax);txt(ax,fmtAxis(v),{x:m.l-8,y:yy+4,'text-anchor':'end'});});
+  const every=((W-m.l-m.r)/(years.length-1))<44?2:1;
+  years.forEach((yv,i)=>{if((years.length-1-i)%every===0)txt(ax,String(yv),{x:x(yv),y:H-m.b+20,'text-anchor':'middle'});});
+  // untested zone
+  const zx=x(last+tested+0.5);el('rect',{x:zx,y:m.t,width:W-m.r-zx,height:H-m.t-m.b,fill:css('--surface-2'),opacity:0.7},svg);
+  txt(svg,'scenario only',{x:(zx+W-m.r)/2,y:m.t-6,'text-anchor':'middle',class:'dlabel'});
+  const lx=x(last);el('line',{x1:lx,x2:lx,y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-width':1,'stroke-dasharray':'2 3'},svg);
+  txt(svg,'forecast →',{x:lx+6,y:m.t-6,class:'dlabel'});
+  const band=(pts,lo,hi,op)=>{const d=pts.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p[hi])}`).join('')+[...pts].reverse().map(p=>`L${x(p.year)},${yS(p[lo])}`).join('')+'Z';el('path',{d,fill:col,'fill-opacity':op,stroke:'none'},svg);};
+  band(A,'lo','hi',css('--band-op'));
+  const FB=[{year:last,lo80:lastA.est,hi80:lastA.est},...F];band(FB,'lo80','hi80',(+css('--band-op')*0.8).toFixed(2));
+  el('path',{d:A.map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.est)}`).join(''),fill:'none',stroke:col,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+  el('path',{d:[{year:last,central:lastA.est},...F].map((p,i)=>`${i?'L':'M'}${x(p.year)},${yS(p.central)}`).join(''),fill:'none',stroke:col,'stroke-width':2,'stroke-dasharray':'6 5','stroke-linecap':'round'},svg);
+  A.forEach(p=>el('circle',{cx:x(p.year),cy:yS(p.est),r:4,fill:p.unstable?css('--surface'):col,stroke:p.unstable?col:css('--surface'),'stroke-width':2},svg));
+  F.forEach(p=>el('circle',{cx:x(p.year),cy:yS(p.central),r:4,fill:css('--surface'),stroke:col,'stroke-width':2},svg));
+  // hover
+  const hair=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:0},svg);
+  const tip=h('div',{class:'tip'});host.appendChild(tip);
+  const hit=el('rect',{x:m.l-20,y:m.t,width:W-m.l-m.r+40,height:H-m.t-m.b,fill:'transparent',tabindex:0},svg);
+  const pts=[...A.map(p=>({year:p.year,t:`${fmt(p.est)} (95% CI ${fmt(p.lo)}–${fmt(p.hi)})${p.unstable?' · unstable':''}`,k:'NEISS-AI estimate'})),...F.map(p=>({year:p.year,t:`${fmt(p.central)} (80% range ${fmt(p.lo80)}–${fmt(p.hi80)})`,k:p.tested?'Forecast (tested horizon)':'Scenario (not testable yet)',s:`slower ${fmt(p.slower)} · faster ${fmt(p.faster)}`}))];
+  let cur=-1;
+  const show=i=>{cur=i;const p=pts[i],px=x(p.year);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.setAttribute('opacity',1);
+    tip.textContent='';tip.appendChild(h('b',{text:String(p.year)}));tip.appendChild(h('div',{text:p.k+': '+p.t}));if(p.s)tip.appendChild(h('div',{text:p.s}));
+    tip.style.opacity=1;const tw=tip.offsetWidth||200;tip.style.left=Math.min(Math.max(px*host.clientWidth/W-tw/2,0),host.clientWidth-tw)+'px';tip.style.top='4px';};
+  const hide=()=>{hair.setAttribute('opacity',0);tip.style.opacity=0;cur=-1;};
+  hit.addEventListener('mousemove',ev=>{const r=svg.getBoundingClientRect(),vx=(ev.clientX-r.left)*W/r.width;let b=0;pts.forEach((p,i)=>{if(Math.abs(x(p.year)-vx)<Math.abs(x(pts[b].year)-vx))b=i;});show(b);});
+  hit.addEventListener('mouseleave',hide);hit.addEventListener('blur',hide);
+  hit.addEventListener('keydown',ev=>{if(ev.key==='ArrowRight'){ev.preventDefault();show(Math.min(cur+1,pts.length-1));}if(ev.key==='ArrowLeft'){ev.preventDefault();show(Math.max(cur-1,0));}});
+  hit.addEventListener('focus',()=>show(A.length-1));
+  // notes, accuracy, table, lock
+  const M=FC.method;
+  document.getElementById('fcnote').textContent=`Solid line: NEISS-AI national estimates with 95% confidence bands. Dashed line: forecast (central path) with an 80% range, the range that caught the real value about 80% of the time in testing. Shaded area: ${last+tested+1} onward cannot be tested with the years available yet, so treat it as a scenario. Method: ${M.text} Forecasts follow past trends; they cannot predict the effect of a specific law, a price change or a change in how hospitals write notes.`;
+  const S=FC.backtest.summary, ebd=FC.backtest.detail.filter(r=>r.device==='E-bike'&&r.year===last).sort((a,b)=>a.cut-b.cut);
+  const acc=document.getElementById('fcacc');acc.textContent='';
+  acc.appendChild(h('p',{class:'desc',text:`We pretended to stand in ${last-tested}, ${last-tested+1} and ${last-tested+2}, forecast the following years with this exact method, and compared with what NEISS later showed, for ${M.backtest_devices.length} devices (${M.backtest_devices.join(', ')}). Part of each "miss" is noise in the yearly estimates themselves.`}));
+  const at=h('div',{class:'tablewrap',id:'tbfcacc'});acc.appendChild(at);
+  table('tbfcacc',['Years ahead','Forecasts tested','Typical miss (median)','Inside the 80% range'],S.map(r=>[r.years_ahead,r.forecasts,Math.round(r.median_miss*100)+'%',`${r.inside_80} of ${r.forecasts}`]));
+  if(ebd.length)acc.appendChild(h('p',{class:'note',text:'E-bike example: '+ebd.map(r=>`with data up to ${r.cut}, forecast for ${r.year}: ${fmt(r.forecast)} (actual ${fmt(r.actual)}, ${r.forecast>=r.actual?'+':'−'}${Math.round(Math.abs(r.forecast/r.actual-1)*100)}%)`).join('; ')+'. In recent years e-bike injuries grew faster than the method expected, so it may be cautious.'}));
+  const head=['Year','Kind','Estimate (central)','Range low','Range high','Slower growth','Faster growth'];
+  const rows=[...A.map(r=>[r.year,'NEISS-AI estimate (95% CI)',fmt(r.est),fmt(r.lo),fmt(r.hi),'','']),...F.map(r=>[r.year,r.tested?'Forecast (80% range)':'Scenario (80% range, not testable yet)',fmt(r.central),fmt(r.lo80),fmt(r.hi80),fmt(r.slower),fmt(r.faster)])];
+  table('tbfc',head,rows);
+  csvTools('tbfc',`${FCDEV} emergency department visits: estimates ${A[0].year}-${last} and forecasts ${f1.year}-${F[F.length-1].year}`,head,[...A.map(r=>[r.year,'estimate',r.est,r.lo,r.hi,'','']),...F.map(r=>[r.year,r.tested?'forecast':'scenario',r.central,r.lo80,r.hi80,r.slower,r.faster])],`neissai_forecast_${FCDEV.toLowerCase().replace(/[^a-z]+/g,'_')}.csv`,'Forecasts from past trends (slowing growth method, tested on past years). Not predictions of the effect of any law.');
+  const chk=(FC.checks||[]).filter(c=>c.device===FCDEV);
+  document.getElementById('fclock').textContent=(lock?`Locked forecast: the ${lock.year} forecast was published on ${lock.locked_on} (fingerprint ${lock.fingerprint}) and will not be changed. When CPSC releases ${lock.year} data, this page will show forecast versus actual. `:'')+chk.map(c=>`${c.year}: forecast ${fmt(c.forecast)}, actual ${fmt(c.actual)} (${c.inside_80?'inside':'outside'} the 80% range).`).join(' ');
 }
 
 
@@ -5017,7 +5105,15 @@ const ST_CALLOUTS=['VT','NH','MA','RI','CT','NJ','DE','MD','DC'];
 const ST_DEVS=['E-bike','E-scooter','Bicycle','Kick scooter','Hoverboard','Moped / minibike','Skateboard'];
 function usPop(y){let t=0;for(const a in STATE_POP)t+=STATE_POP[a].p[y]||0;return t;}
 function natRow(dev,y){return DATA.by_device.find(r=>r.device===dev&&r.year===y);}
-function stExp(abbr,dev,y){const r=natRow(dev,y);if(!r)return null;const f=STATE_POP[abbr].p[y]/usPop(y);return {est:r.est*f,lo:r.lo*f,hi:r.hi*f,rate:r.est/usPop(y)*1e5,unstable:r.unstable};}
+let STE=null;   // age-adjusted state estimates (data/state_estimates.json); false if unavailable
+function loadStateEst(){if(STE!==null)return Promise.resolve(STE);return fetch('data/state_estimates.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{STE=j||false;return STE;});}
+function stExp(abbr,dev,y){const r=natRow(dev,y);if(!r)return null;const f=STATE_POP[abbr].p[y]/usPop(y);
+  const simple={est:r.est*f,lo:r.lo*f,hi:r.hi*f};
+  const a=STE&&STE.states[abbr]&&STE.states[abbr].e[dev]&&STE.states[abbr].e[dev][y];
+  if(a){const pop=STE.states[abbr].pop[y].reduce((s,v)=>s+v,0);
+    return {est:a[0],lo:a[1],hi:a[2],simple:a[3],rate:a[0]/pop*1e5,natRate:r.est/usPop(y)*1e5,adjusted:true,unstable:r.unstable};}
+  return {...simple,simple:simple.est,rate:r.est/usPop(y)*1e5,natRate:r.est/usPop(y)*1e5,adjusted:false,unstable:r.unstable};}
+function stBriefUrl(abbr){return 'briefs/NEISS-AI_State_Brief_'+abbr+'_2025.pdf';}
 function stInit(){
   const ss=document.getElementById('stSel');if(ss.options.length)return;
   ss.appendChild(h('option',{value:'',text:'Choose a state'}));
@@ -5035,10 +5131,12 @@ function stCount(){try{if(ST.abbr&&window.goatcounter&&goatcounter.count)goatcou
 function paramsToState(p){stInit();if(p.s&&STATE_POP[p.s])ST.abbr=p.s;if(p.y&&+p.y>=2020&&+p.y<=2025)ST.year=+p.y;if(p.d&&ST_DEVS.includes(p.d))ST.dev=p.d;if(p.v==='grid'||p.v==='map')ST.view=p.v;}
 function stSentence(){
   if(!ST.abbr)return '';const n=STATE_POP[ST.abbr].n,eb=stExp(ST.abbr,'E-bike',ST.year),es=stExp(ST.abbr,'E-scooter',ST.year);
-  return `If ${n} matched the national pattern, about ${fmt(eb.est)} e-bike injury visits (range ${fmt(eb.lo)} to ${fmt(eb.hi)}) and about ${fmt(es.est)} e-scooter injury visits (range ${fmt(es.lo)} to ${fmt(es.hi)}) to emergency departments would be expected in ${ST.year}. These are estimates based on national rates and state population, not counts. `+citeLine();
+  const how=eb.adjusted?'national rates for each age group and the state\'s age mix':'national rates and state population';
+  return `If people in ${n} were hurt at the national rate for their age group, about ${fmt(eb.est)} e-bike injury visits (range ${fmt(eb.lo)} to ${fmt(eb.hi)}) and about ${fmt(es.est)} e-scooter injury visits (range ${fmt(es.lo)} to ${fmt(es.hi)}) to emergency departments would be expected in ${ST.year}. These are estimates based on ${how}, not counts. `+citeLine();
 }
 function renderState(push){
   stInit();
+  if(STE===null){loadStateEst().then(()=>renderState(false));}
   document.getElementById('stSel').value=ST.abbr;document.getElementById('stYear').value=ST.year;document.getElementById('stDev').value=ST.dev;
   document.getElementById('stView').value=ST.view;
   if(push)setHash('state',{s:ST.abbr,y:ST.year,d:ST.dev,v:ST.view==='grid'?'grid':''});
@@ -5046,10 +5144,11 @@ function renderState(push){
   const pick=ST.abbr;
   [['E-bike','E-bike visits'],['E-scooter','E-scooter visits'],['Bicycle','Bicycle visits']].forEach(([d,lab])=>{
     let num='',sub='';
-    if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
+    if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=e.adjusted?`age-adjusted · range ${fmt(e.lo)} to ${fmt(e.hi)} · ${e.rate.toFixed(1)} per 100,000 residents`:`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
     else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
     const on=d===ST.dev;
-    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub})));
+    const extra=(pick&&stExp(pick,d,y).adjusted)?h('div',{class:'sub',text:'Population only: '+fmt(stExp(pick,d,y).simple)}):null;
+    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub}),extra));
   });
   // map
   const W=document.getElementById('stmap');W.textContent='';
@@ -5080,15 +5179,21 @@ function renderState(push){
       txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:op>0.55?'#ffffff':txtc});hook(g,a,e);});
   }
   W.appendChild(h('p',{class:'note',text:`The stronger the blue, the more expected ${ST.dev.toLowerCase()} visits in ${y}. The strongest are mostly the most populous states.`}));
-  const r=natRow(ST.dev,y);
-  document.getElementById('stnote').textContent=`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
+  const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
+  const B=document.getElementById('stbrief');
+  if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
+    B.onclick=()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'brief-'+pick,title:'State brief PDF: '+STATE_POP[pick].n,event:true});}catch(e){}};}
+  else{B.hidden=true;}
+  document.getElementById('stnote').textContent=(adj?`How it is calculated: for each of 7 age groups, the national estimate for ${ST.dev.toLowerCase()} visits in ${y} for that age group times the state's share of the US population in that age group (US Census Bureau, Vintage 2025, July 1), added up over the age groups. The national total is ${fmt(r.est)} (95% CI ${fmt(r.lo)} to ${fmt(r.hi)}). "Population only" is the national estimate times the state's share of the whole US population. The range carries the national sampling uncertainty into the state number; real differences between states (how many people ride, where, and how) are not included.`
+    :`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`)+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
   document.getElementById('stcite').textContent=citeLine();
   // table
   const rows=Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).map(a=>{const e1=stExp(a,'E-bike',y),e2=stExp(a,'E-scooter',y),e3=stExp(a,'Bicycle',y);
-    return [STATE_POP[a].n,STATE_POP[a].p[y].toLocaleString('en-US'),fmt(e1.est),fmt(e1.lo)+' to '+fmt(e1.hi),fmt(e2.est),fmt(e2.lo)+' to '+fmt(e2.hi),fmt(e3.est),fmt(e3.lo)+' to '+fmt(e3.hi)];});
-  const head=['State','Population','E-bike visits (expected)','E-bike range','E-scooter visits (expected)','E-scooter range','Bicycle visits (expected)','Bicycle range'];
+    return [STATE_POP[a].n,STATE_POP[a].p[y].toLocaleString('en-US'),fmt(e1.est),fmt(e1.lo)+' to '+fmt(e1.hi),fmt(e1.simple),fmt(e2.est),fmt(e2.lo)+' to '+fmt(e2.hi),fmt(e2.simple),fmt(e3.est),fmt(e3.lo)+' to '+fmt(e3.hi),fmt(e3.simple)];});
+  const lab=adj?' (age-adjusted)':' (expected)';
+  const head=['State','Population','E-bike visits'+lab,'E-bike range','E-bike (population only)','E-scooter visits'+lab,'E-scooter range','E-scooter (population only)','Bicycle visits'+lab,'Bicycle range','Bicycle (population only)'];
   table('tbst',head,rows);
-  csvTools('tbst',`Expected emergency department visits by state, ${y} (national rate x state population)`,head,rows,`neiss-ai_expected_by_state_${y}.csv`,'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
+  csvTools('tbst',`Expected emergency department visits by state, ${y}`+(adj?' (age-adjusted, with population-only for comparison)':' (national rate x state population)'),head,rows,`neiss-ai_expected_by_state_${y}.csv`,adj?'Estimates, not counts. Age-adjusted: national NEISS-AI estimate for each age group times the state share of US population in that age group (US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6), summed. Population only: national estimate times the state share of US population. Ranges reflect national sampling uncertainty only.':'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
 }
 
 /* ---------- "Help check NEISS-AI" offers ---------- */

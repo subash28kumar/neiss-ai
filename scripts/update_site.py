@@ -103,6 +103,22 @@ try:
     print("Story explainer written:", _mod.build())
 except Exception as exc:  # pragma: no cover - keep the main refresh working
     print(f"::warning::Story explainer not updated: {exc}")
+# Forecast (with back-test and the locked next-year forecast), age-adjusted state estimates and the
+# one-page state briefs. Each is skipped with a warning if it fails, so the rest still publishes.
+for _name, _fn in (("build_forecast", "main"), ("build_state_estimates", "main"), ("build_state_briefs", "main")):
+    try:
+        import importlib.util
+        import sys as _sys
+        _spec = importlib.util.spec_from_file_location(_name, ROOT / "scripts" / f"{_name}.py")
+        _mod = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(_mod)
+        _argv, _sys.argv = _sys.argv, [_name]
+        try:
+            getattr(_mod, _fn)()
+        finally:
+            _sys.argv = _argv
+    except Exception as exc:  # pragma: no cover - keep the main refresh working
+        print(f"::warning::{_name} not updated: {exc}")
 # Data pack: the same numbers as one Excel file with the citation on every sheet (emailed to people who
 # ask for it). Skipped with a warning if it fails, so the rest of the refresh still publishes.
 try:
