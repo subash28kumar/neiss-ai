@@ -192,7 +192,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
     W, H = letter
     M = 40
     path = out / f"NEISS-AI_State_Brief_{abbr}_{year}.pdf"
-    c = canvas.Canvas(str(path), pagesize=letter)
+    c = canvas.Canvas(str(path), pagesize=letter, invariant=1)   # same input -> same bytes
     c.setTitle(f"NEISS-AI State Brief: {name}, {year}")
     c.setAuthor("Subash Kumar")
     c.setSubject("Expected e-bike, e-scooter and bicycle emergency department visits")
@@ -325,7 +325,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
     c.drawString(M, 40, f"Free custom analysis (for example a bill, report or campaign): {CONTACT}")
     c.drawString(M, 29, f"Explore and download: {SITE}#state?s={abbr}&y={year}")
     c.setFillColor(HexColor(INK3))
-    c.drawRightString(W - M, 29, f"NEISS-AI {D.get('version') or ''} · generated {D['updated']}")
+    c.drawRightString(W - M, 29, f"NEISS-AI {D.get('version') or ''} · data updated {D['updated']}")
     c.showPage()
     c.save()
     return path, y

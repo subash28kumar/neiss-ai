@@ -2,6 +2,21 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Forecasts 2026–2030, tested on past years — 2026-11-20
+
+- New **"Looking ahead"** section on the Overview: forecasts for e-bikes, e-scooters, kick scooters
+  and bicycles, 1–5 years ahead, with 80% ranges. Method: "slowing growth" (damped trend on the log
+  scale); the slowing factor (0.8) was chosen by back-testing forecasts made from data up to 2022,
+  2023 and 2024 for six devices, using the one-standard-error rule (most cautious value that tests
+  about as well as the best).
+- Back-test (36 forecasts): typical miss 12% one year ahead, 18% two years ahead; the 80% range
+  caught the real value 15/18, 10/12 and 5/6 times at 1, 2 and 3 years ahead. Years beyond 3 ahead
+  cannot be tested yet and are shown as scenarios.
+- **Locked 2026 forecast** (`docs/data/forecast_locked.json`, with a fingerprint checked by a test):
+  never changed after publication; when CPSC releases 2026 data the site shows forecast vs actual.
+- `neissai.forecast`, `scripts/build_forecast.py`, `tests/test_forecast.py`. The monthly refresh now
+  also rebuilds the forecast, the state estimates and the state briefs.
+
 ## State briefs and age-adjusted state estimates — 2026-11-20
 
 - **"Your state" is now age-adjusted.** For each of 7 age groups (under 5, 5–13, 14–17, 18–24,

@@ -1,0 +1,884 @@
+{
+ "updated": "2026-11-19",
+ "version": "1.6.1",
+ "last_data_year": 2025,
+ "method": {
+  "name": "Slowing growth (damped trend on the log scale)",
+  "phi": 0.8,
+  "slower_phi": 0.6,
+  "faster_phi": 0.95,
+  "window_years": 3,
+  "sigma_1yr": 0.1667555485485291,
+  "phi_scores": {
+   "0.3": 0.29451171928059433,
+   "0.5": 0.24545063620709348,
+   "0.6": 0.2216099042839263,
+   "0.7": 0.19661684217108816,
+   "0.8": 0.17189114980724687,
+   "0.85": 0.1612174819127029,
+   "0.9": 0.1551407258537599,
+   "0.95": 0.16224348382504492
+  },
+  "best_phi": 0.9,
+  "one_se_limit": 0.17862815797500356,
+  "backtest_devices": [
+   "E-bike",
+   "E-scooter",
+   "Kick scooter",
+   "Bicycle",
+   "Hoverboard",
+   "Skateboard"
+  ],
+  "tested_years_ahead": 3,
+  "text": "Next year's growth is the average yearly growth of the last 3 years multiplied by 0.8; each later year multiplies by 0.8 again, so growth slows over time. The slowing factor was chosen (one-standard-error rule, the most cautious value that tests about as well as the best) by testing forecasts made from data up to 2022, 2023 and 2024 against what NEISS later showed, for 6 devices. The 80% ranges come from the size of those test misses."
+ },
+ "backtest": {
+  "summary": [
+   {
+    "years_ahead": 1,
+    "forecasts": 18,
+    "median_miss": 0.11602705675015268,
+    "mean_miss": 0.12706240931348134,
+    "inside_80": 15
+   },
+   {
+    "years_ahead": 2,
+    "forecasts": 12,
+    "median_miss": 0.18102037803446724,
+    "mean_miss": 0.18954711943582003,
+    "inside_80": 10
+   },
+   {
+    "years_ahead": 3,
+    "forecasts": 6,
+    "median_miss": 0.19786211882901228,
+    "mean_miss": 0.2963463360834088,
+    "inside_80": 5
+   }
+  ],
+  "detail": [
+   {
+    "device": "E-bike",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 43845.4133,
+    "actual": 37789.0,
+    "log_error": 0.1487
+   },
+   {
+    "device": "E-bike",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 62967.6012,
+    "actual": 59349.0,
+    "log_error": 0.0592
+   },
+   {
+    "device": "E-bike",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 84114.629,
+    "actual": 101628.0,
+    "log_error": -0.1891
+   },
+   {
+    "device": "E-bike",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 56893.6044,
+    "actual": 59349.0,
+    "log_error": -0.0423
+   },
+   {
+    "device": "E-bike",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 78926.3261,
+    "actual": 101628.0,
+    "log_error": -0.2528
+   },
+   {
+    "device": "E-bike",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 85434.0636,
+    "actual": 101628.0,
+    "log_error": -0.1736
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 84170.9531,
+    "actual": 68137.0,
+    "log_error": 0.2113
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 109607.8861,
+    "actual": 122694.0,
+    "log_error": -0.1128
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 135389.6444,
+    "actual": 168786.0,
+    "log_error": -0.2205
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 82672.0338,
+    "actual": 122694.0,
+    "log_error": -0.3948
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 96502.6219,
+    "actual": 168786.0,
+    "log_error": -0.5591
+   },
+   {
+    "device": "E-scooter",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 152370.0028,
+    "actual": 168786.0,
+    "log_error": -0.1023
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 79953.1263,
+    "actual": 72517.0,
+    "log_error": 0.0976
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 88628.6527,
+    "actual": 99863.0,
+    "log_error": -0.1193
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 96242.1032,
+    "actual": 106909.0,
+    "log_error": -0.1051
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 80338.2539,
+    "actual": 99863.0,
+    "log_error": -0.2176
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 87198.3838,
+    "actual": 106909.0,
+    "log_error": -0.2038
+   },
+   {
+    "device": "Kick scooter",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 112550.6808,
+    "actual": 106909.0,
+    "log_error": 0.0514
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 399961.6494,
+    "actual": 403369.0,
+    "log_error": -0.0085
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 397373.9369,
+    "actual": 450193.0,
+    "log_error": -0.1248
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 395315.8265,
+    "actual": 434557.0,
+    "log_error": -0.0946
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 397958.4312,
+    "actual": 450193.0,
+    "log_error": -0.1233
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 393682.2767,
+    "actual": 434557.0,
+    "log_error": -0.0988
+   },
+   {
+    "device": "Bicycle",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 473180.9621,
+    "actual": 434557.0,
+    "log_error": 0.0852
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 23398.5232,
+    "actual": 18664.0,
+    "log_error": 0.2261
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 23729.7366,
+    "actual": 16492.0,
+    "log_error": 0.3639
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 23998.0798,
+    "actual": 12119.0,
+    "log_error": 0.6832
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 16467.6819,
+    "actual": 16492.0,
+    "log_error": -0.0015
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 14898.2297,
+    "actual": 12119.0,
+    "log_error": 0.2065
+   },
+   {
+    "device": "Hoverboard",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 14327.878,
+    "actual": 12119.0,
+    "log_error": 0.1674
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2022,
+    "h": 1,
+    "year": 2023,
+    "forecast": 79237.1387,
+    "actual": 69408.0,
+    "log_error": 0.1324
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2022,
+    "h": 2,
+    "year": 2024,
+    "forecast": 76922.2193,
+    "actual": 65132.0,
+    "log_error": 0.1664
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2022,
+    "h": 3,
+    "year": 2025,
+    "forecast": 75119.0734,
+    "actual": 60697.0,
+    "log_error": 0.2132
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2023,
+    "h": 1,
+    "year": 2024,
+    "forecast": 60842.9947,
+    "actual": 65132.0,
+    "log_error": -0.0681
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2023,
+    "h": 2,
+    "year": 2025,
+    "forecast": 54758.4849,
+    "actual": 60697.0,
+    "log_error": -0.103
+   },
+   {
+    "device": "Skateboard",
+    "cut": 2024,
+    "h": 1,
+    "year": 2025,
+    "forecast": 57158.1572,
+    "actual": 60697.0,
+    "log_error": -0.0601
+   }
+  ]
+ },
+ "devices": {
+  "E-bike": {
+   "actual": [
+    {
+     "year": 2019,
+     "est": 5112,
+     "lo": 1687,
+     "hi": 8536,
+     "unstable": true
+    },
+    {
+     "year": 2020,
+     "est": 8147,
+     "lo": 1727,
+     "hi": 14567,
+     "unstable": true
+    },
+    {
+     "year": 2021,
+     "est": 15139,
+     "lo": 5818,
+     "hi": 24459,
+     "unstable": false
+    },
+    {
+     "year": 2022,
+     "est": 27889,
+     "lo": 12703,
+     "hi": 43074,
+     "unstable": false
+    },
+    {
+     "year": 2023,
+     "est": 37789,
+     "lo": 22128,
+     "hi": 53450,
+     "unstable": false
+    },
+    {
+     "year": 2024,
+     "est": 59349,
+     "lo": 39180,
+     "hi": 79517,
+     "unstable": false
+    },
+    {
+     "year": 2025,
+     "est": 101628,
+     "lo": 69694,
+     "hi": 133561,
+     "unstable": false
+    }
+   ],
+   "forecast": [
+    {
+     "year": 2026,
+     "tested": true,
+     "central": 143472,
+     "lo80": 115865,
+     "hi80": 177657,
+     "slower": 131622,
+     "faster": 153055
+    },
+    {
+     "year": 2027,
+     "tested": true,
+     "central": 189048,
+     "lo80": 139737,
+     "hi80": 255760,
+     "slower": 153716,
+     "faster": 225834
+    },
+    {
+     "year": 2028,
+     "tested": true,
+     "central": 235730,
+     "lo80": 162800,
+     "hi80": 341330,
+     "slower": 168715,
+     "faster": 326802
+    },
+    {
+     "year": 2029,
+     "tested": false,
+     "central": 281248,
+     "lo80": 183426,
+     "hi80": 431240,
+     "slower": 178408,
+     "faster": 464253
+    },
+    {
+     "year": 2030,
+     "tested": false,
+     "central": 323914,
+     "lo80": 200858,
+     "hi80": 522359,
+     "slower": 184489,
+     "faster": 648039
+    }
+   ]
+  },
+  "E-scooter": {
+   "actual": [
+    {
+     "year": 2019,
+     "est": 17549,
+     "lo": 9591,
+     "hi": 25507,
+     "unstable": false
+    },
+    {
+     "year": 2020,
+     "est": 32997,
+     "lo": 17011,
+     "hi": 48983,
+     "unstable": false
+    },
+    {
+     "year": 2021,
+     "est": 54455,
+     "lo": 34296,
+     "hi": 74614,
+     "unstable": false
+    },
+    {
+     "year": 2022,
+     "est": 60508,
+     "lo": 41180,
+     "hi": 79836,
+     "unstable": false
+    },
+    {
+     "year": 2023,
+     "est": 68137,
+     "lo": 48884,
+     "hi": 87389,
+     "unstable": false
+    },
+    {
+     "year": 2024,
+     "est": 122694,
+     "lo": 67692,
+     "hi": 177696,
+     "unstable": false
+    },
+    {
+     "year": 2025,
+     "est": 168786,
+     "lo": 97919,
+     "hi": 239652,
+     "unstable": false
+    }
+   ],
+   "forecast": [
+    {
+     "year": 2026,
+     "tested": true,
+     "central": 221893,
+     "lo80": 179196,
+     "hi80": 274763,
+     "slower": 207225,
+     "faster": 233571
+    },
+    {
+     "year": 2027,
+     "tested": true,
+     "central": 276177,
+     "lo80": 204140,
+     "hi80": 373635,
+     "slower": 234371,
+     "faster": 318015
+    },
+    {
+     "year": 2028,
+     "tested": true,
+     "central": 329021,
+     "lo80": 227229,
+     "hi80": 476413,
+     "slower": 252337,
+     "faster": 426358
+    },
+    {
+     "year": 2029,
+     "tested": false,
+     "central": 378488,
+     "lo80": 246844,
+     "hi80": 580340,
+     "slower": 263772,
+     "faster": 563294
+    },
+    {
+     "year": 2030,
+     "tested": false,
+     "central": 423366,
+     "lo80": 262528,
+     "hi80": 682741,
+     "slower": 270880,
+     "faster": 733918
+    }
+   ]
+  },
+  "Kick scooter": {
+   "actual": [
+    {
+     "year": 2019,
+     "est": 43371,
+     "lo": 28721,
+     "hi": 58021,
+     "unstable": false
+    },
+    {
+     "year": 2020,
+     "est": 49389,
+     "lo": 35584,
+     "hi": 63194,
+     "unstable": false
+    },
+    {
+     "year": 2021,
+     "est": 63770,
+     "lo": 41902,
+     "hi": 85639,
+     "unstable": false
+    },
+    {
+     "year": 2022,
+     "est": 70293,
+     "lo": 46055,
+     "hi": 94532,
+     "unstable": false
+    },
+    {
+     "year": 2023,
+     "est": 72517,
+     "lo": 48921,
+     "hi": 96113,
+     "unstable": false
+    },
+    {
+     "year": 2024,
+     "est": 99863,
+     "lo": 70161,
+     "hi": 129564,
+     "unstable": false
+    },
+    {
+     "year": 2025,
+     "est": 106909,
+     "lo": 75322,
+     "hi": 138497,
+     "unstable": false
+    }
+   ],
+   "forecast": [
+    {
+     "year": 2026,
+     "tested": true,
+     "central": 119557,
+     "lo80": 96552,
+     "hi80": 148044,
+     "slower": 116261,
+     "faster": 122090
+    },
+    {
+     "year": 2027,
+     "tested": true,
+     "central": 130744,
+     "lo80": 96641,
+     "hi80": 176882,
+     "slower": 122261,
+     "faster": 138504
+    },
+    {
+     "year": 2028,
+     "tested": true,
+     "central": 140444,
+     "lo80": 96993,
+     "hi80": 203358,
+     "slower": 126008,
+     "faster": 156137
+    },
+    {
+     "year": 2029,
+     "tested": false,
+     "central": 148719,
+     "lo80": 96992,
+     "hi80": 228031,
+     "slower": 128311,
+     "faster": 174963
+    },
+    {
+     "year": 2030,
+     "tested": false,
+     "central": 155688,
+     "lo80": 96542,
+     "hi80": 251070,
+     "slower": 129714,
+     "faster": 194947
+    }
+   ]
+  },
+  "Bicycle": {
+   "actual": [
+    {
+     "year": 2019,
+     "est": 415677,
+     "lo": 298543,
+     "hi": 532811,
+     "unstable": false
+    },
+    {
+     "year": 2020,
+     "est": 424322,
+     "lo": 307480,
+     "hi": 541164,
+     "unstable": false
+    },
+    {
+     "year": 2021,
+     "est": 373501,
+     "lo": 270001,
+     "hi": 477001,
+     "unstable": false
+    },
+    {
+     "year": 2022,
+     "est": 403220,
+     "lo": 283528,
+     "hi": 522912,
+     "unstable": false
+    },
+    {
+     "year": 2023,
+     "est": 403369,
+     "lo": 292830,
+     "hi": 513907,
+     "unstable": false
+    },
+    {
+     "year": 2024,
+     "est": 450193,
+     "lo": 346894,
+     "hi": 553493,
+     "unstable": false
+    },
+    {
+     "year": 2025,
+     "est": 434557,
+     "lo": 334524,
+     "hi": 534590,
+     "unstable": false
+    }
+   ],
+   "forecast": [
+    {
+     "year": 2026,
+     "tested": true,
+     "central": 443317,
+     "lo80": 358014,
+     "hi80": 548946,
+     "slower": 441111,
+     "faster": 444979
+    },
+    {
+     "year": 2027,
+     "tested": true,
+     "central": 450452,
+     "lo80": 332958,
+     "hi80": 609409,
+     "slower": 445090,
+     "faster": 455112
+    },
+    {
+     "year": 2028,
+     "tested": true,
+     "central": 456243,
+     "lo80": 315091,
+     "hi80": 660627,
+     "slower": 447495,
+     "faster": 464952
+    },
+    {
+     "year": 2029,
+     "tested": false,
+     "central": 460929,
+     "lo80": 300611,
+     "hi80": 706747,
+     "slower": 448945,
+     "faster": 474497
+    },
+    {
+     "year": 2030,
+     "tested": false,
+     "central": 464713,
+     "lo80": 288167,
+     "hi80": 749419,
+     "slower": 449816,
+     "faster": 483745
+    }
+   ]
+  }
+ },
+ "ebike_vs_bicycle": [
+  {
+   "year": 2019,
+   "share": 0.012298010233907577,
+   "kind": "actual"
+  },
+  {
+   "year": 2020,
+   "share": 0.01920004147793421,
+   "kind": "actual"
+  },
+  {
+   "year": 2021,
+   "share": 0.040532689336842474,
+   "kind": "actual"
+  },
+  {
+   "year": 2022,
+   "share": 0.0691657159863102,
+   "kind": "actual"
+  },
+  {
+   "year": 2023,
+   "share": 0.0936834511328337,
+   "kind": "actual"
+  },
+  {
+   "year": 2024,
+   "share": 0.1318301261903228,
+   "kind": "actual"
+  },
+  {
+   "year": 2025,
+   "share": 0.23386575293920014,
+   "kind": "actual"
+  },
+  {
+   "year": 2026,
+   "share": 0.3236329759517456,
+   "kind": "forecast"
+  },
+  {
+   "year": 2027,
+   "share": 0.4196851162832,
+   "kind": "forecast"
+  },
+  {
+   "year": 2028,
+   "share": 0.516676420240968,
+   "kind": "forecast"
+  },
+  {
+   "year": 2029,
+   "share": 0.6101764046089528,
+   "kind": "forecast"
+  },
+  {
+   "year": 2030,
+   "share": 0.6970194507147423,
+   "kind": "forecast"
+  }
+ ],
+ "locked": [
+  {
+   "year": 2026,
+   "locked_on": "2026-11-20",
+   "made_with_data_through": 2025,
+   "version": "1.6.1",
+   "phi": 0.8,
+   "sigma_1yr": 0.1668,
+   "devices": {
+    "E-bike": {
+     "central": 143472,
+     "lo80": 115865,
+     "hi80": 177657
+    },
+    "E-scooter": {
+     "central": 221893,
+     "lo80": 179196,
+     "hi80": 274763
+    },
+    "Kick scooter": {
+     "central": 119557,
+     "lo80": 96552,
+     "hi80": 148044
+    },
+    "Bicycle": {
+     "central": 443317,
+     "lo80": 358014,
+     "hi80": 548946
+    }
+   },
+   "fingerprint": "2377626513b8be04"
+  }
+ ],
+ "checks": []
+}

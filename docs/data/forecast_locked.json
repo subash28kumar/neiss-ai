@@ -1,0 +1,35 @@
+{
+ "forecasts": [
+  {
+   "year": 2026,
+   "locked_on": "2026-11-20",
+   "made_with_data_through": 2025,
+   "version": "1.6.1",
+   "phi": 0.8,
+   "sigma_1yr": 0.1668,
+   "devices": {
+    "E-bike": {
+     "central": 143472,
+     "lo80": 115865,
+     "hi80": 177657
+    },
+    "E-scooter": {
+     "central": 221893,
+     "lo80": 179196,
+     "hi80": 274763
+    },
+    "Kick scooter": {
+     "central": 119557,
+     "lo80": 96552,
+     "hi80": 148044
+    },
+    "Bicycle": {
+     "central": 443317,
+     "lo80": 358014,
+     "hi80": 548946
+    }
+   },
+   "fingerprint": "2377626513b8be04"
+  }
+ ]
+}

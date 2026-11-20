@@ -32,7 +32,7 @@ def main(pop_path: Path = MODEL / "state_population_age.csv", out_path: Path = D
     abbrs = sorted({a for a, _ in pop}, key=lambda a: names[a])
     years = sorted({y for _, y in pop if y in records["years"]})
     out = {
-        "updated": date.today().isoformat(),
+        "updated": records.get("updated") or date.today().isoformat(),   # data date, so rebuilds are stable
         "version": records.get("version"),
         "population_source": "US Census Bureau, Vintage 2025 population estimates by age (SC-EST2025-ALLDATA6), July 1",
         "method": ("Age-adjusted: for each age group, the national NEISS-AI estimate for that age group times the "
