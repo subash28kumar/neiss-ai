@@ -364,6 +364,7 @@ a.btn{text-decoration:none;display:inline-block}
       <label class="field">View<select id="stView" aria-label="Map view"><option value="map">US map</option><option value="grid">Grid (easier to tap)</option></select></label>
     </div>
     <div class="tiles" id="sttiles"></div>
+    <div class="reqbox" id="stfc" hidden></div>
     <div class="chart" id="stmap" aria-label="Map of US states"></div>
     <p class="note" id="stnote"></p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
@@ -377,6 +378,7 @@ a.btn{text-decoration:none;display:inline-block}
       <p class="actions"><a class="btn primary" href="#" data-req="state">Request a custom analysis</a></p>
     </div>
     <details><summary>Show the numbers for every state</summary><div class="tablewrap" id="tbst"></div></details>
+    <details id="stfcall" hidden><summary>Forecast for every state</summary><div class="tablewrap" id="tbstfc"></div></details>
   </section>
 </section>
 
@@ -1492,7 +1494,9 @@ function renderState(push){
     else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
     const on=d===ST.dev;
     const extra=(pick&&stExp(pick,d,y).adjusted)?h('div',{class:'sub',text:'Population only: '+fmt(stExp(pick,d,y).simple)}):null;
-    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub}),extra));
+    const fcv=pick&&STE&&STE.forecast&&STE.states[pick].fc&&STE.states[pick].fc[d]&&STE.states[pick].fc[d][STE.forecast.years[0]];
+    const fcl=fcv?h('div',{class:'sub',text:`Forecast ${STE.forecast.years[0]}: about ${fmt(fcv[0])} (80% range ${fmt(fcv[1])} to ${fmt(fcv[2])})`}):null;
+    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub}),extra,fcl));
   });
   // map
   const W=document.getElementById('stmap');W.textContent='';
@@ -1537,6 +1541,21 @@ function renderState(push){
   const lab=adj?' (age-adjusted)':' (expected)';
   const head=['State','Population','E-bike visits'+lab,'E-bike range','E-bike (population only)','E-scooter visits'+lab,'E-scooter range','E-scooter (population only)','Bicycle visits'+lab,'Bicycle range','Bicycle (population only)'];
   table('tbst',head,rows);
+  // forecast for the chosen state and for every state
+  const FB=document.getElementById('stfc'), FA=document.getElementById('stfcall');
+  if(STE&&STE.forecast){
+    const fy=STE.forecast.years, f0=fy[0], fN=fy[fy.length-1], by=STE.forecast.base_year;
+    if(pick){const g=(d,yy)=>STE.states[pick].fc[d][yy], e1=g('E-bike',f0), eN=g('E-bike',fN), s1=g('E-scooter',f0), b0=stExp(pick,'E-bike',by);
+      FB.hidden=false;FB.textContent='';
+      FB.appendChild(h('p',null,h('b',{text:`Looking ahead for ${STE.states[pick].name}: `}),`if national trends keep slowing the way the forecast expects, about ${fmt(e1[0])} e-bike visits (80% range ${fmt(e1[1])} to ${fmt(e1[2])}) and ${fmt(s1[0])} e-scooter visits (80% range ${fmt(s1[1])} to ${fmt(s1[2])}) are expected in ${f0}, and about ${fmt(eN[0])} e-bike visits in ${fN} (${by}: ${fmt(b0.est)}).`));
+      FB.appendChild(h('p',{class:'note',text:`${STE.forecast.method} The national ${f0} forecast was locked on ${STE.forecast.locked_on} and will be checked when CPSC releases ${f0} data. See "Looking ahead" on the Overview for how accurate the method was on past years. Forecasts follow past trends; they cannot predict the effect of a specific law.`}));
+    }else FB.hidden=true;
+    FA.hidden=false;
+    const fdev=['E-bike','E-scooter','Bicycle'], fh=['State',...fdev.flatMap(d=>fy.map(yy=>`${d} ${yy}`))];
+    const frows=Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).map(a=>[STATE_POP[a].n,...fdev.flatMap(d=>fy.map(yy=>fmt(STE.states[a].fc[d][yy][0])))]);
+    table('tbstfc',fh,frows);
+    csvTools('tbstfc',`Forecast emergency department visits by state, ${f0}-${fN} (central, with 80% ranges in the CSV)`,['state','device','year','forecast_central','range80_low','range80_high'],Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).flatMap(a=>fdev.flatMap(d=>fy.map(yy=>{const v=STE.states[a].fc[d][yy];return [STATE_POP[a].n,d,yy,v[0],v[1],v[2]];}))),`neissai_state_forecast_${f0}_${fN}.csv`,STE.forecast.method+' Forecasts from past trends, not counts and not predictions of the effect of any law.');
+  }else{FB.hidden=true;FA.hidden=true;}
   csvTools('tbst',`Expected emergency department visits by state, ${y}`+(adj?' (age-adjusted, with population-only for comparison)':' (national rate x state population)'),head,rows,`neiss-ai_expected_by_state_${y}.csv`,adj?'Estimates, not counts. Age-adjusted: national NEISS-AI estimate for each age group times the state share of US population in that age group (US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6), summed. Population only: national estimate times the state share of US population. Ranges reflect national sampling uncertainty only.':'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
 }
 

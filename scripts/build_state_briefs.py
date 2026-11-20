@@ -164,8 +164,10 @@ def age_mix_sentence(st: dict, us_pop: list[int], groups: list[str], year: int) 
     hi_g = [groups[k] for k in (3, 4) if rel[k] > 0.02]      # 18-24, 25-44: the highest e-bike injury rates
     old = rel[6]
     if abs(diff) < 3:
+        same = fmt10(adj) == fmt10(simple)
         txt = (f"Age mix: the state's age mix is close to the national one, so adjusting for age changes the "
-               f"e-bike estimate by less than 3% (about {fmt10(adj)} vs {fmt10(simple)} from population alone).")
+               f"e-bike estimate by less than 3%" + ("." if same else f" (about {fmt10(adj)} vs {fmt10(simple)} "
+                                                       f"from population alone)."))
     else:
         why = []
         if hi_g:
@@ -215,7 +217,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
 
     # key-number tiles
     tw, gap = (W - 2 * M - 2 * 10) / 3, 10
-    th = 78
+    th = 74
     for i, (dev, col) in enumerate((("E-bike", C_EBIKE), ("E-scooter", C_ESCOOT), ("Bicycle", C_BIKE))):
         x = M + i * (tw + gap)
         e = st["e"][dev][str(year)]
@@ -260,16 +262,24 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         + (f" About {emoto['est'] / nat_e['est'] * 100:.1f}% of {year} e-bike visits look like e-motos "
            f"(electric motorcycles), a minimum." if emoto else ""),
     ]
+    fcm = D.get("forecast")
+    if fcm and st.get("fc"):
+        f0, fN = fcm["years"][0], fcm["years"][-1]
+        e1, eN, s1 = st["fc"]["E-bike"][str(f0)], st["fc"]["E-bike"][str(fN)], st["fc"]["E-scooter"][str(f0)]
+        pts.append(f"Looking ahead: if national trends keep slowing as forecast, about {fmt(e1[0])} e-bike visits "
+                   f"(80% range {fmt(e1[1])} to {fmt(e1[2])}) and {fmt(s1[0])} e-scooter visits are expected in {f0}, "
+                   f"and about {fmt(eN[0])} e-bike visits in {fN}. National forecast tested on past years; assumes "
+                   f"the state keeps its {fcm['base_year']} share.")
     y = bullets(c, M, y, [p for p in pts if p], W - 2 * M) - 4
 
     # charts
     cw = (W - 2 * M - 14) / 2
     c.setFont("Sans-Bold", 9)
     c.setFillColor(HexColor(INK))
-    c.drawString(M, y, f"Expected visits in {the}, {years[0]}–{years[-1]}")
+    c.drawString(M, y, f"Expected visits, {years[0]}–{years[-1]}")
     c.drawString(M + cw + 14, y, f"Expected e-bike visits by age, {year}")
     y -= 4
-    ch = 150
+    ch = 140
     c.drawImage(trend_chart(st, years, unstable), M, y - ch, width=cw, height=ch, preserveAspectRatio=True, anchor="nw")
     c.drawImage(age_chart(st, year, groups), M + cw + 14, y - ch, width=cw, height=ch, preserveAspectRatio=True,
                 anchor="nw")
