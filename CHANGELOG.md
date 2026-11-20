@@ -2,6 +2,13 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State forecasts — 2026-11-20
+
+- "Your state" and every state brief now show a forecast for 2026–2028: the national forecast
+  (tested on past years) times the state's age-adjusted share of national visits in 2025, with
+  80% ranges. Assumes each state keeps its 2025 share; the 51 state forecasts add up to the
+  national forecast (checked by a test). New "Forecast for every state" table with CSV download.
+
 ## Forecasts 2026–2030, tested on past years — 2026-11-20
 
 - New **"Looking ahead"** section on the Overview: forecasts for e-bikes, e-scooters, kick scooters

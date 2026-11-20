@@ -64,6 +64,26 @@ def main(pop_path: Path = MODEL / "state_population_age.csv", out_path: Path = D
                                                       1 if nat_unstable else 0]
                 if dev in AGE_DEVICES:
                     s["age"].setdefault(dev, {})[str(y)] = [[r0(b["est"]), r0(b["lo"]), r0(b["hi"])] for b in r["by_age"]]
+    # State forecasts: national forecast (docs/data/forecast.json) x the state's share of national
+    # visits in the latest year (age-adjusted). Only the horizons the national method was tested on.
+    fpath = DOCS / "data" / "forecast.json"
+    if fpath.exists():
+        F = json.loads(fpath.read_text(encoding="utf-8"))
+        base = max(years)
+        tested = F["method"]["tested_years_ahead"]
+        out["forecast"] = {"base_year": base, "years": [base + h for h in range(1, tested + 1)],
+                           "locked_on": next((l["locked_on"] for l in F.get("locked", []) if l["year"] == base + 1), None),
+                           "method": ("National forecast (slowing-growth method, tested on past years) x the state's share "
+                                      f"of national visits in {base} (age-adjusted). Assumes each state keeps its {base} share."),
+                           "fields": ["central", "lo80", "hi80"]}
+        for dev, fd in F["devices"].items():
+            nat_base = next(r["est"] for r in fd["actual"] if r["year"] == base)
+            rows = {r["year"]: r for r in fd["forecast"] if r["tested"]}
+            for a in abbrs:
+                st = out["states"][a]
+                share = st["e"][dev][str(base)][0] / nat_base
+                st.setdefault("fc", {})[dev] = {str(y): [r0(rows[y]["central"] * share), r0(rows[y]["lo80"] * share),
+                                                     r0(rows[y]["hi80"] * share)] for y in out["forecast"]["years"]}
     path = Path(out_path)
     path.write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
     print(f"wrote {path} ({path.stat().st_size // 1024} KB), {len(abbrs)} states, years {years[0]}-{years[-1]}")

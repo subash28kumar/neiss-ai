@@ -93,3 +93,20 @@ def test_real_population_file(records):
     us = us_population(pop, 2025)
     s = sum(est.state(pop[(a, 2025)], us)["adjusted"]["est"] for a in {a for a, _ in pop})
     assert math.isclose(s, est.national, rel_tol=1e-9)
+
+
+def test_state_forecasts_add_up_to_national_forecast():
+    se_path = ROOT / "docs" / "data" / "state_estimates.json"
+    fc_path = ROOT / "docs" / "data" / "forecast.json"
+    if not (se_path.exists() and fc_path.exists()):
+        pytest.skip("site data not built")
+    S = json.loads(se_path.read_text(encoding="utf-8"))
+    F = json.loads(fc_path.read_text(encoding="utf-8"))
+    if "forecast" not in S:
+        pytest.skip("no state forecasts")
+    for dev, fd in F["devices"].items():
+        for r in fd["forecast"]:
+            if str(r["year"]) not in next(iter(S["states"].values()))["fc"][dev]:
+                continue
+            tot = sum(st["fc"][dev][str(r["year"])][0] for st in S["states"].values())
+            assert abs(tot - r["central"]) <= 51, (dev, r["year"], tot, r["central"])   # rounding only
