@@ -106,10 +106,14 @@ def acs(dry: bool, check_year: int | None = None) -> str:
                f"B08301_018E,B08301_018M&for=state:*")
         raw = get(url)
         if not raw:
+            if check_year:
+                return f"{year}: Census API gave no data (HTTP 204/400/404) for {url}"
             continue
         try:
             rows = json.loads(raw)
         except ValueError:
+            if check_year:
+                return f"{year}: Census API answered with text, not data: {raw[:300]!r}"
             continue  # the API answers with a text/HTML message when a year is not published yet
         head, rows = rows[0], rows[1:]
         ix = {k: head.index(k) for k in head}
@@ -218,21 +222,34 @@ def cpi(dry: bool) -> str:
     cur = load(path)
     check(cur is not None, "costs file missing")
     this = dt.date.today().year
-    body = json.dumps({"seriesid": ["CUUS0000SAM"], "startyear": str(this - 3), "endyear": str(this)}).encode()
-    raw = get("https://api.bls.gov/publicAPI/v1/timeseries/data/", data=body, headers={"Content-Type": "application/json"})
-    check(raw is not None, "BLS API did not answer")
-    js = json.loads(raw)
-    check(js.get("status") == "REQUEST_SUCCEEDED", f"BLS API: {js.get('status')} {js.get('message')}")
-    halves = {}
-    for p in js["Results"]["series"][0]["data"]:
-        if p["period"] in ("S01", "S02") and p["value"] not in ("-", ""):
-            halves.setdefault(int(p["year"]), {})[p["period"]] = float(p["value"])
+    halves, via = {}, "BLS API"
+    try:
+        body = json.dumps({"seriesid": ["CUUS0000SAM"], "startyear": str(this - 3), "endyear": str(this)}).encode()
+        raw = get("https://api.bls.gov/publicAPI/v1/timeseries/data/", data=body, headers={"Content-Type": "application/json"})
+        js = json.loads(raw or b"{}")
+        check(js.get("status") == "REQUEST_SUCCEEDED", f"BLS API: {js.get('status')} {js.get('message')}")
+        for p in js["Results"]["series"][0]["data"]:
+            if p["period"] in ("S01", "S02") and p["value"] not in ("-", ""):
+                halves.setdefault(int(p["year"]), {})[p["period"]] = float(p["value"])
+    except (Unreachable, CheckFailed):
+        # Same official BLS series, as republished by the Federal Reserve Bank of St. Louis (FRED).
+        via = "FRED copy of the BLS series"
+        raw = get("https://fred.stlouisfed.org/graph/fredgraph.csv?id=CUUS0000SAM")
+        check(raw is not None, "FRED did not return the series")
+        for r in csv.DictReader(io.StringIO(raw.decode("utf-8"))):
+            d, val = r.get("observation_date") or r.get("DATE"), r.get("CUUS0000SAM")
+            if not d or val in (None, "", "."):
+                continue
+            y, m = int(d[:4]), int(d[5:7])
+            halves.setdefault(y, {})["S01" if m == 1 else "S02"] = float(val)
     full = [y for y, v in halves.items() if len(v) == 2]
     check(bool(full), "BLS API: no year with both halves")
     year = max(full)
     have = int(cur.get("price_year", 2025))
     if year <= have:
-        return f"{have} prices already in use"
+        known = cur["price_update"].get("index_2025_avg") if have == 2025 else cur["price_update"].get("index_latest_avg")
+        got = round((halves[have]["S01"] + halves[have]["S02"]) / 2, 3) if len(halves.get(have, {})) == 2 else None
+        return f"{have} prices already in use (via {via}; index {got} vs file {known})"
     idx = (halves[year]["S01"] + halves[year]["S02"]) / 2
     base = cur["price_update"]["index_2015_avg"]
     f = idx / base
