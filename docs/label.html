@@ -87,7 +87,8 @@ const TO='nivi05subhash@gmail.com', KEY='neissai-label-v1';
 const Q={
   mv:{title:'Was a motor vehicle involved?',opts:[['yes','Yes'],['no','No']]},
   helmet:{title:'Helmet?',opts:[['yes','Worn'],['no','Not worn'],['not mentioned','Not mentioned']]},
-  etype:{title:'Regular e-bike or e-moto?',opts:[['regular e-bike','Regular e-bike'],['likely e-moto','Likely e-moto'],['unclear','Unclear']]}
+  etype:{title:'Regular e-bike or e-moto?',opts:[['regular e-bike','Regular e-bike'],['likely e-moto','Likely e-moto'],['unclear','Unclear']]},
+  device:{title:'Which vehicle was the injured person riding?',opts:[['e-bike','E-bike'],['bicycle','Regular bicycle'],['e-scooter','E-scooter'],['other','Other or can\u2019t tell']]}
 };
 const DEFS={
   A:['<b>Motor vehicle: Yes</b> when the patient was hit by, crashed into, or struck part of a motor vehicle (moving or parked, including a car door), or the story calls it a motor vehicle crash (MVC, MVA).',
@@ -99,7 +100,12 @@ const DEFS={
      '<b>Regular e-bike</b>: everything else. Ignore speeds that belong to another vehicle or rider ("struck by a car going 30 mph").']
 };
 DEFS.C=DEFS.A.concat(DEFS.B);
-let SETS=null, S=load()||{who:{},set:'A',pos:{A:0,B:0,C:0},ans:{}};
+DEFS.D=['Read only the part before the diagnosis ("DX"). Choose the vehicle the injured person was riding, not a vehicle that hit them.',
+  '<b>E-bike</b>: the story says the bicycle was electric, for example e-bike, ebike, electric bike or bicycle, or pedal-assist.',
+  '<b>Regular bicycle</b>: a bicycle with no sign of a motor.',
+  '<b>E-scooter</b>: an electric or motorized stand-up scooter (not a kick scooter, not a mobility scooter).',
+  '<b>Other or can\u2019t tell</b>: mopeds, motorcycles, dirt bikes or e-motos; kick scooters; or wording that could mean more than one vehicle, such as "motorized bike", "motor bike" or "scooter" with no type.'];
+let SETS=null, S=load()||{who:{},set:'A',pos:{A:0,B:0,C:0,D:0},ans:{}};
 function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const $=id=>document.getElementById(id);
@@ -144,9 +150,9 @@ $('back').addEventListener('click',()=>{S.pos[S.set]=Math.max(0,(S.pos[S.set]||0
 $('finish').addEventListener('click',finish);
 $('more').addEventListener('click',()=>{$('done').hidden=true;$('setup').hidden=false;$('start').textContent=`Continue labelling (${Object.keys(S.ans).length} done)`;});
 function csv(){
-  const head=['set','case_number','mv','helmet','etype','note','labeler','organization','role','labelled_at'];
+  const head=['set','case_number','mv','helmet','etype','device','note','labeler','organization','role','labelled_at'];
   const esc=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
-  const rows=Object.entries(S.ans).map(([k,a])=>{const [set,id]=k.split(':');return [set,id,a.mv||'',a.helmet||'',a.etype||'',a.note||'',S.who.nm,S.who.org,S.who.role,a.t||''];});
+  const rows=Object.entries(S.ans).map(([k,a])=>{const [set,id]=k.split(':');return [set,id,a.mv||'',a.helmet||'',a.etype||'',a.device||'',a.note||'',S.who.nm,S.who.org,S.who.role,a.t||''];});
   return [head,...rows].map(r=>r.map(esc).join(',')).join('\n');
 }
 function finish(){
