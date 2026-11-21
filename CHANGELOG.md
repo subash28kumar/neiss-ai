@@ -10,6 +10,9 @@ All notable changes to NEISS-AI are listed here.
   e-bike injuries for every 10 bicycle injuries now and in 2020, likely e-motos); public health
   (likely hospital stays, busiest months); visits by age group; and buttons for the state brief,
   "Compare with your own counts", a copy-ready sentence and a link.
+- The card also gives a per-day figure ("about 32 a day"), hospital stays compared with bicycles, the
+  2028 outlook for visits and hospital stays, a "Save as image" button (a share-ready picture with the
+  source line) and a "Request a free custom analysis" button for that state.
 - Every number is an estimate from national data and the state's population by age; hospital stays,
   busiest months and e-moto shares apply national patterns to the state, and the card says so.
 

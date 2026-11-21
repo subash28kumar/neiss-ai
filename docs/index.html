@@ -5350,7 +5350,8 @@ function stCardData(a,d,y){
     const idx=[...tot.keys()].sort((p,q)=>tot[q]-tot[p]).slice(0,3).sort((p,q)=>p-q);return {idx,share:idx.reduce((p,i)=>p+tot[i],0)/s};})();
   const yrs=[2020,2021,2022,2023,2024,2025].filter(v=>v<=y), trend=yrs.map(v=>[v,(stExp(a,d,v)||{est:0}).est]);
   const fc=(y===2025&&STE&&STE.forecast&&STE.states[a].fc&&STE.states[a].fc[d])?STE.forecast.years.map(v=>[v,...STE.states[a].fc[d][v]]):[];
-  return {a,d,y,e,pop,one:e.est?oneIn(pop/e.est):null,rank,n:all.length,devs,per10:per10(y),per10_2020:per10(2020),moto,hosp,mon,trend,fc,ages:ag?STE.age_groups.map((g,i)=>[g,ag[i][0]]):null};
+  const pd=e.est/365, perDay=pd>=1.5?`about ${Math.round(pd).toLocaleString('en-US')} a day`:pd>=0.75?'about 1 a day':e.est>0?`about 1 every ${Math.round(365/e.est)} days`:'n/a';
+  return {a,d,y,e,pop,perDay,one:e.est?oneIn(pop/e.est):null,rank,n:all.length,devs,per10:per10(y),per10_2020:per10(2020),moto,hosp,mon,trend,fc,ages:ag?STE.age_groups.map((g,i)=>[g,ag[i][0]]):null};
 }
 function stSpark(C,cw){
   const W=Math.max(300,Math.min(560,Math.round(cw||560))),H=W<420?190:170,P={l:46,r:14,t:22,b:26}, pts=[...C.trend.map(([x,v])=>[x,v,v,v]),...C.fc.map(([x,c,lo,hi])=>[x,c,lo,hi])];
@@ -5369,6 +5370,43 @@ function stSpark(C,cw){
   xs.forEach(x=>txt(svg,String(x),{x:X(x),y:H-8,'text-anchor':'middle','font-size':11,fill:css('--text-3')}));
   return svg;
 }
+function stCardImage(C){
+  const N=STATE_POP[C.a].n, dl=C.d.toLowerCase(), esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const W=1200,H=675, F="font-family='Inter,Segoe UI,Helvetica,Arial,sans-serif'";
+  const pts=[...C.trend.map(([x,v])=>[x,v,v,v]),...C.fc.map(([x,c,lo,hi])=>[x,c,lo,hi])], xs=pts.map(p=>p[0]), mx=Math.max(...pts.map(p=>p[3]))*1.1||1;
+  const gx=700,gy=200,gw=440,gh=250, X=x=>gx+(x-xs[0])/(xs[xs.length-1]-xs[0]||1)*gw, Y=v=>gy+gh-v/mx*gh;
+  let g=`<line x1='${gx}' y1='${gy+gh}' x2='${gx+gw}' y2='${gy+gh}' stroke='#33465c'/>`;
+  if(C.fc.length){const l=C.trend[C.trend.length-1];
+    const up=[[l[0],l[1]],...C.fc.map(f=>[f[0],f[3]])], dn=[...C.fc.map(f=>[f[0],f[2]])].reverse().concat([[l[0],l[1]]]);
+    g+=`<polygon points='${up.concat(dn).map(([x,v])=>X(x)+','+Y(v)).join(' ')}' fill='#ffb347' fill-opacity='0.15'/>`;
+    g+=`<polyline points='${[[l[0],l[1]],...C.fc.map(f=>[f[0],f[1]])].map(([x,v])=>X(x)+','+Y(v)).join(' ')}' fill='none' stroke='#ffb347' stroke-width='3' stroke-dasharray='8 7'/>`;}
+  g+=`<polyline points='${C.trend.map(([x,v])=>X(x)+','+Y(v)).join(' ')}' fill='none' stroke='#ffb347' stroke-width='4' stroke-linejoin='round'/>`;
+  C.trend.forEach(([x,v])=>g+=`<circle cx='${X(x)}' cy='${Y(v)}' r='5' fill='#ffb347'/>`);
+  g+=`<text x='${X(xs[0])}' y='${gy+gh+28}' fill='#9fb0c3' font-size='18' ${F}>${xs[0]}</text><text x='${X(xs[xs.length-1])}' y='${gy+gh+28}' text-anchor='end' fill='#9fb0c3' font-size='18' ${F}>${xs[xs.length-1]}</text>`;
+  if(C.fc.length){const L=C.fc[C.fc.length-1];g+=`<text x='${X(L[0])}' y='${Y(L[3])-10}' text-anchor='end' fill='#ffd79a' font-size='18' ${F}>${L[0]} forecast: about ${fmt(L[1])}</text>`;}
+  const l=C.trend[C.trend.length-1];g+=`<text x='${X(l[0])-8}' y='${Y(l[1])-14}' text-anchor='end' fill='#ffffff' font-size='18' font-weight='700' ${F}>${l[0]}: ${fmt(l[1])}</text>`;
+  const lines=[`${C.perDay} · 1 in ${C.one?C.one.toLocaleString('en-US'):'n/a'} residents · #${C.rank} of ${C.n} states`];
+  if(C.hosp)lines.push(`About ${fmt(C.hosp.n)} likely hospital stays (${Math.round(C.hosp.share*100)}%)`);
+  if(C.per10!=null&&C.d==='E-bike')lines.push(`${C.per10.toFixed(1)} e-bike injuries per 10 bicycle injuries (${C.per10_2020!=null?C.per10_2020.toFixed(1):'n/a'} in 2020)`);
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}' viewBox='0 0 ${W} ${H}'>
+<rect width='${W}' height='${H}' fill='#0e1621'/><rect x='0' y='0' width='${W}' height='8' fill='#ffb347'/>
+<text x='60' y='70' fill='#ffb347' font-size='20' font-weight='700' letter-spacing='2' ${F}>NEISS-AI · E-BIKE INJURY TRACKER</text>
+<text x='60' y='130' fill='#ffffff' font-size='44' font-weight='800' ${F}>${esc(N)}</text>
+<text x='60' y='170' fill='#c9d6e3' font-size='24' ${F}>${esc(C.d)} injuries, ${C.y}</text>
+<text x='60' y='270' fill='#ffffff' font-size='72' font-weight='800' ${F}>about ${fmt(C.e.est)}</text>
+<text x='60' y='310' fill='#c9d6e3' font-size='22' ${F}>emergency department visits (95% range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})</text>
+${lines.map((t,i)=>`<text x='60' y='${375+i*38}' fill='#e8eef5' font-size='22' ${F}>${esc(t)}</text>`).join('')}
+${g}
+<text x='60' y='${H-58}' fill='#9fb0c3' font-size='17' ${F}>Estimates from national emergency department data (US CPSC NEISS) and ${esc(N)}'s population by age, not counts.</text>
+<text x='60' y='${H-30}' fill='#9fb0c3' font-size='17' ${F}>Source: NEISS-AI (Kumar, 2026), doi.org/10.5281/zenodo.23306744 · subash28kumar.github.io/neiss-ai</text>
+</svg>`;
+  const name=`NEISS-AI_${C.a}_${C.d.replace(/\W+/g,'')}_${C.y}`;
+  const dlBlob=(blob,ext)=>{const u=URL.createObjectURL(blob);const a=h('a',{href:u,download:name+'.'+ext});document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);};
+  const img=new Image();img.onload=()=>{try{const c=document.createElement('canvas');c.width=W*2;c.height=H*2;const x=c.getContext('2d');x.scale(2,2);x.drawImage(img,0,0);c.toBlob(b=>b?dlBlob(b,'png'):dlBlob(new Blob([svg],{type:'image/svg+xml'}),'svg'),'image/png');}catch(err){dlBlob(new Blob([svg],{type:'image/svg+xml'}),'svg');}};
+  img.onerror=()=>dlBlob(new Blob([svg],{type:'image/svg+xml'}),'svg');
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'card-image-'+C.a,title:'State card image: '+N,event:true});}catch(e){}
+}
 function renderStCard(){
   const box=document.getElementById('stcard'); if(!box) return;
   const a=ST.abbr; if(!a||!STATE_POP[a]){box.hidden=true;box.textContent='';return;}
@@ -5380,6 +5418,7 @@ function renderStCard(){
   const k=(v,l)=>h('div',{class:'k'},h('div',{class:'v',text:v}),h('div',{class:'l',text:l}));
   box.appendChild(h('div',{class:'kgrid'},
     k('about '+fmt(C.e.est),`emergency department visits (95% range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})`),
+    k(C.perDay,`${dl} emergency department visits in ${N}`),
     k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents had a visit'),
     k(`#${C.rank} of ${C.n}`,`states by number of ${dl} visits`),
     C.fc.length?k('about '+fmt(C.fc[0][1]),`expected in ${C.fc[0][0]} (80% range ${fmt(C.fc[0][2])} to ${fmt(C.fc[0][3])})`):null));
@@ -5397,7 +5436,10 @@ function renderStCard(){
   box.appendChild(h('ul',{class:'ins'},tr));
   // public health
   const ph=[];
-  if(C.hosp)ph.push(h('li',{text:`About ${fmt(C.hosp.n)} of these visits likely ended in a hospital stay (${Math.round(C.hosp.share*100)}%, using national hospital-stay shares by age, 2019-2025).`}));
+  if(C.hosp){const B=(ST.dev!=='Bicycle')?stCardData(a,'Bicycle',y):null;
+    ph.push(h('li',{text:`About ${fmt(C.hosp.n)} of these visits likely ended in a hospital stay (${Math.round(C.hosp.share*100)}%, using national hospital-stay shares by age, 2019-2025).`}));
+    if(B&&B.hosp)ph.push(h('li',null,h('b',{text:'Compared with bicycles: '}),`about ${Math.round(C.hosp.share*100)} in 100 ${dl} visits end in a hospital stay, compared with ${Math.round(B.hosp.share*100)} in 100 bicycle visits.`));
+    if(C.fc.length){const L=C.fc[C.fc.length-1];ph.push(h('li',{text:`If trends continue, about ${fmt(L[1])} ${dl} visits and about ${fmt(L[1]*C.hosp.share)} hospital stays in ${L[0]} (forecast; 80% range for visits ${fmt(L[2])} to ${fmt(L[3])}).`}));}}
   if(C.mon)ph.push(h('li',{text:`Busiest months nationally: ${C.mon.idx.map(i=>MON[i]).join(', ')} (${Math.round(C.mon.share*100)}% of ${dl} visits, ${y-2}-${y}). Safety campaigns work best just before these months.`}));
   if(ph.length){box.appendChild(h('h4',null,h('span',{class:'tag',text:'Public health'}),'Burden and timing'));box.appendChild(h('ul',{class:'ins'},ph));}
   if(C.ages){const mx=Math.max(...C.ages.map(x=>x[1]))||1, top=C.ages.reduce((p,q)=>q[1]>p[1]?q:p);
@@ -5412,6 +5454,8 @@ function renderStCard(){
   const cb=h('button',{class:'btn',type:'button',text:'Compare with your own counts'});cb.addEventListener('click',go('stcmp'));acts.appendChild(cb);
   const cp=h('button',{class:'btn',type:'button',text:'Copy a sentence'});cp.addEventListener('click',()=>document.getElementById('stcopy').click());acts.appendChild(cp);
   const sh=h('button',{class:'btn',type:'button',text:'Copy link'});sh.addEventListener('click',()=>document.getElementById('stshare').click());acts.appendChild(sh);
+  const im=h('button',{class:'btn',type:'button',text:'Save as image'});im.addEventListener('click',()=>stCardImage(C));acts.appendChild(im);
+  acts.appendChild(h('a',{class:'btn',href:'#','data-req':'state',text:`Request a free custom analysis for ${N}`}));
   box.appendChild(acts);
   box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. `+citeLine()}));
   if(ST.cardScroll){ST.cardScroll=false;box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
