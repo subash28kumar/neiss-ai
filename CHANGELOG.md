@@ -2,6 +2,15 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State card: medical bills (CDC costs) — 2026-11-21
+
+- For e-bikes and bicycles, the state card now estimates the medical bills for these injuries, as a
+  range in 2025 dollars. Low end: every injury costs like a bicycle fall with no car (about $7,900);
+  high end: every injury costs like a bicycle crash with a car (about $18,400). Source: Peterson, Xu
+  and Florence, Injury Prevention 2021 (CDC; 12-month medical cost after an emergency department visit,
+  2015 dollars: $6,109 and $14,193), updated with the BLS medical care price index (factor 1.30).
+  Medical care only. New file: docs/data/injury_medical_costs.json.
+
 ## Biking to work updated to 2025 — 2026-11-21
 
 - The state card's "Biking to work" line now uses the Census Bureau's 2025 American Community Survey

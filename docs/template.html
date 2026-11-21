@@ -1724,6 +1724,14 @@ function stCommuteItem(a){
   const cmp=r.share_pct>u.share_pct*1.15?'more than':r.share_pct<u.share_pct*0.85?'fewer than':'about the same as';
   return h('li',null,h('b',{text:'Biking to work (real survey): '}),`About ${fmt(r.bicycle)} people in ${N} usually bike to work (${r.share_pct.toFixed(2)}% of workers${one?`, about 1 in ${one.toLocaleString('en-US')}`:''}), ${cmp} the US share of ${u.share_pct.toFixed(2)}%.`+(r.share_moe90_pct>r.share_pct*0.3?' The survey margin is wide for this state.':'')+' More riding usually means more bike injuries, so read the injury numbers with this in mind. Commuting only; leisure riding is not counted. ',h('a',{href:COM.url,target:'_blank',rel:'noopener',text:`Source: US Census Bureau, ACS ${COM.year}`}));
 }
+let COST=null;  // CDC bicycle-injury medical costs (data/injury_medical_costs.json); false if unavailable
+function loadCosts(){if(COST!==null)return Promise.resolve(COST);COST=undefined;return fetch('data/injury_medical_costs.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{COST=j||false;return COST;});}
+function money(v){if(v>=1e9)return '$'+(v/1e9).toFixed(1)+' billion';if(v>=1e7)return '$'+Math.round(v/1e6).toLocaleString('en-US')+' million';if(v>=1e6)return '$'+(v/1e6).toFixed(1)+' million';return '$'+(Math.round(v/1e4)*1e4).toLocaleString('en-US');}
+function stCostItem(C){
+  if(!COST||!COST.cost_2025_usd||!(C.e&&C.e.est>0))return null; const c=COST.cost_2025_usd, dl=C.d.toLowerCase(), N=STATE_POP[C.a].n;
+  const r100=v=>'$'+(Math.round(v/100)*100).toLocaleString('en-US');
+  return h('li',null,h('b',{text:'Medical bills (estimate): '}),`${C.d} injuries in ${N} in ${C.y} likely cost about ${money(C.e.est*c.other_bicycle_injury)} to ${money(C.e.est*c.road_crash_with_motor_vehicle)} in medical care (in 2025 dollars). Why a range? The low number is if every injury cost like a fall with no car (about ${r100(c.other_bicycle_injury)} each). The high number is if every injury cost like a crash with a car (about ${r100(c.road_crash_with_motor_vehicle)} each). Medical care only; lost work is not counted. `,h('a',{href:COST.url,target:'_blank',rel:'noopener',text:'Source: CDC study of bicycle injury costs'}),', updated to 2025 prices.');
+}
 function stDeathsItem(a){
   if(!FAT||!FAT.states||!FAT.states[a])return null; const r=FAT.states[a], u=FAT.us, N=STATE_POP[a].n;
   const cmp=r.rate_per_100k>u.rate_per_100k*1.15?'higher than':r.rate_per_100k<u.rate_per_100k*0.85?'lower than':'close to';
@@ -1803,7 +1811,8 @@ function renderStCard(){
     if(B&&B.hosp)ph.push(h('li',null,h('b',{text:'Compared with bicycles: '}),`about ${Math.round(C.hosp.share*100)} in 100 ${dl} visits end in a hospital stay, compared with ${Math.round(B.hosp.share*100)} in 100 bicycle visits.`));
     if(C.fc.length){const L=C.fc[C.fc.length-1];ph.push(h('li',{text:`If trends continue, about ${fmt(L[1])} ${dl} visits and about ${fmt(L[1]*C.hosp.share)} hospital stays in ${L[0]} (forecast; 80% range for visits ${fmt(L[2])} to ${fmt(L[3])}).`}));}}
   if(C.mon)ph.push(h('li',{text:`Busiest months nationally: ${C.mon.idx.map(i=>MON[i]).join(', ')} (${Math.round(C.mon.share*100)}% of ${dl} visits, ${y-2}-${y}). Safety campaigns work best just before these months.`}));
-  if(ph.length){box.appendChild(h('h4',null,h('span',{class:'tag',text:'Public health'}),'Burden and timing'));box.appendChild(h('ul',{class:'ins'},ph));}
+  if(ST.dev==='E-bike'||ST.dev==='Bicycle'){if(COST===null){loadCosts().then(()=>{if(ST.abbr===a)renderStCard();});}else{const ci=stCostItem(C);if(ci)ph.splice(Math.min(1,ph.length),0,ci);}}
+  if(ph.length){box.appendChild(h('h4',null,h('span',{class:'tag',text:'Public health'}),'Burden, cost and timing'));box.appendChild(h('ul',{class:'ins'},ph));}
   if(C.ages){const mx=Math.max(...C.ages.map(x=>x[1]))||1, top=C.ages.reduce((p,q)=>q[1]>p[1]?q:p);
     box.appendChild(h('h4',null,h('span',{class:'tag',text:'Who'}),'Visits by age group'));
     const g=h('div',{class:'bars'});C.ages.forEach(([lab,v])=>{const b=h('div',{class:'bar'+(lab===top[0]?' top':'')});b.style.width=(v/mx*100).toFixed(1)+'%';g.appendChild(h('span',{text:lab}));g.appendChild(h('div',null,b));g.appendChild(h('span',{text:fmt(v)}));});
@@ -1819,7 +1828,7 @@ function renderStCard(){
   const im=h('button',{class:'btn',type:'button',text:'Save as image'});im.addEventListener('click',()=>stCardImage(C));acts.appendChild(im);
   acts.appendChild(h('a',{class:'btn',href:'#','data-req':'state',text:`Request a free custom analysis for ${N}`}));
   box.appendChild(acts);
-  box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. Road deaths are real counts from NHTSA's Fatality Analysis Reporting System (crashes involving a motor vehicle on a public road); biking to work comes from the Census Bureau's American Community Survey. `+citeLine()}));
+  box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. Road deaths are real counts from NHTSA's Fatality Analysis Reporting System (crashes involving a motor vehicle on a public road); biking to work comes from the Census Bureau's American Community Survey; medical bills use CDC average costs for bicycle injuries. `+citeLine()}));
   if(ST.cardScroll){ST.cardScroll=false;box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
 }
 
