@@ -2,6 +2,16 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## E-moto range and "electric bike" note — 2026-11-21
+
+- Improved after outside expert review. The e-bike vs e-moto card now always shows the e-moto
+  share as a range for the latest year: at least the "likely e-moto" share, up to that share plus
+  the "unclear" stories (2025: 1.5% to 7.2%), with a note that the true share is probably higher.
+- New note: "electric bike" in a hospital note does not prove the vehicle was a legal e-bike, and
+  a stated speed of 20 to 28 mph is not counted as an e-moto (a legal Class 3 e-bike assists to 28 mph).
+- Labelling page: new Set D (which vehicle? 120 stories, 2019-2023) for a blind human check.
+- Validation: messy-notes stress test (validation/stress/RESULTS.md).
+
 ## State forecasts — 2026-11-20
 
 - "Your state" and every state brief now show a forecast for 2026–2028: the national forecast
