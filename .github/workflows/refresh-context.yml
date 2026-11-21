@@ -58,6 +58,7 @@ jobs:
             python scripts/build_state_briefs.py || echo "briefs skipped"
           fi
           python scripts/build_dashboard.py
+          python scripts/build_state_pages.py
 
       - name: Run tests
         id: tests

@@ -101,3 +101,21 @@ def test_refresh_context_script_imports_and_maps_51_states():
     rc = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(rc)
     assert len(rc.FIPS) == 51 and rc.FIPS["11"] == "DC" and rc.FIPS["06"] == "CA"
+
+
+def test_state_pages_and_sitemap():
+    import importlib.util, re
+    spec = importlib.util.spec_from_file_location("bsp", ROOT / "scripts" / "build_state_pages.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    m.main()
+    pages = list((ROOT / "docs" / "states").glob("*.html"))
+    assert len(pages) == 52  # 51 states + index
+    sm = (ROOT / "docs" / "sitemap.xml").read_text()
+    assert sm.count("<loc>") == 54 and "states/massachusetts.html" in sm
+    S = json.loads((ROOT / "docs" / "data" / "state_estimates.json").read_text())
+    ma = S["states"]["MA"]["e"]["E-bike"]["2025"][0]
+    page = (ROOT / "docs" / "states" / "massachusetts.html").read_text()
+    assert f"about <b>{m.fmt(ma)}</b> people in Massachusetts" in page
+    ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page).group(1))
+    assert ld["@type"] == "Dataset" and ld["spatialCoverage"]["name"].startswith("Massachusetts")
