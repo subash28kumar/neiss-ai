@@ -1,0 +1,548 @@
+{
+ "seed": 2026,
+ "versions": [
+  "clean",
+  "lower case",
+  "clinic format",
+  "other spellings",
+  "typos (5% of words)",
+  "typos (10% of words)",
+  "all combined"
+ ],
+ "ebike_type": {
+  "clean": {
+   "all": {
+    "right": 233,
+    "n": 240,
+    "pct": 97.1,
+    "lo": 94.1,
+    "hi": 98.6
+   },
+   "e-moto found": {
+    "right": 20,
+    "n": 20,
+    "pct": 100.0,
+    "lo": 83.9,
+    "hi": 100.0
+   }
+  },
+  "lower case": {
+   "all": {
+    "right": 233,
+    "n": 240,
+    "pct": 97.1,
+    "lo": 94.1,
+    "hi": 98.6
+   },
+   "e-moto found": {
+    "right": 20,
+    "n": 20,
+    "pct": 100.0,
+    "lo": 83.9,
+    "hi": 100.0
+   }
+  },
+  "clinic format": {
+   "all": {
+    "right": 233,
+    "n": 240,
+    "pct": 97.1,
+    "lo": 94.1,
+    "hi": 98.6
+   },
+   "e-moto found": {
+    "right": 20,
+    "n": 20,
+    "pct": 100.0,
+    "lo": 83.9,
+    "hi": 100.0
+   }
+  },
+  "other spellings": {
+   "all": {
+    "right": 230,
+    "n": 240,
+    "pct": 95.8,
+    "lo": 92.5,
+    "hi": 97.7
+   },
+   "e-moto found": {
+    "right": 17,
+    "n": 20,
+    "pct": 85.0,
+    "lo": 64.0,
+    "hi": 94.8
+   }
+  },
+  "typos (5% of words)": {
+   "all": {
+    "right": 224,
+    "n": 240,
+    "pct": 93.3,
+    "lo": 89.4,
+    "hi": 95.9
+   },
+   "e-moto found": {
+    "right": 20,
+    "n": 20,
+    "pct": 100.0,
+    "lo": 83.9,
+    "hi": 100.0
+   }
+  },
+  "typos (10% of words)": {
+   "all": {
+    "right": 224,
+    "n": 240,
+    "pct": 93.3,
+    "lo": 89.4,
+    "hi": 95.9
+   },
+   "e-moto found": {
+    "right": 19,
+    "n": 20,
+    "pct": 95.0,
+    "lo": 76.4,
+    "hi": 99.1
+   }
+  },
+  "all combined": {
+   "all": {
+    "right": 225,
+    "n": 240,
+    "pct": 93.8,
+    "lo": 89.9,
+    "hi": 96.2
+   },
+   "e-moto found": {
+    "right": 20,
+    "n": 20,
+    "pct": 100.0,
+    "lo": 83.9,
+    "hi": 100.0
+   }
+  }
+ },
+ "motor_vehicle": {
+  "clean": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "lower case": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "clinic format": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "other spellings": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "typos (5% of words)": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "typos (10% of words)": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  },
+  "all combined": {
+   "right": {
+    "right": 295,
+    "n": 300,
+    "pct": 98.3,
+    "lo": 96.2,
+    "hi": 99.3
+   },
+   "crashes found": {
+    "right": 44,
+    "n": 47,
+    "pct": 93.6,
+    "lo": 82.8,
+    "hi": 97.8
+   }
+  }
+ },
+ "helmet": {
+  "clean": {
+   "right": {
+    "right": 300,
+    "n": 300,
+    "pct": 100.0,
+    "lo": 98.7,
+    "hi": 100.0
+   }
+  },
+  "lower case": {
+   "right": {
+    "right": 300,
+    "n": 300,
+    "pct": 100.0,
+    "lo": 98.7,
+    "hi": 100.0
+   }
+  },
+  "clinic format": {
+   "right": {
+    "right": 300,
+    "n": 300,
+    "pct": 100.0,
+    "lo": 98.7,
+    "hi": 100.0
+   }
+  },
+  "other spellings": {
+   "right": {
+    "right": 300,
+    "n": 300,
+    "pct": 100.0,
+    "lo": 98.7,
+    "hi": 100.0
+   }
+  },
+  "typos (5% of words)": {
+   "right": {
+    "right": 297,
+    "n": 300,
+    "pct": 99.0,
+    "lo": 97.1,
+    "hi": 99.7
+   }
+  },
+  "typos (10% of words)": {
+   "right": {
+    "right": 294,
+    "n": 300,
+    "pct": 98.0,
+    "lo": 95.7,
+    "hi": 99.1
+   }
+  },
+  "all combined": {
+   "right": {
+    "right": 298,
+    "n": 300,
+    "pct": 99.3,
+    "lo": 97.6,
+    "hi": 99.8
+   }
+  }
+ },
+ "device_text_only": {
+  "clean": {
+   "E-bike found": {
+    "right": 189,
+    "n": 200,
+    "pct": 94.5,
+    "lo": 90.4,
+    "hi": 96.9
+   },
+   "E-scooter found": {
+    "right": 182,
+    "n": 200,
+    "pct": 91.0,
+    "lo": 86.2,
+    "hi": 94.2
+   },
+   "Bicycle found": {
+    "right": 195,
+    "n": 200,
+    "pct": 97.5,
+    "lo": 94.3,
+    "hi": 98.9
+   },
+   "E-bike calls right": {
+    "right": 189,
+    "n": 189,
+    "pct": 100.0,
+    "lo": 98.0,
+    "hi": 100.0
+   }
+  },
+  "lower case": {
+   "E-bike found": {
+    "right": 189,
+    "n": 200,
+    "pct": 94.5,
+    "lo": 90.4,
+    "hi": 96.9
+   },
+   "E-scooter found": {
+    "right": 182,
+    "n": 200,
+    "pct": 91.0,
+    "lo": 86.2,
+    "hi": 94.2
+   },
+   "Bicycle found": {
+    "right": 195,
+    "n": 200,
+    "pct": 97.5,
+    "lo": 94.3,
+    "hi": 98.9
+   },
+   "E-bike calls right": {
+    "right": 189,
+    "n": 189,
+    "pct": 100.0,
+    "lo": 98.0,
+    "hi": 100.0
+   }
+  },
+  "clinic format": {
+   "E-bike found": {
+    "right": 189,
+    "n": 200,
+    "pct": 94.5,
+    "lo": 90.4,
+    "hi": 96.9
+   },
+   "E-scooter found": {
+    "right": 182,
+    "n": 200,
+    "pct": 91.0,
+    "lo": 86.2,
+    "hi": 94.2
+   },
+   "Bicycle found": {
+    "right": 195,
+    "n": 200,
+    "pct": 97.5,
+    "lo": 94.3,
+    "hi": 98.9
+   },
+   "E-bike calls right": {
+    "right": 189,
+    "n": 189,
+    "pct": 100.0,
+    "lo": 98.0,
+    "hi": 100.0
+   }
+  },
+  "other spellings": {
+   "E-bike found": {
+    "right": 160,
+    "n": 200,
+    "pct": 80.0,
+    "lo": 73.9,
+    "hi": 85.0
+   },
+   "E-scooter found": {
+    "right": 182,
+    "n": 200,
+    "pct": 91.0,
+    "lo": 86.2,
+    "hi": 94.2
+   },
+   "Bicycle found": {
+    "right": 195,
+    "n": 200,
+    "pct": 97.5,
+    "lo": 94.3,
+    "hi": 98.9
+   },
+   "E-bike calls right": {
+    "right": 160,
+    "n": 160,
+    "pct": 100.0,
+    "lo": 97.7,
+    "hi": 100.0
+   }
+  },
+  "typos (5% of words)": {
+   "E-bike found": {
+    "right": 173,
+    "n": 200,
+    "pct": 86.5,
+    "lo": 81.1,
+    "hi": 90.6
+   },
+   "E-scooter found": {
+    "right": 168,
+    "n": 200,
+    "pct": 84.0,
+    "lo": 78.3,
+    "hi": 88.4
+   },
+   "Bicycle found": {
+    "right": 187,
+    "n": 200,
+    "pct": 93.5,
+    "lo": 89.2,
+    "hi": 96.2
+   },
+   "E-bike calls right": {
+    "right": 173,
+    "n": 173,
+    "pct": 100.0,
+    "lo": 97.8,
+    "hi": 100.0
+   }
+  },
+  "typos (10% of words)": {
+   "E-bike found": {
+    "right": 162,
+    "n": 200,
+    "pct": 81.0,
+    "lo": 75.0,
+    "hi": 85.8
+   },
+   "E-scooter found": {
+    "right": 157,
+    "n": 200,
+    "pct": 78.5,
+    "lo": 72.3,
+    "hi": 83.6
+   },
+   "Bicycle found": {
+    "right": 183,
+    "n": 200,
+    "pct": 91.5,
+    "lo": 86.8,
+    "hi": 94.6
+   },
+   "E-bike calls right": {
+    "right": 162,
+    "n": 162,
+    "pct": 100.0,
+    "lo": 97.7,
+    "hi": 100.0
+   }
+  },
+  "all combined": {
+   "E-bike found": {
+    "right": 162,
+    "n": 200,
+    "pct": 81.0,
+    "lo": 75.0,
+    "hi": 85.8
+   },
+   "E-scooter found": {
+    "right": 161,
+    "n": 200,
+    "pct": 80.5,
+    "lo": 74.5,
+    "hi": 85.4
+   },
+   "Bicycle found": {
+    "right": 190,
+    "n": 200,
+    "pct": 95.0,
+    "lo": 91.0,
+    "hi": 97.3
+   },
+   "E-bike calls right": {
+    "right": 162,
+    "n": 162,
+    "pct": 100.0,
+    "lo": 97.7,
+    "hi": 100.0
+   }
+  }
+ },
+ "examples": {
+  "e-bike missed from text alone (clean)": [
+   [
+    "Bicycle",
+    9
+   ],
+   [
+    "Other",
+    2
+   ]
+  ],
+  "sample misses": [
+   "22YOM PRESENTS WITH MVCA YESTERDAY, STATES HE WAS RIDING ELECTRONIC BIKE WITH HELMET ON WHEN A CAR HIT HIM FROM THE BACK AND HE FELL FORWARD",
+   "6YOF REPORTS SHE WAS STRUCK BY A MOTORIZED BICYCLE WHILE CROSSING THE STREET AND SHE FELL TO THE GROUND AND HIT HER HEAD, SHE DID NOT LOSE C",
+   "9YOM WAS RIDING A MOTORIZED BIKE, WHEN THE BIKE WENT TO THE LEFT AND HE FELL FORWARD. REPORTS HE LANDED ON HIS RIGHT WRIST, AND SUSTAINED AB",
+   "34YOM C/O FALL FROM A BATTERY BIKE ACCIDENT. INJURIES TO LEFT SHOULDER, HANDS, AND KNEES. ABRASIONS TO LEFT SHOULDER, BOTH KNEES, AND BOTH P",
+   "59 YOM RIDING MOTORIZED BICYCLE HAD ACCIDENT NO HELMET DX ACUTE STRAIN NECK MUSCLE",
+   "13 YOM WAS HELMETED RIDING A MOTORIZED BIKE WHEN HE CRASHED. HE REPORTS PAIN AROUND HIS EYE. DX: MOTOR VEHICLE ACCIDENT",
+   "67YOM DRINKING ALCOHOL AND FELL OFF ELECTRIC BOKE WHEN TIPPED OVER. BAC 91. KNEE PAIN DX AMS",
+   "31YOM WAS RIDING A MOTORIZED BICYCLE AND FELL OFF WHILE INTOXICATED NO BAC OBTAINED DX: STRAINED LEFT ANKLE"
+  ],
+  "messy samples": {
+   "clean": "29YOM WAS RIDING AN ELECTRIC BICYCLE AND WAS HIT BY A CAR DX CLOSED HEAD INJURY, ABRASION LEFT FOOT",
+   "lower case": "29yom was riding an electric bicycle and was hit by a car dx closed head injury, abrasion left foot",
+   "clinic format": "29 yo male WAS RIDING AN ELECTRIC BICYCLE AND WAS HIT BY A CAR DIAGNOSIS: CLOSED HEAD INJURY, ABRASION LEFT FOOT",
+   "other spellings": "29YOM WAS RIDING AN ELEC BICYCLE AND WAS HIT BY A CAR DX CLOSED HEAD INJURY, ABRASION LEFT FOOT",
+   "typos (5% of words)": "29YOM WAS RIDING AN ELECTRIC BICYCLE AND WAS HIT BY A CAR DX CLOSED HEAD INJURY, ABRASION LEEFT FOOT",
+   "typos (10% of words)": "29YOM WAS RIDING AN ELECTRIC BICYCLE AND WAS HIT BY A CAR DX CLOSED HEAD IJNURY, ABRASION LFT FOOT",
+   "all combined": "29 year old man was riding an electric bicycle and was hit by a car dx closed head injury, abrasion left foot"
+  }
+ }
+}
