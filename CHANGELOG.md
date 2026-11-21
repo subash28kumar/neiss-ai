@@ -2,6 +2,23 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Outside data now updates itself every month — 2026-11-21
+
+- New monthly robot (.github/workflows/refresh-context.yml, scripts/refresh_context.py) keeps the
+  state card's outside data current from official raw data, not PDF reports:
+  - biking to work: Census ACS 1-year table-based summary file, Table B08301;
+  - road deaths: NHTSA FARS national CSV files (bicyclists and other cyclists, fatal injury), which
+    reproduce NHTSA's printed 2024 table exactly (US 1,103; California 163; Florida 208);
+  - medical prices: BLS CPI-U Medical care (CUUS0000SAM), with the Federal Reserve (FRED) copy of the
+    same series as a backup;
+  - population: Census state estimates by age (newest vintage), which rebuild the current files with
+    zero differences; state numbers, briefs and workbooks are rebuilt when it changes.
+- Every source is checked (all 51 states, totals add up, numbers in a sensible range, not too
+  different from last year). If a check or a test fails, nothing is published and a GitHub issue
+  explains the problem. If a source is down, it is simply tried again next month.
+- Data files no longer have a year in their name (state_cyclist_deaths.json), and the card shows the
+  data year and price year from the files.
+
 ## State card: medical bills (CDC costs) — 2026-11-21
 
 - For e-bikes and bicycles, the state card now estimates the medical bills for these injuries, as a
