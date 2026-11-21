@@ -1,0 +1,93 @@
+# Keeps the outside data on the "Your state" card up to date (Census biking to work,
+# NHTSA FARS cyclist deaths, BLS medical prices, Census population estimates).
+# Runs on the 2nd of every month and on demand. Every source is checked before it is used;
+# if a check or a test fails, nothing is published and a GitHub issue explains what went wrong.
+# Pushing to a branch named auto-refresh-test runs a dry run (fetch and check only).
+name: Refresh outside data
+
+on:
+  schedule:
+    - cron: "41 6 2 * *"
+  workflow_dispatch:
+  push:
+    branches: [auto-refresh-test]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install NEISS-AI
+        run: pip install -e ".[briefs,test]" openpyxl
+
+      - name: Dry run (test branch only) - fetch, check and compare FARS with NHTSA's 2024 table
+        if: github.event_name == 'push'
+        run: |
+          python scripts/refresh_context.py all --dry-run --report report.md || true
+          echo "--- FARS 2024 from the raw files (NHTSA's printed 2024 table: US 1,103; CA 163; FL 208; MA 10; WY 1):"
+          python scripts/refresh_context.py fars --check-year 2024 || true
+          cat report.md
+
+      - name: Fetch and check outside data
+        id: fetch
+        if: github.event_name != 'push'
+        run: |
+          set +e
+          python scripts/refresh_context.py all --report report.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat report.md
+
+      - name: Rebuild state numbers if population changed
+        if: github.event_name != 'push'
+        run: |
+          if ! git diff --quiet -- src/neissai/model/; then
+            python scripts/build_state_estimates.py
+            python scripts/build_state_benchmarks.py
+            python scripts/build_state_briefs.py || echo "briefs skipped"
+          fi
+          python scripts/build_dashboard.py
+
+      - name: Run tests
+        id: tests
+        if: github.event_name != 'push'
+        run: |
+          set +e
+          PYTHONPATH=src pytest -q > tests.log 2>&1
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          tail -5 tests.log
+
+      - name: Publish (only if every check and test passed)
+        if: github.event_name != 'push' && steps.tests.outputs.status == '0'
+        run: |
+          git config user.name "neissai-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/ src/neissai/model/
+          if git diff --cached --quiet; then
+            echo "Nothing new."
+          else
+            git commit -m "Refresh outside data ($(date +%Y-%m-%d))" -m "$(cat report.md)"
+            git push
+          fi
+
+      - name: Open an issue if something failed
+        if: github.event_name != 'push' && (steps.fetch.outputs.status != '0' || steps.tests.outputs.status != '0')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "The monthly refresh of outside data found a problem, so the affected data was NOT published."
+            echo
+            cat report.md
+            echo
+            echo "Tests: $( [ '${{ steps.tests.outputs.status }}' = '0' ] && echo passed || echo FAILED )"
+            echo
+            echo '```'; tail -30 tests.log 2>/dev/null; echo '```'
+          } > issue.md
+          gh issue create --title "Outside data refresh needs a look ($(date +%Y-%m-%d))" --body-file issue.md

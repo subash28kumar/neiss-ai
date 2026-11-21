@@ -71,18 +71,19 @@ def test_site_compare_box_matches_workbook_numbers():
 
 
 def test_state_cyclist_deaths_file_matches_nhtsa_totals():
-    d = json.loads((ROOT / "docs" / "data" / "state_cyclist_deaths_2024.json").read_text())
-    assert len(d["states"]) == 51 and d["year"] == 2024
-    assert sum(v["deaths"] for v in d["states"].values()) == d["us"]["deaths"] == 1103
-    assert d["states"]["CA"]["deaths"] == 163 and d["states"]["FL"]["deaths"] == 208
+    d = json.loads((ROOT / "docs" / "data" / "state_cyclist_deaths.json").read_text())
+    assert len(d["states"]) == 51 and d["year"] >= 2024
+    assert sum(v["deaths"] for v in d["states"].values()) == d["us"]["deaths"]
+    assert sum(v["traffic_deaths"] for v in d["states"].values()) == d["us"]["traffic_deaths"]
+    assert 700 < d["us"]["deaths"] < 2000
 
 
 def test_state_bike_commute_file():
     d = json.loads((ROOT / "docs" / "data" / "state_bike_commute.json").read_text())
-    assert len(d["states"]) == 51 and d["year"] == 2025
+    assert len(d["states"]) == 51 and d["year"] >= 2025
     assert sum(v["bicycle"] for v in d["states"].values()) == d["us"]["bicycle"]
-    ca = d["states"]["CA"]
-    assert ca["bicycle"] == 134140 and abs(ca["share_pct"] - 100 * ca["bicycle"] / ca["workers"]) < 0.01
+    for v in d["states"].values():
+        assert abs(v["share_pct"] - 100 * v["bicycle"] / v["workers"]) < 0.01
 
 
 def test_medical_cost_file():
@@ -90,4 +91,13 @@ def test_medical_cost_file():
     assert d["cost_2015_usd"] == {"road_crash_with_motor_vehicle": 14193, "other_bicycle_injury": 6109}
     f = d["price_update"]["factor"]
     assert 1.25 < f < 1.35
-    assert d["cost_2025_usd"]["road_crash_with_motor_vehicle"] == round(14193 * d["price_update"]["index_2025_avg"] / d["price_update"]["index_2015_avg"])
+    latest = d["price_update"].get("index_latest_avg", d["price_update"].get("index_2025_avg"))
+    assert d["cost_2025_usd"]["road_crash_with_motor_vehicle"] == round(14193 * latest / d["price_update"]["index_2015_avg"])
+
+
+def test_refresh_context_script_imports_and_maps_51_states():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("rc", ROOT / "scripts" / "refresh_context.py")
+    rc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(rc)
+    assert len(rc.FIPS) == 51 and rc.FIPS["11"] == "DC" and rc.FIPS["06"] == "CA"

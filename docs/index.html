@@ -5370,8 +5370,8 @@ function stSpark(C,cw){
   xs.forEach(x=>txt(svg,String(x),{x:X(x),y:H-8,'text-anchor':'middle','font-size':11,fill:css('--text-3')}));
   return svg;
 }
-let FAT=null;   // NHTSA FARS bicyclist deaths by state (data/state_cyclist_deaths_2024.json); false if unavailable
-function loadDeaths(){if(FAT!==null)return Promise.resolve(FAT);FAT=undefined;return fetch('data/state_cyclist_deaths_2024.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{FAT=j||false;return FAT;});}
+let FAT=null;   // NHTSA FARS bicyclist deaths by state (data/state_cyclist_deaths.json); false if unavailable
+function loadDeaths(){if(FAT!==null)return Promise.resolve(FAT);FAT=undefined;return fetch('data/state_cyclist_deaths.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{FAT=j||false;return FAT;});}
 let COM=null;   // Census ACS bike-to-work by state (data/state_bike_commute.json); false if unavailable
 function loadCommute(){if(COM!==null)return Promise.resolve(COM);COM=undefined;return fetch('data/state_bike_commute.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{COM=j||false;return COM;});}
 function stCommuteItem(a){
@@ -5386,12 +5386,12 @@ function money(v){if(v>=1e9)return '$'+(v/1e9).toFixed(1)+' billion';if(v>=1e7)r
 function stCostItem(C){
   if(!COST||!COST.cost_2025_usd||!(C.e&&C.e.est>0))return null; const c=COST.cost_2025_usd, dl=C.d.toLowerCase(), N=STATE_POP[C.a].n;
   const r100=v=>'$'+(Math.round(v/100)*100).toLocaleString('en-US');
-  return h('li',null,h('b',{text:'Medical bills (estimate): '}),`${C.d} injuries in ${N} in ${C.y} likely cost about ${money(C.e.est*c.other_bicycle_injury)} to ${money(C.e.est*c.road_crash_with_motor_vehicle)} in medical care (in 2025 dollars). Why a range? The low number is if every injury cost like a fall with no car (about ${r100(c.other_bicycle_injury)} each). The high number is if every injury cost like a crash with a car (about ${r100(c.road_crash_with_motor_vehicle)} each). Medical care only; lost work is not counted. `,h('a',{href:COST.url,target:'_blank',rel:'noopener',text:'Source: CDC study of bicycle injury costs'}),', updated to 2025 prices.');
+  return h('li',null,h('b',{text:'Medical bills (estimate): '}),`${C.d} injuries in ${N} in ${C.y} likely cost about ${money(C.e.est*c.other_bicycle_injury)} to ${money(C.e.est*c.road_crash_with_motor_vehicle)} in medical care (in ${COST.price_year||2025} dollars). Why a range? The low number is if every injury cost like a fall with no car (about ${r100(c.other_bicycle_injury)} each). The high number is if every injury cost like a crash with a car (about ${r100(c.road_crash_with_motor_vehicle)} each). Medical care only; lost work is not counted. `,h('a',{href:COST.url,target:'_blank',rel:'noopener',text:'Source: CDC study of bicycle injury costs'}),`, updated to ${COST.price_year||2025} prices.`);
 }
 function stDeathsItem(a){
   if(!FAT||!FAT.states||!FAT.states[a])return null; const r=FAT.states[a], u=FAT.us, N=STATE_POP[a].n;
   const cmp=r.rate_per_100k>u.rate_per_100k*1.15?'higher than':r.rate_per_100k<u.rate_per_100k*0.85?'lower than':'close to';
-  return h('li',null,h('b',{text:'Road deaths (real count): '}),`In ${FAT.year}, ${r.deaths.toLocaleString('en-US')} ${r.deaths===1?'bicyclist was':'bicyclists, including e-bike riders, were'} killed in traffic crashes with motor vehicles in ${N}: ${r.share_of_traffic_deaths_pct}% of all traffic deaths, ${r.rate_per_100k} per 100,000 people, ${cmp} the US rate of ${u.rate_per_100k}.`+(r.deaths<10?' Small numbers change a lot from year to year.':'')+' ',h('a',{href:FAT.url,target:'_blank',rel:'noopener',text:'Source: NHTSA, FARS 2024'}));
+  return h('li',null,h('b',{text:'Road deaths (real count): '}),`In ${FAT.year}, ${r.deaths.toLocaleString('en-US')} ${r.deaths===1?'bicyclist was':'bicyclists, including e-bike riders, were'} killed in traffic crashes with motor vehicles in ${N}: ${r.share_of_traffic_deaths_pct}% of all traffic deaths, ${r.rate_per_100k} per 100,000 people, ${cmp} the US rate of ${u.rate_per_100k}.`+(r.deaths<10?' Small numbers change a lot from year to year.':'')+' ',h('a',{href:FAT.url,target:'_blank',rel:'noopener',text:`Source: NHTSA, FARS ${FAT.year}`}));
 }
 function stCardImage(C){
   const N=STATE_POP[C.a].n, dl=C.d.toLowerCase(), esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
