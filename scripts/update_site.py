@@ -105,7 +105,7 @@ except Exception as exc:  # pragma: no cover - keep the main refresh working
     print(f"::warning::Story explainer not updated: {exc}")
 # Forecast (with back-test and the locked next-year forecast), age-adjusted state estimates and the
 # one-page state briefs. Each is skipped with a warning if it fails, so the rest still publishes.
-for _name, _fn in (("build_forecast", "main"), ("build_state_estimates", "main"), ("build_state_briefs", "main")):
+for _name, _fn in (("build_forecast", "main"), ("build_state_estimates", "main"), ("build_state_briefs", "main"), ("build_state_benchmarks", "main")):
     try:
         import importlib.util
         import sys as _sys

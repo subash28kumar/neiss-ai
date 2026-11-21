@@ -2,6 +2,14 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## "Compare your state" workbooks — 2026-11-21
+
+- New download on the "Your state" view: one Excel workbook per state (docs/benchmarks/) with
+  national e-bike, e-scooter and bicycle emergency visit rates per 100,000 for 7 age groups (95%
+  ranges), the state's expected visits in each age group, a column for the state's own counts and
+  a ratio column (own count / expected) that fills itself in. For state health departments and
+  transport agencies that have their own emergency department data. Rebuilt with every refresh.
+
 ## E-moto range and "electric bike" note — 2026-11-21
 
 - Improved after outside expert review. The e-bike vs e-moto card now always shows the e-moto
