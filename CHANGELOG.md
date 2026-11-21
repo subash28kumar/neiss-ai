@@ -2,6 +2,22 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State map: warmer colours and the top 5 states highlighted — 2026-11-21
+
+- The "Your state" map uses a 5-colour warm key (about 10 states per colour) with a legend, a hover
+  outline and a gentle fade-in, in place of shades of one blue. Colours checked for colour-blind
+  readers in light and dark mode.
+- The 5 states with the most expected visits glow softly on the map (a few pulses, then steady; no
+  motion for people who turn animations off) and are listed above the map as buttons.
+- The note says plainly that the top states are mostly the most populous ones, because state
+  numbers come from national rates and population, not local injury rates.
+- New "Dot map" view: each glowing dot is 50 expected visits (100 or 200 for devices with more
+  visits), placed at random inside each state on a dark panel; the 5 states with the most visits
+  are labelled. The dot map opens first. About 1 dot in 5 twinkles softly for about 20 seconds after the map loads (no motion for
+  people who turn animations off). Dots do not show where injuries happened.
+- The state tiles now say "About 1 in X people" (for example, about 1 in 3,400 people in the US had
+  an e-bike emergency department visit in 2025).
+
 ## "Compare with your own counts" on the website — 2026-11-21
 
 - New box on the "Your state" view: type your own emergency department counts by age group and the
