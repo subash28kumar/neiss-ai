@@ -2,6 +2,13 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State card: how many people bike to work (Census) — 2026-11-21
+
+- The state card (e-bike and bicycle views) now shows how many workers usually bike to work and the
+  share compared with the US (0.49%), from the Census Bureau's American Community Survey 2024 1-year
+  estimates, Table B08301, with a note when the survey margin is wide. More riding usually means more
+  injuries, so this helps read the injury numbers. New file: docs/data/state_bike_commute_2024.json.
+
 ## State card: real bicyclist road deaths (NHTSA) — 2026-11-21
 
 - The state card now shows real bicyclist deaths in traffic crashes for 2024 (including e-bike
