@@ -97,11 +97,13 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .dotlayer{filter:drop-shadow(0 0 2px rgba(255,170,60,.9))}
 .dotlayer circle{opacity:.9;animation:dotin .5s ease-out both}
 @keyframes dotin{from{opacity:0;transform:scale(.2)}to{opacity:.9}}
+@keyframes twinkle{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.9);fill:#fff1c9}}
+.dotlayer circle.tw{animation:dotin .5s ease-out both,twinkle 2.8s ease-in-out 4}
 .dotlayer circle{transform-box:fill-box;transform-origin:center}
 .dotlab{paint-order:stroke;stroke:#0e1621;stroke-width:4px;stroke-linejoin:round}
 .dotkey{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffb347;box-shadow:0 0 4px rgba(255,170,60,.9);margin-right:2px;border:1px solid #c77a1a}
 .onein{font-weight:600;color:var(--text)}
-@media (prefers-reduced-motion:reduce){.dotlayer circle{animation:none}}
+@media (prefers-reduced-motion:reduce){.dotlayer circle,.dotlayer circle.tw{animation:none}}
 @keyframes stglow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,196,64,.55))}50%{filter:drop-shadow(0 0 9px rgba(255,196,64,1))}}
 .sttop{filter:drop-shadow(0 0 4px rgba(255,196,64,.85));animation:stglow 2.6s ease-in-out .6s 4}
 .sttop .stshape{stroke:#ffcf5a;stroke-width:1.6}
@@ -1598,7 +1600,7 @@ function renderState(push){
       const bb=pth.getBBox(); let placed=0,tries=0; const pt=svg.createSVGPoint?svg.createSVGPoint():null;
       while(placed<n&&tries<n*60){tries++;const x=bb.x+rnd()*bb.width, yy=bb.y+rnd()*bb.height;
         let ok=true; if(pt&&pth.isPointInFill){pt.x=x;pt.y=yy;ok=pth.isPointInFill(pt);}
-        if(ok){el('circle',{cx:x.toFixed(1),cy:yy.toFixed(1),r:1.9,fill:dc,style:`animation-delay:${Math.min(placed*8+i*6,1400)}ms`},dotg);placed++;}}
+        if(ok){const tw=rnd()<0.14;const d0=Math.min(placed*8+i*6,1400);el('circle',{cx:x.toFixed(1),cy:yy.toFixed(1),r:1.9,fill:dc,class:tw?'tw':'',style:tw?`animation-delay:${d0}ms,${1600+Math.round(rnd()*4000)}ms`:`animation-delay:${d0}ms`},dotg);placed++;}}
     });
     ST_CALLOUTS.forEach((a,i)=>{const e=stExp(a,ST.dev,y);const bx=905,by=150+i*34,[cx,cy]=STATE_SHAPES[a].c;
       el('line',{x1:cx,y1:cy,x2:bx,y2:by+12,stroke:'#3d4f64','stroke-width':0.8},svg);
