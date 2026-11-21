@@ -2,6 +2,15 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## "Compare your state" workbooks: plainer words and a worked example — 2026-11-21
+
+- "Expected" is now "Benchmark: visits in [state] at the US rate", so it is not read as a forecast;
+  column headings use plain words.
+- The "How to use" sheet has a step-by-step worked example (e-bike, ages 25-44) with that state's own
+  numbers, a one-sentence summary, and a plain-English method (technical note kept for analysts).
+- The All ages ratio appears only once every age group is filled in (before, a partly filled column
+  gave a misleadingly low ratio).
+
 ## "Compare your state" workbooks — 2026-11-21
 
 - New download on the "Your state" view: one Excel workbook per state (docs/benchmarks/) with

@@ -33,3 +33,30 @@ def test_expected_by_age_sums_to_national_and_matches_site():
             assert abs(tot - g["est"]) < 1e-6 * max(1, g["est"]) + 1e-6
         ma = [round(g["rate"] * pop[("MA", year)][k] / 1e5) for k, g in enumerate(nat[dev]["groups"])]
         assert ma == [row[0] for row in site["MA"]["age"][dev][str(year)]]
+
+
+def test_workbook_plain_words_worked_example_and_all_ages_guard(tmp_path):
+    openpyxl = pytest.importorskip("openpyxl")
+    m = _mod()
+    from neissai.state import load_age_population, us_population
+    records = json.loads(REC.read_text())
+    pop = load_age_population()
+    year = 2025
+    nat = m.national_by_age(records, year, us_population(pop, year))
+    path = tmp_path / "ma.xlsx"
+    m.workbook("MA", "Massachusetts", year, nat, pop[("MA", year)], "test", path)
+    wb = openpyxl.load_workbook(path)
+    ws = wb["Compare"]
+    heads = [ws.cell(6, c).value for c in range(1, 13)]
+    assert heads[6] == "Benchmark: visits in Massachusetts at the US rate"
+    assert not any("xpected" in str(h) for h in heads)
+    # All-ages ratio only once every age group is filled in
+    all_row = next(r for r in range(7, 40) if ws.cell(r, 1).value == "E-bike" and ws.cell(r, 2).value == "All ages")
+    f = ws.cell(all_row, 10).value
+    assert "fill in all age groups" in f and "<7" in f
+    # worked example uses the same numbers as the 25-44 e-bike row
+    row = next(r for r in range(7, 40) if ws.cell(r, 1).value == "E-bike" and ws.cell(r, 2).value == "25-44")
+    text = " ".join(str(c.value) for c in wb["How to use"]["A"] if c.value)
+    assert f"{ws.cell(row, 7).value:,} visits: the benchmark" in text
+    assert ws.cell(row, 8).value.replace(" - ", " to ") in text
+    assert "Taylor" not in text.split("Technical note")[0]
