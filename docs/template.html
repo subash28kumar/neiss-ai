@@ -91,7 +91,15 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .stg:hover .stshape,.stg:focus .stshape{stroke:var(--text);stroke-width:2.2}
 @keyframes stfade{from{opacity:0}to{opacity:1}}
 .stfade .stg{animation:stfade .5s ease-out both}
-@media (prefers-reduced-motion:reduce){.stfade .stg{animation:none}}
+@media (prefers-reduced-motion:reduce){.stfade .stg{animation:none}.sttop{animation:none!important}}
+@keyframes stglow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,196,64,.55))}50%{filter:drop-shadow(0 0 9px rgba(255,196,64,1))}}
+.sttop{filter:drop-shadow(0 0 4px rgba(255,196,64,.85));animation:stglow 2.6s ease-in-out .6s 4}
+.sttop .stshape{stroke:#ffcf5a;stroke-width:1.6}
+.sttop.stsel .stshape{stroke:var(--text);stroke-width:2.6}
+.sttoplist{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:2px 0 8px;font-size:13px;color:var(--text-2)}
+.sttoplist button{font:inherit;font-size:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:3px 10px;cursor:pointer}
+.sttoplist button:hover,.sttoplist button:focus{border-color:#e0a82e;box-shadow:0 0 0 2px rgba(255,196,64,.45)}
+.sttoplist b.rk{display:inline-block;min-width:1.4em;color:#b7791f}
 .tbltools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
 .citeline{font-size:12px;color:var(--text-3);margin:6px 0 0;overflow-wrap:anywhere}
 .reqbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}
@@ -1543,29 +1551,34 @@ function renderState(push){
    lg.appendChild(h('span',{text:'Expected visits:'}));
    HEAT.forEach((c,i)=>{const it=h('span',{});const sw=h('span',{class:'sw'});sw.style.background=c;it.appendChild(sw);it.appendChild(document.createTextNode(i<4?`${fmt(ed[i])}–${fmt(ed[i+1])}`:`${fmt(ed[4])}+`));lg.appendChild(it);});
    W.appendChild(lg);}
+  const TOP=Object.keys(STATE_POP).map(a=>[a,stExp(a,ST.dev,y)]).filter(x=>x[1]).sort((p,q)=>q[1].est-p[1].est).slice(0,5).map(x=>x[0]);
+  {const tl=h('div',{class:'sttoplist'});tl.appendChild(h('span',{text:'Most expected visits (glowing on the map):'}));
+   TOP.forEach((a,i)=>{const b=h('button',{type:'button','aria-label':`Number ${i+1}: ${STATE_POP[a].n}, about ${fmt(stExp(a,ST.dev,y).est)} visits. Show this state.`},h('b',{class:'rk',text:String(i+1)}),`${STATE_POP[a].n} ${fmt(stExp(a,ST.dev,y).est)}`);
+     b.addEventListener('click',()=>{ST.abbr=a;renderState(true);stCount();});tl.appendChild(b);});
+   W.appendChild(tl);}
   const hook=(g,a,e)=>{g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} ${ST.dev} visits`);g.style.cursor='pointer';
     const t=el('title',{},g);t.textContent=`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} (${e?fmt(e.lo):''} to ${e?fmt(e.hi):''})`;
     const go=()=>{ST.abbr=a;renderState(true);stCount();};g.addEventListener('click',go);g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go();}});};
   if(ST.view==='map'){
     const svg=el('svg',{viewBox:'0 0 975 610',width:'100%',style:'max-width:760px;display:block',class:'stfade',role:'img','aria-label':`Map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
-    const order=Object.keys(STATE_SHAPES).sort((a,b)=>(a===pick)-(b===pick));  // selected state drawn last so its outline shows
-    order.forEach((a,i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg',style:`animation-delay:${Math.min(i*12,500)}ms`},svg);
+    const order=Object.keys(STATE_SHAPES).sort((a,b)=>((a===pick)*2+TOP.includes(a))-((b===pick)*2+TOP.includes(b)));  // selected state drawn last so its outline shows
+    order.forEach((a,i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg'+(TOP.includes(a)?' sttop':'')+(a===pick?' stsel':''),style:`animation-delay:${Math.min(i*12,500)}ms`},svg);
       el('path',{class:'stshape',d:STATE_SHAPES[a].d,fill,stroke:a===pick?txtc:bg,'stroke-width':a===pick?2.5:0.8,'stroke-linejoin':'round'},g);
       if(!ST_CALLOUTS.includes(a)&&(STATE_SHAPES[a].a>1500||a==='HI')){const [cx,cy]=STATE_SHAPES[a].c;txt(g,a,{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'middle','font-size':a==='HI'?11:13,'font-weight':'600',fill:lab,'pointer-events':'none'});}
       hook(g,a,e);});
     // call-out boxes for small eastern states (easy to tap)
     ST_CALLOUTS.forEach((a,i)=>{const {e,fill,lab}=shade(a);const bx=905,by=150+i*34,[cx,cy]=STATE_SHAPES[a].c;
       el('line',{x1:cx,y1:cy,x2:bx,y2:by+12,stroke:css('--text-3'),'stroke-width':0.8},svg);
-      const g=el('g',{class:'stg'},svg);el('rect',{class:'stshape',x:bx,y:by,width:52,height:24,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?2.5:0},g);
+      const g=el('g',{class:'stg'+(TOP.includes(a)?' sttop':'')+(a===pick?' stsel':'')},svg);el('rect',{class:'stshape',x:bx,y:by,width:52,height:24,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?2.5:0},g);
       txt(g,a,{x:bx+26,y:by+13,'text-anchor':'middle','dominant-baseline':'middle','font-size':13,'font-weight':'600',fill:lab});hook(g,a,e);});
   }else{
     const cw=Math.min(W.clientWidth||560,560), cols=11, gap=4, sz=Math.floor((cw-gap*(cols-1))/cols), H=8*(sz+gap)-gap;
     const svg=el('svg',{viewBox:`0 0 ${cols*(sz+gap)-gap} ${H}`,width:'100%',style:'max-width:560px;display:block',class:'stfade',role:'img','aria-label':`Grid map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
-    TILEGRID.forEach(([a,c,r],i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg',style:`animation-delay:${Math.min(i*12,500)}ms`},svg);const x=c*(sz+gap),yy=r*(sz+gap);
+    TILEGRID.forEach(([a,c,r],i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg'+(TOP.includes(a)?' sttop':'')+(a===pick?' stsel':''),style:`animation-delay:${Math.min(i*12,500)}ms`},svg);const x=c*(sz+gap),yy=r*(sz+gap);
       el('rect',{class:'stshape',x,y:yy,width:sz,height:sz,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
       txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:lab});hook(g,a,e);});
   }
-  W.appendChild(h('p',{class:'note',text:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The highest are mostly the most populous states. Tap a state for its numbers.`}));
+  W.appendChild(h('p',{class:'note',text:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The 5 states with the most expected visits glow; they are mostly the most populous states, because these numbers come from national rates and each state's population, not from local injury rates. Tap a state for its numbers.`}));
   const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
   const B=document.getElementById('stbrief');
   if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
