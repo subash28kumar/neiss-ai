@@ -13,7 +13,7 @@ All notable changes to NEISS-AI are listed here.
   numbers come from national rates and population, not local injury rates.
 - New "Dot map" view: each glowing dot is 50 expected visits (100 or 200 for devices with more
   visits), placed at random inside each state on a dark panel; the 5 states with the most visits
-  are labelled. About 1 dot in 7 twinkles softly a few times after the map loads (no motion for
+  are labelled. The dot map opens first. About 1 dot in 5 twinkles softly for about 20 seconds after the map loads (no motion for
   people who turn animations off). Dots do not show where injuries happened.
 - The state tiles now say "About 1 in X people" (for example, about 1 in 3,400 people in the US had
   an e-bike emergency department visit in 2025).
