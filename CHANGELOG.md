@@ -11,6 +11,11 @@ All notable changes to NEISS-AI are listed here.
   motion for people who turn animations off) and are listed above the map as buttons.
 - The note says plainly that the top states are mostly the most populous ones, because state
   numbers come from national rates and population, not local injury rates.
+- New "Dot map" view: each glowing dot is 50 expected visits (100 or 200 for devices with more
+  visits), placed at random inside each state on a dark panel; the 5 states with the most visits
+  are labelled. Dots do not show where injuries happened.
+- The state tiles now say "About 1 in X people" (for example, about 1 in 3,400 people in the US had
+  an e-bike emergency department visit in 2025).
 
 ## "Compare with your own counts" on the website — 2026-11-21
 

@@ -19,7 +19,7 @@
   --text:#0b0b0b; --text-2:#52514e; --text-3:#7a7974; --accent:#2a78d6; --accent-soft:#e6f0fc;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --ref:#8a8984;
   --a1:#104281; --a2:#2a78d6; --a3:#86b6ef;
-  --h1:#f0a06a; --h2:#e8783c; --h3:#d35a20; --h4:#a44314; --h5:#6b2a0c;
+  --h1:#f0a06a; --h2:#e8783c; --h3:#d35a20; --h4:#a44314; --h5:#6b2a0c; --dot:#c2410c;
   --band-op:.14; --code-bg:#f0efec; --warn:#8a5a00; --warn-bg:#fdf3dc;
 }
 @media (prefers-color-scheme:dark){
@@ -29,7 +29,7 @@
     --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5; --accent-soft:#16263b;
     --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --ref:#8f8e88;
     --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
-    --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c;
+    --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c; --dot:#f59a5b;
     --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
   }
 }
@@ -39,7 +39,7 @@
   --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5; --accent-soft:#16263b;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --ref:#8f8e88;
   --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
-  --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c;
+  --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c; --dot:#f59a5b;
   --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
 }
 *{box-sizing:border-box}
@@ -92,6 +92,16 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 @keyframes stfade{from{opacity:0}to{opacity:1}}
 .stfade .stg{animation:stfade .5s ease-out both}
 @media (prefers-reduced-motion:reduce){.stfade .stg{animation:none}.sttop{animation:none!important}}
+.stbase{fill:#172231}
+.stdots .stg:hover .stbase,.stdots .stg:focus .stbase{fill:#22344a}
+.dotlayer{filter:drop-shadow(0 0 2px rgba(255,170,60,.9))}
+.dotlayer circle{opacity:.9;animation:dotin .5s ease-out both}
+@keyframes dotin{from{opacity:0;transform:scale(.2)}to{opacity:.9}}
+.dotlayer circle{transform-box:fill-box;transform-origin:center}
+.dotlab{paint-order:stroke;stroke:#0e1621;stroke-width:4px;stroke-linejoin:round}
+.dotkey{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffb347;box-shadow:0 0 4px rgba(255,170,60,.9);margin-right:2px;border:1px solid #c77a1a}
+.onein{font-weight:600;color:var(--text)}
+@media (prefers-reduced-motion:reduce){.dotlayer circle{animation:none}}
 @keyframes stglow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,196,64,.55))}50%{filter:drop-shadow(0 0 9px rgba(255,196,64,1))}}
 .sttop{filter:drop-shadow(0 0 4px rgba(255,196,64,.85));animation:stglow 2.6s ease-in-out .6s 4}
 .sttop .stshape{stroke:#ffcf5a;stroke-width:1.6}
@@ -383,7 +393,7 @@ a.btn{text-decoration:none;display:inline-block}
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
       <label class="field">Year<select id="stYear" aria-label="Year"></select></label>
       <label class="field">Map shows<select id="stDev" aria-label="Device shown on the map"></select></label>
-      <label class="field">View<select id="stView" aria-label="Map view"><option value="map">US map</option><option value="grid">Grid (easier to tap)</option></select></label>
+      <label class="field">View<select id="stView" aria-label="Map view"><option value="map">US map (colours)</option><option value="dots">Dot map (1 dot = 100 visits)</option><option value="grid">Grid (easier to tap)</option></select></label>
     </div>
     <div class="tiles" id="sttiles"></div>
     <div class="reqbox" id="stfc" hidden></div>
@@ -5170,7 +5180,7 @@ function stInit(){
   document.getElementById('stshare').addEventListener('click',()=>{const b=document.getElementById('stshare');(navigator.clipboard?navigator.clipboard.writeText(location.href):Promise.reject()).then(()=>{b.textContent='Link copied';setTimeout(()=>b.textContent='Copy link to this state',1500);}).catch(()=>{window.prompt('Copy this link:',location.href);});});
 }
 function stCount(){try{if(ST.abbr&&window.goatcounter&&goatcounter.count)goatcounter.count({path:'state-'+ST.abbr,title:'Your state: '+STATE_POP[ST.abbr].n,event:true});}catch(e){}}
-function paramsToState(p){stInit();if(p.s&&STATE_POP[p.s])ST.abbr=p.s;if(p.y&&+p.y>=2020&&+p.y<=2025)ST.year=+p.y;if(p.d&&ST_DEVS.includes(p.d))ST.dev=p.d;if(p.v==='grid'||p.v==='map')ST.view=p.v;}
+function paramsToState(p){stInit();if(p.s&&STATE_POP[p.s])ST.abbr=p.s;if(p.y&&+p.y>=2020&&+p.y<=2025)ST.year=+p.y;if(p.d&&ST_DEVS.includes(p.d))ST.dev=p.d;if(p.v==='grid'||p.v==='map'||p.v==='dots')ST.view=p.v;}
 function stSentence(){
   if(!ST.abbr)return '';const n=STATE_POP[ST.abbr].n,eb=stExp(ST.abbr,'E-bike',ST.year),es=stExp(ST.abbr,'E-scooter',ST.year);
   const how=eb.adjusted?'national rates for each age group and the state\'s age mix':'national rates and state population';
@@ -5181,7 +5191,7 @@ function renderState(push){
   if(STE===null){loadStateEst().then(()=>renderState(false));}
   document.getElementById('stSel').value=ST.abbr;document.getElementById('stYear').value=ST.year;document.getElementById('stDev').value=ST.dev;
   document.getElementById('stView').value=ST.view;
-  if(push)setHash('state',{s:ST.abbr,y:ST.year,d:ST.dev,v:ST.view==='grid'?'grid':''});
+  if(push)setHash('state',{s:ST.abbr,y:ST.year,d:ST.dev,v:ST.view==='map'?'':ST.view});
   const y=ST.year, T=document.getElementById('sttiles');T.textContent='';
   const pick=ST.abbr;
   [['E-bike','E-bike visits'],['E-scooter','E-scooter visits'],['Bicycle','Bicycle visits']].forEach(([d,lab])=>{
@@ -5189,10 +5199,12 @@ function renderState(push){
     if(pick){const e=stExp(pick,d,y);num='about '+fmt(e.est);sub=e.adjusted?`age-adjusted · range ${fmt(e.lo)} to ${fmt(e.hi)} · ${e.rate.toFixed(1)} per 100,000 residents`:`range ${fmt(e.lo)} to ${fmt(e.hi)} · national rate ${e.rate.toFixed(1)} per 100,000`;}
     else{const r=natRow(d,y);num=fmt(r.est);sub=`whole US · ${(r.est/usPop(y)*1e5).toFixed(1)} per 100,000 people`;}
     const on=d===ST.dev;
+    const oneIn=(()=>{const est=pick?stExp(pick,d,y).est:natRow(d,y).est, pp=pick?STATE_POP[pick].p[y]:usPop(y);if(!est)return null;const x=pp/est, m=Math.pow(10,Math.floor(Math.log10(x))-1);
+      return h('div',{class:'sub onein',text:`About 1 in ${(Math.round(x/m)*m).toLocaleString('en-US')} ${pick?'residents':'people'}`});})();
     const extra=(pick&&stExp(pick,d,y).adjusted)?h('div',{class:'sub',text:'Population only: '+fmt(stExp(pick,d,y).simple)}):null;
     const fcv=pick&&STE&&STE.forecast&&STE.states[pick].fc&&STE.states[pick].fc[d]&&STE.states[pick].fc[d][STE.forecast.years[0]];
     const fcl=fcv?h('div',{class:'sub',text:`Forecast ${STE.forecast.years[0]}: about ${fmt(fcv[0])} (80% range ${fmt(fcv[1])} to ${fmt(fcv[2])})`}):null;
-    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),h('div',{class:'sub',text:sub}),extra,fcl));
+    T.appendChild(h('div',{class:'tile'+(on?' tileon':'')},h('p',{class:'label',text:(pick?STATE_POP[pick].n+', ':'United States, ')+lab+', '+y+(on?' · shown on the map':'')}),h('div',{class:'num',text:num}),oneIn,h('div',{class:'sub',text:sub}),extra,fcl));
   });
   // map
   const W=document.getElementById('stmap');W.textContent='';
@@ -5203,12 +5215,14 @@ function renderState(push){
   const lum=hex=>{const n=parseInt(hex.replace('#','').trim(),16),c=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2];};
   const txtc=css('--text'),bg=css('--surface');
   const shade=a=>{const e=stExp(a,ST.dev,y);const v=e?e.est:0;let b=0;while(b<4&&v>=cut[b])b++;const fill=HEAT[b];return {e,fill,lab:lum(fill)<0.25?'#ffffff':'#1a1a19'};};
-  {const lg=h('div',{class:'heatlegend','aria-hidden':'true'});const ed=[vals[0],...cut,vals[vals.length-1]];
+  const NAT=natRow(ST.dev,y), DOTV=[50,100,200,250,500,1000,2000].find(v=>NAT.est/v<=2500)||5000;
+  if(ST.view!=='dots'){const lg=h('div',{class:'heatlegend','aria-hidden':'true'});const ed=[vals[0],...cut,vals[vals.length-1]];
    lg.appendChild(h('span',{text:'Expected visits:'}));
    HEAT.forEach((c,i)=>{const it=h('span',{});const sw=h('span',{class:'sw'});sw.style.background=c;it.appendChild(sw);it.appendChild(document.createTextNode(i<4?`${fmt(ed[i])}–${fmt(ed[i+1])}`:`${fmt(ed[4])}+`));lg.appendChild(it);});
    W.appendChild(lg);}
+  else{const lg=h('div',{class:'heatlegend'});const sw=h('span',{class:'dotkey','aria-hidden':'true'});lg.appendChild(sw);lg.appendChild(h('span',{text:`1 dot = ${DOTV.toLocaleString('en-US')} expected ${ST.dev.toLowerCase()} visits (about ${fmt(NAT.est)} in the US in ${y})`}));W.appendChild(lg);}
   const TOP=Object.keys(STATE_POP).map(a=>[a,stExp(a,ST.dev,y)]).filter(x=>x[1]).sort((p,q)=>q[1].est-p[1].est).slice(0,5).map(x=>x[0]);
-  {const tl=h('div',{class:'sttoplist'});tl.appendChild(h('span',{text:'Most expected visits (glowing on the map):'}));
+  {const tl=h('div',{class:'sttoplist'});tl.appendChild(h('span',{text:ST.view==='dots'?'Most expected visits:':'Most expected visits (glowing on the map):'}));
    TOP.forEach((a,i)=>{const b=h('button',{type:'button','aria-label':`Number ${i+1}: ${STATE_POP[a].n}, about ${fmt(stExp(a,ST.dev,y).est)} visits. Show this state.`},h('b',{class:'rk',text:String(i+1)}),`${STATE_POP[a].n} ${fmt(stExp(a,ST.dev,y).est)}`);
      b.addEventListener('click',()=>{ST.abbr=a;renderState(true);stCount();});tl.appendChild(b);});
    W.appendChild(tl);}
@@ -5227,6 +5241,27 @@ function renderState(push){
       el('line',{x1:cx,y1:cy,x2:bx,y2:by+12,stroke:css('--text-3'),'stroke-width':0.8},svg);
       const g=el('g',{class:'stg'+(TOP.includes(a)?' sttop':'')+(a===pick?' stsel':'')},svg);el('rect',{class:'stshape',x:bx,y:by,width:52,height:24,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?2.5:0},g);
       txt(g,a,{x:bx+26,y:by+13,'text-anchor':'middle','dominant-baseline':'middle','font-size':13,'font-weight':'600',fill:lab});hook(g,a,e);});
+  }else if(ST.view==='dots'){
+    const svg=el('svg',{viewBox:'-10 -10 995 630',width:'100%',style:'max-width:760px;display:block',class:'stdots',role:'img','aria-label':`Dot map: each dot is ${DOTV} expected ${ST.dev} emergency department visits, ${y}`},W);
+    const base=el('g',{},svg), dotg=el('g',{class:'dotlayer','aria-hidden':'true'},svg), top=el('g',{},svg);
+    const dc='#ffb347'; el('rect',{x:-10,y:-10,width:995,height:630,rx:14,fill:'#0e1621'},base);
+    let seed=20251;const rnd=()=>{seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};
+    Object.keys(STATE_SHAPES).sort((a,b)=>(a===pick)-(b===pick)).forEach((a,i)=>{const e=stExp(a,ST.dev,y);const g=el('g',{class:'stg'+(a===pick?' stsel':'')},base);
+      if(a===pick)el('path',{d:STATE_SHAPES[a].d,fill:'none',stroke:'#ffffff','stroke-width':2.5,'stroke-linejoin':'round','pointer-events':'none'},top);
+      const pth=el('path',{class:'stshape stbase',d:STATE_SHAPES[a].d,stroke:a===pick?'#ffffff':'#2f3e50','stroke-width':a===pick?2.5:0.7,'stroke-linejoin':'round'},g);
+      hook(g,a,e);
+      const n=e?Math.round(e.est/DOTV):0; if(!n)return;
+      const bb=pth.getBBox(); let placed=0,tries=0; const pt=svg.createSVGPoint?svg.createSVGPoint():null;
+      while(placed<n&&tries<n*60){tries++;const x=bb.x+rnd()*bb.width, yy=bb.y+rnd()*bb.height;
+        let ok=true; if(pt&&pth.isPointInFill){pt.x=x;pt.y=yy;ok=pth.isPointInFill(pt);}
+        if(ok){el('circle',{cx:x.toFixed(1),cy:yy.toFixed(1),r:1.9,fill:dc,style:`animation-delay:${Math.min(placed*8+i*6,1400)}ms`},dotg);placed++;}}
+    });
+    ST_CALLOUTS.forEach((a,i)=>{const e=stExp(a,ST.dev,y);const bx=905,by=150+i*34,[cx,cy]=STATE_SHAPES[a].c;
+      el('line',{x1:cx,y1:cy,x2:bx,y2:by+12,stroke:'#3d4f64','stroke-width':0.8},svg);
+      const g=el('g',{class:'stg'+(a===pick?' stsel':'')},svg);el('rect',{class:'stshape stbase',x:bx,y:by,width:52,height:24,rx:4,stroke:a===pick?'#ffffff':'#3d4f64','stroke-width':a===pick?2.5:0.7},g);
+      txt(g,a,{x:bx+26,y:by+13,'text-anchor':'middle','dominant-baseline':'middle','font-size':12,'font-weight':'600',fill:'#e8eef5'});hook(g,a,e);});
+    TOP.slice(0,5).forEach(a=>{if(ST_CALLOUTS.includes(a))return;const [cx,cy]=STATE_SHAPES[a].c;const e=stExp(a,ST.dev,y);
+      const t=txt(top,`${a} ${fmt(e.est)}`,{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'middle','font-size':13,'font-weight':'700',fill:'#ffffff',class:'dotlab','pointer-events':'none'});});
   }else{
     const cw=Math.min(W.clientWidth||560,560), cols=11, gap=4, sz=Math.floor((cw-gap*(cols-1))/cols), H=8*(sz+gap)-gap;
     const svg=el('svg',{viewBox:`0 0 ${cols*(sz+gap)-gap} ${H}`,width:'100%',style:'max-width:560px;display:block',class:'stfade',role:'img','aria-label':`Grid map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
@@ -5234,7 +5269,7 @@ function renderState(push){
       el('rect',{class:'stshape',x,y:yy,width:sz,height:sz,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
       txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:lab});hook(g,a,e);});
   }
-  W.appendChild(h('p',{class:'note',text:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The 5 states with the most expected visits glow; they are mostly the most populous states, because these numbers come from national rates and each state's population, not from local injury rates. Tap a state for its numbers.`}));
+  W.appendChild(h('p',{class:'note',text:ST.view==='dots'?`Each dot is ${DOTV.toLocaleString('en-US')} expected ${ST.dev.toLowerCase()} emergency department visits in ${y}, placed at random inside the state: dots do not show where injuries happened. More people means more dots, because state numbers come from national rates and each state's population by age, not from local injury rates. Tap a state for its numbers.`:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The 5 states with the most expected visits glow; they are mostly the most populous states, because these numbers come from national rates and each state's population, not from local injury rates. Tap a state for its numbers.`}));
   const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
   const B=document.getElementById('stbrief');
   if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
