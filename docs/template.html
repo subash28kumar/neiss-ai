@@ -19,6 +19,7 @@
   --text:#0b0b0b; --text-2:#52514e; --text-3:#7a7974; --accent:#2a78d6; --accent-soft:#e6f0fc;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --ref:#8a8984;
   --a1:#104281; --a2:#2a78d6; --a3:#86b6ef;
+  --h1:#f0a06a; --h2:#e8783c; --h3:#d35a20; --h4:#a44314; --h5:#6b2a0c;
   --band-op:.14; --code-bg:#f0efec; --warn:#8a5a00; --warn-bg:#fdf3dc;
 }
 @media (prefers-color-scheme:dark){
@@ -28,6 +29,7 @@
     --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5; --accent-soft:#16263b;
     --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --ref:#8f8e88;
     --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
+    --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c;
     --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
   }
 }
@@ -37,6 +39,7 @@
   --text:#f0efec; --text-2:#c3c2b7; --text-3:#9a998f; --accent:#3987e5; --accent-soft:#16263b;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --ref:#8f8e88;
   --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
+  --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c;
   --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
 }
 *{box-sizing:border-box}
@@ -82,6 +85,13 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .tip .row span{color:var(--text-2)}
 .tip .ci{grid-column:3;color:var(--text-3);font-size:12px;margin-top:-2px}
 .note{font-size:13px;color:var(--text-3);margin:8px 0 0}
+.heatlegend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:4px 0 8px;font-size:13px;color:var(--text-2)}
+.heatlegend span.sw{display:inline-block;width:22px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.stg{transition:opacity .2s}
+.stg:hover .stshape,.stg:focus .stshape{stroke:var(--text);stroke-width:2.2}
+@keyframes stfade{from{opacity:0}to{opacity:1}}
+.stfade .stg{animation:stfade .5s ease-out both}
+@media (prefers-reduced-motion:reduce){.stfade .stg{animation:none}}
 .tbltools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
 .citeline{font-size:12px;color:var(--text-3);margin:6px 0 0;overflow-wrap:anywhere}
 .reqbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}
@@ -1523,32 +1533,39 @@ function renderState(push){
   // map
   const W=document.getElementById('stmap');W.textContent='';
   W.appendChild(h('h3',{class:'maptitle',text:`Map: expected ${ST.dev.toLowerCase()} emergency department visits by state, ${y}`}));
-  let max=0;Object.keys(STATE_POP).forEach(a=>{const e=stExp(a,ST.dev,y);if(e&&e.est>max)max=e.est;});
-  const acc=css('--accent'),txtc=css('--text'),bg=css('--surface');
-  const shade=a=>{const e=stExp(a,ST.dev,y);return {e,op:0.12+0.88*(e?Math.sqrt(e.est/max):0)};};
+  const vals=Object.keys(STATE_POP).map(a=>{const e=stExp(a,ST.dev,y);return e?e.est:0;}).sort((a,b)=>a-b);
+  const cut=[1,2,3,4].map(q=>vals[Math.floor(q*vals.length/5)]);   // quintiles: about 10 states per colour
+  const HEAT=['--h1','--h2','--h3','--h4','--h5'].map(css);
+  const lum=hex=>{const n=parseInt(hex.replace('#','').trim(),16),c=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2];};
+  const txtc=css('--text'),bg=css('--surface');
+  const shade=a=>{const e=stExp(a,ST.dev,y);const v=e?e.est:0;let b=0;while(b<4&&v>=cut[b])b++;const fill=HEAT[b];return {e,fill,lab:lum(fill)<0.25?'#ffffff':'#1a1a19'};};
+  {const lg=h('div',{class:'heatlegend','aria-hidden':'true'});const ed=[vals[0],...cut,vals[vals.length-1]];
+   lg.appendChild(h('span',{text:'Expected visits:'}));
+   HEAT.forEach((c,i)=>{const it=h('span',{});const sw=h('span',{class:'sw'});sw.style.background=c;it.appendChild(sw);it.appendChild(document.createTextNode(i<4?`${fmt(ed[i])}–${fmt(ed[i+1])}`:`${fmt(ed[4])}+`));lg.appendChild(it);});
+   W.appendChild(lg);}
   const hook=(g,a,e)=>{g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} ${ST.dev} visits`);g.style.cursor='pointer';
     const t=el('title',{},g);t.textContent=`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} (${e?fmt(e.lo):''} to ${e?fmt(e.hi):''})`;
     const go=()=>{ST.abbr=a;renderState(true);stCount();};g.addEventListener('click',go);g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go();}});};
   if(ST.view==='map'){
-    const svg=el('svg',{viewBox:'0 0 975 610',width:'100%',style:'max-width:760px;display:block',role:'img','aria-label':`Map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
+    const svg=el('svg',{viewBox:'0 0 975 610',width:'100%',style:'max-width:760px;display:block',class:'stfade',role:'img','aria-label':`Map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
     const order=Object.keys(STATE_SHAPES).sort((a,b)=>(a===pick)-(b===pick));  // selected state drawn last so its outline shows
-    order.forEach(a=>{const {e,op}=shade(a);const g=el('g',{},svg);
-      el('path',{d:STATE_SHAPES[a].d,fill:acc,'fill-opacity':op.toFixed(2),stroke:a===pick?txtc:bg,'stroke-width':a===pick?2.5:0.8,'stroke-linejoin':'round'},g);
-      if(!ST_CALLOUTS.includes(a)&&(STATE_SHAPES[a].a>1500||a==='HI')){const [cx,cy]=STATE_SHAPES[a].c;txt(g,a,{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'middle','font-size':a==='HI'?11:13,'font-weight':'600',fill:op>0.55?'#ffffff':txtc,'pointer-events':'none'});}
+    order.forEach((a,i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg',style:`animation-delay:${Math.min(i*12,500)}ms`},svg);
+      el('path',{class:'stshape',d:STATE_SHAPES[a].d,fill,stroke:a===pick?txtc:bg,'stroke-width':a===pick?2.5:0.8,'stroke-linejoin':'round'},g);
+      if(!ST_CALLOUTS.includes(a)&&(STATE_SHAPES[a].a>1500||a==='HI')){const [cx,cy]=STATE_SHAPES[a].c;txt(g,a,{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'middle','font-size':a==='HI'?11:13,'font-weight':'600',fill:lab,'pointer-events':'none'});}
       hook(g,a,e);});
     // call-out boxes for small eastern states (easy to tap)
-    ST_CALLOUTS.forEach((a,i)=>{const {e,op}=shade(a);const bx=905,by=150+i*34,[cx,cy]=STATE_SHAPES[a].c;
+    ST_CALLOUTS.forEach((a,i)=>{const {e,fill,lab}=shade(a);const bx=905,by=150+i*34,[cx,cy]=STATE_SHAPES[a].c;
       el('line',{x1:cx,y1:cy,x2:bx,y2:by+12,stroke:css('--text-3'),'stroke-width':0.8},svg);
-      const g=el('g',{},svg);el('rect',{x:bx,y:by,width:52,height:24,rx:4,fill:acc,'fill-opacity':op.toFixed(2),stroke:a===pick?txtc:'none','stroke-width':a===pick?2.5:0},g);
-      txt(g,a,{x:bx+26,y:by+13,'text-anchor':'middle','dominant-baseline':'middle','font-size':13,'font-weight':'600',fill:op>0.55?'#ffffff':txtc});hook(g,a,e);});
+      const g=el('g',{class:'stg'},svg);el('rect',{class:'stshape',x:bx,y:by,width:52,height:24,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?2.5:0},g);
+      txt(g,a,{x:bx+26,y:by+13,'text-anchor':'middle','dominant-baseline':'middle','font-size':13,'font-weight':'600',fill:lab});hook(g,a,e);});
   }else{
     const cw=Math.min(W.clientWidth||560,560), cols=11, gap=4, sz=Math.floor((cw-gap*(cols-1))/cols), H=8*(sz+gap)-gap;
-    const svg=el('svg',{viewBox:`0 0 ${cols*(sz+gap)-gap} ${H}`,width:'100%',style:'max-width:560px;display:block',role:'img','aria-label':`Grid map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
-    TILEGRID.forEach(([a,c,r])=>{const {e,op}=shade(a);const g=el('g',{},svg);const x=c*(sz+gap),yy=r*(sz+gap);
-      el('rect',{x,y:yy,width:sz,height:sz,rx:4,fill:acc,'fill-opacity':op.toFixed(2),stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
-      txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:op>0.55?'#ffffff':txtc});hook(g,a,e);});
+    const svg=el('svg',{viewBox:`0 0 ${cols*(sz+gap)-gap} ${H}`,width:'100%',style:'max-width:560px;display:block',class:'stfade',role:'img','aria-label':`Grid map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
+    TILEGRID.forEach(([a,c,r],i)=>{const {e,fill,lab}=shade(a);const g=el('g',{class:'stg',style:`animation-delay:${Math.min(i*12,500)}ms`},svg);const x=c*(sz+gap),yy=r*(sz+gap);
+      el('rect',{class:'stshape',x,y:yy,width:sz,height:sz,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
+      txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:lab});hook(g,a,e);});
   }
-  W.appendChild(h('p',{class:'note',text:`The stronger the blue, the more expected ${ST.dev.toLowerCase()} visits in ${y}. The strongest are mostly the most populous states.`}));
+  W.appendChild(h('p',{class:'note',text:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The highest are mostly the most populous states. Tap a state for its numbers.`}));
   const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
   const B=document.getElementById('stbrief');
   if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
