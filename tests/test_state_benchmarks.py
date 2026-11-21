@@ -83,3 +83,11 @@ def test_state_bike_commute_file():
     assert sum(v["bicycle"] for v in d["states"].values()) == d["us"]["bicycle"]
     ca = d["states"]["CA"]
     assert ca["bicycle"] == 134140 and abs(ca["share_pct"] - 100 * ca["bicycle"] / ca["workers"]) < 0.01
+
+
+def test_medical_cost_file():
+    d = json.loads((ROOT / "docs" / "data" / "injury_medical_costs.json").read_text())
+    assert d["cost_2015_usd"] == {"road_crash_with_motor_vehicle": 14193, "other_bicycle_injury": 6109}
+    f = d["price_update"]["factor"]
+    assert 1.25 < f < 1.35
+    assert d["cost_2025_usd"]["road_crash_with_motor_vehicle"] == round(14193 * d["price_update"]["index_2025_avg"] / d["price_update"]["index_2015_avg"])

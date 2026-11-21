@@ -1,0 +1,21 @@
+{
+ "title": "Average medical cost in the year after an emergency department visit for a bicycle injury",
+ "source": "Peterson C, Xu L, Florence C. Average medical cost of fatal and non-fatal injuries by type in the USA. Injury Prevention 2021;27(1):24-33. Table: estimated 12-month attributable cost of medical care following emergency department treatment for all patients with non-fatal injuries, by mechanism and intent (unintentional), 2015 US dollars (MarketScan claims, injuries Oct 2014-Sep 2015).",
+ "url": "https://stacks.cdc.gov/view/cdc/90013",
+ "cost_2015_usd": {
+  "road_crash_with_motor_vehicle": 14193,
+  "other_bicycle_injury": 6109
+ },
+ "price_update": {
+  "index": "US Bureau of Labor Statistics CPI-U Medical care, US city average (CUUS0000SAM), not seasonally adjusted",
+  "index_2015_avg": 446.752,
+  "index_2025_avg": 580.509,
+  "factor": 1.2994,
+  "url": "https://fred.stlouisfed.org/series/CUUS0000SAM"
+ },
+ "cost_2025_usd": {
+  "road_crash_with_motor_vehicle": 18442,
+  "other_bicycle_injury": 7938
+ },
+ "note": "Medical care only (not lost work or quality of life). Averages for people with employer-based insurance, covering both patients sent home and patients admitted. Bicycle injury costs are applied to e-bike injuries; e-bike injuries lead to hospital stays slightly more often, so their true cost may be higher. Low end = every injury costs like an other bicycle injury; high end = every injury costs like a road crash with a motor vehicle."
+}
