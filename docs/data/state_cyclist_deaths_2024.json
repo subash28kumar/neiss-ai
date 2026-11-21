@@ -1,0 +1,320 @@
+{
+ "source": "NHTSA, Traffic Safety Facts: Bicyclists and Other Cyclists, 2024 Data (DOT HS 813 822, July 2026), Table 6; FARS 2024 Annual Report File",
+ "url": "https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813822",
+ "year": 2024,
+ "note": "Pedalcyclists killed in traffic crashes involving a motor vehicle in transport on a public road. Since 2022 includes riders of bicycles powered by pedals, motors, or both (so e-bike riders are included). Real counts, not estimates. 2024 Annual Report File; final numbers may change slightly.",
+ "us": {
+  "deaths": 1103,
+  "share_of_traffic_deaths_pct": 2.8,
+  "rate_per_100k": 0.32,
+  "traffic_deaths": 39254
+ },
+ "states": {
+  "AK": {
+   "deaths": 1,
+   "share_of_traffic_deaths_pct": 1.4,
+   "rate_per_100k": 0.14,
+   "traffic_deaths": 70
+  },
+  "AL": {
+   "deaths": 10,
+   "share_of_traffic_deaths_pct": 1.0,
+   "rate_per_100k": 0.19,
+   "traffic_deaths": 962
+  },
+  "AR": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 0.7,
+   "rate_per_100k": 0.13,
+   "traffic_deaths": 603
+  },
+  "AZ": {
+   "deaths": 44,
+   "share_of_traffic_deaths_pct": 3.6,
+   "rate_per_100k": 0.58,
+   "traffic_deaths": 1229
+  },
+  "CA": {
+   "deaths": 163,
+   "share_of_traffic_deaths_pct": 4.2,
+   "rate_per_100k": 0.41,
+   "traffic_deaths": 3876
+  },
+  "CO": {
+   "deaths": 14,
+   "share_of_traffic_deaths_pct": 2.0,
+   "rate_per_100k": 0.23,
+   "traffic_deaths": 689
+  },
+  "CT": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 1.3,
+   "rate_per_100k": 0.11,
+   "traffic_deaths": 310
+  },
+  "DC": {
+   "deaths": 1,
+   "share_of_traffic_deaths_pct": 2.1,
+   "rate_per_100k": 0.14,
+   "traffic_deaths": 47
+  },
+  "DE": {
+   "deaths": 5,
+   "share_of_traffic_deaths_pct": 4.0,
+   "rate_per_100k": 0.48,
+   "traffic_deaths": 126
+  },
+  "FL": {
+   "deaths": 208,
+   "share_of_traffic_deaths_pct": 6.6,
+   "rate_per_100k": 0.89,
+   "traffic_deaths": 3138
+  },
+  "GA": {
+   "deaths": 24,
+   "share_of_traffic_deaths_pct": 1.7,
+   "rate_per_100k": 0.21,
+   "traffic_deaths": 1403
+  },
+  "HI": {
+   "deaths": 7,
+   "share_of_traffic_deaths_pct": 6.9,
+   "rate_per_100k": 0.48,
+   "traffic_deaths": 102
+  },
+  "IA": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 1.1,
+   "rate_per_100k": 0.12,
+   "traffic_deaths": 356
+  },
+  "ID": {
+   "deaths": 3,
+   "share_of_traffic_deaths_pct": 1.3,
+   "rate_per_100k": 0.15,
+   "traffic_deaths": 238
+  },
+  "IL": {
+   "deaths": 37,
+   "share_of_traffic_deaths_pct": 3.1,
+   "rate_per_100k": 0.29,
+   "traffic_deaths": 1177
+  },
+  "IN": {
+   "deaths": 19,
+   "share_of_traffic_deaths_pct": 2.3,
+   "rate_per_100k": 0.27,
+   "traffic_deaths": 832
+  },
+  "KS": {
+   "deaths": 7,
+   "share_of_traffic_deaths_pct": 2.1,
+   "rate_per_100k": 0.24,
+   "traffic_deaths": 339
+  },
+  "KY": {
+   "deaths": 11,
+   "share_of_traffic_deaths_pct": 1.6,
+   "rate_per_100k": 0.24,
+   "traffic_deaths": 707
+  },
+  "LA": {
+   "deaths": 44,
+   "share_of_traffic_deaths_pct": 5.9,
+   "rate_per_100k": 0.96,
+   "traffic_deaths": 752
+  },
+  "MA": {
+   "deaths": 10,
+   "share_of_traffic_deaths_pct": 2.8,
+   "rate_per_100k": 0.14,
+   "traffic_deaths": 363
+  },
+  "MD": {
+   "deaths": 11,
+   "share_of_traffic_deaths_pct": 1.9,
+   "rate_per_100k": 0.18,
+   "traffic_deaths": 578
+  },
+  "ME": {
+   "deaths": 1,
+   "share_of_traffic_deaths_pct": 0.6,
+   "rate_per_100k": 0.07,
+   "traffic_deaths": 177
+  },
+  "MI": {
+   "deaths": 29,
+   "share_of_traffic_deaths_pct": 2.6,
+   "rate_per_100k": 0.29,
+   "traffic_deaths": 1098
+  },
+  "MN": {
+   "deaths": 7,
+   "share_of_traffic_deaths_pct": 1.5,
+   "rate_per_100k": 0.12,
+   "traffic_deaths": 477
+  },
+  "MO": {
+   "deaths": 18,
+   "share_of_traffic_deaths_pct": 1.9,
+   "rate_per_100k": 0.29,
+   "traffic_deaths": 955
+  },
+  "MS": {
+   "deaths": 9,
+   "share_of_traffic_deaths_pct": 1.2,
+   "rate_per_100k": 0.31,
+   "traffic_deaths": 753
+  },
+  "MT": {
+   "deaths": 2,
+   "share_of_traffic_deaths_pct": 1.0,
+   "rate_per_100k": 0.18,
+   "traffic_deaths": 206
+  },
+  "NC": {
+   "deaths": 44,
+   "share_of_traffic_deaths_pct": 2.7,
+   "rate_per_100k": 0.4,
+   "traffic_deaths": 1619
+  },
+  "ND": {
+   "deaths": 1,
+   "share_of_traffic_deaths_pct": 1.1,
+   "rate_per_100k": 0.13,
+   "traffic_deaths": 90
+  },
+  "NE": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 1.6,
+   "rate_per_100k": 0.2,
+   "traffic_deaths": 251
+  },
+  "NH": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 3.0,
+   "rate_per_100k": 0.28,
+   "traffic_deaths": 133
+  },
+  "NJ": {
+   "deaths": 25,
+   "share_of_traffic_deaths_pct": 3.7,
+   "rate_per_100k": 0.26,
+   "traffic_deaths": 670
+  },
+  "NM": {
+   "deaths": 6,
+   "share_of_traffic_deaths_pct": 1.5,
+   "rate_per_100k": 0.28,
+   "traffic_deaths": 409
+  },
+  "NV": {
+   "deaths": 15,
+   "share_of_traffic_deaths_pct": 3.6,
+   "rate_per_100k": 0.46,
+   "traffic_deaths": 417
+  },
+  "NY": {
+   "deaths": 47,
+   "share_of_traffic_deaths_pct": 4.3,
+   "rate_per_100k": 0.24,
+   "traffic_deaths": 1101
+  },
+  "OH": {
+   "deaths": 24,
+   "share_of_traffic_deaths_pct": 2.1,
+   "rate_per_100k": 0.2,
+   "traffic_deaths": 1157
+  },
+  "OK": {
+   "deaths": 11,
+   "share_of_traffic_deaths_pct": 1.7,
+   "rate_per_100k": 0.27,
+   "traffic_deaths": 645
+  },
+  "OR": {
+   "deaths": 11,
+   "share_of_traffic_deaths_pct": 2.0,
+   "rate_per_100k": 0.26,
+   "traffic_deaths": 538
+  },
+  "PA": {
+   "deaths": 22,
+   "share_of_traffic_deaths_pct": 2.0,
+   "rate_per_100k": 0.17,
+   "traffic_deaths": 1127
+  },
+  "RI": {
+   "deaths": 5,
+   "share_of_traffic_deaths_pct": 9.6,
+   "rate_per_100k": 0.45,
+   "traffic_deaths": 52
+  },
+  "SC": {
+   "deaths": 34,
+   "share_of_traffic_deaths_pct": 3.3,
+   "rate_per_100k": 0.62,
+   "traffic_deaths": 1038
+  },
+  "SD": {
+   "deaths": 4,
+   "share_of_traffic_deaths_pct": 2.7,
+   "rate_per_100k": 0.43,
+   "traffic_deaths": 146
+  },
+  "TN": {
+   "deaths": 9,
+   "share_of_traffic_deaths_pct": 0.8,
+   "rate_per_100k": 0.12,
+   "traffic_deaths": 1197
+  },
+  "TX": {
+   "deaths": 79,
+   "share_of_traffic_deaths_pct": 1.9,
+   "rate_per_100k": 0.25,
+   "traffic_deaths": 4160
+  },
+  "UT": {
+   "deaths": 8,
+   "share_of_traffic_deaths_pct": 2.9,
+   "rate_per_100k": 0.23,
+   "traffic_deaths": 277
+  },
+  "VA": {
+   "deaths": 24,
+   "share_of_traffic_deaths_pct": 2.6,
+   "rate_per_100k": 0.27,
+   "traffic_deaths": 917
+  },
+  "VT": {
+   "deaths": 2,
+   "share_of_traffic_deaths_pct": 3.4,
+   "rate_per_100k": 0.31,
+   "traffic_deaths": 59
+  },
+  "WA": {
+   "deaths": 13,
+   "share_of_traffic_deaths_pct": 1.8,
+   "rate_per_100k": 0.16,
+   "traffic_deaths": 730
+  },
+  "WI": {
+   "deaths": 8,
+   "share_of_traffic_deaths_pct": 1.3,
+   "rate_per_100k": 0.13,
+   "traffic_deaths": 595
+  },
+  "WV": {
+   "deaths": 5,
+   "share_of_traffic_deaths_pct": 2.0,
+   "rate_per_100k": 0.28,
+   "traffic_deaths": 256
+  },
+  "WY": {
+   "deaths": 1,
+   "share_of_traffic_deaths_pct": 0.9,
+   "rate_per_100k": 0.17,
+   "traffic_deaths": 107
+  }
+ }
+}

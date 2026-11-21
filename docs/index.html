@@ -5370,6 +5370,13 @@ function stSpark(C,cw){
   xs.forEach(x=>txt(svg,String(x),{x:X(x),y:H-8,'text-anchor':'middle','font-size':11,fill:css('--text-3')}));
   return svg;
 }
+let FAT=null;   // NHTSA FARS bicyclist deaths by state (data/state_cyclist_deaths_2024.json); false if unavailable
+function loadDeaths(){if(FAT!==null)return Promise.resolve(FAT);FAT=undefined;return fetch('data/state_cyclist_deaths_2024.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{FAT=j||false;return FAT;});}
+function stDeathsItem(a){
+  if(!FAT||!FAT.states||!FAT.states[a])return null; const r=FAT.states[a], u=FAT.us, N=STATE_POP[a].n;
+  const cmp=r.rate_per_100k>u.rate_per_100k*1.15?'higher than':r.rate_per_100k<u.rate_per_100k*0.85?'lower than':'close to';
+  return h('li',null,h('b',{text:'Road deaths (real count): '}),`In ${FAT.year}, ${r.deaths.toLocaleString('en-US')} ${r.deaths===1?'bicyclist was':'bicyclists, including e-bike riders, were'} killed in traffic crashes with motor vehicles in ${N}: ${r.share_of_traffic_deaths_pct}% of all traffic deaths, ${r.rate_per_100k} per 100,000 people, ${cmp} the US rate of ${u.rate_per_100k}.`+(r.deaths<10?' Small numbers change a lot from year to year.':'')+' ',h('a',{href:FAT.url,target:'_blank',rel:'noopener',text:'Source: NHTSA, FARS 2024'}));
+}
 function stCardImage(C){
   const N=STATE_POP[C.a].n, dl=C.d.toLowerCase(), esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const W=1200,H=675, F="font-family='Inter,Segoe UI,Helvetica,Arial,sans-serif'";
@@ -5432,7 +5439,8 @@ function renderStCard(){
   tr.push(h('li',null,'Visits in '+y+': ',...C.devs.map((x,i)=>[h('b',{text:`${x.d} about ${fmt(x.est)}`}),x.one?` (1 in ${x.one.toLocaleString('en-US')})`:'',i<2?' · ':''])));
   if(C.per10!=null)tr.push(h('li',{text:`About ${C.per10.toFixed(1)} e-bike injuries for every 10 bicycle injuries`+(C.per10_2020!=null&&y>2020?`, up from ${C.per10_2020.toFixed(1)} in 2020: riders are shifting to e-bikes.`:'.')}));
   if(C.moto)tr.push(h('li',{text:`At least ${C.moto.n<10?'a few':fmt(C.moto.n)} of these e-bike visits were likely e-motos (faster, motorcycle-like vehicles), based on the national share of ${(C.moto.share*100).toFixed(1)}%; the true number is probably higher.`}));
-  box.appendChild(h('h4',null,h('span',{class:'tag',text:'Transportation'}),'Which vehicles'));
+  if(ST.dev==='E-bike'||ST.dev==='Bicycle'){if(FAT===null){loadDeaths().then(()=>{if(ST.abbr===a)renderStCard();});}else{const di=stDeathsItem(a);if(di)tr.unshift(di);}}
+  box.appendChild(h('h4',null,h('span',{class:'tag',text:'Transportation'}),'Which vehicles and road deaths'));
   box.appendChild(h('ul',{class:'ins'},tr));
   // public health
   const ph=[];
@@ -5457,7 +5465,7 @@ function renderStCard(){
   const im=h('button',{class:'btn',type:'button',text:'Save as image'});im.addEventListener('click',()=>stCardImage(C));acts.appendChild(im);
   acts.appendChild(h('a',{class:'btn',href:'#','data-req':'state',text:`Request a free custom analysis for ${N}`}));
   box.appendChild(acts);
-  box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. `+citeLine()}));
+  box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. Road deaths are real counts from NHTSA's Fatality Analysis Reporting System (crashes involving a motor vehicle on a public road). `+citeLine()}));
   if(ST.cardScroll){ST.cardScroll=false;box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
 }
 
