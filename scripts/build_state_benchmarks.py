@@ -2,10 +2,10 @@
 
 For state health departments and transport agencies that have their own emergency department
 data: national NEISS-AI visit rates per 100,000 by 7 age groups (with 95% ranges), the state's
-expected visits by age group (national rate x the state's population in that age group), an empty
-column for the state's own count, and a ratio column (own count / expected) that fills itself in.
+benchmark visits by age group (national rate x the state's population in that age group), an empty
+column for the state's own count, and a ratio column (own count / benchmark) that fills itself in.
 
-Expected numbers are not counts: NEISS has no patient-state field. Same estimator as
+Benchmarks are not counts: NEISS has no patient-state field. Same estimator as
 scripts/build_state_estimates.py (Taylor linearization, hospitals as clusters within strata).
 
     python scripts/build_state_benchmarks.py [--year 2025]
@@ -84,15 +84,17 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
     bold, thin = Font(bold=True), Side(style="thin", color="BBBBBB")
     ws["A1"] = f"Compare your state: {name}, {year}"
     ws["A1"].font = Font(bold=True, size=14)
-    ws["A2"] = (f"Expected emergency department visits in {name} if the state had the national visit rate in each "
-                f"age group. Enter your own count in column I; column J then compares it with the national benchmark.")
-    ws["A3"] = "Expected numbers are estimates from national data, not counts: NEISS does not record the patient's state."
+    ws["A2"] = (f"Benchmark = the number of emergency department visits {name} would have if it matched the US rate "
+                f"in each age group. Type your own count in the yellow column I; column J then compares it with the benchmark.")
+    ws["A3"] = (f"Benchmarks are estimates from national data, not counts of visits in {name}: NEISS does not record the "
+                f"patient's state. See the 'How to use' sheet for a worked example.")
     ws["A4"] = CITE + f" (data updated {updated})"
     for r in (2, 3, 4):
         ws.cell(r, 1).font = Font(size=9, color="555555")
-    head = ["Device", "Age group", "National visits per 100,000", "95% range: low", "95% range: high",
-            f"{name} population, {year}", f"Expected visits in {name}", "Expected: low", "Your state's actual count (enter)",
-            "Ratio: actual / expected", "National NEISS records", "National estimate unstable?"]
+    head = ["Device", "Age group", "US visits per 100,000 people", "US rate, 95% range: low", "US rate, 95% range: high",
+            f"{name} population, {year}", f"Benchmark: visits in {name} at the US rate", "Benchmark: 95% range (low - high)",
+            "Your own count (type here)", "Ratio: your count / benchmark", "Injury notes behind the US rate",
+            "Few notes? (read with care)"]
     hr = 6
     for c, h in enumerate(head, 1):
         cell = ws.cell(hr, c, h)
@@ -100,9 +102,6 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
         cell.alignment = Alignment(wrap_text=True, vertical="top")
         cell.fill = PatternFill("solid", fgColor="EEF3FB")
         cell.border = Border(bottom=thin)
-    # replace column H with expected high too: keep low and high side by side
-    head[7] = "Expected: low"
-    ws.cell(hr, 8, "Expected: low - high")
     r = hr + 1
     groups = [g[2] for g in AGE_GROUPS]
     for dev in DEVICES:
@@ -126,12 +125,13 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
         ws.cell(r, 6, f"=SUM(F{first}:F{r - 1})").font = bold
         ws.cell(r, 7, f"=SUM(G{first}:G{r - 1})").font = bold
         ws.cell(r, 9, f'=IF(COUNT(I{first}:I{r - 1})=0,"",SUM(I{first}:I{r - 1}))').font = bold
-        ws.cell(r, 10, f'=IF(I{r}="","",I{r}/G{r})').font = bold
+        cnt = f"COUNT(I{first}:I{r - 1})"
+        ws.cell(r, 10, f'=IF({cnt}=0,"",IF({cnt}<{len(groups)},"fill in all age groups",I{r}/G{r}))').font = bold
         ws.cell(r, 11, nat[dev]["records"]).font = bold
         for c in range(1, 13):
             ws.cell(r, c).border = Border(bottom=thin)
         r += 2
-    widths = [11, 10, 13, 10, 10, 14, 14, 15, 16, 12, 12, 12]
+    widths = [11, 10, 13, 11, 11, 14, 16, 16, 14, 13, 13, 12]
     for c, w in enumerate(widths, 1):
         ws.column_dimensions[get_column_letter(c)].width = w
     for col in "FG":
@@ -143,21 +143,39 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
             cell.number_format = "0.00"
     ws.freeze_panes = ws.cell(hr + 1, 3)
     h = wb.create_sheet("How to use")
+    k = [g[2] for g in AGE_GROUPS].index("25-44")
+    ex = nat["E-bike"]["groups"][k]
+    sp = state_pop[k]
+    bench = ex["rate"] * sp / 1e5
+    blo, bhi = ex["rate_lo"] * sp / 1e5, ex["rate_hi"] * sp / 1e5
+    mine = max(10, int(round(bench * 1.2 / 10.0)) * 10)
+    all_e = sum(g["rate"] * state_pop[j] / 1e5 for j, g in enumerate(nat["E-bike"]["groups"]))
     lines = [
         ("How to use this table", True),
         ("1. Count your own emergency department visits for each device and age group in the same year, using your usual case definition (for example syndromic surveillance or hospital discharge data).", False),
-        ("2. Type each count into the yellow column I on the Compare sheet. The All ages rows add up your counts.", False),
-        ("3. Column J shows your count divided by the expected number. 1.0 means your state matches the national rate for its age mix; 1.5 means 50% more visits than expected; 0.5 means half.", False),
-        ("4. Use the 95% range in column H to judge differences: a count inside the range is consistent with the national rate.", False),
+        ("2. Type each count into the yellow column I on the Compare sheet. The All ages row adds up your counts; its ratio appears once all age groups are filled in.", False),
+        ("3. Column J shows your count divided by the benchmark. 1.0 means your state matches the US rate for its age mix; 1.5 means 50% more visits than the benchmark; 0.5 means half.", False),
+        ("4. Use the 95% range in column H to judge differences: a count inside the range is consistent with the US rate.", False),
+        ("", False),
+        (f"How the numbers are made: a worked example (e-bike, ages 25-44, {name}, {year})", True),
+        (f"Step 1. About 100 US hospitals report every emergency department visit to CPSC (the NEISS sample). NEISS-AI reads each short injury note and decides the device. In {year} it found {ex['records']:,} e-bike visits for ages 25-44 in those hospitals.", False),
+        (f"Step 2. Each sample visit stands for many visits across the country (CPSC gives every record a weight). Adding up the weights gives about {round(ex['est'], -2):,.0f} e-bike emergency department visits in the US for ages 25-44.", False),
+        (f"Step 3. The US has about {ex['pop'] / 1e6:.1f} million people aged 25-44 (US Census Bureau). {round(ex['est'], -2):,.0f} / {ex['pop'] / 1e6:.1f} million x 100,000 = {ex['rate']:.1f} visits per 100,000 people (column C).", False),
+        (f"Step 4. {name} has about {sp:,} people aged 25-44 (column F). {ex['rate']:.1f} x {sp:,} / 100,000 = about {round(bench):,} visits: the benchmark (column G).", False),
+        (f"Step 5. The US number comes from a sample of hospitals, so it has a margin of error. The US rate could be as low as {ex['rate_lo']:.1f} or as high as {ex['rate_hi']:.1f} per 100,000, so the {name} benchmark range is {round(blo):,} to {round(bhi):,} (column H).", False),
+        (f"Step 6. The same is done for all {len(AGE_GROUPS)} age groups and added up: about {round(all_e):,} e-bike visits for {name} at the US rate. Working by age group makes the benchmark fair for a state whose population is younger or older than the US.", False),
+        (f"Step 7. If your team counted {mine:,} visits for this row, the ratio would be {mine:,} / {round(bench):,} = {mine / round(bench):.2f}: about {abs(mine / round(bench) - 1) * 100:.0f}% {'more' if mine >= bench else 'fewer'} than the benchmark. That count is {'inside' if blo <= mine <= bhi else 'outside'} the 95% range. (Example only, not real {name} data.)", False),
+        ("In one sentence: US rate for each age group x the state's population in that age group = the number of visits the state would have at the US rate.", False),
         ("", False),
         ("Read with care", True),
-        ("- Expected numbers come from national data (NEISS, about 100 hospitals) and the state's population by age. They are not counts of visits in the state.", False),
-        ("- Differences can come from how much people ride, local roads and rules, and from differences between your case definition and NEISS-AI's (device read from product codes and the injury note; e-motos counted separately).", False),
-        ("- Rows marked 'yes' in column L rest on few national records and are unstable under the CPSC reporting rule.", False),
-        ("- National visits include everyone hurt in an incident involving the device, as on the NEISS-AI website.", False),
+        ("- Benchmarks come from national data (NEISS, about 100 hospitals) and the state's population by age. They are not counts of visits in the state.", False),
+        ("- Differences can come from how much people ride, local roads, weather and rules, and from differences between your case definition and NEISS-AI's (device read from product codes and the injury note; e-motos counted separately).", False),
+        ("- Rows marked 'yes' in column L rest on few injury notes (fewer than 20 notes, a US estimate under 1,200, or a large margin of error). CPSC advises not to rely on such estimates.", False),
+        ("- US visits include everyone hurt in an incident involving the device, as on the NEISS-AI website.", False),
         ("", False),
         ("Method", True),
-        ("National visits per age group are survey-weighted NEISS estimates (Taylor linearization, hospitals as clusters within strata). Rate = national visits / US population in that age group x 100,000 (US Census Bureau, Vintage 2025, July 1). Expected visits = rate x the state's population in that age group / 100,000.", False),
+        ("US visits per age group: NEISS sample weights added up for visits NEISS-AI labels as each device. Rate = US visits / US population in that age group x 100,000 (US Census Bureau, Vintage 2025, July 1). Benchmark = rate x the state's population in that age group / 100,000. 95% ranges reflect the uncertainty from sampling hospitals.", False),
+        ("Technical note for analysts: design-based variance by Taylor linearization, with hospitals (PSUs) as clusters within NEISS strata; the same estimator as the NEISS-AI website.", False),
         ("", False),
         ("How to cite", True),
         (CITE, False),
