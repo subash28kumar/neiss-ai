@@ -5372,13 +5372,13 @@ function stSpark(C,cw){
 }
 let FAT=null;   // NHTSA FARS bicyclist deaths by state (data/state_cyclist_deaths_2024.json); false if unavailable
 function loadDeaths(){if(FAT!==null)return Promise.resolve(FAT);FAT=undefined;return fetch('data/state_cyclist_deaths_2024.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{FAT=j||false;return FAT;});}
-let COM=null;   // Census ACS bike-to-work by state (data/state_bike_commute_2024.json); false if unavailable
-function loadCommute(){if(COM!==null)return Promise.resolve(COM);COM=undefined;return fetch('data/state_bike_commute_2024.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{COM=j||false;return COM;});}
+let COM=null;   // Census ACS bike-to-work by state (data/state_bike_commute.json); false if unavailable
+function loadCommute(){if(COM!==null)return Promise.resolve(COM);COM=undefined;return fetch('data/state_bike_commute.json',{cache:'no-cache'}).then(r=>r.ok?r.json():false).catch(()=>false).then(j=>{COM=j||false;return COM;});}
 function stCommuteItem(a){
   if(!COM||!COM.states||!COM.states[a])return null; const r=COM.states[a], u=COM.us, N=STATE_POP[a].n;
   const one=r.share_pct>0?(()=>{const x=100/r.share_pct,m=Math.pow(10,Math.floor(Math.log10(x))-1);return Math.round(x/m)*m;})():null;
   const cmp=r.share_pct>u.share_pct*1.15?'more than':r.share_pct<u.share_pct*0.85?'fewer than':'about the same as';
-  return h('li',null,h('b',{text:'Biking to work (real survey): '}),`About ${fmt(r.bicycle)} people in ${N} usually bike to work (${r.share_pct.toFixed(2)}% of workers${one?`, about 1 in ${one.toLocaleString('en-US')}`:''}), ${cmp} the US share of ${u.share_pct.toFixed(2)}%.`+(r.share_moe90_pct>r.share_pct*0.3?' The survey margin is wide for this state.':'')+' More riding usually means more bike injuries, so read the injury numbers with this in mind. Commuting only; leisure riding is not counted. ',h('a',{href:COM.url,target:'_blank',rel:'noopener',text:'Source: US Census Bureau, ACS 2024'}));
+  return h('li',null,h('b',{text:'Biking to work (real survey): '}),`About ${fmt(r.bicycle)} people in ${N} usually bike to work (${r.share_pct.toFixed(2)}% of workers${one?`, about 1 in ${one.toLocaleString('en-US')}`:''}), ${cmp} the US share of ${u.share_pct.toFixed(2)}%.`+(r.share_moe90_pct>r.share_pct*0.3?' The survey margin is wide for this state.':'')+' More riding usually means more bike injuries, so read the injury numbers with this in mind. Commuting only; leisure riding is not counted. ',h('a',{href:COM.url,target:'_blank',rel:'noopener',text:`Source: US Census Bureau, ACS ${COM.year}`}));
 }
 function stDeathsItem(a){
   if(!FAT||!FAT.states||!FAT.states[a])return null; const r=FAT.states[a], u=FAT.us, N=STATE_POP[a].n;

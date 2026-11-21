@@ -2,6 +2,12 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Biking to work updated to 2025 — 2026-11-21
+
+- The state card's "Biking to work" line now uses the Census Bureau's 2025 American Community Survey
+  1-year estimates (released Oct 29, 2026), Table B08301 (US: 0.47% of workers). The file is now
+  docs/data/state_bike_commute.json (no year in the name, so future updates keep the same path).
+
 ## State card: how many people bike to work (Census) — 2026-11-21
 
 - The state card (e-bike and bicycle views) now shows how many workers usually bike to work and the
