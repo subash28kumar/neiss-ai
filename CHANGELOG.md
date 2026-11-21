@@ -2,6 +2,20 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Tap a state for detailed insights — 2026-11-21
+
+- Tapping a state on the map (or one of the top-5 buttons) opens a card under the map and scrolls to
+  it: visits with 95% range, "1 in X residents", rank out of 51, the 2026 outlook; a trend line from
+  2020 with the 2026-2028 forecast (80% range); transportation (e-bike vs e-scooter vs bicycle,
+  e-bike injuries for every 10 bicycle injuries now and in 2020, likely e-motos); public health
+  (likely hospital stays, busiest months); visits by age group; and buttons for the state brief,
+  "Compare with your own counts", a copy-ready sentence and a link.
+- The card also gives a per-day figure ("about 32 a day"), hospital stays compared with bicycles, the
+  2028 outlook for visits and hospital stays, a "Save as image" button (a share-ready picture with the
+  source line) and a "Request a free custom analysis" button for that state.
+- Every number is an estimate from national data and the state's population by age; hospital stays,
+  busiest months and e-moto shares apply national patterns to the state, and the card says so.
+
 ## State map: warmer colours and the top 5 states highlighted — 2026-11-21
 
 - The "Your state" map uses a 5-colour warm key (about 10 states per colour) with a legend, a hover
