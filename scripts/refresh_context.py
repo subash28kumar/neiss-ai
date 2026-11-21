@@ -53,16 +53,27 @@ class CheckFailed(Exception):
     pass
 
 
+class Unreachable(Exception):
+    """The source did not answer (outage). Not a data problem: try again next month."""
+
+
 def get(url: str, timeout: int = 120, data: bytes | None = None, headers: dict | None = None) -> bytes | None:
     """Download a URL. Returns None if it does not exist (404/400); raises on other errors."""
-    req = urllib.request.Request(url, data=data, headers={**UA, **(headers or {})})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            return r.read()
-    except urllib.error.HTTPError as e:
-        if e.code in (400, 403, 404):
-            return None
-        raise
+    import time
+    last = None
+    for attempt in range(3):
+        req = urllib.request.Request(url, data=data, headers={**UA, **(headers or {})})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code in (400, 403, 404, 204):
+                return None
+            last = e
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            last = e
+        time.sleep(15 * (attempt + 1))
+    raise Unreachable(f"{url.split('/')[2]} did not answer ({last})")
 
 
 def load(path: Path):
@@ -85,18 +96,21 @@ def check(cond: bool, msg: str) -> None:
 
 
 # ---------------------------------------------------------------- ACS: biking to work
-def acs(dry: bool) -> str:
+def acs(dry: bool, check_year: int | None = None) -> str:
     path = DATA / "state_bike_commute.json"
     cur = load(path)
     have = cur["year"] if cur else 0
     this_year = dt.date.today().year
-    for year in range(this_year, have, -1):
+    for year in ([check_year] if check_year else range(this_year, have, -1)):
         url = (f"https://api.census.gov/data/{year}/acs/acs1?get=NAME,B08301_001E,B08301_001M,"
                f"B08301_018E,B08301_018M&for=state:*")
         raw = get(url)
         if not raw:
             continue
-        rows = json.loads(raw)
+        try:
+            rows = json.loads(raw)
+        except ValueError:
+            continue  # the API answers with a text/HTML message when a year is not published yet
         head, rows = rows[0], rows[1:]
         ix = {k: head.index(k) for k in head}
         out, T, B = {}, 0, 0
@@ -124,6 +138,9 @@ def acs(dry: bool) -> str:
                "note": (cur or {}).get("note", "Workers 16 years and over whose usual way to get to work was a bicycle."),
                "us": {"workers": T, "bicycle": B, "share_pct": round(share, 2)},
                "states": dict(sorted(out.items()))}
+        if check_year:
+            same = cur and cur["year"] == year and cur["states"] == doc["states"]
+            return f"{year}: US {doc['us']}; CA {out['CA']}; matches the file on the site: {bool(same)}"
         return f"updated to {year}" if write_if_changed(path, doc, dry) else f"{year} already in use"
     return f"no newer year than {have}"
 
@@ -230,11 +247,11 @@ def cpi(dry: bool) -> str:
 
 
 # ---------------------------------------------------------------- Census population estimates
-def population(dry: bool) -> str:
+def population(dry: bool, check_vintage: int | None = None) -> str:
     rows = list(csv.DictReader((MODEL / "state_population.csv").open(encoding="utf-8")))
     have = max(int(r["source"].split("Vintage ")[1][:4]) for r in rows)
     this = dt.date.today().year
-    for v in range(this, have, -1):
+    for v in ([check_vintage] if check_vintage else range(this, have, -1)):
         base = f"https://www2.census.gov/programs-surveys/popest/datasets/2020-{v}/state"
         tot = get(f"{base}/totals/NST-EST{v}-ALLDATA.csv", timeout=300)
         age = get(f"{base}/asrh/sc-est{v}-alldata6.csv", timeout=600)
@@ -262,6 +279,14 @@ def population(dry: bool) -> str:
             check(min(groups) > 0, f"Vintage {v} {k}: empty age group")
         check(len(pop) == 51 * len(years), f"Vintage {v}: {len(pop)} state-years, expected {51 * len(years)}")
         name_of = {a: s for s, a in abbr_of.items()}
+        if check_vintage:
+            cur_t = {(r["abbr"], int(r["year"])): int(r["population"]) for r in rows}
+            cur_a = {}
+            for r in csv.DictReader((MODEL / "state_population_age.csv").open(encoding="utf-8")):
+                cur_a.setdefault((r["abbr"], int(r["year"])), {})[r["age_group"]] = int(r["population"])
+            diff_t = sum(1 for k in totals if cur_t.get(k) != totals[k])
+            diff_a = sum(1 for k in pop for (_, _, lab), val in zip(AGE_GROUPS, pop[k]) if cur_a.get(k, {}).get(lab) != val)
+            return f"Vintage {v}: rebuilt from Census files; differences from the site's files: totals {diff_t}, age cells {diff_a}"
         src_t = f"US Census Bureau, Vintage {v} estimates NST-EST{v}-POP (July 1)"
         src_a = f"US Census Bureau, Vintage {v} estimates SC-EST{v}-ALLDATA6 (July 1 resident population)"
         if not dry:
@@ -284,7 +309,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("what", choices=["acs", "fars", "cpi", "population", "all"])
     ap.add_argument("--dry-run", action="store_true", help="fetch and check, but write nothing")
-    ap.add_argument("--check-year", type=int, help="fars only: compute one year and print it (no writing)")
+    ap.add_argument("--check-year", type=int, help="acs/fars: compute one year and print it (no writing)")
+    ap.add_argument("--check-vintage", type=int, help="population: rebuild one vintage and compare (no writing)")
     ap.add_argument("--report", help="write a short Markdown report here")
     a = ap.parse_args()
     jobs = {"acs": acs, "fars": fars, "cpi": cpi, "population": population}
@@ -294,9 +320,15 @@ def main() -> int:
         try:
             if name == "fars" and a.check_year:
                 msg = fars(True, a.check_year)
+            elif name == "acs" and a.check_year:
+                msg = acs(True, a.check_year)
+            elif name == "population" and a.check_vintage:
+                msg = population(True, a.check_vintage)
             else:
                 msg = jobs[name](a.dry_run)
             lines.append(f"- {name}: {msg}")
+        except Unreachable as e:
+            lines.append(f"- {name}: could not reach the source this month, nothing changed; will try again next month ({e})")
         except Exception as e:  # noqa: BLE001 - report every failure, keep going with the rest
             failed = True
             lines.append(f"- {name}: FAILED, nothing written ({type(e).__name__}: {e})")

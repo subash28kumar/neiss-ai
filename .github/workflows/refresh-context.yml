@@ -33,7 +33,12 @@ jobs:
           python scripts/refresh_context.py all --dry-run --report report.md || true
           echo "--- FARS 2024 from the raw files (NHTSA's printed 2024 table: US 1,103; CA 163; FL 208; MA 10; WY 1):"
           python scripts/refresh_context.py fars --check-year 2024 || true
-          cat report.md
+          echo "--- ACS 2025 from the Census API, compared with the file on the site:"
+          python scripts/refresh_context.py acs --check-year 2025 || true
+          echo "--- Population Vintage 2025 rebuilt from Census files, compared with the site's files:"
+          python scripts/refresh_context.py population --check-vintage 2025 || true
+          echo "--- Medical prices (BLS):"
+          python scripts/refresh_context.py cpi --dry-run || true
 
       - name: Fetch and check outside data
         id: fetch
