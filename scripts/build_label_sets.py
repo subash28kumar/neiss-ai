@@ -1,6 +1,7 @@
 """Build docs/data/label_sets.json for the blind labelling page (docs/label.html).
 
-Sets A and B are locked accuracy tests (never learned from). Set C ("Help train") is built by
+Sets A and B are locked accuracy tests (never learned from). Set D is a blind device check of
+2019-2023 stories (answer key kept private, never in this repository). Set C ("Help train") is built by
 scripts/build_train_set.py from the hardest e-bike stories; trusted answers to it teach NEISS-AI.
 
 Only the case number and the story are written. The reference answers and NEISS-AI's own
@@ -40,6 +41,10 @@ c = train_set()
 c["note"] = ("Help NEISS-AI learn: the hardest e-bike stories. Your answers teach the tool only when at least two "
              "approved reviewers agree. A few stories with known answers are mixed in as quality checks.")
 sets.append({k: c[k] for k in ("id", "title", "questions", "learn", "note", "items")})
+sets.append({"id": "D", "file": "set_d_device_2019_2023.csv", "title": "Set D: which vehicle? (120 stories, 2019-2023)",
+             "questions": ["device"], "items": items("set_d_device_2019_2023.csv", "id", 14),
+             "note": ("Blind check of stories from 2019 to 2023, before CPSC had a separate e-bike code: which vehicle "
+                      "was the injured person riding? Your answers check NEISS-AI; they do not teach it.")})
 out = ROOT / "docs" / "data" / "label_sets.json"
 out.write_text(json.dumps({"sets": sets}, separators=(",", ":")))
 print("wrote", out, [len(s["items"]) for s in sets])
