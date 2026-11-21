@@ -68,3 +68,10 @@ def test_site_compare_box_matches_workbook_numbers():
     site = json.loads((ROOT / "docs" / "data" / "state_estimates.json").read_text())
     ma = site["states"]["MA"]["age"]["E-bike"]["2025"]
     assert site["age_groups"][4] == "25-44" and ma[4] == [656, 402, 910]
+
+
+def test_state_cyclist_deaths_file_matches_nhtsa_totals():
+    d = json.loads((ROOT / "docs" / "data" / "state_cyclist_deaths_2024.json").read_text())
+    assert len(d["states"]) == 51 and d["year"] == 2024
+    assert sum(v["deaths"] for v in d["states"].values()) == d["us"]["deaths"] == 1103
+    assert d["states"]["CA"]["deaths"] == 163 and d["states"]["FL"]["deaths"] == 208

@@ -2,6 +2,14 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State card: real bicyclist road deaths (NHTSA) — 2026-11-21
+
+- The state card now shows real bicyclist deaths in traffic crashes for 2024 (including e-bike
+  riders, since NHTSA counts riders of bicycles powered by pedals, motors or both from 2022): the
+  number, the share of all traffic deaths and the rate per 100,000 people compared with the US rate.
+  Source: NHTSA Traffic Safety Facts, Bicyclists and Other Cyclists: 2024 Data, Table 6 (FARS 2024
+  Annual Report File). Shown for e-bikes and bicycles. New file: docs/data/state_cyclist_deaths_2024.json.
+
 ## Tap a state for detailed insights — 2026-11-21
 
 - Tapping a state on the map (or one of the top-5 buttons) opens a card under the map and scrolls to
