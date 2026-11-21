@@ -104,6 +104,27 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .dotkey{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffb347;box-shadow:0 0 4px rgba(255,170,60,.9);margin-right:2px;border:1px solid #c77a1a}
 .onein{font-weight:600;color:var(--text)}
 @media (prefers-reduced-motion:reduce){.dotlayer circle,.dotlayer circle.tw{animation:none}}
+.stcard{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px 18px;margin:14px 0;box-shadow:0 2px 10px rgba(0,0,0,.06);animation:cardin .35s ease-out both}
+@keyframes cardin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.stcard{animation:none}}
+.stcard[hidden]{display:none}
+.stcard .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.stcard .cardhead h3{margin:0;font-size:20px}
+.stcard .cardhead p{margin:2px 0 0;color:var(--text-2);font-size:13px}
+.stcard .x{font:inherit;font-size:20px;line-height:1;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;width:34px;height:34px;cursor:pointer}
+.stcard .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin:12px 0}
+.stcard .k{background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.stcard .k .v{font-size:22px;font-weight:700;color:var(--text)}
+.stcard .k .l{font-size:12.5px;color:var(--text-2);margin-top:2px}
+.stcard h4{margin:16px 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.stcard h4 .tag{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#b7791f;border:1px solid rgba(183,121,31,.45);border-radius:999px;padding:1px 8px}
+.stcard ul.ins{margin:4px 0 0;padding-left:18px}
+.stcard ul.ins li{margin:4px 0}
+.stcard .bars{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:center;font-size:13px;max-width:560px}
+.stcard .bar{height:12px;border-radius:0 4px 4px 0;background:var(--h4,#a44314);min-width:2px}
+.stcard .bar.top{background:var(--h5,#6b2a0c)}
+.stcard .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.stcard .fine{font-size:12.5px;color:var(--text-3);margin-top:10px}
 @keyframes stglow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,196,64,.55))}50%{filter:drop-shadow(0 0 9px rgba(255,196,64,1))}}
 .sttop{filter:drop-shadow(0 0 4px rgba(255,196,64,.85));animation:stglow 2.6s ease-in-out .6s 4}
 .sttop .stshape{stroke:#ffcf5a;stroke-width:1.6}
@@ -400,6 +421,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="tiles" id="sttiles"></div>
     <div class="reqbox" id="stfc" hidden></div>
     <div class="chart" id="stmap" aria-label="Map of US states"></div>
+    <div class="stcard" id="stcard" hidden aria-live="polite"></div>
     <p class="note" id="stnote"></p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="stcopy" type="button">Copy a sentence for my report</button>
@@ -5226,11 +5248,11 @@ function renderState(push){
   const TOP=Object.keys(STATE_POP).map(a=>[a,stExp(a,ST.dev,y)]).filter(x=>x[1]).sort((p,q)=>q[1].est-p[1].est).slice(0,5).map(x=>x[0]);
   {const tl=h('div',{class:'sttoplist'});tl.appendChild(h('span',{text:ST.view==='dots'?'Most expected visits:':'Most expected visits (glowing on the map):'}));
    TOP.forEach((a,i)=>{const b=h('button',{type:'button','aria-label':`Number ${i+1}: ${STATE_POP[a].n}, about ${fmt(stExp(a,ST.dev,y).est)} visits. Show this state.`},h('b',{class:'rk',text:String(i+1)}),`${STATE_POP[a].n} ${fmt(stExp(a,ST.dev,y).est)}`);
-     b.addEventListener('click',()=>{ST.abbr=a;renderState(true);stCount();});tl.appendChild(b);});
+     b.addEventListener('click',()=>{ST.abbr=a;ST.cardScroll=true;renderState(true);stCount();});tl.appendChild(b);});
    W.appendChild(tl);}
   const hook=(g,a,e)=>{g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} ${ST.dev} visits`);g.style.cursor='pointer';
     const t=el('title',{},g);t.textContent=`${STATE_POP[a].n}: about ${e?fmt(e.est):'n/a'} (${e?fmt(e.lo):''} to ${e?fmt(e.hi):''})`;
-    const go=()=>{ST.abbr=a;renderState(true);stCount();};g.addEventListener('click',go);g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go();}});};
+    const go=()=>{ST.abbr=a;ST.cardScroll=true;renderState(true);stCount();};g.addEventListener('click',go);g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go();}});};
   if(ST.view==='map'){
     const svg=el('svg',{viewBox:'0 0 975 610',width:'100%',style:'max-width:760px;display:block',class:'stfade',role:'img','aria-label':`Map: expected ${ST.dev} emergency department visits by state, ${y}`},W);
     const order=Object.keys(STATE_SHAPES).sort((a,b)=>((a===pick)*2+TOP.includes(a))-((b===pick)*2+TOP.includes(b)));  // selected state drawn last so its outline shows
@@ -5271,7 +5293,7 @@ function renderState(push){
       el('rect',{class:'stshape',x,y:yy,width:sz,height:sz,rx:4,fill,stroke:a===pick?txtc:'none','stroke-width':a===pick?3:0},g);
       txt(g,a,{x:x+sz/2,y:yy+sz/2+1,'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(10,Math.round(sz*0.3)),'font-weight':'600',fill:lab});hook(g,a,e);});
   }
-  W.appendChild(h('p',{class:'note',text:ST.view==='dots'?`Each dot is ${DOTV.toLocaleString('en-US')} expected ${ST.dev.toLowerCase()} emergency department visits in ${y}, placed at random inside the state: dots do not show where injuries happened. More people means more dots, because state numbers come from national rates and each state's population by age, not from local injury rates. Tap a state for its numbers.`:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The 5 states with the most expected visits glow; they are mostly the most populous states, because these numbers come from national rates and each state's population, not from local injury rates. Tap a state for its numbers.`}));
+  W.appendChild(h('p',{class:'note',text:ST.view==='dots'?`Each dot is ${DOTV.toLocaleString('en-US')} expected ${ST.dev.toLowerCase()} emergency department visits in ${y}, placed at random inside the state: dots do not show where injuries happened. More people means more dots, because state numbers come from national rates and each state's population by age, not from local injury rates. Tap a state for detailed insights.`:`The key above runs from fewest to most expected ${ST.dev.toLowerCase()} visits in ${y}; each of the 5 colours holds about 10 states. The 5 states with the most expected visits glow; they are mostly the most populous states, because these numbers come from national rates and each state's population, not from local injury rates. Tap a state for detailed insights.`}));
   const r=natRow(ST.dev,y), adj=!!(STE&&STE.states);
   const B=document.getElementById('stbrief');
   if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
@@ -5306,7 +5328,93 @@ function renderState(push){
     csvTools('tbstfc',`Forecast emergency department visits by state, ${f0}-${fN} (central, with 80% ranges in the CSV)`,['state','device','year','forecast_central','range80_low','range80_high'],Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).flatMap(a=>fdev.flatMap(d=>fy.map(yy=>{const v=STE.states[a].fc[d][yy];return [STATE_POP[a].n,d,yy,v[0],v[1],v[2]];}))),`neissai_state_forecast_${f0}_${fN}.csv`,STE.forecast.method+' Forecasts from past trends, not counts and not predictions of the effect of any law.');
   }else{FB.hidden=true;FA.hidden=true;}
   csvTools('tbst',`Expected emergency department visits by state, ${y}`+(adj?' (age-adjusted, with population-only for comparison)':' (national rate x state population)'),head,rows,`neiss-ai_expected_by_state_${y}.csv`,adj?'Estimates, not counts. Age-adjusted: national NEISS-AI estimate for each age group times the state share of US population in that age group (US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6), summed. Population only: national estimate times the state share of US population. Ranges reflect national sampling uncertainty only.':'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
+  renderStCard();
   renderCompare();
+}
+
+/* ---------- State insight card (opens when a state is tapped) ---------- */
+function stCardData(a,d,y){
+  const e=stExp(a,d,y); if(!e) return null;
+  const pop=STATE_POP[a].p[y], oneIn=x=>{const m=Math.pow(10,Math.floor(Math.log10(x))-1);return Math.round(x/m)*m;};
+  const all=Object.keys(STATE_POP).map(b=>[b,(stExp(b,d,y)||{est:0}).est]).sort((p,q)=>q[1]-p[1]);
+  const rank=all.findIndex(x=>x[0]===a)+1;
+  const devs=['E-bike','E-scooter','Bicycle'].map(dd=>{const x=stExp(a,dd,y);return {d:dd,est:x?x.est:0,lo:x?x.lo:0,hi:x?x.hi:0,one:x&&x.est?oneIn(pop/x.est):null};});
+  const per10=yy=>{const eb=stExp(a,'E-bike',yy),bi=stExp(a,'Bicycle',yy);return eb&&bi&&bi.est?eb.est/bi.est*10:null;};
+  let moto=null;
+  if(d==='E-bike'){const T=DATA.by_ebike_type.filter(r=>r.year===y);const tot=T.reduce((s,r)=>s+r.est,0),lm=T.find(r=>r.type==='likely e-moto');if(tot&&lm)moto={n:e.est*lm.est/tot,share:lm.est/tot};}
+  let hosp=null; const ag=STE&&STE.states[a].age&&STE.states[a].age[d]&&STE.states[a].age[d][String(y)];
+  if(ag&&DATA.hospitalized.some(r=>r.device===d)){const sh=g=>(DATA.hospitalized.find(r=>r.device===d&&r.age_group===g)||{}).share||0;
+    const kids=ag[0][0]+ag[1][0]+ag[2][0], adults=ag[3][0]+ag[4][0]+ag[5][0], old=ag[6][0];
+    const n=kids*sh('0-17')+adults*sh('18-64')+old*sh('65+'); hosp={n,share:n/(kids+adults+old)};}
+  const mon=(()=>{const tot=Array(12).fill(0);DATA.by_month.filter(r=>r.device===d&&r.year>=y-2&&r.year<=y).forEach(r=>tot[r.month-1]+=r.est);const s=tot.reduce((p,q)=>p+q,0);if(!s)return null;
+    const idx=[...tot.keys()].sort((p,q)=>tot[q]-tot[p]).slice(0,3).sort((p,q)=>p-q);return {idx,share:idx.reduce((p,i)=>p+tot[i],0)/s};})();
+  const yrs=[2020,2021,2022,2023,2024,2025].filter(v=>v<=y), trend=yrs.map(v=>[v,(stExp(a,d,v)||{est:0}).est]);
+  const fc=(y===2025&&STE&&STE.forecast&&STE.states[a].fc&&STE.states[a].fc[d])?STE.forecast.years.map(v=>[v,...STE.states[a].fc[d][v]]):[];
+  return {a,d,y,e,pop,one:e.est?oneIn(pop/e.est):null,rank,n:all.length,devs,per10:per10(y),per10_2020:per10(2020),moto,hosp,mon,trend,fc,ages:ag?STE.age_groups.map((g,i)=>[g,ag[i][0]]):null};
+}
+function stSpark(C,cw){
+  const W=Math.max(300,Math.min(560,Math.round(cw||560))),H=W<420?190:170,P={l:46,r:14,t:22,b:26}, pts=[...C.trend.map(([x,v])=>[x,v,v,v]),...C.fc.map(([x,c,lo,hi])=>[x,c,lo,hi])];
+  const xs=pts.map(p=>p[0]), max=Math.max(...pts.map(p=>p[3]))*1.08||1;
+  const X=x=>P.l+(x-xs[0])/(xs[xs.length-1]-xs[0]||1)*(W-P.l-P.r), Y=v=>H-P.b-(v/max)*(H-P.t-P.b);
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:'100%',style:'max-width:560px;display:block',role:'img','aria-label':`Trend of expected ${C.d} visits in ${STATE_POP[C.a].n}`});
+  [0,0.5,1].forEach(f=>{const v=max*f/1.08;el('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:css('--grid'),'stroke-width':1},svg);txt(svg,fmt(v),{x:P.l-6,y:Y(v)+4,'text-anchor':'end','font-size':11,fill:css('--text-3')});});
+  const acc=css('--h4')||css('--accent');
+  if(C.fc.length){const last=C.trend[C.trend.length-1];const band=[[last[0],last[1]],...C.fc.map(f=>[f[0],f[3]])].map(([x,v])=>`${X(x)},${Y(v)}`).join(' ')+' '+[...C.fc.map(f=>[f[0],f[2]])].reverse().concat([[last[0],last[1]]]).map(([x,v])=>`${X(x)},${Y(v)}`).join(' ');
+    el('polygon',{points:band,fill:acc,'fill-opacity':0.14},svg);
+    el('polyline',{points:[[last[0],last[1]],...C.fc.map(f=>[f[0],f[1]])].map(([x,v])=>`${X(x)},${Y(v)}`).join(' '),fill:'none',stroke:acc,'stroke-width':2,'stroke-dasharray':'5 4'},svg);
+    const fl=C.fc[C.fc.length-1];txt(svg,`${fl[0]}: about ${fmt(fl[1])}`,{x:X(fl[0]),y:Y(fl[3])-6,'text-anchor':'end','font-size':11.5,fill:css('--text-2')});}
+  el('polyline',{points:C.trend.map(([x,v])=>`${X(x)},${Y(v)}`).join(' '),fill:'none',stroke:acc,'stroke-width':2.5,'stroke-linejoin':'round'},svg);
+  C.trend.forEach(([x,v])=>el('circle',{cx:X(x),cy:Y(v),r:3,fill:acc},svg));
+  const l=C.trend[C.trend.length-1];txt(svg,`${l[0]}: ${fmt(l[1])}`,{x:X(l[0])+(C.fc.length?-4:6),y:Y(l[1])-8,'text-anchor':C.fc.length?'end':'start','font-size':11.5,'font-weight':'600',fill:css('--text')});
+  xs.forEach(x=>txt(svg,String(x),{x:X(x),y:H-8,'text-anchor':'middle','font-size':11,fill:css('--text-3')}));
+  return svg;
+}
+function renderStCard(){
+  const box=document.getElementById('stcard'); if(!box) return;
+  const a=ST.abbr; if(!a||!STATE_POP[a]){box.hidden=true;box.textContent='';return;}
+  const C=stCardData(a,ST.dev,ST.year); if(!C){box.hidden=true;return;}
+  const N=STATE_POP[a].n, dl=ST.dev.toLowerCase(), y=ST.year, MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  box.textContent=''; box.hidden=false;
+  const close=h('button',{class:'x',type:'button','aria-label':'Close state details',text:'×'});close.addEventListener('click',()=>{ST.abbr='';renderState(true);});
+  box.appendChild(h('div',{class:'cardhead'},h('div',null,h('h3',{text:`${N}: ${dl} injuries, ${y}`}),h('p',{text:'Estimates from national emergency department data and the state\'s population by age, not counts.'})),close));
+  const k=(v,l)=>h('div',{class:'k'},h('div',{class:'v',text:v}),h('div',{class:'l',text:l}));
+  box.appendChild(h('div',{class:'kgrid'},
+    k('about '+fmt(C.e.est),`emergency department visits (95% range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})`),
+    k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents had a visit'),
+    k(`#${C.rank} of ${C.n}`,`states by number of ${dl} visits`),
+    C.fc.length?k('about '+fmt(C.fc[0][1]),`expected in ${C.fc[0][0]} (80% range ${fmt(C.fc[0][2])} to ${fmt(C.fc[0][3])})`):null));
+  // trend + forecast
+  box.appendChild(h('h4',null,h('span',{class:'tag',text:'Forecast'}),'Trend and outlook'));
+  box.appendChild(stSpark(C,box.clientWidth-36));
+  const f2020=C.trend[0][1], fl=C.trend[C.trend.length-1][1];
+  box.appendChild(h('p',{class:'fine',text:(f2020>0&&C.trend.length>1?`About ${(fl/f2020).toFixed(1)} times the ${C.trend[0][0]} level. `:'')+(C.fc.length?`Dashed line: NEISS-AI forecast with 80% range; it follows past national trends and assumes ${N} keeps its 2025 share. It cannot predict the effect of a new law.`:'')}));
+  // transportation
+  const tr=[];
+  tr.push(h('li',null,'Visits in '+y+': ',...C.devs.map((x,i)=>[h('b',{text:`${x.d} about ${fmt(x.est)}`}),x.one?` (1 in ${x.one.toLocaleString('en-US')})`:'',i<2?' · ':''])));
+  if(C.per10!=null)tr.push(h('li',{text:`About ${C.per10.toFixed(1)} e-bike injuries for every 10 bicycle injuries`+(C.per10_2020!=null&&y>2020?`, up from ${C.per10_2020.toFixed(1)} in 2020: riders are shifting to e-bikes.`:'.')}));
+  if(C.moto)tr.push(h('li',{text:`At least ${C.moto.n<10?'a few':fmt(C.moto.n)} of these e-bike visits were likely e-motos (faster, motorcycle-like vehicles), based on the national share of ${(C.moto.share*100).toFixed(1)}%; the true number is probably higher.`}));
+  box.appendChild(h('h4',null,h('span',{class:'tag',text:'Transportation'}),'Which vehicles'));
+  box.appendChild(h('ul',{class:'ins'},tr));
+  // public health
+  const ph=[];
+  if(C.hosp)ph.push(h('li',{text:`About ${fmt(C.hosp.n)} of these visits likely ended in a hospital stay (${Math.round(C.hosp.share*100)}%, using national hospital-stay shares by age, 2019-2025).`}));
+  if(C.mon)ph.push(h('li',{text:`Busiest months nationally: ${C.mon.idx.map(i=>MON[i]).join(', ')} (${Math.round(C.mon.share*100)}% of ${dl} visits, ${y-2}-${y}). Safety campaigns work best just before these months.`}));
+  if(ph.length){box.appendChild(h('h4',null,h('span',{class:'tag',text:'Public health'}),'Burden and timing'));box.appendChild(h('ul',{class:'ins'},ph));}
+  if(C.ages){const mx=Math.max(...C.ages.map(x=>x[1]))||1, top=C.ages.reduce((p,q)=>q[1]>p[1]?q:p);
+    box.appendChild(h('h4',null,h('span',{class:'tag',text:'Who'}),'Visits by age group'));
+    const g=h('div',{class:'bars'});C.ages.forEach(([lab,v])=>{const b=h('div',{class:'bar'+(lab===top[0]?' top':'')});b.style.width=(v/mx*100).toFixed(1)+'%';g.appendChild(h('span',{text:lab}));g.appendChild(h('div',null,b));g.appendChild(h('span',{text:fmt(v)}));});
+    box.appendChild(g);
+    box.appendChild(h('p',{class:'fine',text:`Most visits: ages ${top[0]} (about ${fmt(top[1])}). Small groups rest on few injury notes; read them with care.`}));}
+  // actions
+  const acts=h('div',{class:'acts'});
+  if(STE&&STE.states){const br=h('a',{class:'btn primary',href:stBriefUrl(a),download:'',text:'Download state brief (PDF)'});br.addEventListener('click',()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'brief-'+a,title:'State brief PDF: '+N,event:true});}catch(e){}});acts.appendChild(br);}
+  const go=(id)=>()=>{const t=document.getElementById(id);if(t){t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}};
+  const cb=h('button',{class:'btn',type:'button',text:'Compare with your own counts'});cb.addEventListener('click',go('stcmp'));acts.appendChild(cb);
+  const cp=h('button',{class:'btn',type:'button',text:'Copy a sentence'});cp.addEventListener('click',()=>document.getElementById('stcopy').click());acts.appendChild(cp);
+  const sh=h('button',{class:'btn',type:'button',text:'Copy link'});sh.addEventListener('click',()=>document.getElementById('stshare').click());acts.appendChild(sh);
+  box.appendChild(acts);
+  box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. `+citeLine()}));
+  if(ST.cardScroll){ST.cardScroll=false;box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
 }
 
 /* ---------- Compare with your own counts (state view) ---------- */
