@@ -372,6 +372,7 @@ a.btn{text-decoration:none;display:inline-block}
       <button class="btn" id="stcopy" type="button">Copy a sentence for my report</button>
       <button class="btn" id="stshare" type="button">Copy link to this state</button>
       <a class="btn primary" id="stbrief" href="#" download hidden>Download one-page brief (PDF)</a>
+      <a class="btn" id="stbench" href="#" download hidden title="National rates by age group, your state's expected visits, and a column for your own counts">Compare your state (Excel)</a>
     </div>
     <p class="citeline" id="stcite"></p>
     <div class="reqbox">
@@ -5191,6 +5192,10 @@ function renderState(push){
   if(pick&&adj){B.hidden=false;B.href=stBriefUrl(pick);B.textContent=y===2025?'Download one-page brief (PDF)':'Download 2025 one-page brief (PDF)';
     B.onclick=()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'brief-'+pick,title:'State brief PDF: '+STATE_POP[pick].n,event:true});}catch(e){}};}
   else{B.hidden=true;}
+  const BX=document.getElementById('stbench');
+  if(BX){if(pick&&adj){BX.hidden=false;BX.href=`benchmarks/NEISS-AI_Compare_Your_State_${pick}_2025.xlsx`;
+    BX.onclick=()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'bench-'+pick,title:'Compare your state Excel: '+STATE_POP[pick].n,event:true});}catch(e){}};}
+  else{BX.hidden=true;}}
   document.getElementById('stnote').textContent=(adj?`How it is calculated: for each of 7 age groups, the national estimate for ${ST.dev.toLowerCase()} visits in ${y} for that age group times the state's share of the US population in that age group (US Census Bureau, Vintage 2025, July 1), added up over the age groups. The national total is ${fmt(r.est)} (95% CI ${fmt(r.lo)} to ${fmt(r.hi)}). "Population only" is the national estimate times the state's share of the whole US population. The range carries the national sampling uncertainty into the state number; real differences between states (how many people ride, where, and how) are not included.`
     :`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`)+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
   document.getElementById('stcite').textContent=citeLine();
