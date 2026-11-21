@@ -2,6 +2,16 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Easier to find on Google: a page for every state — 2026-11-21
+
+- New plain pages for all 50 states and DC (docs/states/<state>.html) and a states index: the same
+  numbers as the "Your state" card in plain English (estimates clearly labelled; road deaths and
+  biking to work as real state data), with links to the interactive view, the state brief and the
+  "Compare your state" workbook. Each page has a title, description and schema.org Dataset data.
+- docs/sitemap.xml lists the home page, the states index, the press page and every state page.
+- The home page now carries schema.org Dataset and SoftwareApplication data and links to the states index.
+- The pages rebuild automatically with every data refresh (update_site.py and the monthly outside-data refresh).
+
 ## Outside data now updates itself every month — 2026-11-21
 
 - New monthly robot (.github/workflows/refresh-context.yml, scripts/refresh_context.py) keeps the
