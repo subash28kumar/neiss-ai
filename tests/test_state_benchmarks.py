@@ -75,3 +75,11 @@ def test_state_cyclist_deaths_file_matches_nhtsa_totals():
     assert len(d["states"]) == 51 and d["year"] == 2024
     assert sum(v["deaths"] for v in d["states"].values()) == d["us"]["deaths"] == 1103
     assert d["states"]["CA"]["deaths"] == 163 and d["states"]["FL"]["deaths"] == 208
+
+
+def test_state_bike_commute_file():
+    d = json.loads((ROOT / "docs" / "data" / "state_bike_commute_2024.json").read_text())
+    assert len(d["states"]) == 51 and d["year"] == 2024
+    assert sum(v["bicycle"] for v in d["states"].values()) == d["us"]["bicycle"]
+    ca = d["states"]["CA"]
+    assert ca["bicycle"] == 143419 and abs(ca["share_pct"] - 100 * ca["bicycle"] / ca["workers"]) < 0.01

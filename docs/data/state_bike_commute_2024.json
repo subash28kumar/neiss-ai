@@ -1,0 +1,370 @@
+{
+ "source": "US Census Bureau, American Community Survey 2024 1-year estimates, Table B08301 (Means of Transportation to Work), via Census Reporter",
+ "url": "https://data.census.gov/table/ACSDT1Y2024.B08301",
+ "year": 2024,
+ "note": "Workers 16 years and over whose usual way to get to work last week was a bicycle (including e-bikes ridden as bicycles), out of all workers including those who worked from home. Commuting only: leisure riding is not counted. Margins of error are at the 90% level, as published by the Census Bureau. US total = sum of the 50 states and DC.",
+ "us": {
+  "workers": 165360450,
+  "bicycle": 803184,
+  "share_pct": 0.49
+ },
+ "states": {
+  "AK": {
+   "workers": 361983,
+   "bicycle": 3370,
+   "bicycle_moe90": 1095,
+   "share_pct": 0.93,
+   "share_moe90_pct": 0.3
+  },
+  "AL": {
+   "workers": 2323881,
+   "bicycle": 1662,
+   "bicycle_moe90": 785,
+   "share_pct": 0.07,
+   "share_moe90_pct": 0.03
+  },
+  "AR": {
+   "workers": 1386650,
+   "bicycle": 2985,
+   "bicycle_moe90": 1116,
+   "share_pct": 0.22,
+   "share_moe90_pct": 0.08
+  },
+  "AZ": {
+   "workers": 3571875,
+   "bicycle": 16595,
+   "bicycle_moe90": 2368,
+   "share_pct": 0.46,
+   "share_moe90_pct": 0.07
+  },
+  "CA": {
+   "workers": 18893770,
+   "bicycle": 143419,
+   "bicycle_moe90": 6880,
+   "share_pct": 0.76,
+   "share_moe90_pct": 0.04
+  },
+  "CO": {
+   "workers": 3167362,
+   "bicycle": 30131,
+   "bicycle_moe90": 3380,
+   "share_pct": 0.95,
+   "share_moe90_pct": 0.11
+  },
+  "CT": {
+   "workers": 1874388,
+   "bicycle": 4325,
+   "bicycle_moe90": 1311,
+   "share_pct": 0.23,
+   "share_moe90_pct": 0.07
+  },
+  "DC": {
+   "workers": 388136,
+   "bicycle": 15633,
+   "bicycle_moe90": 2125,
+   "share_pct": 4.03,
+   "share_moe90_pct": 0.54
+  },
+  "DE": {
+   "workers": 500340,
+   "bicycle": 1924,
+   "bicycle_moe90": 986,
+   "share_pct": 0.38,
+   "share_moe90_pct": 0.2
+  },
+  "FL": {
+   "workers": 11086922,
+   "bicycle": 56407,
+   "bicycle_moe90": 5745,
+   "share_pct": 0.51,
+   "share_moe90_pct": 0.05
+  },
+  "GA": {
+   "workers": 5402123,
+   "bicycle": 7412,
+   "bicycle_moe90": 1414,
+   "share_pct": 0.14,
+   "share_moe90_pct": 0.03
+  },
+  "HI": {
+   "workers": 716578,
+   "bicycle": 6526,
+   "bicycle_moe90": 1200,
+   "share_pct": 0.91,
+   "share_moe90_pct": 0.17
+  },
+  "IA": {
+   "workers": 1649748,
+   "bicycle": 5609,
+   "bicycle_moe90": 1294,
+   "share_pct": 0.34,
+   "share_moe90_pct": 0.08
+  },
+  "ID": {
+   "workers": 952044,
+   "bicycle": 5844,
+   "bicycle_moe90": 1055,
+   "share_pct": 0.61,
+   "share_moe90_pct": 0.11
+  },
+  "IL": {
+   "workers": 6314165,
+   "bicycle": 40508,
+   "bicycle_moe90": 4233,
+   "share_pct": 0.64,
+   "share_moe90_pct": 0.07
+  },
+  "IN": {
+   "workers": 3355446,
+   "bicycle": 14558,
+   "bicycle_moe90": 2595,
+   "share_pct": 0.43,
+   "share_moe90_pct": 0.08
+  },
+  "KS": {
+   "workers": 1494667,
+   "bicycle": 5186,
+   "bicycle_moe90": 1204,
+   "share_pct": 0.35,
+   "share_moe90_pct": 0.08
+  },
+  "KY": {
+   "workers": 2078668,
+   "bicycle": 4883,
+   "bicycle_moe90": 1378,
+   "share_pct": 0.23,
+   "share_moe90_pct": 0.07
+  },
+  "LA": {
+   "workers": 2043342,
+   "bicycle": 7236,
+   "bicycle_moe90": 1716,
+   "share_pct": 0.35,
+   "share_moe90_pct": 0.08
+  },
+  "MA": {
+   "workers": 3752433,
+   "bicycle": 35484,
+   "bicycle_moe90": 3669,
+   "share_pct": 0.95,
+   "share_moe90_pct": 0.1
+  },
+  "MD": {
+   "workers": 3227926,
+   "bicycle": 10569,
+   "bicycle_moe90": 2025,
+   "share_pct": 0.33,
+   "share_moe90_pct": 0.06
+  },
+  "ME": {
+   "workers": 702479,
+   "bicycle": 2263,
+   "bicycle_moe90": 944,
+   "share_pct": 0.32,
+   "share_moe90_pct": 0.13
+  },
+  "MI": {
+   "workers": 4800270,
+   "bicycle": 18219,
+   "bicycle_moe90": 2465,
+   "share_pct": 0.38,
+   "share_moe90_pct": 0.05
+  },
+  "MN": {
+   "workers": 3009002,
+   "bicycle": 16777,
+   "bicycle_moe90": 2146,
+   "share_pct": 0.56,
+   "share_moe90_pct": 0.07
+  },
+  "MO": {
+   "workers": 3054047,
+   "bicycle": 6685,
+   "bicycle_moe90": 1472,
+   "share_pct": 0.22,
+   "share_moe90_pct": 0.05
+  },
+  "MS": {
+   "workers": 1302251,
+   "bicycle": 875,
+   "bicycle_moe90": 554,
+   "share_pct": 0.07,
+   "share_moe90_pct": 0.04
+  },
+  "MT": {
+   "workers": 565069,
+   "bicycle": 4896,
+   "bicycle_moe90": 1450,
+   "share_pct": 0.87,
+   "share_moe90_pct": 0.26
+  },
+  "NC": {
+   "workers": 5375927,
+   "bicycle": 10165,
+   "bicycle_moe90": 2034,
+   "share_pct": 0.19,
+   "share_moe90_pct": 0.04
+  },
+  "ND": {
+   "workers": 422457,
+   "bicycle": 1114,
+   "bicycle_moe90": 462,
+   "share_pct": 0.26,
+   "share_moe90_pct": 0.11
+  },
+  "NE": {
+   "workers": 1036126,
+   "bicycle": 4286,
+   "bicycle_moe90": 1271,
+   "share_pct": 0.41,
+   "share_moe90_pct": 0.12
+  },
+  "NH": {
+   "workers": 754095,
+   "bicycle": 1184,
+   "bicycle_moe90": 580,
+   "share_pct": 0.16,
+   "share_moe90_pct": 0.08
+  },
+  "NJ": {
+   "workers": 4772330,
+   "bicycle": 15468,
+   "bicycle_moe90": 3358,
+   "share_pct": 0.32,
+   "share_moe90_pct": 0.07
+  },
+  "NM": {
+   "workers": 954026,
+   "bicycle": 4295,
+   "bicycle_moe90": 1263,
+   "share_pct": 0.45,
+   "share_moe90_pct": 0.13
+  },
+  "NV": {
+   "workers": 1581033,
+   "bicycle": 4694,
+   "bicycle_moe90": 1698,
+   "share_pct": 0.3,
+   "share_moe90_pct": 0.11
+  },
+  "NY": {
+   "workers": 9557920,
+   "bicycle": 86388,
+   "bicycle_moe90": 6269,
+   "share_pct": 0.9,
+   "share_moe90_pct": 0.07
+  },
+  "OH": {
+   "workers": 5765669,
+   "bicycle": 21523,
+   "bicycle_moe90": 2609,
+   "share_pct": 0.37,
+   "share_moe90_pct": 0.05
+  },
+  "OK": {
+   "workers": 1876156,
+   "bicycle": 4171,
+   "bicycle_moe90": 1072,
+   "share_pct": 0.22,
+   "share_moe90_pct": 0.06
+  },
+  "OR": {
+   "workers": 2080165,
+   "bicycle": 27924,
+   "bicycle_moe90": 3237,
+   "share_pct": 1.34,
+   "share_moe90_pct": 0.16
+  },
+  "PA": {
+   "workers": 6390587,
+   "bicycle": 29734,
+   "bicycle_moe90": 3578,
+   "share_pct": 0.47,
+   "share_moe90_pct": 0.06
+  },
+  "RI": {
+   "workers": 565855,
+   "bicycle": 3993,
+   "bicycle_moe90": 1493,
+   "share_pct": 0.71,
+   "share_moe90_pct": 0.26
+  },
+  "SC": {
+   "workers": 2571377,
+   "bicycle": 6080,
+   "bicycle_moe90": 1887,
+   "share_pct": 0.24,
+   "share_moe90_pct": 0.07
+  },
+  "SD": {
+   "workers": 475913,
+   "bicycle": 1417,
+   "bicycle_moe90": 455,
+   "share_pct": 0.3,
+   "share_moe90_pct": 0.1
+  },
+  "TN": {
+   "workers": 3479795,
+   "bicycle": 3646,
+   "bicycle_moe90": 1422,
+   "share_pct": 0.1,
+   "share_moe90_pct": 0.04
+  },
+  "TX": {
+   "workers": 15130603,
+   "bicycle": 31994,
+   "bicycle_moe90": 3963,
+   "share_pct": 0.21,
+   "share_moe90_pct": 0.03
+  },
+  "UT": {
+   "workers": 1771258,
+   "bicycle": 10713,
+   "bicycle_moe90": 1896,
+   "share_pct": 0.6,
+   "share_moe90_pct": 0.11
+  },
+  "VA": {
+   "workers": 4445265,
+   "bicycle": 14266,
+   "bicycle_moe90": 2101,
+   "share_pct": 0.32,
+   "share_moe90_pct": 0.05
+  },
+  "VT": {
+   "workers": 340565,
+   "bicycle": 1708,
+   "bicycle_moe90": 697,
+   "share_pct": 0.5,
+   "share_moe90_pct": 0.2
+  },
+  "WA": {
+   "workers": 3932815,
+   "bicycle": 29999,
+   "bicycle_moe90": 3740,
+   "share_pct": 0.76,
+   "share_moe90_pct": 0.1
+  },
+  "WI": {
+   "workers": 3050562,
+   "bicycle": 15361,
+   "bicycle_moe90": 2051,
+   "share_pct": 0.5,
+   "share_moe90_pct": 0.07
+  },
+  "WV": {
+   "workers": 759466,
+   "bicycle": 1327,
+   "bicycle_moe90": 612,
+   "share_pct": 0.17,
+   "share_moe90_pct": 0.08
+  },
+  "WY": {
+   "workers": 294920,
+   "bicycle": 1753,
+   "bicycle_moe90": 723,
+   "share_pct": 0.59,
+   "share_moe90_pct": 0.24
+  }
+ }
+}
