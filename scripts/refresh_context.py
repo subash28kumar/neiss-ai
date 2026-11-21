@@ -7,7 +7,7 @@ website never shows half-updated or broken numbers.
 
 Sources
   acs         US Census Bureau, American Community Survey 1-year, Table B08301 (biking to work),
-              from the official Census Data API          -> docs/data/state_bike_commute.json
+              from the official ACS table-based summary file (no key needed)          -> docs/data/state_bike_commute.json
   fars        NHTSA Fatality Analysis Reporting System (FARS) national CSV files: bicyclists and
               other cyclists killed, by state            -> docs/data/state_cyclist_deaths.json
   cpi         US Bureau of Labor Statistics, CPI-U Medical care (CUUS0000SAM, semiannual), from
@@ -102,27 +102,27 @@ def acs(dry: bool, check_year: int | None = None) -> str:
     have = cur["year"] if cur else 0
     this_year = dt.date.today().year
     for year in ([check_year] if check_year else range(this_year, have, -1)):
-        url = (f"https://api.census.gov/data/{year}/acs/acs1?get=NAME,B08301_001E,B08301_001M,"
-               f"B08301_018E,B08301_018M&for=state:*")
-        raw = get(url)
+        # Official ACS table-based summary file (no key needed): one pipe-separated file per table.
+        url = (f"https://www2.census.gov/programs-surveys/acs/summary_file/{year}/table-based-SF/data/"
+               f"1YRData/acsdt1y{year}-b08301.dat")
+        raw = get(url, timeout=300)
         if not raw:
             if check_year:
-                return f"{year}: Census API gave no data (HTTP 204/400/404) for {url}"
+                return f"{year}: no summary file yet at {url}"
             continue
-        try:
-            rows = json.loads(raw)
-        except ValueError:
-            if check_year:
-                return f"{year}: Census API answered with text, not data: {raw[:300]!r}"
-            continue  # the API answers with a text/HTML message when a year is not published yet
-        head, rows = rows[0], rows[1:]
-        ix = {k: head.index(k) for k in head}
+        rd = csv.DictReader(io.StringIO(raw.decode("utf-8", "replace")), delimiter="|")
+        cols = {k.upper(): k for k in (rd.fieldnames or [])}
+        need = ["GEO_ID", "B08301_E001", "B08301_M001", "B08301_E018", "B08301_M018"]
+        check(all(n in cols for n in need), f"ACS {year}: unexpected columns {list(cols)[:8]}")
         out, T, B = {}, 0, 0
-        for r in rows:
-            ab = FIPS.get(r[ix["state"]])
+        for r in rd:
+            g = r[cols["GEO_ID"]]
+            if not g.startswith("0400000US"):
+                continue
+            ab = FIPS.get(g[-2:])
             if not ab:
                 continue  # Puerto Rico
-            y, my, x, mx = (int(float(r[ix[k]])) for k in ("B08301_001E", "B08301_001M", "B08301_018E", "B08301_018M"))
+            y, my, x, mx = (int(float(r[cols[k]])) for k in need[1:])
             check(y > 0 and 0 <= x < y, f"ACS {year} {ab}: impossible numbers (workers {y}, bicycle {x})")
             p = x / y
             inner = mx ** 2 - (p ** 2) * (my ** 2)
@@ -137,14 +137,15 @@ def acs(dry: bool, check_year: int | None = None) -> str:
         if cur:
             check(0.6 < T / cur["us"]["workers"] < 1.4, f"ACS {year}: total workers changed too much")
         doc = {"source": f"US Census Bureau, American Community Survey {year} 1-year estimates, Table B08301 "
-                         f"(Means of Transportation to Work), from the Census Data API",
+                         f"(Means of Transportation to Work), from the official ACS summary file",
                "url": f"https://data.census.gov/table/ACSDT1Y{year}.B08301", "year": year,
                "note": (cur or {}).get("note", "Workers 16 years and over whose usual way to get to work was a bicycle."),
                "us": {"workers": T, "bicycle": B, "share_pct": round(share, 2)},
                "states": dict(sorted(out.items()))}
         if check_year:
             same = cur and cur["year"] == year and cur["states"] == doc["states"]
-            return f"{year}: US {doc['us']}; CA {out['CA']}; matches the file on the site: {bool(same)}"
+            nd = sum(1 for k in out if not cur or cur["states"].get(k) != out[k])
+            return f"{year}: US {doc['us']}; CA {out['CA']}; matches the file on the site: {bool(same)} (states different: {nd})"
         return f"updated to {year}" if write_if_changed(path, doc, dry) else f"{year} already in use"
     return f"no newer year than {have}"
 
