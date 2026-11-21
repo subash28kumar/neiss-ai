@@ -85,6 +85,9 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .tbltools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
 .citeline{font-size:12px;color:var(--text-3);margin:6px 0 0;overflow-wrap:anywhere}
 .reqbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}
+.reqbox[hidden]{display:none}
+.cmpbox{display:block}
+.cmpbox table td input{font:inherit}
 .reqbox p{margin:0;font-size:14px;max-width:64ch}
 .reqbox .actions{margin:0}
 details{margin-top:12px}
@@ -373,6 +376,21 @@ a.btn{text-decoration:none;display:inline-block}
       <button class="btn" id="stshare" type="button">Copy link to this state</button>
       <a class="btn primary" id="stbrief" href="#" download hidden>Download one-page brief (PDF)</a>
       <a class="btn" id="stbench" href="#" download hidden title="US rates by age group, your state's benchmark (visits at the US rate), and a column for your own counts">Compare your state (Excel)</a>
+    </div>
+    <div class="reqbox cmpbox" id="stcmp" hidden>
+      <h3 style="margin-top:0">Compare with your own counts</h3>
+      <p class="desc" id="stcmpdesc"></p>
+      <div class="filters">
+        <label class="field">Device<select id="stcmpDev" aria-label="Device to compare"><option>E-bike</option><option>E-scooter</option><option>Bicycle</option></select></label>
+      </div>
+      <div class="tablewrap" id="stcmptab"></div>
+      <p id="stcmpres" aria-live="polite" style="font-weight:600"></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="stcmpEx" type="button">Try an example (made-up number)</button>
+        <button class="btn" id="stcmpClr" type="button">Clear</button>
+        <button class="btn" id="stcmpCsv" type="button">Download as CSV</button>
+      </div>
+      <p class="note">The numbers you type stay on your computer: nothing is sent or saved. Benchmark = the number of visits the state would have if it matched the US rate in that age group (US rate x the state's population in that age group). It is an estimate from national data, not a count. A count inside the 95% range is consistent with the US rate. Differences can come from how much people ride, local roads, weather and rules, or from a different way of counting (for example hospital codes that cannot tell an e-bike from a bicycle). Small age groups, such as under 5, rest on few injury notes; read them with care.</p>
     </div>
     <p class="citeline" id="stcite"></p>
     <div class="reqbox">
@@ -5221,7 +5239,70 @@ function renderState(push){
     csvTools('tbstfc',`Forecast emergency department visits by state, ${f0}-${fN} (central, with 80% ranges in the CSV)`,['state','device','year','forecast_central','range80_low','range80_high'],Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).flatMap(a=>fdev.flatMap(d=>fy.map(yy=>{const v=STE.states[a].fc[d][yy];return [STATE_POP[a].n,d,yy,v[0],v[1],v[2]];}))),`neissai_state_forecast_${f0}_${fN}.csv`,STE.forecast.method+' Forecasts from past trends, not counts and not predictions of the effect of any law.');
   }else{FB.hidden=true;FA.hidden=true;}
   csvTools('tbst',`Expected emergency department visits by state, ${y}`+(adj?' (age-adjusted, with population-only for comparison)':' (national rate x state population)'),head,rows,`neiss-ai_expected_by_state_${y}.csv`,adj?'Estimates, not counts. Age-adjusted: national NEISS-AI estimate for each age group times the state share of US population in that age group (US Census Bureau Vintage 2025, SC-EST2025-ALLDATA6), summed. Population only: national estimate times the state share of US population. Ranges reflect national sampling uncertainty only.':'Estimates, not counts: national NEISS-AI estimate times the state share of US population (US Census Bureau Vintage 2025). Ranges reflect only national-estimate uncertainty.');
+  renderCompare();
 }
+
+/* ---------- Compare with your own counts (state view) ---------- */
+const CMP={key:'',vals:{},example:false};
+function cmpData(){
+  const a=ST.abbr, y=String(ST.year), d=document.getElementById('stcmpDev').value;
+  if(!a||!STE||!STE.states||!STE.states[a]||!STE.states[a].age||!STE.states[a].age[d]||!STE.states[a].age[d][y])return null;
+  const g=STE.states[a].age[d][y], t=STE.states[a].e[d][y];
+  return {a,y,d,name:STATE_POP[a].n,groups:STE.age_groups.map((lab,k)=>({lab,est:g[k][0],lo:g[k][1],hi:g[k][2]})),tot:{est:g.reduce((s,v)=>s+v[0],0),lo:t[1],hi:t[2]}};
+}
+function cmpRatioText(mine,b,lo,hi){const r=mine/b, pct=Math.round(Math.abs(r-1)*100);
+  const dir=r>=1?`${pct}% more than`:`${pct}% fewer than`; const inside=mine>=lo&&mine<=hi;
+  return {r, txt:(pct===0?'about the same as':dir)+' the benchmark', inside};}
+function renderCompare(){
+  const box=document.getElementById('stcmp'); if(!box)return;
+  const D=cmpData(); if(!D){box.hidden=true;return;}
+  box.hidden=false;
+  const key=D.a+'|'+D.y+'|'+D.d; if(key!==CMP.key){CMP.key=key;CMP.vals={};CMP.example=false;}
+  document.getElementById('stcmpdesc').textContent=`Have your own emergency department counts for ${D.name} in ${D.y}? "Benchmark" is the number of ${D.d.toLowerCase()} visits ${D.name} would have at the US rate for each age group. Type your counts in the yellow "Your count" boxes. Ratio = your count / benchmark: 1.00 = the same, 1.50 = 50% more, 0.50 = half.`;
+  const W=document.getElementById('stcmptab'); W.textContent='';
+  const t=h('table');
+  t.appendChild(h('tr',null,['Age group','Benchmark','95% range','Your count','Ratio'].map(x=>h('th',{text:x}))));
+  const rowEls=[];
+  D.groups.forEach((g,k)=>{
+    const inp=h('input',{type:'number',min:'0',step:'1',inputmode:'numeric','aria-label':`Your count, ${g.lab}`,style:'width:5.5em;background:#fff8e1;color:#222;border:1px solid #c9b46a;border-radius:4px;padding:3px 6px'});
+    if(CMP.vals[k]!=null)inp.value=CMP.vals[k];
+    const rc=h('td',{text:''});
+    inp.addEventListener('input',()=>{CMP.example=false;const v=inp.value.trim();if(v===''||isNaN(+v)||+v<0)delete CMP.vals[k];else CMP.vals[k]=Math.round(+v);cmpUpdate(D,rowEls,totEls);});
+    t.appendChild(h('tr',null,h('td',{text:g.lab}),h('td',{text:g.est.toLocaleString('en-US')}),h('td',{text:`${g.lo.toLocaleString('en-US')} to ${g.hi.toLocaleString('en-US')}`}),h('td',null,inp),rc));
+    rowEls.push({g,inp,rc});
+  });
+  const yc=h('td',{text:''}), rcT=h('td',{text:''});
+  t.appendChild(h('tr',{style:'font-weight:600'},h('td',{text:'All ages'}),h('td',{text:D.tot.est.toLocaleString('en-US')}),h('td',{text:`${D.tot.lo.toLocaleString('en-US')} to ${D.tot.hi.toLocaleString('en-US')}`}),yc,rcT));
+  const totEls={yc,rcT};
+  W.appendChild(t);
+  cmpUpdate(D,rowEls,totEls);
+  document.getElementById('stcmpEx').onclick=()=>{const k=STE.age_groups.indexOf('25-44');const b=D.groups[k].est;CMP.vals={};CMP.vals[k]=Math.max(10,Math.round(b*1.2/10)*10);CMP.example=true;renderCompare();};
+  document.getElementById('stcmpClr').onclick=()=>{CMP.vals={};CMP.example=false;renderCompare();};
+  document.getElementById('stcmpCsv').onclick=()=>{
+    const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+    const lines=[['state','year','device','age_group','benchmark_visits_at_us_rate','range95_low','range95_high','your_count','ratio_your_count_to_benchmark'].join(',')];
+    D.groups.forEach((g,k)=>{const m=CMP.vals[k];lines.push([D.name,D.y,D.d,g.lab,g.est,g.lo,g.hi,m??'',m!=null?(m/g.est).toFixed(2):''].map(q).join(','));});
+    const all=Object.keys(CMP.vals).length===D.groups.length, sum=Object.values(CMP.vals).reduce((s,v)=>s+v,0);
+    lines.push([D.name,D.y,D.d,'All ages',D.tot.est,D.tot.lo,D.tot.hi,all?sum:'',all?(sum/D.tot.est).toFixed(2):''].map(q).join(','));
+    lines.push('');lines.push(q('Benchmarks are estimates from national data, not counts: NEISS does not record the patient\'s state. '+citeLine()));
+    const blob=new Blob([lines.join('\n')+'\n'],{type:'text/csv'});const u=URL.createObjectURL(blob);const a=h('a',{href:u,download:`NEISS-AI_compare_${D.a}_${D.d.replace(/\W+/g,'')}_${D.y}.csv`});document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+    try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'compare-csv-'+D.a,title:'Compare your counts CSV: '+D.name,event:true});}catch(e){}};
+}
+let CMP_COUNTED={};
+function cmpUpdate(D,rowEls,totEls){
+  let n=0,sum=0,last=null;
+  rowEls.forEach(({g,rc},k)=>{const m=CMP.vals[k];if(m==null){rc.textContent='';return;}n++;sum+=m;
+    if(g.est<=0){rc.textContent='n/a';return;}const R=cmpRatioText(m,g.est,g.lo,g.hi);rc.textContent=R.r.toFixed(2);last={g,m,R};});
+  totEls.yc.textContent=n?sum.toLocaleString('en-US'):'';
+  const res=document.getElementById('stcmpres');
+  if(n===D.groups.length){const R=cmpRatioText(sum,D.tot.est,D.tot.lo,D.tot.hi);totEls.rcT.textContent=R.r.toFixed(2);
+    res.textContent=`All ages: your ${sum.toLocaleString('en-US')} visits are ${R.txt} (${D.tot.est.toLocaleString('en-US')}), ratio ${R.r.toFixed(2)}. That is ${R.inside?'inside':'outside'} the 95% range, so it is ${R.inside?'consistent with':'different from'} the US rate for ${D.name}'s age mix.`;}
+  else{totEls.rcT.textContent=n?'fill in all age groups':'';
+    res.textContent=(n===1&&last&&last.g.est>0)?`${last.g.lab}: your ${last.m.toLocaleString('en-US')} visits are ${last.R.txt} (${last.g.est.toLocaleString('en-US')}), ratio ${last.R.r.toFixed(2)}. That is ${last.R.inside?'inside':'outside'} the 95% range, so it is ${last.R.inside?'consistent with':'different from'} the US rate.`:'';}
+  if(CMP.example&&res.textContent)res.textContent+=` (Example only: a made-up number, not real ${D.name} data.)`;
+  if(n&&!CMP.example&&!CMP_COUNTED[D.a]){CMP_COUNTED[D.a]=1;try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'compare-used-'+D.a,title:'Compare your counts used: '+D.name,event:true});}catch(e){}}
+}
+{const s=document.getElementById('stcmpDev');if(s)s.addEventListener('change',()=>renderCompare());}
 
 /* ---------- "Help check NEISS-AI" offers ---------- */
 function checkMail(){

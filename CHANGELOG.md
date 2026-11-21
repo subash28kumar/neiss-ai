@@ -2,6 +2,14 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## "Compare with your own counts" on the website — 2026-11-21
+
+- New box on the "Your state" view: type your own emergency department counts by age group and the
+  ratio to the benchmark (visits at the US rate) appears at once, with a plain-English sentence
+  saying whether the count is inside the 95% range. Works without Excel; numbers stay in the browser.
+  "Try an example" fills a clearly labelled made-up number; "Download as CSV" saves the table.
+- Fixed: hidden note boxes on the "Your state" view no longer show as empty boxes before a state is picked.
+
 ## "Compare your state" workbooks: plainer words and a worked example — 2026-11-21
 
 - "Expected" is now "Benchmark: visits in [state] at the US rate", so it is not read as a forecast;

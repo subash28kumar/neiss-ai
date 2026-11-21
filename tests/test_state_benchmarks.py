@@ -60,3 +60,11 @@ def test_workbook_plain_words_worked_example_and_all_ages_guard(tmp_path):
     assert f"{ws.cell(row, 7).value:,} visits: the benchmark" in text
     assert ws.cell(row, 8).value.replace(" - ", " to ") in text
     assert "Taylor" not in text.split("Technical note")[0]
+
+
+def test_site_compare_box_matches_workbook_numbers():
+    tpl = (ROOT / "docs" / "template.html").read_text(encoding="utf-8")
+    assert 'id="stcmp"' in tpl and "fill in all age groups" in tpl and ".reqbox[hidden]{display:none}" in tpl
+    site = json.loads((ROOT / "docs" / "data" / "state_estimates.json").read_text())
+    ma = site["states"]["MA"]["age"]["E-bike"]["2025"]
+    assert site["age_groups"][4] == "25-44" and ma[4] == [656, 402, 910]
