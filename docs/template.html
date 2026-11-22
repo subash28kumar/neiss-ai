@@ -1777,7 +1777,7 @@ function stCardImage(C){
   g+=`<text x='${X(xs[0])}' y='${gy+gh+28}' fill='#9fb0c3' font-size='18' ${F}>${xs[0]}</text><text x='${X(xs[xs.length-1])}' y='${gy+gh+28}' text-anchor='end' fill='#9fb0c3' font-size='18' ${F}>${xs[xs.length-1]}</text>`;
   if(C.fc.length){const L=C.fc[C.fc.length-1];g+=`<text x='${X(L[0])}' y='${Y(L[3])-10}' text-anchor='end' fill='#ffd79a' font-size='18' ${F}>${L[0]} forecast: about ${fmt(L[1])}</text>`;}
   const l=C.trend[C.trend.length-1];g+=`<text x='${X(l[0])-8}' y='${Y(l[1])-14}' text-anchor='end' fill='#ffffff' font-size='18' font-weight='700' ${F}>${l[0]}: ${fmt(l[1])}</text>`;
-  const lines=[`${C.perDay} · 1 in ${C.one?C.one.toLocaleString('en-US'):'n/a'} residents · #${C.rank} of ${C.n} states`];
+  const lines=[`${C.perDay} · 1 in ${C.one?C.one.toLocaleString('en-US'):'n/a'} residents, at the national rate`];
   if(C.hosp)lines.push(`About ${fmt(C.hosp.n)} likely hospital stays (${Math.round(C.hosp.share*100)}%)`);
   if(C.per10!=null&&C.d==='E-bike')lines.push(`${C.per10.toFixed(1)} e-bike injuries per 10 bicycle injuries (${C.per10_2020!=null?C.per10_2020.toFixed(1):'n/a'} in 2020)`);
   const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}' viewBox='0 0 ${W} ${H}'>
@@ -1786,7 +1786,7 @@ function stCardImage(C){
 <text x='60' y='130' fill='#ffffff' font-size='44' font-weight='800' ${F}>${esc(N)}</text>
 <text x='60' y='170' fill='#c9d6e3' font-size='24' ${F}>${esc(C.d)} injuries, ${C.y}</text>
 <text x='60' y='270' fill='#ffffff' font-size='72' font-weight='800' ${F}>about ${fmt(C.e.est)}</text>
-<text x='60' y='310' fill='#c9d6e3' font-size='22' ${F}>emergency department visits (likely range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})</text>
+<text x='60' y='310' fill='#c9d6e3' font-size='22' ${F}>expected ED visits at the national rate (range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})</text>
 ${lines.map((t,i)=>`<text x='60' y='${375+i*38}' fill='#e8eef5' font-size='22' ${F}>${esc(t)}</text>`).join('')}
 ${g}
 <text x='60' y='${H-58}' fill='#9fb0c3' font-size='17' ${F}>Estimates from national emergency department data (US CPSC NEISS) and ${esc(N)}'s population by age, not counts.</text>
@@ -1809,10 +1809,9 @@ function renderStCard(){
   box.appendChild(h('div',{class:'cardhead'},h('div',null,h('h3',{text:`${N}: ${dl} injuries, ${y}`}),h('p',{text:'Estimates from national emergency department data and the state\'s population by age, not counts.'})),close));
   const k=(v,l)=>h('div',{class:'k'},h('div',{class:'v',text:v}),h('div',{class:'l',text:l}));
   box.appendChild(h('div',{class:'kgrid'},
-    k('about '+fmt(C.e.est),`emergency department visits (likely range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})`),
-    k(C.perDay,`${dl} emergency department visits in ${N}`),
-    k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents had a visit'),
-    k(`#${C.rank} of ${C.n}`,`states by number of ${dl} visits`),
+    k('about '+fmt(C.e.est),`expected emergency department visits at the national rate (range ${fmt(C.e.lo)} to ${fmt(C.e.hi)}, from the national estimate only)`),
+    k(C.perDay,`expected ${dl} emergency department visits in ${N}`),
+    k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents, at the national rate'),
     C.fc.length?k('about '+fmt(C.fc[0][1]),`expected in ${C.fc[0][0]} (80% range ${fmt(C.fc[0][2])} to ${fmt(C.fc[0][3])})`):null));
   // trend + forecast
   box.appendChild(h('h4',null,h('span',{class:'tag',text:'Forecast'}),'Trend and outlook'));

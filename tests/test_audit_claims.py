@@ -119,3 +119,20 @@ def test_hospital_stay_definition_is_the_same_everywhere():
     src = (Path(__file__).resolve().parents[1] / "scripts" / "build_fact_sheet.py").read_text()
     assert "isin([2, 4, 5, 8])" in src
     assert "rare deaths" in _html()
+
+
+def test_state_outputs_do_not_claim_state_level_certainty_or_rank():
+    # Independent review (Nov 22, 2026): state numbers are the national rate applied to the state's
+    # population, so a 95% "true number" claim and a state ranking overstate them.
+    for f in (DOCS / "states").glob("*.html"):
+        t = f.read_text()
+        assert "very likely (95%)" not in t, f.name
+        assert " of 51</b>" not in t, f.name
+    md = _html("states/maryland.html")
+    assert "These are expected numbers, not counts." in md
+    assert "not how" in md and "differs from other states" in md
+    html = _html()
+    assert "#${C.rank} of ${C.n}" not in html
+    assert "residents had a visit" not in html
+    src = (DOCS.parent / "scripts" / "build_state_briefs.py").read_text()
+    assert "very likely, 95%" not in src

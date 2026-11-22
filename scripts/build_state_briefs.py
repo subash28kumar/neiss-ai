@@ -228,14 +228,14 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         c.roundRect(x, y - th, 4, th, 2, stroke=0, fill=1)
         c.setFillColor(HexColor(INK2))
         c.setFont("Sans", 7.8)
-        c.drawString(x + 12, y - 15, f"{dev} visits, {year} (age-adjusted)")
+        c.drawString(x + 12, y - 15, f"Expected {dev} visits, {year}")
         c.setFillColor(HexColor(INK))
         c.setFont("Sans-Bold", 19)
         c.drawString(x + 12, y - 38, f"about {fmt(e[0])}")
         c.setFont("Sans", 7.4)
         c.setFillColor(HexColor(INK2))
         rate = e[0] / sum(st["pop"][str(year)]) * 1e5
-        c.drawString(x + 12, y - 52, f"likely range {fmt(e[1])} to {fmt(e[2])}")
+        c.drawString(x + 12, y - 52, f"range {fmt(e[1])} to {fmt(e[2])} (national uncertainty)")
         c.drawString(x + 12, y - 63, f"{rate:,.1f} per 100,000 residents")
         c.setFillColor(HexColor(INK3))
         c.drawString(x + 12, y - 73, f"Population-only estimate: {fmt(e[3])}")
@@ -284,7 +284,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
     c.drawImage(age_chart(st, year, groups), M + cw + 14, y - ch, width=cw, height=ch, preserveAspectRatio=True,
                 anchor="nw")
     y -= ch + 10
-    notes = "Shaded bands and lines: likely ranges (the true number is very likely, 95%, inside)."
+    notes = "Shaded bands and lines: ranges from the uncertainty in the national number only, not real differences between states."
     if any(unstable.get(("E-bike", yy)) for yy in years):
         un_years = [str(yy) for yy in years if unstable.get(("E-bike", yy))]
         notes += f" Open circles: the national e-bike estimate for {', '.join(un_years)} rests on few records (CPSC rule), so read it with care."
@@ -303,7 +303,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
     yl = para(c, M, yl - 2, f"2. For each age group, the national number is multiplied by {the}'s share of the US "
               f"population in that age group (US Census Bureau), then the age groups are added up.",
               col_w, size=7.6)
-    yl = para(c, M, yl - 2, "3. The likely range comes from the uncertainty in the national number, because NEISS samples about "
+    yl = para(c, M, yl - 2, "3. The range comes from the uncertainty in the national number, because NEISS samples about "
               "100 hospitals rather than all of them.", col_w, size=7.6)
     yl = para(c, M, yl - 2, "Note: e-scooter totals differ from CPSC's published figures.", col_w, size=7.6)
     yr = bullets(c, M + col_w + 18, yr - 13, [
