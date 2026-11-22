@@ -360,7 +360,7 @@ a.btn{text-decoration:none;display:inline-block}
     </section>
     <section class="card">
       <h2>How often an injury means a hospital stay</h2>
-      <p class="desc">Share of injured riders admitted, transferred or held, 2019–2025. For children, e-bike injuries are more serious than bicycle injuries.</p>
+      <p class="desc">Share of injured riders admitted, transferred or held, 2019–2025. For children, a larger share of e-bike injuries than bicycle injuries ended in a hospital stay (about 11% vs 6%); the likely ranges nearly touch, so read the gap with care.</p>
       <div class="legend" id="lg3"></div>
       <div class="chart" id="c3"></div>
     <div class="dlrow"><button class="btn dl" type="button" data-chart="c3">Download chart (PNG)</button></div>
@@ -462,7 +462,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-search" role="tabpanel" aria-labelledby="tab-search" hidden>
   <section class="card">
     <h2>Search the injury stories</h2>
-    <p class="desc">Every NEISS record has a short story written by hospital staff. Search them (for example <i>battery</i>, <i>hit by car</i>, <i>helmet</i>, <i>delivery</i>) to see national estimates and real examples. All words must appear.</p>
+    <p class="desc">Every NEISS record has a short story written by hospital staff. Search the stories of the bike and scooter injuries on this site (e-bikes, e-scooters, bicycles, kick scooters, hoverboards, skateboards and mopeds; about 142,000 records from 2019 to 2025), for example <i>battery</i>, <i>hit by car</i>, <i>helmet</i>, <i>delivery</i>) to see national estimates and real examples. All words must appear.</p>
     <form class="askbox" id="searchform">
       <input type="search" id="searchq" placeholder="e.g. battery" aria-label="Words to search for" autocomplete="off">
       <select id="searchdev" aria-label="Device"></select>
@@ -527,7 +527,7 @@ neissai hazards --years 2020-2025</code></pre>
   <section class="card">
     <h2>How accurate is NEISS-AI?</h2>
     <p class="desc"><a href="#reads">See how NEISS-AI reads a real injury story</a>, then check how often it gets it right below. Every check below was done in one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. All of them can be repeated with the open code and the test files.</p>
-    <p class="note"><b>In short:</b> NEISS-AI's e-bike totals match the government's own published figures within 5%, and when its rules were tested on injury stories they had never seen, they put about 98 to 99 stories in 100 in the right group. The table below gives the details; the technical terms are for researchers who want to check the work.</p>
+    <p class="note"><b>In short:</b> NEISS-AI's e-bike totals match the government's own published figures within 5%, and when its rules were tested on injury stories they had never seen, they put about 98 to 99 stories in 100 in the right group. <b>E-scooters are different:</b> NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (see "E-scooter totals" further down this tab), so use CPSC's numbers when you need the official e-scooter count. The table below gives the details; the technical terms are for researchers who want to check the work.</p>
     <div class="tiles">
       <div class="tile"><p class="label">Matches CPSC's published totals</p><div class="num">within 5%</div><p class="sub">E-bike visits, 2022–2024</p></div>
       <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">98% right</div><p class="sub">Tested once on 833 stories it had never seen</p></div>
@@ -544,31 +544,34 @@ neissai hazards --years 2020-2025</code></pre>
     <div class="tablewrap"><table class="rctable">
       <thead><tr><th>What is checked</th><th>How it was tested</th><th>Result</th><th>Details</th></tr></thead>
       <tbody>
-        <tr><td data-label="What is checked">National e-bike totals</td><td data-label="How it was tested">NEISS-AI's estimates compared with the figures CPSC published for the same years</td><td data-label="Result">+4.4% (2022), +0.7% (2023), +0.3% (2024)</td><td data-label="Details"><a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">CPSC report</a></td></tr>
+        <tr><td data-label="What is checked">National e-bike totals</td><td data-label="How it was tested">NEISS-AI's estimates compared with the figures CPSC published for the same years</td><td data-label="Result" id="cpscEbRes"></td><td data-label="Details"><a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">CPSC report</a></td></tr>
+        <tr><td data-label="What is checked">National e-scooter totals</td><td data-label="How it was tested">NEISS-AI's estimates compared with the figures CPSC published for the same years</td><td data-label="Result" id="cpscEsRes"></td><td data-label="Details">Side by side, below</td></tr>
         <tr><td data-label="What is checked">E-bike or moped, before 2024</td><td data-label="How it was tested">Before 2024 e-bikes and mopeds shared one product code. A text model learned from 2024–2025 stories (where the codes are separate): it learned from 70% of them, was tuned on 15%, then tested once on the last 15% (833 stories) that it had never seen</td><td data-label="Result">AUC 0.998 [0.996–0.999]: shown one e-bike story and one moped story, it ranks the e-bike story higher 99.8 times in 100. Accuracy 98.0% [97.0–98.8]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/classifier_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/scripts/train_classifier_split.py">Training code</a></td></tr>
         <tr><td data-label="What is checked">Regular e-bike or e-moto</td><td data-label="How it was tested">Rule rebuilt on 920 stories (v2, November 2026), then locked so it could not be changed, and tested once on 240 new stories from 2019–2025</td><td data-label="Result">98.9% right [97.9–99.7]; 233 of 240 raw. Share of likely e-motos: 1.7% by the rule vs 1.6% by the answer key. A single "likely e-moto" call was right about 19 times in 20 (previous version: 3 in 4)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/ebike_type_TEST2_240.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Motor vehicle involved</td><td data-label="How it was tested">Rules frozen, then tested once on 300 random stories (2019–2025) never used to build them</td><td data-label="Result">98.3% right [96.2–99.3]. Found 44 of 47 real cases; 44 of its 46 flags were correct</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/injurycoder_test_300.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Helmet status</td><td data-label="How it was tested">Same 300 test stories. Three answers: worn, not worn, not mentioned. "Not mentioned" is never counted as "no helmet"</td><td data-label="Result">300 of 300 right [98.7–100]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a></td></tr>
-        <tr><td data-label="What is checked">Hazard Watch</td><td data-label="How it was tested">Totals checked against NEISS-AI's own national estimates; the word scan was run on past years to see whether it would have caught known new hazards</td><td data-label="Result">Totals identical (bicycles 2025: 420,962). The scan flagged e-bike words in 2021, 2022 and 2023 (before CPSC's 2024 e-bike code), water beads in 2023 and e-scooters in 2024</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/METHODS_hazard_scan.md">Methods</a></td></tr>
+        <tr><td data-label="What is checked">Hazard Watch</td><td data-label="How it was tested">Totals checked against NEISS-AI's own national estimates; the word scan was run on past years to see whether it would have caught known new hazards</td><td data-label="Result">Totals identical (bicycles 2025: 420,962). The scan flagged e-bike words in 2021, 2022 and 2023 (before CPSC's 2024 e-bike code), water beads in 2023 and the word "e-scooter" in 2024</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/METHODS_hazard_scan.md">Methods</a></td></tr>
         <tr><td data-label="What is checked">Uncertainty</td><td data-label="How it was tested">Each sampled visit is scaled up to the country with CPSC's weights, and the ranges allow for the fact that only about 100 hospitals are sampled, the same way CPSC does it (survey weights; Taylor-linearized standard errors with hospitals as clusters within strata)</td><td data-label="Result">Every number has a likely range (95% confidence interval). Numbers resting on few records are flagged (CPSC rule: fewer than 20 records, under 1,200 visits, or a coefficient of variation above 33%)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/src/neissai/estimate.py">Code</a></td></tr>
       </tbody>
     </table></div>
     <h3 style="font-size:15px;margin:18px 0 0">E-bike totals: NEISS-AI and CPSC side by side</h3>
     <div class="tablewrap"><table>
       <thead><tr><th style="text-align:left">Year</th><th>NEISS-AI</th><th>CPSC published</th><th>Difference</th></tr></thead>
-      <tbody>
-        <tr><td style="text-align:left">2022</td><td>28,000</td><td>26,800</td><td>+4.4%</td></tr>
-        <tr><td style="text-align:left">2023</td><td>37,900</td><td>37,600</td><td>+0.7%</td></tr>
-        <tr><td style="text-align:left">2024</td><td>59,300</td><td>59,200</td><td>+0.3%</td></tr>
-      </tbody>
+      <tbody id="cpscEbike"></tbody>
     </table></div>
     <p class="note">E-bike emergency department visits, national estimates, rounded to the nearest 100; differences use unrounded NEISS-AI estimates. CPSC source: <a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">Micromobility Products-Related Deaths, Injuries, and Hazard Patterns: 2017–2024</a> (CPSC, April 2026).</p>
+    <h3 style="font-size:15px;margin:18px 0 0" id="escmp">E-scooter totals: NEISS-AI and CPSC do not match</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th style="text-align:left">Year</th><th>NEISS-AI</th><th>CPSC published</th><th>Difference</th></tr></thead>
+      <tbody id="cpscEsc"></tbody>
+    </table></div>
+    <p class="note"><b>Why they differ, as far as I can tell.</b> NEISS-AI counts every record with CPSC's powered-scooter product code, plus stories that name an electric scooter. CPSC's report starts from the same records but reviews each one and calls a sample of patients, and removes scooters that turn out not to be electric, seated scooters, mopeds, mobility scooters and powered skateboards. That review does not explain the whole gap: about 87% of the stories NEISS-AI counts as e-scooters say the scooter was electric. Until the difference is understood, <b>use CPSC's figures when you need the official e-scooter count</b>; NEISS-AI's e-scooter numbers are counted the same way every year, so they are still useful for trends and for comparing groups, but they are not confirmed against CPSC. Same CPSC source as above.</p>
   </section>
 
   <section class="card">
     <h2>Who checked the answers</h2>
     <ul class="acclist">
-      <li><span class="status done">Done</span> <b>National totals</b> were checked against CPSC's own published figures, an official source independent of NEISS-AI.</li>
+      <li><span class="status done">Done</span> <b>National totals</b> were checked against CPSC's own published figures, an official source independent of NEISS-AI. E-bike totals match within 5%; e-scooter totals do not (see above).</li>
       <li><span class="status done">Done</span> <b>Story-level tests</b> (e-moto, motor vehicle, helmet) used answer keys made by independent AI reviewers that never saw NEISS-AI's rules and worked only from the written definitions. Where two reviewers were used they agreed closely, but because they were the same kind of system this is not as independent as two people reading the stories.</li>
       <li><span class="status next">Next</span> <b>An outside human check.</b> I am looking for injury researchers to label the test stories blind (without seeing NEISS-AI's answers). The results will be published here, whatever they show.</li>
       <li><span class="status next">Next</span> <b>Learning from people.</b> The hardest e-bike stories are on the <a href="label.html">labelling page</a> as Set C. When at least two approved reviewers agree on an answer, NEISS-AI uses it for that story and for near-identical stories. Guardrails: reviewers are approved by name, stories with known answers check each reviewer's care, the locked test stories are never learned from, and a new version is published only if accuracy on those locked tests does not drop. Every version is kept, so a change can be undone.</li>
@@ -631,7 +634,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
     <h2>Fact sheets</h2>
     <p class="desc">One-page summaries with citations, ready to print or attach to a report.</p>
     <ul>
-      <li><a href="NEISS-AI_FactSheet1_Ebike_Injuries_US_2019-2025.pdf">E-bike injuries in the United States, 2019&ndash;2025</a> (PDF, October 2026)</li>
+      <li><a href="NEISS-AI_FactSheet1_Ebike_Injuries_US_2019-2025.pdf">E-bike injuries in the United States, 2019&ndash;2025</a> (PDF, rebuilt with every data update)</li>
     </ul>
   </section>
   <section class="card" id="cite">
@@ -4337,6 +4340,21 @@ const DATA = {
   }
  ]
 };
+/* CPSC published national estimates (Micromobility Products-Related Deaths, Injuries, and Hazard Patterns: 2017-2024, April 2026, Appendix B) */
+const CPSC_PUB={'E-bike':{2022:26800,2023:37600,2024:59200},'E-scooter':{2021:61200,2022:74800,2023:58400,2024:79300}};
+function cpscCompare(){
+  const r100=v=>(Math.round(v/100)*100).toLocaleString('en-US');
+  const pc=(a,b)=>{const d=100*(a-b)/b;return (d>=0?'+':'')+d.toFixed(1)+'%';};
+  const fill=(dev,tb,res)=>{const t=document.getElementById(tb), r=document.getElementById(res); if(!t||!DATA) return;
+    const parts=[]; t.innerHTML='';
+    Object.entries(CPSC_PUB[dev]).forEach(([y,c])=>{const row=DATA.by_device.find(x=>x.year==+y&&x.device===dev); if(!row) return;
+      const tr=document.createElement('tr'); [y,r100(row.est),c.toLocaleString('en-US'),pc(row.est,c)].forEach((v,i)=>{const td=document.createElement('td'); if(i===0) td.style.textAlign='left'; td.textContent=v; tr.appendChild(td);}); t.appendChild(tr);
+      parts.push(pc(row.est,c)+' ('+y+')');});
+    if(r) r.textContent=parts.join(', ');};
+  fill('E-bike','cpscEbike','cpscEbRes'); fill('E-scooter','cpscEsc','cpscEsRes');
+  const rs=document.getElementById('cpscEsRes'); if(rs) rs.textContent+='. Does not match: see the side-by-side table and note below';
+}
+document.addEventListener('DOMContentLoaded',cpscCompare);
 /* ---------- theme ---------- */
 (function(){
   const root=document.documentElement, btn=document.getElementById('themebtn'), KEY='neissai-theme';
@@ -4518,7 +4536,7 @@ function drawOverview(){
   document.getElementById('t2s').textContent=`${(last(kids).est/yr(kids,2022).est).toFixed(0)}× the 2022 count · ${Math.round(last(kids).est/last(eb).est*100)}% of e-bike injuries`;
   document.getElementById('t3').textContent=k(last(es).est);
   drawStory(eb,es,kids);
-  document.getElementById('t3s').textContent=`likely range ${k(last(es).lo)}–${k(last(es).hi)}`;
+  document.getElementById('t3s').textContent=`likely range ${k(last(es).lo)}–${k(last(es).hi)} · not the same as CPSC's published e-scooter figures (see Accuracy)`;
   legend('lg1',[{label:'E-bike',color:css('--s1')},{label:'E-scooter',color:css('--s2')},{label:'Kick scooter',color:css('--s3')},{label:'Unstable estimate',hollow:true}]);
   C1S=[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}];
   if(!PLAY.on) lineChart('c1',C1S,{band:true,aria:C1ARIA});
@@ -5091,13 +5109,13 @@ function askAnswer(q){
     for(let i=0;i<R.n;i++) num[i]=den[i]&&(f.shareOutcome==='died'?R.p[i]===8:isHosp(i))?1:0;
     const s=share(num,den), what=f.shareOutcome==='died'?'died':'needed a hospital stay';
     big.textContent=isNaN(s.v)?'No matching records.':`About ${pct(s.v)} of ${who} injured on ${devPl}${extraTxt} ${what} ${yrs}.`;
-    sub.textContent=isNaN(s.v)?'':`95% confidence interval ${pct(s.lo)} to ${pct(s.hi)}, based on ${s.n.toLocaleString('en-US')} NEISS records.`;
+    sub.textContent=isNaN(s.v)?'':`Likely range ${pct(s.lo)} to ${pct(s.hi)} (the true share is very likely, 95%, inside it), based on ${s.n.toLocaleString('en-US')} NEISS records.`;
     if(trend&&yIdx.length>1) series=[{label:'Share',color:css('--s1'),points:yIdx.map(yi=>{const r=share(num,den,yi);return {year:R.years[yi],est:r.v||0,lo:r.lo||0,hi:r.hi||0,unstable:r.n<20};})}];
   } else {
     const m=buildMask(f), tot=total(m);
     const outW=f.outcome==='hosp'?' and needed a hospital stay':f.outcome==='died'?' and died':f.outcome==='released'?' and were treated and released':'';
     big.textContent=`About ${fmt(tot.est)} ${who} were treated in US emergency departments for ${devAdj} injuries${extraTxt}${outW} ${yrs}.`;
-    sub.textContent=`95% confidence interval ${fmt(tot.lo)} to ${fmt(tot.hi)}, based on ${tot.n.toLocaleString('en-US')} NEISS records.`;
+    sub.textContent=`Likely range ${fmt(tot.lo)} to ${fmt(tot.hi)} (the true number is very likely, 95%, inside it), based on ${tot.n.toLocaleString('en-US')} NEISS records.`;
     if(tot.unstable) notes.unshift('This estimate rests on few hospital records (CPSC\'s rule), so treat it as rough.');
     if(trend&&yIdx.length>1) series=[{label:'Visits',color:css('--s1'),points:yIdx.map(yi=>({year:R.years[yi],...total(m,yi)}))}];
   }
@@ -5131,8 +5149,8 @@ async function doSearch(q,dev){
   for(let i=0;i<R.n;i++){ if(dev!=='all' && R.d[i]!==+dev) continue; const s=S[i]; if(res.every(r=>r.test(s))){m[i]=1;hits.push(i);} }
   const tot=total(m);
   out.appendChild(h('div',{class:'answer'},
-    h('p',{class:'big',text:`${hits.length.toLocaleString('en-US')} stories mention "${q.trim()}"${dev==='all'?'':' for '+R.devices[+dev].toLowerCase()+'s'} (${R.years[0]}–${R.years[R.years.length-1]}).`}),
-    h('p',{class:'ci',text:hits.length?`That is about ${fmt(tot.est)} emergency visits nationally (likely range ${fmt(tot.lo)} to ${fmt(tot.hi)})${tot.unstable?'; rests on few records, read with care':''}. Words match from the start, so "batter" also finds "battery".`:'No matches. Try a shorter word.'})));
+    h('p',{class:'big',text:`${hits.length.toLocaleString('en-US')} stories mention "${q.trim()}"${dev==='all'?' among bike and scooter injuries':' for '+R.devices[+dev].toLowerCase()+'s'} (${R.years[0]}–${R.years[R.years.length-1]}).`}),
+    h('p',{class:'ci',text:hits.length?`That is about ${fmt(tot.est)} emergency visits nationally${dev==='all'?' with these devices':''} (likely range ${fmt(tot.lo)} to ${fmt(tot.hi)})${tot.unstable?'; rests on few records, read with care':''}. Words match from the start, so "batter" also finds "battery".`:'No matches. Try a shorter word.'})));
   if(!hits.length) return;
   const series=[{label:'Visits',color:css('--s1'),points:R.years.map((y,yi)=>({year:y,...total(m,yi)}))}];
   out.appendChild(h('div',{class:'chart',id:'searchchart',style:'margin-top:8px'}));
