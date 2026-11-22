@@ -44,3 +44,5 @@ jobs:
           name: dist
           path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true   # a release for a version already on PyPI (e.g. for Zenodo) does not fail
