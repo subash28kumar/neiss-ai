@@ -1,0 +1,32 @@
+# On demand: test the e-bike vs moped model on hard 2024-2025 notes (needs CPSC's files).
+# The result goes to a review branch, not main.
+name: Validate model on hard notes
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install NEISS-AI
+        run: pip install -e .
+      - name: Download NEISS 2024-2025
+        run: neissai download --years 2024-2025 --data-dir data
+      - name: Run the hard-notes test
+        run: python validation/classifier_v2/hard_notes.py --data-dir data
+      - name: Push results to a review branch
+        run: |
+          git config user.name "neissai-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "validation-hard-notes-${{ github.run_id }}"
+          git add validation/classifier_v2/HARD_NOTES.md validation/classifier_v2/hard_notes.json
+          git commit -m "Hard-notes test of the e-bike vs moped model ($(date +%Y-%m-%d))"
+          git push origin "validation-hard-notes-${{ github.run_id }}"
