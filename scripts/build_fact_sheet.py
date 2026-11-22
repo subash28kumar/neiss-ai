@@ -58,7 +58,7 @@ def main() -> Path:
     recent = df["year"].isin([y0, y1])
     ebm = recent & (df["device"] == "E-bike")
     bim = recent & (df["device"] == "Bicycle")
-    hosp = df["Disposition"].isin([2, 4, 5])
+    hosp = df["Disposition"].isin([2, 4, 5, 8])   # same definition as the website: transferred, admitted, held, died
     male = share(df, ebm, df["Sex"] == 1)
     head = share(df, ebm, df["Body_Part"].isin([75, 76, 77, 88, 94]))
     frac = share(df, ebm, df["Diagnosis"] == 57)
@@ -119,8 +119,8 @@ def main() -> Path:
         f"Mostly men: about {male['share']}% of injured riders were male (95% CI {male['ci_low']}–{male['ci_high']}%).",
         f"Head and face: about {head['share']}% of injuries were to the head or face (95% CI {head['ci_low']}–{head['ci_high']}%).",
         f"Broken bones: fractures were the most common diagnosis, about {frac['share']}% of visits (95% CI {frac['ci_low']}–{frac['ci_high']}%).",
-        f"Hospital stays: about {h_eb['share']}% of e-bike visits (95% CI {h_eb['ci_low']}–{h_eb['ci_high']}%) ended in admission, "
-        f"transfer or an observation stay; for bicycle injuries the share was {h_bi['share']}% (95% CI {h_bi['ci_low']}–{h_bi['ci_high']}%).",
+        f"Hospital stays: about {h_eb['share']}% of e-bike visits (95% CI {h_eb['ci_low']}–{h_eb['ci_high']}%) ended in a hospital stay "
+        f"(admitted, transferred or held; the rare deaths in the ED included); for bicycle injuries the share was {h_bi['share']}% (95% CI {h_bi['ci_low']}–{h_bi['ci_high']}%).",
         f"Older riders: visits among adults 65 and older rose from about {B.fmt(o65[0])} in {y22} to {B.fmt(o65[1])} in {y1}.",
     ], W - 2 * m, size=8.4) - 6
 

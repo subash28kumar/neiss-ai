@@ -2,6 +2,18 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Audit part 3: every number recomputed; Ask and Search read questions more honestly — 2026-11-22
+
+- Recomputed from the raw records: all 91 national estimates by device and by age (with ranges and
+  record counts), all hospital-stay shares, every number in the 51 Compare-your-state workbooks and all
+  1,291 data-pack rows. All match. Forecast rebuilds identically.
+- Ask a question: "women", "men" and "adults" now mean ages 18 and older (they silently meant 18-64);
+  number ranges such as "kids 5 to 9" are now used (they were ignored); a year with no data yet (2026)
+  gets a plain message instead of a 2019-2025 total. 22 test questions all match the data.
+- Search: several words are described as "contain all of the words", not as an exact phrase.
+- Hospital stay: the fact sheet now uses the same definition as the website (admitted, transferred,
+  held, and the rare deaths in the ED); labels say so.
+
 ## Full accuracy audit: honest fixes — 2026-11-22
 
 - E-scooters: NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (2021-2024:
