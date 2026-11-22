@@ -1,0 +1,215 @@
+{
+ "all test notes": {
+  "metrics": {
+   "auc": 0.9976442873969376,
+   "accuracy": 0.9795918367346939,
+   "sensitivity": 0.9858657243816255,
+   "specificity": 0.9662921348314607,
+   "n": 833,
+   "n_ebike": 566
+  },
+  "ci": {
+   "auc": [
+    0.9955569079992135,
+    0.9991314935875125
+   ],
+   "accuracy": [
+    0.9699879951980792,
+    0.9879951980792316
+   ],
+   "sensitivity": [
+    0.975516983783035,
+    0.9946714031971581
+   ],
+   "specificity": [
+    0.9439955056179775,
+    0.9854027869940278
+   ]
+  }
+ },
+ "HARD test notes (no e-bike or moped words)": {
+  "metrics": {
+   "auc": 0.7631160572337043,
+   "accuracy": 0.7407407407407407,
+   "sensitivity": 0.8378378378378378,
+   "specificity": 0.5294117647058824,
+   "n": 54,
+   "n_ebike": 37
+  },
+  "ci": {
+   "auc": [
+    0.6074869574869576,
+    0.8829464285714285
+   ],
+   "accuracy": [
+    0.6111111111111112,
+    0.8518518518518519
+   ],
+   "sensitivity": [
+    0.7058823529411765,
+    0.9428571428571428
+   ],
+   "specificity": [
+    0.2727272727272727,
+    0.7647058823529411
+   ]
+  }
+ },
+ "easy test notes (name the device)": {
+  "metrics": {
+   "auc": 0.9998109640831758,
+   "accuracy": 0.9961489088575096,
+   "sensitivity": 0.996219281663516,
+   "specificity": 0.996,
+   "n": 779,
+   "n_ebike": 529
+  },
+  "ci": {
+   "auc": [
+    0.9995035358163392,
+    1.0
+   ],
+   "accuracy": [
+    0.9910141206675225,
+    1.0
+   ],
+   "sensitivity": [
+    0.9904761904761905,
+    1.0
+   ],
+   "specificity": [
+    0.9868966777600369,
+    1.0
+   ]
+  }
+ },
+ "share of all 2024-2025 5045/5046 notes that are hard": 0.0722,
+ "hard notes in all splits": 397,
+ "hard test examples": [
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.327,
+   "text": "20YOM WAS RIDING A MOTORIZED BICYCLE AND WAS HIT BY CAR DX:ORBITAL FRACTURES, FACIAL FRACTURES"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.22,
+   "text": "25YOM PRESENTS AFTER HE WAS RIDING MOTORIZED BICYCLE WHEN A CAR MADE A U-TURN AND CRASHED INTO HIM. HAS ABRASION TO RIGHT CHEST WALL. DX: LEFT KNEE PAIN, MOTOR "
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.573,
+   "text": "63YOF WAS RIDING A MOTORIZED BICYCLE WITHOUT A HELMET WHEN SHE FELL OFF DX:CLOSED HEAD INJURY, RIB FRACTURE, LAC TO SCALP"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.382,
+   "text": "62YOM WAS THE RIDER OF A MOTORIZED BICYCLE AND WAS STRUCK BY A CAR AT APPROXIMATELY 40 MPH DX: TRAUMATIC SUBARACHNOID HEMORRHAGE; TRAUMATIC SUBDURAL HEMATOMA; A"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.799,
+   "text": "23YOM PRESENTED TO ED C/O PEDESTRAIN STRUCK, PT STATED HE WAS RIDING HIS ELETRIC BIKE AND WAS STRUCK BY A VEHICLE MAKING A TURN. C/O THIGH PAIN, KNEE AND R ANKL"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.682,
+   "text": "29YOM - PATIENT PRESENT FOR PEDESTRAIN STRUCK. PT USED MOTORIZED BIKE AND WAS STRUCK. PT HAS NO LOC. DX: TRAUMA."
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.701,
+   "text": "73 YOF REPORTS SHE WAS RIDING HER TRICYCLE AND FELL, C/O LEFT SIDE, LT SHOULDER, AND LT ELBOW PAIN. DX: SHOULDER CONTUSION"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.914,
+   "text": "23YOM PRESENTS AFTER HE WAS RIDING MOTORIZED BIKE WHEN HE ACCIDENTALLY PRESSED ON THE BRAKES CAUSING HIM TO SWERVE AND FALL OFF BIKE ONTO HIS LEFT SIDE. DX: LEF"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.476,
+   "text": "27YOM BICYCLE ACCIDENT. PATIENT REPORTS HE WAS HELMETED, ON A MOTORIZED BICYCLE, WHEN HIS HANDLE BAR CLIPPED A POLE AND HE FELL, LANDING ON HIS RIGHT ANKLE. DX:"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.836,
+   "text": "49YOM, HELMETED MOTORIZED BIKE DRIVER CUT OFF BY TRACTOR TRAILER AND FLIPPED OVER HANDLEBARS STRIKING HEAD AND LANDING ONTO HIS BACK NO LOSS OF CONSCIOUSNESS DX"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.955,
+   "text": "31 YOF WAS RIDING A *** BIKE GOING APPROXIMATE 10 TO 15 MPH DOWN A HILL SHE CRASHED AND TOOK MOST OF THE IMPACT ONTO HER RIGHT SHOULDER. +HELMET. DX: DISPLACED "
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.763,
+   "text": "26YOM REPORTS WITH ELBOW INJURY AFTER FALLING OFF HIS MOTORIZED BIKE. DX ELBOW FRACTURE"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.968,
+   "text": "14YOM REPORTS HE WAS ON AN ELECTRICK BIKE, NO HELMET, COMING DOWN A HILL AND FELL OVER THE HANDLE BARS. +LOC. DX HEAD INJURY WITH LOC, ADMIT."
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.948,
+   "text": "39YOM INURED J BACK WHILE PULLING EV BIKE, DX LUMBAR STRAIN"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.911,
+   "text": "64YOM C/O BACK PAIN AND FLANK PAIN.  WAS RIDING HIS ELECTRONIC BIKE AND MOVED TO GET OUT OF THE WAY OF ANOTHER PERSON AND RAN HIS FRONT TIRE INTO A 2-FOOT-DEEP "
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.501,
+   "text": "60YOF, WAS RIDING A MOTORIZED BIKE WHEN SHE FELL ONTO A GARBAGE CAN, NO HEAD STRIKE, LOC OR THINNERS, DX: LACERATION OF RIGHT LOWER LEG"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.63,
+   "text": "23YOM RIDING A MOTORIZED BICYCLE, HE FELL OFF. DX: ABRASIONS CHEST, ABRASIONS FOREARMS"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.685,
+   "text": "35YOM C/O RIDING MOTORIZED BIKE, SWERVED TO AVOID HITTING SOMEONE AT 8P, FELL ON R SIDE HELMETED, AMBULATORY AFTERWARDS, UNCLEAR LOC C/O HEADACHE, DIZZINESS, LO"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.379,
+   "text": "24YOM PRESENTS AFTER A FALL FROM HIS MOTORIZED BICYCLE. DX: FRACTURE OF HAND, FRACTURE OF RADIAL HEAD"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.852,
+   "text": "23 YOM WAS RIDING A MOTORIZED BICYCLE ABOUT 20 MPH WHEN HE HIT A BUMP IN THE ROAD CAUSING HIM TO FALL OFF. HE WAS WEARING A HELMET AND THERE WAS A DENT IN THE H"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.41,
+   "text": "16YOM RIDING MOTORIZED BIKE AND STRUCK BY A CAR. ANKLE PAIN DX ANKLE FX"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.643,
+   "text": "69YOM HAD TO PUSH HIS MOTORIZED BICYCLE UP SEVERAL HILLS BECAUSE THE BATTERY DIED, NOW HAS PAIN IN RIGHT SHOULDER DX: STRAINED SHOULDER"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.736,
+   "text": "17YOF,RIDING ON HANDLEBARS OF MOTORIZED BIKE AN TOE GOT CAUGHT IN WHEEL,DX:FX TOE"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.785,
+   "text": "15YOM  PRESENTING FOR CHIN PAIN AFTER CRASHING HIS E- BIKE YESTERDAY (NO HEAD HIT NO LOC AND WAS ABLE TO GET UP ON HIS OWN) PATIENT ENDORSING PAIN IN THE CHIN F"
+  },
+  {
+   "code": "5045 e-bike",
+   "p_ebike": 0.813,
+   "text": "68 YOM TWISTED KNEE WHILE PUSHING HIS SCOOTER BIKE UP INTO A TRUCK YESTERDAY. DX: SPRAIN RIGHT KNEE"
+  }
+ ]
+}

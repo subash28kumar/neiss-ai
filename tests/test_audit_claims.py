@@ -42,7 +42,7 @@ def test_escooter_mismatch_is_disclosed():
     assert "still useful for trends" not in html and "not reliable for trends" in html
     assert "every year is counted the same way" not in html
     assert "powered-scooter product code (5022)" in html and "follow-up study" in html
-    assert "not yet tested" in html and "validated text classifier" not in press
+    assert "74% right" in html and "54 hardest" in html and "validated text classifier" not in press
 
 
 def test_search_and_children_wording_are_not_overstated():
