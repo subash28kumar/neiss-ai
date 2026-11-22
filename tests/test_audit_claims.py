@@ -20,11 +20,11 @@ def test_cpsc_tables_are_computed_from_data_not_typed():
     # no stale hand-typed comparison numbers
     assert "+4.4% (2022)" not in html and "<td>37,900</td>" not in html
     m = re.search(r"const CPSC_PUB=(\{.*?\});", html)
-    pub = json.loads(m.group(1).replace("'", '"').replace("2021:", '"2021":').replace("2022:", '"2022":')
+    pub = json.loads(m.group(1).replace("'", '"').replace("2019:", '"2019":').replace("2021:", '"2021":').replace("2022:", '"2022":')
                      .replace("2023:", '"2023":').replace("2024:", '"2024":'))
     # CPSC April 2026 report, Appendix B
     assert pub["E-bike"] == {"2022": 26800, "2023": 37600, "2024": 59200}
-    assert pub["E-scooter"] == {"2021": 61200, "2022": 74800, "2023": 58400, "2024": 79300}
+    assert pub["E-scooter"] == {"2019": 39100, "2021": 61200, "2022": 74800, "2023": 58400, "2024": 79300}
 
 
 def test_ebike_claim_within_5_percent_still_true():
@@ -38,6 +38,10 @@ def test_escooter_mismatch_is_disclosed():
     html, press = _html(), _html("press.html")
     assert "E-scooter totals: NEISS-AI and CPSC do not match" in html
     assert "do not match CPSC" in press and "79,300" in press
+    # Independent review (Nov 2026): no trend claim for e-scooters; classifier limits stated
+    assert "still useful for trends" not in html and "not reliable for trends" in html
+    assert "every year is counted the same way" not in html
+    assert "not yet tested" in html and "validated text classifier" not in press
 
 
 def test_search_and_children_wording_are_not_overstated():

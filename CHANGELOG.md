@@ -2,6 +2,21 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Unpowered scooters fixed; accuracy limits stated plainly (independent review) — 2026-11-22
+
+- Bug fix: stories that say "UNPOWERED", "NON-MOTORIZED" or "NONELECTRIC" scooter were counted as
+  e-scooters, because "UNPOWERED SCOOTER" contains the e-scooter words "POWERED SCOOTER". About 1,230
+  records move from e-scooter to kick scooter. National e-scooter estimates fall 2.6% (2025) to 11.4%
+  (2020); 2025 is now about 164,400. E-bike and bicycle numbers do not change. Same fix in
+  `neissai label-notes`.
+- E-scooter comparison with CPSC now includes 2019 (15,600 vs 39,100). The site no longer says NEISS-AI's
+  e-scooter numbers are useful for trends: the gap with CPSC changes by year, and 2019 was counted from
+  story words only.
+- The e-bike/moped text model's "98% right" is now described as a test on 2024-2025 stories; it has not
+  yet been tested on the harder unclear 2019-2023 notes where it is used (14-62% of those years' e-bike
+  estimates). "Every year is counted the same way" removed from the site, fact sheet and briefs.
+- The refresh workflow can rebuild the data after a rule change into a review branch.
+
 ## State numbers described honestly (independent review) — 2026-11-22
 
 - An independent review found that the 51 state pages and state briefs overstated the state numbers.

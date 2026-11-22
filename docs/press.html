@@ -72,7 +72,7 @@ img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--border);
 <div class="stat"><b>101,600</b><span>e-bike injuries treated in US emergency departments in 2025 (95% CI 69,700–133,600)</span></div>
 <div class="stat"><b>+71%</b><span>increase from 2024 (59,300) to 2025, and about 3.6 times the 2022 level (28,000)</span></div>
 <div class="stat"><b>About 3×</b><span>e-bike emergency visits among people 65 and older, from about 3,200 (2022) to 9,700 (2025)</span></div>
-<div class="stat"><b>168,800</b><span>e-scooter injuries treated in US emergency departments in 2025 (95% CI 97,900–239,700). Note: NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (2024: 122,700 vs 79,300). For the official e-scooter count, please use CPSC's report; <a href="./#accuracy">details</a>.</span></div>
+<div class="stat"><b>164,400</b><span>e-scooter injuries treated in US emergency departments in 2025 (95% CI 94,300–234,600). Note: NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (2024: 117,900 vs 79,300), and the gap changes by year, so they are not reliable for trends. For the official e-scooter count, please use CPSC's report; <a href="./#accuracy">details</a>.</span></div>
 </div>
 <p class="small">All numbers are national estimates with 95% confidence intervals. Updated November 2026 from the complete CPSC NEISS files (2019–2025).</p>
 </section>
@@ -91,7 +91,7 @@ img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--border);
 <section class="card">
 <h2>How to describe the source</h2>
 <div class="quote">…according to NEISS-AI, a free, open tool by independent researcher Subash Kumar that produces national injury estimates from the Consumer Product Safety Commission's emergency department data.</div>
-<p><b>How it works, in three lines.</b> NEISS is a national sample of about 100 hospital emergency departments run by CPSC. NEISS-AI reads the short injury description in every record with a validated text classifier to identify e-bikes, e-scooters and other devices. It then applies CPSC's survey weights to estimate national totals with 95% confidence intervals.</p>
+<p><b>How it works, in three lines.</b> NEISS is a national sample of about 100 hospital emergency departments run by CPSC. NEISS-AI uses product codes and the words in each short injury description to identify e-bikes, e-scooters and other devices; for unclear pre-2024 e-bike/moped notes, a text classifier (tested on 2024–2025 notes) decides. It then applies CPSC's survey weights to estimate national totals with 95% confidence intervals.</p>
 <p><b>Accuracy.</b> NEISS-AI's e-bike estimates for 2022–2024 match CPSC's own published figures within 5%. Because it reads the injury descriptions, its counts stay consistent across CPSC's 2024 change in product codes for e-bikes.</p>
 <p><b>Please note.</b></p>
 <ul>

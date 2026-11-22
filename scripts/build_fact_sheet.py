@@ -127,7 +127,8 @@ def main() -> Path:
     c.setFillColor(HexColor(B.ACCENT_SOFT)); box_top = y
     text = ("Is the rise just a change in coding? No. CPSC gave e-bikes their own product code in 2024, and both 2024 and "
             "2025 use that code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with "
-            "mopeds, NEISS-AI reads the injury stories so every year is counted the same way.")
+            "mopeds, NEISS-AI reads the injury stories to tell them apart; unclear notes are decided by a text model, so "
+            "those early years are less certain.")
     lines = B.wrap(c, text, "Sans", 8.2, W - 2 * m - 20)
     bh = 12 + 11.4 * len(lines)
     c.roundRect(m, box_top - bh, W - 2 * m, bh, 6, stroke=0, fill=1)
