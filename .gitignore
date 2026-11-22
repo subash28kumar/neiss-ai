@@ -5,3 +5,5 @@ validation/learning/trusted_labellers.csv
 
 __pycache__/
 *.pyc
+build/
+*.egg-info/
