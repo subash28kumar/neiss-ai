@@ -22,3 +22,14 @@ def test_hard_rule_matches_pipeline():
     sent_to_model = (lab["label_source"] == "classifier").tolist()
     assert hard.is_hard(pd.Series(NOTES)).tolist() == sent_to_model
     assert any(sent_to_model) and not all(sent_to_model)
+
+
+def test_misspelled_ebike_words():
+    df = pd.DataFrame({"Narrative": ["PT FELL OFF ELETRIC BIKE", "RIDING ELECTRONIC BICYCLE, FELL", "FELL OFF E- BIKE",
+                                     "PT FELL OFF MOTORIZED BIKE", "ELECTRICAL CORD CAUGHT IN BIKE"],
+                       "Product_1": ["3215", "3215", "5040", "3215", "5040"], "Product_2": "0", "Product_3": "0",
+                       "Weight": 1.0, "PSU": 1, "Stratum": "V", "CPSC_Case_Number": range(5)})
+    lab = neissai.label_devices(df)
+    assert lab.device.tolist()[:3] == ["E-bike"] * 3
+    assert lab.label_source.tolist()[3] == "classifier"      # "motorized" stays with the model
+    assert lab.device.tolist()[4] == "Bicycle"
