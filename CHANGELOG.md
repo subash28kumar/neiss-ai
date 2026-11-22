@@ -21,6 +21,8 @@ All notable changes to NEISS-AI are listed here.
 - New tests (tests/test_audit_claims.py) keep these claims tied to the data.
 - The same e-scooter note now appears on the Your state card, all 51 state pages, all 51 state briefs (PDF),
   the 51 Compare-your-state workbooks and the data pack.
+- State pages now round numbers the same way as the website and the state briefs (half up). Before, 3 pages
+  (South Dakota, Utah, Vermont) showed a likely-range end 10 lower than the brief.
 
 ## v1.7.0: run NEISS-AI on your own injury notes — 2026-11-22
 

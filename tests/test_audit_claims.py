@@ -78,3 +78,25 @@ def test_state_brief_has_escooter_note():
     text = subprocess.run(["pdftotext", str(DOCS / "briefs" / "NEISS-AI_State_Brief_MA_2025.pdf"), "-"],
                           capture_output=True, text=True).stdout
     assert "e-scooter totals differ from CPSC" in text
+
+
+def test_every_state_page_matches_state_data_with_site_rounding():
+    import html as _h
+    import math
+    s = json.loads((DOCS / "data" / "state_estimates.json").read_text())
+    y = str(s["years"][-1])
+
+    def fmt(v):
+        v = float(v)
+        if v >= 1000:
+            return f"{math.floor(v / 100 + 0.5) * 100:,}"
+        if v >= 100:
+            return f"{math.floor(v / 10 + 0.5) * 10:,}"
+        return f"{math.floor(v + 0.5):,}"
+
+    for ab, st in s["states"].items():
+        slug = st["name"].lower().replace(" ", "-").replace(".", "")
+        t = re.sub(r"\s+", " ", _h.unescape(re.sub(r"<[^>]+>", " ", (DOCS / "states" / f"{slug}.html").read_text())))
+        eb = st["e"]["E-bike"][y]
+        for v in eb[:3]:
+            assert fmt(v) in t, (ab, v)
