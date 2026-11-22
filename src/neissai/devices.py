@@ -21,8 +21,13 @@ from .classifier import EbikeMopedClassifier
 
 DEVICES = ["E-bike", "E-scooter", "Bicycle", "Kick scooter", "Hoverboard", "Skateboard", "Moped / minibike"]
 
+# Misspellings of "electric" (and "E- BIKE") found before BIKE/BICYCLE in real notes by
+# validation/words/word_audit.py. Kept only where 2024-2025 hospital codes show they mean e-bikes
+# (Nov 2026: 42 coded e-bike, 1 coded moped). "MOTORIZED BIKE" is NOT here: hospitals code it both ways.
+E_MISSPELLED = (r"\b(ELECTRONIC|ELETRIC|ELECTIC|ELECTIRC|ELECTRI|ELECTRICK|ELECTRIIC|ELELCTRIC|ELEXTRIC|"
+                r"ELECTRIAL|ELCTRIC|ELECRIC|ELECTIRCAL) (BIKES?|BICYCLES?)\b|\bE- +BIKES?\b|\bE +-BIKES?\b")
 E_WORDS = (r"\bE-?BIKES?\b|\bE BIKES?\b|\bE-?BICYCLES?\b|ELECTRI(C|CAL) (BI(KE|CYCLE)|PEDAL|ASSIST)|"
-           r"PEDAL[- ]ASSIST|POWER[- ]ASSIST(ED)? (BI(KE|CYCLE))|BATTERY[- ]POWERED (BI(KE|CYCLE))")
+           r"PEDAL[- ]ASSIST|POWER[- ]ASSIST(ED)? (BI(KE|CYCLE))|BATTERY[- ]POWERED (BI(KE|CYCLE))|" + E_MISSPELLED)
 ESC_WORDS = (r"\bE-?SCOOTERS?\b|\bE SCOOTERS?\b|ELEC(TRIC|TRONIC)? SCOOTER|MOTORI[ZS]ED SCOOTER|POWERED SCOOTER|"
              r"STAND[- ]?UP (ELECTRIC|MOTORIZED)|LIME SCOOTER|BIRD SCOOTER|RENTAL SCOOTER|BATTERY[- ]POWERED SCOOTER")
 # Words that name an electric stand-up scooter (not "motorized scooter", which under the moped
@@ -36,7 +41,9 @@ ESC_NEG_WORDS = (r"\b(NON|UN|NOT)[- ]?(AN? )?(ELEC(TRIC|TRONIC)?|MOTORI[ZS]ED|PO
                  r"(KICK ?)?SCOOTERS?\b")
 MOBILITY_WORDS = r"MOBILITY SCOOTER|INVALID|ASSIST(IVE|ED) MOBILITY|POWER CHAIR|WHEELCHAIR|HANDICAP"
 MOPED_WORDS = r"MOPED|MINI ?BIKE|DIRT ?BIKE|MOTOR ?BIKE|MOTORCYCLE|GAS (POWERED|SCOOTER)|VESPA"
-EXERCISE_WORDS = r"STATIONARY|EXERCISE BIKE|SPIN BIKE|PELOTON|WORKOUT BIKE"
+# "STATIONARY" alone is NOT enough: diagnoses often say "colliding with stationary object" (Nov 2026 fix).
+EXERCISE_WORDS = (r"STATION[AE]RY (EXERCISE )?(BIKES?|BICYCLES?|CYCLES?)|EXERCISE (BIKES?|BICYCLES?)|SPIN BIKE|PELOTON|"
+                  r"WORKOUT BIKE")
 HOVER_WORDS = r"HOVER ?BOARD"
 
 BIKE_CODES = ("5040", "5033")
@@ -115,6 +122,7 @@ def label_devices(df: pd.DataFrame, classifier: EbikeMopedClassifier | None = No
         p = clf.predict_proba(narr[undecided].tolist())
         out.loc[undecided[undecided].index, "p_ebike"] = p
         label[undecided] = np.where(p >= threshold, "E-bike", "Moped / minibike")
+        label[undecided & _kw(narr, EXERCISE_WORDS)] = "Excluded"
     out.loc[narr.index, "device"] = label
     out.loc[narr.index, "label_source"] = source
     return out

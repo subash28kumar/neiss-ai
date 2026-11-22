@@ -2,6 +2,13 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## v1.7.2 — 2026-11-22
+
+- Misspelled "electric bike" notes (ELETRIC, ELECTRONIC, E- BIKE and similar) now count as e-bikes by the word rules. Found with a word audit (`validation/words/`); 43 of 44 such 2024-2025 notes were coded e-bike by the hospital. "Motorized bike" stays with the model (hospitals code it both ways).
+- Fixed: diagnoses saying "colliding with stationary object" no longer remove real bicycle and e-bike crashes as exercise bikes. Exercise bikes now need STATIONARY BIKE/BICYCLE/CYCLE or EXERCISE BIKE.
+- Effect: 94 more records counted (81 bicycle, 13 e-bike); 2025 e-bike 101,600 -> 101,800 (73,600-130,100); every year changes by less than 1.2%.
+- Hard-stories test rerun with the new rule: 47 stories, 72.3% right (59.6-85.1%).
+
 ## E-bike vs moped model tested on hard stories — 2026-11-22
 
 - New on-demand test (`validation/classifier_v2/hard_notes.py`): the model scored on the 54 locked-test 2024-2025 stories that name neither device, the kind it decides before 2024. Right 74.1% of the time (61.1-85.2%), against 98.0% on all 833. Site, README and results updated to show this.
