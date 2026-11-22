@@ -86,13 +86,17 @@ class StateEstimator:
             self.N[g] += 1
         self.national = sum(self.T)
         self.records = sum(self.N)
+        # One-year design: only the hospitals sampled that year (older files: all hospitals).
+        yc = records.get("year_clusters")
+        self.design = set(yc[y]) if yc else set(range(n_cl))
 
     # -- variance of sum_g f_g * (cluster sums) -----------------------------------------
     def _se(self, factors: Sequence[float]) -> float:
         z = [sum(f * s for f, s in zip(factors, row)) for row in self.S]
         by_stratum: Dict[int, List[float]] = {}
         for c, h in enumerate(self.cluster_stratum):
-            by_stratum.setdefault(h, []).append(z[c])
+            if c in self.design:
+                by_stratum.setdefault(h, []).append(z[c])
         v = 0.0
         for zs in by_stratum.values():
             n = len(zs)
