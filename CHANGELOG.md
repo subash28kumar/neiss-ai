@@ -2,6 +2,16 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Own notes: motorcycles handled honestly — 2026-11-22
+
+- `neissai label-notes` / `label_note`: V29.81x (motorcycle and military vehicle) was read as an
+  e-bike code; the e-bike rule now checks the 5th character for V20-V28 and the 6th for V29.
+  Other ICD-10-CM motorcycle codes (which also cover mopeds and motor scooters) now give
+  "Motorcycle or moped" instead of "Moped / minibike"; the note's words then decide. A note that says
+  motorcycle (Harley, sport bike) is "Motorcycle (not micromobility)", not a moped.
+- Text-only accuracy re-run on the current data (validation/freetext): 85.0% / 86.6% overall; e-bike
+  2025 from text alone 97,900 vs 101,600.
+
 ## Moped-code "scooter" stories are no longer e-bikes — 2026-11-22
 
 - Independent review: before 2024, some code-3215 (moped / power-assisted cycle) stories that name

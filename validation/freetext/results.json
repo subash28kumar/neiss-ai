@@ -1,23 +1,23 @@
 {
  "full story": {
   "E-bike": {
-   "records": 5831,
-   "agree_raw": 94.3,
-   "agree_weighted": 94.6,
+   "records": 5793,
+   "agree_raw": 94.9,
+   "agree_weighted": 95.0,
    "text_only_said": {
     "Bicycle": 225,
-    "Scooter (type not stated)": 31,
-    "Other": 25
+    "Other": 25,
+    "Moped / minibike": 23
    }
   },
   "E-scooter": {
-   "records": 14579,
-   "agree_raw": 80.5,
-   "agree_weighted": 79.9,
+   "records": 13363,
+   "agree_raw": 82.7,
+   "agree_weighted": 82.3,
    "text_only_said": {
-    "Scooter (type not stated)": 2140,
-    "Kick scooter": 459,
-    "Other": 67
+    "Scooter (type not stated)": 2068,
+    "Other": 65,
+    "Bicycle": 53
    }
   },
   "Bicycle": {
@@ -26,18 +26,18 @@
    "agree_weighted": 99.0,
    "text_only_said": {
     "Other": 634,
-    "Moped / minibike": 45,
-    "Excluded": 12
+    "Motorcycle (not micromobility)": 26,
+    "Moped / minibike": 21
    }
   },
   "Kick scooter": {
-   "records": 16340,
-   "agree_raw": 1.3,
-   "agree_weighted": 1.5,
+   "records": 17566,
+   "agree_raw": 7.8,
+   "agree_weighted": 5.9,
    "text_only_said": {
-    "Scooter (type not stated)": 15962,
-    "Bicycle": 85,
-    "Other": 61
+    "Scooter (type not stated)": 16032,
+    "Bicycle": 88,
+    "Other": 63
    }
   },
   "Hoverboard": {
@@ -51,7 +51,7 @@
    }
   },
   "Skateboard": {
-   "records": 16309,
+   "records": 16310,
    "agree_raw": 96.9,
    "agree_weighted": 97.0,
    "text_only_said": {
@@ -61,48 +61,48 @@
    }
   },
   "Moped / minibike": {
-   "records": 6291,
-   "agree_raw": 94.2,
-   "agree_weighted": 94.8,
+   "records": 6317,
+   "agree_raw": 93.0,
+   "agree_weighted": 93.9,
    "text_only_said": {
-    "Bicycle": 114,
-    "Scooter (type not stated)": 83,
+    "Bicycle": 112,
+    "Scooter (type not stated)": 109,
     "E-bike": 74
    }
   },
   "ALL 7 devices": {
-   "records": 141635,
-   "agree_raw": 84.7,
-   "agree_weighted": 86.3
+   "records": 141634,
+   "agree_raw": 85.0,
+   "agree_weighted": 86.6
   },
   "E-bike 2025 national estimate": {
    "full_labels": 101628,
    "text_only": 97934
   },
   "E-scooter 2025 national estimate": {
-   "full_labels": 168786,
-   "text_only": 140432
+   "full_labels": 164421,
+   "text_only": 139155
   }
  },
  "short note (first 60 characters)": {
   "E-bike": {
-   "records": 5831,
-   "agree_raw": 71.1,
-   "agree_weighted": 71.6,
+   "records": 5793,
+   "agree_raw": 71.6,
+   "agree_weighted": 71.9,
    "text_only_said": {
-    "Other": 1276,
+    "Other": 1268,
     "Bicycle": 272,
-    "Moped / minibike": 91
+    "Moped / minibike": 87
    }
   },
   "E-scooter": {
-   "records": 14579,
-   "agree_raw": 61.0,
-   "agree_weighted": 59.7,
+   "records": 13363,
+   "agree_raw": 61.7,
+   "agree_weighted": 61.1,
    "text_only_said": {
-    "Other": 3366,
-    "Scooter (type not stated)": 1852,
-    "Kick scooter": 330
+    "Other": 3199,
+    "Scooter (type not stated)": 1778,
+    "Bicycle": 49
    }
   },
   "Bicycle": {
@@ -110,19 +110,19 @@
    "agree_raw": 85.1,
    "agree_weighted": 84.0,
    "text_only_said": {
-    "Other": 11570,
-    "Moped / minibike": 28,
+    "Other": 11569,
+    "Motorcycle (not micromobility)": 22,
     "E-bike": 10
    }
   },
   "Kick scooter": {
-   "records": 16340,
-   "agree_raw": 0.9,
-   "agree_weighted": 1.0,
+   "records": 17566,
+   "agree_raw": 6.5,
+   "agree_weighted": 4.5,
    "text_only_said": {
-    "Scooter (type not stated)": 12755,
-    "Other": 3349,
-    "Bicycle": 73
+    "Scooter (type not stated)": 12827,
+    "Other": 3513,
+    "Bicycle": 75
    }
   },
   "Hoverboard": {
@@ -136,37 +136,37 @@
    }
   },
   "Skateboard": {
-   "records": 16309,
+   "records": 16310,
    "agree_raw": 82.4,
    "agree_weighted": 82.3,
    "text_only_said": {
-    "Other": 2805,
+    "Other": 2806,
     "Bicycle": 34,
     "Scooter (type not stated)": 18
    }
   },
   "Moped / minibike": {
-   "records": 6291,
-   "agree_raw": 76.7,
-   "agree_weighted": 77.0,
+   "records": 6317,
+   "agree_raw": 75.7,
+   "agree_weighted": 76.3,
    "text_only_said": {
-    "Other": 1189,
+    "Other": 1194,
     "E-bike": 98,
-    "Bicycle": 81
+    "Scooter (type not stated)": 86
    }
   },
   "ALL 7 devices": {
-   "records": 141635,
-   "agree_raw": 71.3,
-   "agree_weighted": 71.8
+   "records": 141634,
+   "agree_raw": 71.5,
+   "agree_weighted": 72.0
   },
   "E-bike 2025 national estimate": {
    "full_labels": 101628,
    "text_only": 74679
   },
   "E-scooter 2025 national estimate": {
-   "full_labels": 168786,
-   "text_only": 103330
+   "full_labels": 164421,
+   "text_only": 102296
   }
  }
 }
