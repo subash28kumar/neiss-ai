@@ -129,7 +129,7 @@ def build(out: Path = OUT) -> Path:
          "Taylor-linearized 95% confidence intervals). Full method and code: " + SITE, None),
         ("Limits: these are counts of ED visits, not risk rates (the number of riders is not known). NEISS has no "
          "state or city information, so the 'Expected by state' sheet applies national rates for each age group to the state's age mix. Early e-bike "
-         "estimates (2019-2021) rest on small samples.", None),
+         "estimates (2019-2021) rest on small samples. E-scooters: NEISS-AI\'s national e-scooter totals differ from CPSC\'s published e-scooter figures (see the Accuracy tab on the website), so treat e-scooter numbers with care; CPSC\'s report is the official count.", None),
         ("", None),
         (f"Data updated: {updated}. NEISS-AI version {VERSION}. Free to use, share and adapt with the citation above.", None),
         (f"Need a different breakdown? Request a free custom analysis: {SITE}#about", None),

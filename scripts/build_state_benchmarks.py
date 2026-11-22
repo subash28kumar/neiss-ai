@@ -170,6 +170,7 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
         ("Read with care", True),
         ("- Benchmarks come from national data (NEISS, about 100 hospitals) and the state's population by age. They are not counts of visits in the state.", False),
         ("- Differences can come from how much people ride, local roads, weather and rules, and from differences between your case definition and NEISS-AI's (device read from product codes and the injury note; e-motos counted separately).", False),
+        ("- E-scooters: NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures (see the Accuracy tab on the website), so treat e-scooter numbers with care; CPSC's report is the official count.", False),
         ("- Rows marked 'yes' in column L rest on few injury notes (fewer than 20 notes, a US estimate under 1,200, or a large margin of error). CPSC advises not to rely on such estimates.", False),
         ("- US visits include everyone hurt in an incident involving the device, as on the NEISS-AI website.", False),
         ("", False),
