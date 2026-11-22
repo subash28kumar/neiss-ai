@@ -25,6 +25,11 @@ E_WORDS = (r"\bE-?BIKES?\b|\bE BIKES?\b|\bE-?BICYCLES?\b|ELECTRI(C|CAL) (BI(KE|C
            r"PEDAL[- ]ASSIST|POWER[- ]ASSIST(ED)? (BI(KE|CYCLE))|BATTERY[- ]POWERED (BI(KE|CYCLE))")
 ESC_WORDS = (r"\bE-?SCOOTERS?\b|\bE SCOOTERS?\b|ELEC(TRIC|TRONIC)? SCOOTER|MOTORI[ZS]ED SCOOTER|POWERED SCOOTER|"
              r"STAND[- ]?UP (ELECTRIC|MOTORIZED)|LIME SCOOTER|BIRD SCOOTER|RENTAL SCOOTER|BATTERY[- ]POWERED SCOOTER")
+# A scooter the story says is NOT powered ("UNPOWERED SCOOTER", "NON-MOTORIZED SCOOTER",
+# "NONELECTRIC SCOOTER", "NOT AN ELECTRIC SCOOTER"). These phrases contain e-scooter words, so they
+# are removed before the e-scooter words are searched (independent review, Nov 2026).
+ESC_NEG_WORDS = (r"\b(NON|UN|NOT)[- ]?(AN? )?(ELEC(TRIC|TRONIC)?|MOTORI[ZS]ED|POWERED|BATTERY[- ]POWERED) "
+                 r"(KICK ?)?SCOOTERS?\b")
 MOBILITY_WORDS = r"MOBILITY SCOOTER|INVALID|ASSIST(IVE|ED) MOBILITY|POWER CHAIR|WHEELCHAIR|HANDICAP"
 MOPED_WORDS = r"MOPED|MINI ?BIKE|DIRT ?BIKE|MOTOR ?BIKE|MOTORCYCLE|GAS (POWERED|SCOOTER)|VESPA"
 EXERCISE_WORDS = r"STATIONARY|EXERCISE BIKE|SPIN BIKE|PELOTON|WORKOUT BIKE"
@@ -69,19 +74,24 @@ def label_devices(df: pd.DataFrame, classifier: EbikeMopedClassifier | None = No
     narr, codes = narr_all[cand], codes_all[cand]
     bike, scooter = _has(codes, *BIKE_CODES), _has(codes, *SCOOTER_CODES)
     e_words, moped_words = _kw(narr, E_WORDS), _kw(narr, MOPED_WORDS)
+    neg_esc = _kw(narr, ESC_NEG_WORDS)
+    esc_words = _kw(narr.str.replace(_noncapturing(ESC_NEG_WORDS), " ", regex=True), ESC_WORDS)
 
     label = pd.Series("Other", index=narr.index, dtype="object")
     # Order matters: later rules override earlier ones.
     label[bike] = "Bicycle"
     label[_has(codes, "5024", "5023", "1329")] = "Kick scooter"
-    label[_has(codes, "5022") | (_has(codes, "5042") & _kw(narr, ESC_WORDS))] = "E-scooter"
+    label[_has(codes, "5022") | (_has(codes, "5042") & esc_words)] = "E-scooter"
     label[_has(codes, "5025") | (_has(codes, "5042") & _kw(narr, HOVER_WORDS))] = "Hoverboard"
     label[_has(codes, "1333")] = "Skateboard"
     label[_has(codes, "5046", "5035") | (_has(codes, "3215") & moped_words)] = "Moped / minibike"
     label[_has(codes, "5045")] = "E-bike"
     # Narrative overrides inside bicycle and scooter codes
     label[(bike | _has(codes, "3215")) & e_words] = "E-bike"
-    label[scooter & _kw(narr, ESC_WORDS)] = "E-scooter"
+    label[scooter & esc_words] = "E-scooter"
+    # The story says the scooter was not powered (and names no e-scooter elsewhere): a kick scooter,
+    # whatever the code says (as for "non-electric" bicycles below).
+    label[scooter & neg_esc & ~esc_words & (label == "E-scooter")] = "Kick scooter"
     label[scooter & _kw(narr, MOBILITY_WORDS)] = "Excluded"
     label[_kw(narr, EXERCISE_WORDS) & label.isin(["Bicycle", "E-bike"])] = "Excluded"
     label[bike & ~_has(codes, "5045", "3215") & _kw(narr, r"NON-? ?ELECTRIC")] = "Bicycle"
