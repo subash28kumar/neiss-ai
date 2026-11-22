@@ -33,3 +33,12 @@ def test_misspelled_ebike_words():
     assert lab.device.tolist()[:3] == ["E-bike"] * 3
     assert lab.label_source.tolist()[3] == "classifier"      # "motorized" stays with the model
     assert lab.device.tolist()[4] == "Bicycle"
+
+
+def test_stationary_object_is_not_an_exercise_bike():
+    df = pd.DataFrame({"Narrative": ["RIDING BIKE, CRASHED. DX: PEDAL CYCLIST COLLIDING WITH STATIONARY OBJECT",
+                                     "FELL OFF STATIONARY BIKE AT GYM", "RIDING HIS ELECTIC BIKE, HIT FENCE. DX: COLLIDING WITH STATIONARY OBJECT",
+                                     "INJURED ON EXERCISE BIKE AT HOME"],
+                       "Product_1": ["5040", "5040", "3215", "5040"], "Product_2": "0", "Product_3": "0",
+                       "Weight": 1.0, "PSU": 1, "Stratum": "V", "CPSC_Case_Number": range(4)})
+    assert neissai.label_devices(df).device.tolist() == ["Bicycle", "Excluded", "E-bike", "Excluded"]

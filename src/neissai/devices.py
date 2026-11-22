@@ -41,7 +41,9 @@ ESC_NEG_WORDS = (r"\b(NON|UN|NOT)[- ]?(AN? )?(ELEC(TRIC|TRONIC)?|MOTORI[ZS]ED|PO
                  r"(KICK ?)?SCOOTERS?\b")
 MOBILITY_WORDS = r"MOBILITY SCOOTER|INVALID|ASSIST(IVE|ED) MOBILITY|POWER CHAIR|WHEELCHAIR|HANDICAP"
 MOPED_WORDS = r"MOPED|MINI ?BIKE|DIRT ?BIKE|MOTOR ?BIKE|MOTORCYCLE|GAS (POWERED|SCOOTER)|VESPA"
-EXERCISE_WORDS = r"STATIONARY|EXERCISE BIKE|SPIN BIKE|PELOTON|WORKOUT BIKE"
+# "STATIONARY" alone is NOT enough: diagnoses often say "colliding with stationary object" (Nov 2026 fix).
+EXERCISE_WORDS = (r"STATION[AE]RY (EXERCISE )?(BIKES?|BICYCLES?|CYCLES?)|EXERCISE (BIKES?|BICYCLES?)|SPIN BIKE|PELOTON|"
+                  r"WORKOUT BIKE")
 HOVER_WORDS = r"HOVER ?BOARD"
 
 BIKE_CODES = ("5040", "5033")
@@ -120,6 +122,7 @@ def label_devices(df: pd.DataFrame, classifier: EbikeMopedClassifier | None = No
         p = clf.predict_proba(narr[undecided].tolist())
         out.loc[undecided[undecided].index, "p_ebike"] = p
         label[undecided] = np.where(p >= threshold, "E-bike", "Moped / minibike")
+        label[undecided & _kw(narr, EXERCISE_WORDS)] = "Excluded"
     out.loc[narr.index, "device"] = label
     out.loc[narr.index, "label_source"] = source
     return out
