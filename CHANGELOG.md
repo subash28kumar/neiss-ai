@@ -2,6 +2,15 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Moped-code "scooter" stories are no longer e-bikes — 2026-11-22
+
+- Independent review: before 2024, some code-3215 (moped / power-assisted cycle) stories that name
+  only a scooter and no bike were sent to the e-bike/moped text model and often counted as e-bikes.
+  They are now an e-scooter when the story says electric, otherwise a moped / motor scooter.
+  E-bike estimates fall 11.6% in 2019 and 4.1% in 2020 (both already flagged as resting on few
+  records) and by 0.3% or less in 2021-2023; 2024-2025 are unchanged. E-bike totals stay within 5%
+  of CPSC's published figures (2022 +4.0%, 2023 +0.2%, 2024 +0.3%).
+
 ## Ranges use each year's own hospital sample — 2026-11-22
 
 - Independent review: one-year 95% ranges were computed with the hospitals of all seven years in
