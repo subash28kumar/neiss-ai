@@ -2,6 +2,24 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Full accuracy audit: honest fixes — 2026-11-22
+
+- E-scooters: NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (2021-2024:
+  -11%, -19%, +17%, +55%). The Accuracy tab now shows them side by side with a plain explanation, the
+  Overview tile and the press page say so, and readers are told to use CPSC's figures for the official
+  e-scooter count.
+- The NEISS-AI vs CPSC comparison tables are now computed from the current data on every update
+  (e-bikes: +4.1%, +0.5%, +0.3%; the old hand-typed table said +4.4% and +0.7%). "Within 5%" still holds.
+- Search: says clearly that it searches the bike and scooter injury stories on the site (about 142,000
+  records), not every NEISS record.
+- Overview: the children's hospital-stay chart now states the numbers (about 11% vs 6%) instead of
+  "more serious".
+- Ask answers say "likely range" like the rest of the site. Press page: updated date and the same
+  "1-2 working days" reply time as the main site.
+- The national fact sheet PDF is now built from the data by scripts/build_fact_sheet.py on every refresh
+  (it was hand-made in October: bicycle hospital-stay share now 13%, main DOI in the citation).
+- New tests (tests/test_audit_claims.py) keep these claims tied to the data.
+
 ## v1.7.0: run NEISS-AI on your own injury notes — 2026-11-22
 
 - New `neissai label-notes` command and `neissai.label_notes()` / `label_note()` (module
