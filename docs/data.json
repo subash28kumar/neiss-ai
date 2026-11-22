@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-19",
+ "updated": "2026-11-22",
  "source": "CPSC NEISS annual files 2019-2025",
- "version": "1.6.1",
+ "version": "1.7.0",
  "by_device": [
   {
    "year": 2019,
@@ -24,10 +24,10 @@
   {
    "year": 2019,
    "device": "E-scooter",
-   "est": 17549,
-   "lo": 9591,
-   "hi": 25507,
-   "n": 476,
+   "est": 15645,
+   "lo": 7922,
+   "hi": 23369,
+   "n": 428,
    "unstable": false
   },
   {
@@ -42,10 +42,10 @@
   {
    "year": 2019,
    "device": "Kick scooter",
-   "est": 43371,
-   "lo": 28721,
-   "hi": 58021,
-   "n": 1558,
+   "est": 45193,
+   "lo": 30245,
+   "hi": 60141,
+   "n": 1605,
    "unstable": false
   },
   {
@@ -87,10 +87,10 @@
   {
    "year": 2020,
    "device": "E-scooter",
-   "est": 32997,
-   "lo": 17011,
-   "hi": 48983,
-   "n": 1060,
+   "est": 29245,
+   "lo": 13609,
+   "hi": 44881,
+   "n": 832,
    "unstable": false
   },
   {
@@ -105,10 +105,10 @@
   {
    "year": 2020,
    "device": "Kick scooter",
-   "est": 49389,
-   "lo": 35584,
-   "hi": 63194,
-   "n": 1895,
+   "est": 53125,
+   "lo": 38745,
+   "hi": 67505,
+   "n": 2122,
    "unstable": false
   },
   {
@@ -123,10 +123,10 @@
   {
    "year": 2020,
    "device": "Skateboard",
-   "est": 113738,
-   "lo": 79074,
-   "hi": 148402,
-   "n": 3317,
+   "est": 113754,
+   "lo": 79085,
+   "hi": 148423,
+   "n": 3318,
    "unstable": false
   },
   {
@@ -150,10 +150,10 @@
   {
    "year": 2021,
    "device": "E-scooter",
-   "est": 54455,
-   "lo": 34296,
-   "hi": 74614,
-   "n": 1759,
+   "est": 50472,
+   "lo": 30780,
+   "hi": 70164,
+   "n": 1507,
    "unstable": false
   },
   {
@@ -168,10 +168,10 @@
   {
    "year": 2021,
    "device": "Kick scooter",
-   "est": 63770,
-   "lo": 41902,
-   "hi": 85639,
-   "n": 2284,
+   "est": 67753,
+   "lo": 45314,
+   "hi": 90193,
+   "n": 2536,
    "unstable": false
   },
   {
@@ -213,10 +213,10 @@
   {
    "year": 2022,
    "device": "E-scooter",
-   "est": 60508,
-   "lo": 41180,
-   "hi": 79836,
-   "n": 1790,
+   "est": 56933,
+   "lo": 38010,
+   "hi": 75855,
+   "n": 1606,
    "unstable": false
   },
   {
@@ -231,10 +231,10 @@
   {
    "year": 2022,
    "device": "Kick scooter",
-   "est": 70293,
-   "lo": 46055,
-   "hi": 94532,
-   "n": 2145,
+   "est": 73869,
+   "lo": 49298,
+   "hi": 98439,
+   "n": 2329,
    "unstable": false
   },
   {
@@ -276,10 +276,10 @@
   {
    "year": 2023,
    "device": "E-scooter",
-   "est": 68137,
-   "lo": 48884,
-   "hi": 87389,
-   "n": 2180,
+   "est": 63690,
+   "lo": 45292,
+   "hi": 82088,
+   "n": 2004,
    "unstable": false
   },
   {
@@ -294,10 +294,10 @@
   {
    "year": 2023,
    "device": "Kick scooter",
-   "est": 72517,
-   "lo": 48921,
-   "hi": 96113,
-   "n": 2421,
+   "est": 76964,
+   "lo": 52547,
+   "hi": 101381,
+   "n": 2597,
    "unstable": false
   },
   {
@@ -339,10 +339,10 @@
   {
    "year": 2024,
    "device": "E-scooter",
-   "est": 122694,
-   "lo": 67692,
-   "hi": 177696,
-   "n": 2971,
+   "est": 117884,
+   "lo": 63622,
+   "hi": 172147,
+   "n": 2800,
    "unstable": false
   },
   {
@@ -357,10 +357,10 @@
   {
    "year": 2024,
    "device": "Kick scooter",
-   "est": 99863,
-   "lo": 70161,
-   "hi": 129564,
-   "n": 2823,
+   "est": 104672,
+   "lo": 73970,
+   "hi": 135375,
+   "n": 2994,
    "unstable": false
   },
   {
@@ -402,10 +402,10 @@
   {
    "year": 2025,
    "device": "E-scooter",
-   "est": 168786,
-   "lo": 97919,
-   "hi": 239652,
-   "n": 4343,
+   "est": 164421,
+   "lo": 94265,
+   "hi": 234577,
+   "n": 4174,
    "unstable": false
   },
   {
@@ -420,10 +420,10 @@
   {
    "year": 2025,
    "device": "Kick scooter",
-   "est": 106909,
-   "lo": 75322,
-   "hi": 138497,
-   "n": 3214,
+   "est": 111273,
+   "lo": 78843,
+   "hi": 143704,
+   "n": 3383,
    "unstable": false
   },
   {
@@ -480,31 +480,31 @@
    "year": 2019,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 4216,
-   "lo": 2648,
-   "hi": 5784,
-   "n": 146,
+   "est": 2698,
+   "lo": 1604,
+   "hi": 3792,
+   "n": 108,
    "unstable": false
   },
   {
    "year": 2019,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 12107,
-   "lo": 4923,
-   "hi": 19291,
-   "n": 306,
+   "est": 11776,
+   "lo": 4635,
+   "hi": 18917,
+   "n": 297,
    "unstable": false
   },
   {
    "year": 2019,
    "device": "E-scooter",
    "age_group": "65+",
-   "est": 1226,
-   "lo": 539,
-   "hi": 1913,
-   "n": 24,
-   "unstable": false
+   "est": 1171,
+   "lo": 485,
+   "hi": 1857,
+   "n": 23,
+   "unstable": true
   },
   {
    "year": 2020,
@@ -540,30 +540,30 @@
    "year": 2020,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 8416,
-   "lo": 5846,
-   "hi": 10985,
-   "n": 445,
+   "est": 4930,
+   "lo": 3410,
+   "hi": 6451,
+   "n": 226,
    "unstable": false
   },
   {
    "year": 2020,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 21371,
-   "lo": 6964,
-   "hi": 35779,
-   "n": 550,
+   "est": 21161,
+   "lo": 6734,
+   "hi": 35588,
+   "n": 542,
    "unstable": true
   },
   {
    "year": 2020,
    "device": "E-scooter",
    "age_group": "65+",
-   "est": 3210,
-   "lo": 1689,
-   "hi": 4731,
-   "n": 65,
+   "est": 3154,
+   "lo": 1633,
+   "hi": 4675,
+   "n": 64,
    "unstable": false
   },
   {
@@ -600,30 +600,30 @@
    "year": 2021,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 11220,
-   "lo": 7552,
-   "hi": 14888,
-   "n": 578,
+   "est": 8048,
+   "lo": 5345,
+   "hi": 10751,
+   "n": 350,
    "unstable": false
   },
   {
    "year": 2021,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 39889,
-   "lo": 22443,
-   "hi": 57335,
-   "n": 1107,
+   "est": 39112,
+   "lo": 21852,
+   "hi": 56372,
+   "n": 1085,
    "unstable": false
   },
   {
    "year": 2021,
    "device": "E-scooter",
    "age_group": "65+",
-   "est": 3346,
-   "lo": 2072,
-   "hi": 4620,
-   "n": 74,
+   "est": 3312,
+   "lo": 2041,
+   "hi": 4583,
+   "n": 72,
    "unstable": false
   },
   {
@@ -660,20 +660,20 @@
    "year": 2022,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 12905,
-   "lo": 8411,
-   "hi": 17400,
-   "n": 520,
+   "est": 9926,
+   "lo": 6127,
+   "hi": 13725,
+   "n": 351,
    "unstable": false
   },
   {
    "year": 2022,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 43900,
-   "lo": 27723,
-   "hi": 60078,
-   "n": 1187,
+   "est": 43304,
+   "lo": 27178,
+   "hi": 59430,
+   "n": 1172,
    "unstable": false
   },
   {
@@ -720,20 +720,20 @@
    "year": 2023,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 14579,
-   "lo": 9750,
-   "hi": 19408,
-   "n": 553,
+   "est": 11608,
+   "lo": 7690,
+   "hi": 15527,
+   "n": 412,
    "unstable": false
   },
   {
    "year": 2023,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 49188,
-   "lo": 33739,
-   "hi": 64638,
-   "n": 1522,
+   "est": 47712,
+   "lo": 32612,
+   "hi": 62812,
+   "n": 1487,
    "unstable": false
   },
   {
@@ -780,30 +780,30 @@
    "year": 2024,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 28549,
-   "lo": 19536,
-   "hi": 37562,
-   "n": 920,
+   "est": 24763,
+   "lo": 16668,
+   "hi": 32857,
+   "n": 772,
    "unstable": false
   },
   {
    "year": 2024,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 87559,
-   "lo": 39204,
-   "hi": 135914,
-   "n": 1917,
+   "est": 86637,
+   "lo": 38578,
+   "hi": 134697,
+   "n": 1896,
    "unstable": false
   },
   {
    "year": 2024,
    "device": "E-scooter",
    "age_group": "65+",
-   "est": 6586,
-   "lo": 4420,
-   "hi": 8752,
-   "n": 134,
+   "est": 6484,
+   "lo": 4311,
+   "hi": 8658,
+   "n": 132,
    "unstable": false
   },
   {
@@ -840,20 +840,20 @@
    "year": 2025,
    "device": "E-scooter",
    "age_group": "0-17",
-   "est": 42961,
-   "lo": 29574,
-   "hi": 56348,
-   "n": 1474,
+   "est": 39528,
+   "lo": 27001,
+   "hi": 52055,
+   "n": 1328,
    "unstable": false
   },
   {
    "year": 2025,
    "device": "E-scooter",
    "age_group": "18-64",
-   "est": 116256,
-   "lo": 55240,
-   "hi": 177272,
-   "n": 2665,
+   "est": 115325,
+   "lo": 54570,
+   "hi": 176080,
+   "n": 2642,
    "unstable": false
   },
   {
@@ -892,10 +892,10 @@
    "year": 2019,
    "month": 1,
    "device": "E-scooter",
-   "est": 536,
-   "lo": 156,
-   "hi": 916,
-   "n": 13,
+   "est": 345,
+   "lo": 97,
+   "hi": 593,
+   "n": 10,
    "unstable": true
   },
   {
@@ -922,10 +922,10 @@
    "year": 2019,
    "month": 2,
    "device": "E-scooter",
-   "est": 435,
-   "lo": 147,
-   "hi": 723,
-   "n": 19,
+   "est": 415,
+   "lo": 130,
+   "hi": 699,
+   "n": 17,
    "unstable": true
   },
   {
@@ -952,10 +952,10 @@
    "year": 2019,
    "month": 3,
    "device": "E-scooter",
-   "est": 835,
-   "lo": 336,
-   "hi": 1334,
-   "n": 31,
+   "est": 765,
+   "lo": 271,
+   "hi": 1260,
+   "n": 27,
    "unstable": true
   },
   {
@@ -982,10 +982,10 @@
    "year": 2019,
    "month": 4,
    "device": "E-scooter",
-   "est": 1368,
-   "lo": 509,
-   "hi": 2226,
-   "n": 38,
+   "est": 1232,
+   "lo": 449,
+   "hi": 2014,
+   "n": 33,
    "unstable": false
   },
   {
@@ -1012,11 +1012,11 @@
    "year": 2019,
    "month": 5,
    "device": "E-scooter",
-   "est": 1223,
-   "lo": 629,
-   "hi": 1818,
-   "n": 36,
-   "unstable": false
+   "est": 952,
+   "lo": 430,
+   "hi": 1473,
+   "n": 27,
+   "unstable": true
   },
   {
    "year": 2019,
@@ -1042,11 +1042,11 @@
    "year": 2019,
    "month": 6,
    "device": "E-scooter",
-   "est": 1651,
-   "lo": 595,
-   "hi": 2707,
-   "n": 46,
-   "unstable": false
+   "est": 1326,
+   "lo": 390,
+   "hi": 2263,
+   "n": 41,
+   "unstable": true
   },
   {
    "year": 2019,
@@ -1072,10 +1072,10 @@
    "year": 2019,
    "month": 7,
    "device": "E-scooter",
-   "est": 2824,
-   "lo": 1492,
-   "hi": 4156,
-   "n": 72,
+   "est": 2446,
+   "lo": 1298,
+   "hi": 3595,
+   "n": 65,
    "unstable": false
   },
   {
@@ -1102,11 +1102,11 @@
    "year": 2019,
    "month": 8,
    "device": "E-scooter",
-   "est": 2052,
-   "lo": 828,
-   "hi": 3276,
-   "n": 58,
-   "unstable": false
+   "est": 1754,
+   "lo": 572,
+   "hi": 2935,
+   "n": 52,
+   "unstable": true
   },
   {
    "year": 2019,
@@ -1132,10 +1132,10 @@
    "year": 2019,
    "month": 9,
    "device": "E-scooter",
-   "est": 2886,
-   "lo": 1114,
-   "hi": 4658,
-   "n": 74,
+   "est": 2768,
+   "lo": 1010,
+   "hi": 4526,
+   "n": 71,
    "unstable": false
   },
   {
@@ -1162,10 +1162,10 @@
    "year": 2019,
    "month": 10,
    "device": "E-scooter",
-   "est": 1786,
-   "lo": 318,
-   "hi": 3254,
-   "n": 39,
+   "est": 1766,
+   "lo": 302,
+   "hi": 3231,
+   "n": 38,
    "unstable": true
   },
   {
@@ -1192,10 +1192,10 @@
    "year": 2019,
    "month": 11,
    "device": "E-scooter",
-   "est": 1034,
-   "lo": 310,
-   "hi": 1757,
-   "n": 28,
+   "est": 957,
+   "lo": 233,
+   "hi": 1680,
+   "n": 25,
    "unstable": true
   },
   {
@@ -1252,10 +1252,10 @@
    "year": 2020,
    "month": 1,
    "device": "E-scooter",
-   "est": 1391,
-   "lo": 154,
-   "hi": 2628,
-   "n": 48,
+   "est": 1277,
+   "lo": 147,
+   "hi": 2408,
+   "n": 42,
    "unstable": true
   },
   {
@@ -1282,10 +1282,10 @@
    "year": 2020,
    "month": 2,
    "device": "E-scooter",
-   "est": 1613,
-   "lo": 535,
-   "hi": 2691,
-   "n": 47,
+   "est": 1413,
+   "lo": 341,
+   "hi": 2484,
+   "n": 36,
    "unstable": true
   },
   {
@@ -1312,10 +1312,10 @@
    "year": 2020,
    "month": 3,
    "device": "E-scooter",
-   "est": 1181,
-   "lo": 674,
-   "hi": 1688,
-   "n": 45,
+   "est": 806,
+   "lo": 377,
+   "hi": 1234,
+   "n": 26,
    "unstable": true
   },
   {
@@ -1342,10 +1342,10 @@
    "year": 2020,
    "month": 4,
    "device": "E-scooter",
-   "est": 1015,
-   "lo": 509,
-   "hi": 1521,
-   "n": 38,
+   "est": 886,
+   "lo": 453,
+   "hi": 1319,
+   "n": 26,
    "unstable": true
   },
   {
@@ -1372,10 +1372,10 @@
    "year": 2020,
    "month": 5,
    "device": "E-scooter",
-   "est": 2206,
-   "lo": 1320,
-   "hi": 3092,
-   "n": 87,
+   "est": 1975,
+   "lo": 1151,
+   "hi": 2799,
+   "n": 59,
    "unstable": false
   },
   {
@@ -1402,11 +1402,11 @@
    "year": 2020,
    "month": 6,
    "device": "E-scooter",
-   "est": 3548,
-   "lo": 1418,
-   "hi": 5679,
-   "n": 117,
-   "unstable": false
+   "est": 3004,
+   "lo": 913,
+   "hi": 5096,
+   "n": 84,
+   "unstable": true
   },
   {
    "year": 2020,
@@ -1432,10 +1432,10 @@
    "year": 2020,
    "month": 7,
    "device": "E-scooter",
-   "est": 4485,
-   "lo": 1277,
-   "hi": 7693,
-   "n": 125,
+   "est": 4095,
+   "lo": 884,
+   "hi": 7306,
+   "n": 107,
    "unstable": true
   },
   {
@@ -1462,11 +1462,11 @@
    "year": 2020,
    "month": 8,
    "device": "E-scooter",
-   "est": 5123,
-   "lo": 1820,
-   "hi": 8425,
-   "n": 165,
-   "unstable": false
+   "est": 4658,
+   "lo": 1459,
+   "hi": 7857,
+   "n": 136,
+   "unstable": true
   },
   {
    "year": 2020,
@@ -1492,10 +1492,10 @@
    "year": 2020,
    "month": 9,
    "device": "E-scooter",
-   "est": 4132,
-   "lo": 1878,
-   "hi": 6385,
-   "n": 148,
+   "est": 3540,
+   "lo": 1336,
+   "hi": 5744,
+   "n": 118,
    "unstable": false
   },
   {
@@ -1522,10 +1522,10 @@
    "year": 2020,
    "month": 10,
    "device": "E-scooter",
-   "est": 3925,
-   "lo": 1879,
-   "hi": 5972,
-   "n": 112,
+   "est": 3625,
+   "lo": 1573,
+   "hi": 5676,
+   "n": 95,
    "unstable": false
   },
   {
@@ -1552,11 +1552,11 @@
    "year": 2020,
    "month": 11,
    "device": "E-scooter",
-   "est": 2650,
-   "lo": 938,
-   "hi": 4361,
-   "n": 78,
-   "unstable": false
+   "est": 2339,
+   "lo": 650,
+   "hi": 4028,
+   "n": 58,
+   "unstable": true
   },
   {
    "year": 2020,
@@ -1582,10 +1582,10 @@
    "year": 2020,
    "month": 12,
    "device": "E-scooter",
-   "est": 1728,
-   "lo": 1001,
-   "hi": 2454,
-   "n": 50,
+   "est": 1628,
+   "lo": 914,
+   "hi": 2342,
+   "n": 45,
    "unstable": false
   },
   {
@@ -1612,10 +1612,10 @@
    "year": 2021,
    "month": 1,
    "device": "E-scooter",
-   "est": 1829,
-   "lo": 953,
-   "hi": 2705,
-   "n": 61,
+   "est": 1585,
+   "lo": 787,
+   "hi": 2383,
+   "n": 50,
    "unstable": false
   },
   {
@@ -1642,10 +1642,10 @@
    "year": 2021,
    "month": 2,
    "device": "E-scooter",
-   "est": 1350,
-   "lo": 540,
-   "hi": 2160,
-   "n": 39,
+   "est": 1264,
+   "lo": 476,
+   "hi": 2052,
+   "n": 33,
    "unstable": false
   },
   {
@@ -1672,10 +1672,10 @@
    "year": 2021,
    "month": 3,
    "device": "E-scooter",
-   "est": 3158,
-   "lo": 1764,
-   "hi": 4551,
-   "n": 112,
+   "est": 2722,
+   "lo": 1342,
+   "hi": 4102,
+   "n": 81,
    "unstable": false
   },
   {
@@ -1702,10 +1702,10 @@
    "year": 2021,
    "month": 4,
    "device": "E-scooter",
-   "est": 5484,
-   "lo": 2312,
-   "hi": 8656,
-   "n": 162,
+   "est": 5213,
+   "lo": 2051,
+   "hi": 8375,
+   "n": 138,
    "unstable": false
   },
   {
@@ -1732,10 +1732,10 @@
    "year": 2021,
    "month": 5,
    "device": "E-scooter",
-   "est": 6098,
-   "lo": 3509,
-   "hi": 8687,
-   "n": 219,
+   "est": 5607,
+   "lo": 3050,
+   "hi": 8165,
+   "n": 181,
    "unstable": false
   },
   {
@@ -1762,10 +1762,10 @@
    "year": 2021,
    "month": 6,
    "device": "E-scooter",
-   "est": 6283,
-   "lo": 4123,
-   "hi": 8443,
-   "n": 207,
+   "est": 5856,
+   "lo": 3725,
+   "hi": 7987,
+   "n": 178,
    "unstable": false
   },
   {
@@ -1792,10 +1792,10 @@
    "year": 2021,
    "month": 7,
    "device": "E-scooter",
-   "est": 7353,
-   "lo": 4210,
-   "hi": 10496,
-   "n": 205,
+   "est": 6842,
+   "lo": 3819,
+   "hi": 9864,
+   "n": 183,
    "unstable": false
   },
   {
@@ -1822,10 +1822,10 @@
    "year": 2021,
    "month": 8,
    "device": "E-scooter",
-   "est": 5841,
-   "lo": 3120,
-   "hi": 8563,
-   "n": 191,
+   "est": 5408,
+   "lo": 2730,
+   "hi": 8086,
+   "n": 165,
    "unstable": false
   },
   {
@@ -1852,10 +1852,10 @@
    "year": 2021,
    "month": 9,
    "device": "E-scooter",
-   "est": 6434,
-   "lo": 4059,
-   "hi": 8809,
-   "n": 219,
+   "est": 5791,
+   "lo": 3534,
+   "hi": 8047,
+   "n": 185,
    "unstable": false
   },
   {
@@ -1882,10 +1882,10 @@
    "year": 2021,
    "month": 10,
    "device": "E-scooter",
-   "est": 4620,
-   "lo": 2831,
-   "hi": 6410,
-   "n": 151,
+   "est": 4439,
+   "lo": 2666,
+   "hi": 6212,
+   "n": 138,
    "unstable": false
   },
   {
@@ -1912,10 +1912,10 @@
    "year": 2021,
    "month": 11,
    "device": "E-scooter",
-   "est": 3801,
-   "lo": 2275,
-   "hi": 5328,
-   "n": 122,
+   "est": 3684,
+   "lo": 2182,
+   "hi": 5186,
+   "n": 112,
    "unstable": false
   },
   {
@@ -1942,10 +1942,10 @@
    "year": 2021,
    "month": 12,
    "device": "E-scooter",
-   "est": 2203,
-   "lo": 1372,
-   "hi": 3035,
-   "n": 71,
+   "est": 2061,
+   "lo": 1260,
+   "hi": 2863,
+   "n": 63,
    "unstable": false
   },
   {
@@ -1972,10 +1972,10 @@
    "year": 2022,
    "month": 1,
    "device": "E-scooter",
-   "est": 1958,
-   "lo": 983,
-   "hi": 2934,
-   "n": 58,
+   "est": 1811,
+   "lo": 839,
+   "hi": 2783,
+   "n": 54,
    "unstable": false
   },
   {
@@ -2002,10 +2002,10 @@
    "year": 2022,
    "month": 2,
    "device": "E-scooter",
-   "est": 2417,
-   "lo": 1561,
-   "hi": 3274,
-   "n": 75,
+   "est": 2258,
+   "lo": 1430,
+   "hi": 3086,
+   "n": 65,
    "unstable": false
   },
   {
@@ -2032,10 +2032,10 @@
    "year": 2022,
    "month": 3,
    "device": "E-scooter",
-   "est": 4511,
-   "lo": 2914,
-   "hi": 6109,
-   "n": 135,
+   "est": 4181,
+   "lo": 2608,
+   "hi": 5754,
+   "n": 122,
    "unstable": false
   },
   {
@@ -2062,10 +2062,10 @@
    "year": 2022,
    "month": 4,
    "device": "E-scooter",
-   "est": 5744,
-   "lo": 3422,
-   "hi": 8066,
-   "n": 178,
+   "est": 5259,
+   "lo": 2960,
+   "hi": 7557,
+   "n": 156,
    "unstable": false
   },
   {
@@ -2092,10 +2092,10 @@
    "year": 2022,
    "month": 5,
    "device": "E-scooter",
-   "est": 7503,
-   "lo": 4771,
-   "hi": 10234,
-   "n": 217,
+   "est": 7104,
+   "lo": 4416,
+   "hi": 9792,
+   "n": 185,
    "unstable": false
   },
   {
@@ -2122,10 +2122,10 @@
    "year": 2022,
    "month": 6,
    "device": "E-scooter",
-   "est": 6116,
-   "lo": 3016,
-   "hi": 9216,
-   "n": 185,
+   "est": 5901,
+   "lo": 2808,
+   "hi": 8993,
+   "n": 169,
    "unstable": false
   },
   {
@@ -2152,10 +2152,10 @@
    "year": 2022,
    "month": 7,
    "device": "E-scooter",
-   "est": 7399,
-   "lo": 5027,
-   "hi": 9770,
-   "n": 203,
+   "est": 6865,
+   "lo": 4603,
+   "hi": 9126,
+   "n": 183,
    "unstable": false
   },
   {
@@ -2182,10 +2182,10 @@
    "year": 2022,
    "month": 8,
    "device": "E-scooter",
-   "est": 6896,
-   "lo": 4291,
-   "hi": 9501,
-   "n": 191,
+   "est": 6655,
+   "lo": 4097,
+   "hi": 9213,
+   "n": 176,
    "unstable": false
   },
   {
@@ -2212,10 +2212,10 @@
    "year": 2022,
    "month": 9,
    "device": "E-scooter",
-   "est": 5888,
-   "lo": 3898,
-   "hi": 7877,
-   "n": 201,
+   "est": 5400,
+   "lo": 3440,
+   "hi": 7360,
+   "n": 175,
    "unstable": false
   },
   {
@@ -2242,10 +2242,10 @@
    "year": 2022,
    "month": 10,
    "device": "E-scooter",
-   "est": 5609,
-   "lo": 3568,
-   "hi": 7651,
-   "n": 166,
+   "est": 5395,
+   "lo": 3433,
+   "hi": 7357,
+   "n": 156,
    "unstable": false
   },
   {
@@ -2272,10 +2272,10 @@
    "year": 2022,
    "month": 11,
    "device": "E-scooter",
-   "est": 3785,
-   "lo": 2197,
-   "hi": 5373,
-   "n": 113,
+   "est": 3497,
+   "lo": 2013,
+   "hi": 4982,
+   "n": 103,
    "unstable": false
   },
   {
@@ -2302,10 +2302,10 @@
    "year": 2022,
    "month": 12,
    "device": "E-scooter",
-   "est": 2681,
-   "lo": 1248,
-   "hi": 4115,
-   "n": 68,
+   "est": 2607,
+   "lo": 1183,
+   "hi": 4030,
+   "n": 62,
    "unstable": false
   },
   {
@@ -2332,10 +2332,10 @@
    "year": 2023,
    "month": 1,
    "device": "E-scooter",
-   "est": 3142,
-   "lo": 1614,
-   "hi": 4671,
-   "n": 91,
+   "est": 2883,
+   "lo": 1370,
+   "hi": 4397,
+   "n": 85,
    "unstable": false
   },
   {
@@ -2362,10 +2362,10 @@
    "year": 2023,
    "month": 2,
    "device": "E-scooter",
-   "est": 2725,
-   "lo": 1649,
-   "hi": 3801,
-   "n": 101,
+   "est": 2601,
+   "lo": 1542,
+   "hi": 3659,
+   "n": 89,
    "unstable": false
   },
   {
@@ -2392,10 +2392,10 @@
    "year": 2023,
    "month": 3,
    "device": "E-scooter",
-   "est": 4070,
-   "lo": 2537,
-   "hi": 5603,
-   "n": 127,
+   "est": 3713,
+   "lo": 2267,
+   "hi": 5159,
+   "n": 118,
    "unstable": false
   },
   {
@@ -2422,10 +2422,10 @@
    "year": 2023,
    "month": 4,
    "device": "E-scooter",
-   "est": 5654,
-   "lo": 3596,
-   "hi": 7711,
-   "n": 165,
+   "est": 5111,
+   "lo": 3131,
+   "hi": 7090,
+   "n": 143,
    "unstable": false
   },
   {
@@ -2452,10 +2452,10 @@
    "year": 2023,
    "month": 5,
    "device": "E-scooter",
-   "est": 7446,
-   "lo": 5077,
-   "hi": 9816,
-   "n": 250,
+   "est": 7087,
+   "lo": 4794,
+   "hi": 9380,
+   "n": 225,
    "unstable": false
   },
   {
@@ -2482,10 +2482,10 @@
    "year": 2023,
    "month": 6,
    "device": "E-scooter",
-   "est": 6652,
-   "lo": 4574,
-   "hi": 8730,
-   "n": 205,
+   "est": 6511,
+   "lo": 4475,
+   "hi": 8547,
+   "n": 194,
    "unstable": false
   },
   {
@@ -2512,10 +2512,10 @@
    "year": 2023,
    "month": 7,
    "device": "E-scooter",
-   "est": 8503,
-   "lo": 5426,
-   "hi": 11580,
-   "n": 272,
+   "est": 7959,
+   "lo": 4982,
+   "hi": 10935,
+   "n": 249,
    "unstable": false
   },
   {
@@ -2542,10 +2542,10 @@
    "year": 2023,
    "month": 8,
    "device": "E-scooter",
-   "est": 7959,
-   "lo": 5382,
-   "hi": 10537,
-   "n": 277,
+   "est": 7149,
+   "lo": 4712,
+   "hi": 9587,
+   "n": 252,
    "unstable": false
   },
   {
@@ -2572,10 +2572,10 @@
    "year": 2023,
    "month": 9,
    "device": "E-scooter",
-   "est": 7753,
-   "lo": 5195,
-   "hi": 10310,
-   "n": 272,
+   "est": 7177,
+   "lo": 4722,
+   "hi": 9631,
+   "n": 251,
    "unstable": false
   },
   {
@@ -2602,10 +2602,10 @@
    "year": 2023,
    "month": 10,
    "device": "E-scooter",
-   "est": 5979,
-   "lo": 3861,
-   "hi": 8097,
-   "n": 197,
+   "est": 5660,
+   "lo": 3638,
+   "hi": 7682,
+   "n": 188,
    "unstable": false
   },
   {
@@ -2632,10 +2632,10 @@
    "year": 2023,
    "month": 11,
    "device": "E-scooter",
-   "est": 4679,
-   "lo": 2849,
-   "hi": 6510,
-   "n": 127,
+   "est": 4390,
+   "lo": 2588,
+   "hi": 6192,
+   "n": 118,
    "unstable": false
   },
   {
@@ -2662,10 +2662,10 @@
    "year": 2023,
    "month": 12,
    "device": "E-scooter",
-   "est": 3575,
-   "lo": 2183,
-   "hi": 4966,
-   "n": 96,
+   "est": 3448,
+   "lo": 2064,
+   "hi": 4833,
+   "n": 92,
    "unstable": false
   },
   {
@@ -2692,10 +2692,10 @@
    "year": 2024,
    "month": 1,
    "device": "E-scooter",
-   "est": 4182,
-   "lo": 2221,
-   "hi": 6143,
-   "n": 92,
+   "est": 3922,
+   "lo": 2099,
+   "hi": 5745,
+   "n": 86,
    "unstable": false
   },
   {
@@ -2722,10 +2722,10 @@
    "year": 2024,
    "month": 2,
    "device": "E-scooter",
-   "est": 4926,
-   "lo": 2615,
-   "hi": 7237,
-   "n": 125,
+   "est": 4789,
+   "lo": 2495,
+   "hi": 7083,
+   "n": 121,
    "unstable": false
   },
   {
@@ -2752,10 +2752,10 @@
    "year": 2024,
    "month": 3,
    "device": "E-scooter",
-   "est": 6871,
-   "lo": 3735,
-   "hi": 10007,
-   "n": 163,
+   "est": 6413,
+   "lo": 3328,
+   "hi": 9497,
+   "n": 149,
    "unstable": false
   },
   {
@@ -2782,10 +2782,10 @@
    "year": 2024,
    "month": 4,
    "device": "E-scooter",
-   "est": 8859,
-   "lo": 5686,
-   "hi": 12033,
-   "n": 208,
+   "est": 8295,
+   "lo": 5243,
+   "hi": 11346,
+   "n": 195,
    "unstable": false
   },
   {
@@ -2812,10 +2812,10 @@
    "year": 2024,
    "month": 5,
    "device": "E-scooter",
-   "est": 11289,
-   "lo": 6825,
-   "hi": 15752,
-   "n": 285,
+   "est": 10888,
+   "lo": 6511,
+   "hi": 15266,
+   "n": 267,
    "unstable": false
   },
   {
@@ -2842,10 +2842,10 @@
    "year": 2024,
    "month": 6,
    "device": "E-scooter",
-   "est": 13706,
-   "lo": 6915,
-   "hi": 20497,
-   "n": 333,
+   "est": 12962,
+   "lo": 6310,
+   "hi": 19614,
+   "n": 307,
    "unstable": false
   },
   {
@@ -2872,10 +2872,10 @@
    "year": 2024,
    "month": 7,
    "device": "E-scooter",
-   "est": 15061,
-   "lo": 6604,
-   "hi": 23518,
-   "n": 349,
+   "est": 14741,
+   "lo": 6321,
+   "hi": 23161,
+   "n": 335,
    "unstable": false
   },
   {
@@ -2902,10 +2902,10 @@
    "year": 2024,
    "month": 8,
    "device": "E-scooter",
-   "est": 14842,
-   "lo": 7468,
-   "hi": 22215,
-   "n": 349,
+   "est": 14141,
+   "lo": 6815,
+   "hi": 21467,
+   "n": 329,
    "unstable": false
   },
   {
@@ -2932,10 +2932,10 @@
    "year": 2024,
    "month": 9,
    "device": "E-scooter",
-   "est": 14805,
-   "lo": 7104,
-   "hi": 22507,
-   "n": 372,
+   "est": 14336,
+   "lo": 6646,
+   "hi": 22026,
+   "n": 351,
    "unstable": false
   },
   {
@@ -2962,10 +2962,10 @@
    "year": 2024,
    "month": 10,
    "device": "E-scooter",
-   "est": 12700,
-   "lo": 6850,
-   "hi": 18550,
-   "n": 309,
+   "est": 12466,
+   "lo": 6660,
+   "hi": 18272,
+   "n": 296,
    "unstable": false
   },
   {
@@ -2992,10 +2992,10 @@
    "year": 2024,
    "month": 11,
    "device": "E-scooter",
-   "est": 8726,
-   "lo": 4451,
-   "hi": 13002,
-   "n": 214,
+   "est": 8504,
+   "lo": 4275,
+   "hi": 12733,
+   "n": 202,
    "unstable": false
   },
   {
@@ -3022,10 +3022,10 @@
    "year": 2024,
    "month": 12,
    "device": "E-scooter",
-   "est": 6727,
-   "lo": 4221,
-   "hi": 9232,
-   "n": 172,
+   "est": 6428,
+   "lo": 3959,
+   "hi": 8897,
+   "n": 162,
    "unstable": false
   },
   {
@@ -3052,10 +3052,10 @@
    "year": 2025,
    "month": 1,
    "device": "E-scooter",
-   "est": 6454,
-   "lo": 3825,
-   "hi": 9084,
-   "n": 158,
+   "est": 6346,
+   "lo": 3717,
+   "hi": 8975,
+   "n": 152,
    "unstable": false
   },
   {
@@ -3082,10 +3082,10 @@
    "year": 2025,
    "month": 2,
    "device": "E-scooter",
-   "est": 5714,
-   "lo": 2787,
-   "hi": 8642,
-   "n": 151,
+   "est": 5415,
+   "lo": 2612,
+   "hi": 8218,
+   "n": 144,
    "unstable": false
   },
   {
@@ -3112,10 +3112,10 @@
    "year": 2025,
    "month": 3,
    "device": "E-scooter",
-   "est": 9770,
-   "lo": 5874,
-   "hi": 13666,
-   "n": 262,
+   "est": 9447,
+   "lo": 5591,
+   "hi": 13304,
+   "n": 247,
    "unstable": false
   },
   {
@@ -3142,10 +3142,10 @@
    "year": 2025,
    "month": 4,
    "device": "E-scooter",
-   "est": 12978,
-   "lo": 7870,
-   "hi": 18085,
-   "n": 341,
+   "est": 12736,
+   "lo": 7661,
+   "hi": 17810,
+   "n": 328,
    "unstable": false
   },
   {
@@ -3172,10 +3172,10 @@
    "year": 2025,
    "month": 5,
    "device": "E-scooter",
-   "est": 14639,
-   "lo": 9038,
-   "hi": 20240,
-   "n": 388,
+   "est": 14272,
+   "lo": 8772,
+   "hi": 19772,
+   "n": 371,
    "unstable": false
   },
   {
@@ -3202,10 +3202,10 @@
    "year": 2025,
    "month": 6,
    "device": "E-scooter",
-   "est": 17699,
-   "lo": 9905,
-   "hi": 25494,
-   "n": 446,
+   "est": 17350,
+   "lo": 9581,
+   "hi": 25120,
+   "n": 436,
    "unstable": false
   },
   {
@@ -3232,10 +3232,10 @@
    "year": 2025,
    "month": 7,
    "device": "E-scooter",
-   "est": 18718,
-   "lo": 9317,
-   "hi": 28119,
-   "n": 510,
+   "est": 18077,
+   "lo": 8836,
+   "hi": 27318,
+   "n": 489,
    "unstable": false
   },
   {
@@ -3262,10 +3262,10 @@
    "year": 2025,
    "month": 8,
    "device": "E-scooter",
-   "est": 22254,
-   "lo": 11705,
-   "hi": 32803,
-   "n": 555,
+   "est": 21308,
+   "lo": 10871,
+   "hi": 31745,
+   "n": 523,
    "unstable": false
   },
   {
@@ -3292,10 +3292,10 @@
    "year": 2025,
    "month": 9,
    "device": "E-scooter",
-   "est": 20266,
-   "lo": 11140,
-   "hi": 29392,
-   "n": 513,
+   "est": 19648,
+   "lo": 10660,
+   "hi": 28635,
+   "n": 493,
    "unstable": false
   },
   {
@@ -3322,10 +3322,10 @@
    "year": 2025,
    "month": 10,
    "device": "E-scooter",
-   "est": 17837,
-   "lo": 10091,
-   "hi": 25583,
-   "n": 458,
+   "est": 17665,
+   "lo": 9945,
+   "hi": 25384,
+   "n": 449,
    "unstable": false
   },
   {
@@ -3352,10 +3352,10 @@
    "year": 2025,
    "month": 11,
    "device": "E-scooter",
-   "est": 13471,
-   "lo": 7620,
-   "hi": 19322,
-   "n": 318,
+   "est": 13253,
+   "lo": 7440,
+   "hi": 19066,
+   "n": 304,
    "unstable": false
   },
   {
@@ -3382,10 +3382,10 @@
    "year": 2025,
    "month": 12,
    "device": "E-scooter",
-   "est": 8985,
-   "lo": 4975,
-   "hi": 12995,
-   "n": 243,
+   "est": 8904,
+   "lo": 4911,
+   "hi": 12898,
+   "n": 238,
    "unstable": false
   }
  ],
@@ -3632,26 +3632,26 @@
   {
    "device": "E-scooter",
    "age_group": "0-17",
-   "share": 0.0832,
-   "lo": 0.0632,
-   "hi": 0.1033,
-   "n": 4636
+   "share": 0.0904,
+   "lo": 0.069,
+   "hi": 0.1118,
+   "n": 3547
   },
   {
    "device": "E-scooter",
    "age_group": "18-64",
-   "share": 0.1395,
-   "lo": 0.1186,
-   "hi": 0.1604,
-   "n": 9254
+   "share": 0.1401,
+   "lo": 0.1189,
+   "hi": 0.1612,
+   "n": 9121
   },
   {
    "device": "E-scooter",
    "age_group": "65+",
-   "share": 0.2636,
-   "lo": 0.2142,
-   "hi": 0.3131,
-   "n": 689
+   "share": 0.2629,
+   "lo": 0.2128,
+   "hi": 0.3129,
+   "n": 683
   }
  ]
 }
