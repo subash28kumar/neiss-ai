@@ -8,19 +8,19 @@
   "slower_phi": 0.6,
   "faster_phi": 0.95,
   "window_years": 3,
-  "sigma_1yr": 0.16841305125778172,
+  "sigma_1yr": 0.16851487062277962,
   "phi_scores": {
-   "0.3": 0.29622535762782115,
-   "0.5": 0.24682447630248275,
-   "0.6": 0.2225884536042015,
-   "0.7": 0.19714687883435114,
-   "0.8": 0.17191793810324307,
-   "0.85": 0.1609710365402791,
-   "0.9": 0.1550758732058615,
-   "0.95": 0.16383270414428205
+   "0.3": 0.29472840065869493,
+   "0.5": 0.24414724708786992,
+   "0.6": 0.22053445242939038,
+   "0.7": 0.19446182044584479,
+   "0.8": 0.17173463487195748,
+   "0.85": 0.162468959066448,
+   "0.9": 0.160356129678391,
+   "0.95": 0.16919016694992903
   },
   "best_phi": 0.9,
-  "one_se_limit": 0.17894035179916476,
+  "one_se_limit": 0.18437243324146044,
   "backtest_devices": [
    "E-bike",
    "E-scooter",
@@ -38,21 +38,21 @@
     "years_ahead": 1,
     "forecasts": 18,
     "median_miss": 0.11602705675015268,
-    "mean_miss": 0.1285581387629976,
+    "mean_miss": 0.1301311028681963,
     "inside_80": 15
    },
    {
     "years_ahead": 2,
     "forecasts": 12,
     "median_miss": 0.1736340690136755,
-    "mean_miss": 0.18853628302666092,
+    "mean_miss": 0.19304640442530344,
     "inside_80": 10
    },
    {
     "years_ahead": 3,
     "forecasts": 6,
-    "median_miss": 0.1975401690828863,
-    "mean_miss": 0.2940063507641543,
+    "median_miss": 0.20182766428613075,
+    "mean_miss": 0.28339126519437213,
     "inside_80": 5
    }
   ],
@@ -62,108 +62,108 @@
     "cut": 2022,
     "h": 1,
     "year": 2023,
-    "forecast": 43845.4133,
-    "actual": 37789.0,
-    "log_error": 0.1487
+    "forecast": 45270.6886,
+    "actual": 37657.0,
+    "log_error": 0.1841
    },
    {
     "device": "E-bike",
     "cut": 2022,
     "h": 2,
     "year": 2024,
-    "forecast": 62967.6012,
+    "forecast": 66732.3277,
     "actual": 59349.0,
-    "log_error": 0.0592
+    "log_error": 0.1173
    },
    {
     "device": "E-bike",
     "cut": 2022,
     "h": 3,
     "year": 2025,
-    "forecast": 84114.629,
+    "forecast": 91023.098,
     "actual": 101628.0,
-    "log_error": -0.1891
+    "log_error": -0.1102
    },
    {
     "device": "E-bike",
     "cut": 2023,
     "h": 1,
     "year": 2024,
-    "forecast": 56893.6044,
+    "forecast": 57279.7764,
     "actual": 59349.0,
-    "log_error": -0.0423
+    "log_error": -0.0355
    },
    {
     "device": "E-bike",
     "cut": 2023,
     "h": 2,
     "year": 2025,
-    "forecast": 78926.3261,
+    "forecast": 80117.2051,
     "actual": 101628.0,
-    "log_error": -0.2528
+    "log_error": -0.2378
    },
    {
     "device": "E-bike",
     "cut": 2024,
     "h": 1,
     "year": 2025,
-    "forecast": 85434.0636,
+    "forecast": 85507.9543,
     "actual": 101628.0,
-    "log_error": -0.1736
+    "log_error": -0.1727
    },
    {
     "device": "E-scooter",
     "cut": 2022,
     "h": 1,
     "year": 2023,
-    "forecast": 80345.3973,
-    "actual": 63690.0,
-    "log_error": 0.2323
+    "forecast": 80184.142,
+    "actual": 63822.0,
+    "log_error": 0.2282
    },
    {
     "device": "E-scooter",
     "cut": 2022,
     "h": 2,
     "year": 2024,
-    "forecast": 105837.2507,
+    "forecast": 105428.5399,
     "actual": 117884.0,
-    "log_error": -0.1078
+    "log_error": -0.1117
    },
    {
     "device": "E-scooter",
     "cut": 2022,
     "h": 3,
     "year": 2025,
-    "forecast": 131941.2479,
+    "forecast": 131236.2936,
     "actual": 164421.0,
-    "log_error": -0.2201
+    "log_error": -0.2254
    },
    {
     "device": "E-scooter",
     "cut": 2023,
     "h": 1,
     "year": 2024,
-    "forecast": 78380.8222,
+    "forecast": 78535.1321,
     "actual": 117884.0,
-    "log_error": -0.4081
+    "log_error": -0.4062
    },
    {
     "device": "E-scooter",
     "cut": 2023,
     "h": 2,
     "year": 2025,
-    "forecast": 92538.1191,
+    "forecast": 92712.6155,
     "actual": 164421.0,
-    "log_error": -0.5748
+    "log_error": -0.5729
    },
    {
     "device": "E-scooter",
     "cut": 2024,
     "h": 1,
     "year": 2025,
-    "forecast": 147807.3476,
+    "forecast": 147794.8551,
     "actual": 164421.0,
-    "log_error": -0.1065
+    "log_error": -0.1066
    },
    {
     "device": "Kick scooter",
@@ -388,37 +388,37 @@
    "actual": [
     {
      "year": 2019,
-     "est": 5112,
-     "lo": 1795,
-     "hi": 8428,
+     "est": 4521,
+     "lo": 1307,
+     "hi": 7736,
      "unstable": true
     },
     {
      "year": 2020,
-     "est": 8147,
-     "lo": 1869,
-     "hi": 14424,
+     "est": 7812,
+     "lo": 1731,
+     "hi": 13892,
      "unstable": true
     },
     {
      "year": 2021,
-     "est": 15139,
-     "lo": 6202,
-     "hi": 24075,
+     "est": 15090,
+     "lo": 6155,
+     "hi": 24025,
      "unstable": false
     },
     {
      "year": 2022,
-     "est": 27889,
-     "lo": 13430,
-     "hi": 42347,
+     "est": 27872,
+     "lo": 13413,
+     "hi": 42330,
      "unstable": false
     },
     {
      "year": 2023,
-     "est": 37789,
-     "lo": 23846,
-     "hi": 51732,
+     "est": 37657,
+     "lo": 23707,
+     "hi": 51607,
      "unstable": false
     },
     {
@@ -440,47 +440,47 @@
     {
      "year": 2026,
      "tested": true,
-     "central": 143472,
-     "lo80": 115619,
-     "hi80": 178035,
-     "slower": 131622,
-     "faster": 153055
+     "central": 143496,
+     "lo80": 115623,
+     "hi80": 178087,
+     "slower": 131638,
+     "faster": 153084
     },
     {
      "year": 2027,
      "tested": true,
-     "central": 189048,
-     "lo80": 139318,
-     "hi80": 256529,
-     "slower": 153716,
-     "faster": 225834
+     "central": 189103,
+     "lo80": 139333,
+     "hi80": 256652,
+     "slower": 153746,
+     "faster": 225919
     },
     {
      "year": 2028,
      "tested": true,
-     "central": 235730,
-     "lo80": 162202,
-     "hi80": 342589,
-     "slower": 168715,
-     "faster": 326802
+     "central": 235824,
+     "lo80": 162230,
+     "hi80": 342802,
+     "slower": 168755,
+     "faster": 326982
     },
     {
      "year": 2029,
      "tested": false,
-     "central": 281248,
-     "lo80": 182648,
-     "hi80": 433076,
-     "slower": 178408,
-     "faster": 464253
+     "central": 281383,
+     "lo80": 182688,
+     "hi80": 433397,
+     "slower": 178455,
+     "faster": 464586
     },
     {
      "year": 2030,
      "tested": false,
-     "central": 323914,
-     "lo80": 199906,
-     "hi80": 524846,
-     "slower": 184489,
-     "faster": 648039
+     "central": 324091,
+     "lo80": 199957,
+     "hi80": 525286,
+     "slower": 184540,
+     "faster": 648606
     }
    ]
   },
@@ -488,37 +488,37 @@
    "actual": [
     {
      "year": 2019,
-     "est": 15645,
-     "lo": 8573,
-     "hi": 22718,
+     "est": 15787,
+     "lo": 8682,
+     "hi": 22892,
      "unstable": false
     },
     {
      "year": 2020,
-     "est": 29245,
-     "lo": 14602,
-     "hi": 43888,
+     "est": 29317,
+     "lo": 14574,
+     "hi": 44061,
      "unstable": false
     },
     {
      "year": 2021,
-     "est": 50472,
-     "lo": 32754,
-     "hi": 68190,
+     "est": 50488,
+     "lo": 32770,
+     "hi": 68207,
      "unstable": false
     },
     {
      "year": 2022,
-     "est": 56933,
-     "lo": 40281,
-     "hi": 73584,
+     "est": 56951,
+     "lo": 40298,
+     "hi": 73603,
      "unstable": false
     },
     {
      "year": 2023,
-     "est": 63690,
-     "lo": 48344,
-     "hi": 79035,
+     "est": 63822,
+     "lo": 48494,
+     "hi": 79150,
      "unstable": false
     },
     {
@@ -540,47 +540,47 @@
     {
      "year": 2026,
      "tested": true,
-     "central": 218164,
-     "lo80": 175811,
-     "hi80": 270719,
-     "slower": 203271,
-     "faster": 230044
+     "central": 218145,
+     "lo80": 175773,
+     "hi80": 270732,
+     "slower": 203258,
+     "faster": 230021
     },
     {
      "year": 2027,
      "tested": true,
-     "central": 273553,
-     "lo80": 201594,
-     "hi80": 371199,
-     "slower": 230859,
-     "faster": 316500
+     "central": 273512,
+     "lo80": 201526,
+     "hi80": 371211,
+     "slower": 230836,
+     "faster": 316438
     },
     {
      "year": 2028,
      "tested": true,
-     "central": 327831,
-     "lo80": 225576,
-     "hi80": 476439,
-     "slower": 249178,
-     "faster": 428556
+     "central": 327764,
+     "lo80": 225478,
+     "hi80": 476449,
+     "slower": 249147,
+     "faster": 428433
     },
     {
      "year": 2029,
      "tested": false,
-     "central": 378910,
-     "lo80": 246072,
-     "hi80": 583460,
-     "slower": 260860,
-     "faster": 571557
+     "central": 378816,
+     "lo80": 245946,
+     "hi80": 583467,
+     "slower": 260824,
+     "faster": 571344
     },
     {
      "year": 2030,
      "tested": false,
-     "central": 425447,
-     "lo80": 262568,
-     "hi80": 689364,
-     "slower": 268130,
-     "faster": 751378
+     "central": 425326,
+     "lo80": 262417,
+     "hi80": 689369,
+     "slower": 268091,
+     "faster": 751038
     }
    ]
   },
@@ -641,8 +641,8 @@
      "year": 2026,
      "tested": true,
      "central": 124119,
-     "lo80": 100023,
-     "hi80": 154019,
+     "lo80": 100010,
+     "hi80": 154039,
      "slower": 120775,
      "faster": 126687
     },
@@ -650,8 +650,8 @@
      "year": 2027,
      "tested": true,
      "central": 135455,
-     "lo80": 99823,
-     "hi80": 183806,
+     "lo80": 99805,
+     "hi80": 183840,
      "slower": 126861,
      "faster": 143305
     },
@@ -659,8 +659,8 @@
      "year": 2028,
      "tested": true,
      "central": 145265,
-     "lo80": 99955,
-     "hi80": 211115,
+     "lo80": 99932,
+     "hi80": 211163,
      "slower": 130658,
      "faster": 161105
     },
@@ -668,8 +668,8 @@
      "year": 2029,
      "tested": false,
      "central": 153622,
-     "lo80": 99765,
-     "hi80": 236553,
+     "lo80": 99739,
+     "hi80": 236615,
      "slower": 132991,
      "faster": 180060
     },
@@ -677,8 +677,8 @@
      "year": 2030,
      "tested": false,
      "central": 160653,
-     "lo80": 99148,
-     "hi80": 260311,
+     "lo80": 99119,
+     "hi80": 260387,
      "slower": 134411,
      "faster": 200129
     }
@@ -741,8 +741,8 @@
      "year": 2026,
      "tested": true,
      "central": 443317,
-     "lo80": 357254,
-     "hi80": 550113,
+     "lo80": 357208,
+     "hi80": 550185,
      "slower": 441111,
      "faster": 444979
     },
@@ -750,8 +750,8 @@
      "year": 2027,
      "tested": true,
      "central": 450452,
-     "lo80": 331959,
-     "hi80": 611243,
+     "lo80": 331898,
+     "hi80": 611355,
      "slower": 445090,
      "faster": 455112
     },
@@ -759,8 +759,8 @@
      "year": 2028,
      "tested": true,
      "central": 456243,
-     "lo80": 313934,
-     "hi80": 663062,
+     "lo80": 313863,
+     "hi80": 663212,
      "slower": 447495,
      "faster": 464952
     },
@@ -768,8 +768,8 @@
      "year": 2029,
      "tested": false,
      "central": 460929,
-     "lo80": 299337,
-     "hi80": 709756,
+     "lo80": 299258,
+     "hi80": 709941,
      "slower": 448945,
      "faster": 474497
     },
@@ -777,8 +777,8 @@
      "year": 2030,
      "tested": false,
      "central": 464713,
-     "lo80": 286802,
-     "hi80": 752988,
+     "lo80": 286718,
+     "hi80": 753207,
      "slower": 449816,
      "faster": 483745
     }
@@ -788,27 +788,27 @@
  "ebike_vs_bicycle": [
   {
    "year": 2019,
-   "share": 0.012298010233907577,
+   "share": 0.010876233229165914,
    "kind": "actual"
   },
   {
    "year": 2020,
-   "share": 0.01920004147793421,
+   "share": 0.0184105467074533,
    "kind": "actual"
   },
   {
    "year": 2021,
-   "share": 0.040532689336842474,
+   "share": 0.04040149825569409,
    "kind": "actual"
   },
   {
    "year": 2022,
-   "share": 0.0691657159863102,
+   "share": 0.06912355537919745,
    "kind": "actual"
   },
   {
    "year": 2023,
-   "share": 0.0936834511328337,
+   "share": 0.09335620734364812,
    "kind": "actual"
   },
   {
@@ -823,27 +823,27 @@
   },
   {
    "year": 2026,
-   "share": 0.3236329759517456,
+   "share": 0.3236871132846248,
    "kind": "forecast"
   },
   {
    "year": 2027,
-   "share": 0.4196851162832,
+   "share": 0.41980721586317743,
    "kind": "forecast"
   },
   {
    "year": 2028,
-   "share": 0.516676420240968,
+   "share": 0.5168824507992451,
    "kind": "forecast"
   },
   {
    "year": 2029,
-   "share": 0.6101764046089528,
+   "share": 0.6104692913659153,
    "kind": "forecast"
   },
   {
    "year": 2030,
-   "share": 0.6970194507147423,
+   "share": 0.6974003309569562,
    "kind": "forecast"
   }
  ],

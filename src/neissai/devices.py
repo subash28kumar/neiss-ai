@@ -25,6 +25,10 @@ E_WORDS = (r"\bE-?BIKES?\b|\bE BIKES?\b|\bE-?BICYCLES?\b|ELECTRI(C|CAL) (BI(KE|C
            r"PEDAL[- ]ASSIST|POWER[- ]ASSIST(ED)? (BI(KE|CYCLE))|BATTERY[- ]POWERED (BI(KE|CYCLE))")
 ESC_WORDS = (r"\bE-?SCOOTERS?\b|\bE SCOOTERS?\b|ELEC(TRIC|TRONIC)? SCOOTER|MOTORI[ZS]ED SCOOTER|POWERED SCOOTER|"
              r"STAND[- ]?UP (ELECTRIC|MOTORIZED)|LIME SCOOTER|BIRD SCOOTER|RENTAL SCOOTER|BATTERY[- ]POWERED SCOOTER")
+# Words that name an electric stand-up scooter (not "motorized scooter", which under the moped
+# code usually means a motor scooter).
+ESC_STRICT_WORDS = (r"\bE-?SCOOTERS?\b|\bE SCOOTERS?\b|ELEC(TRIC|TRONIC)? (KICK ?|STAND[- ]?UP )?SCOOTER|"
+                    r"STAND[- ]?UP (ELECTRIC|MOTORIZED)|LIME SCOOTER|BIRD SCOOTER|BATTERY[- ]POWERED SCOOTER")
 # A scooter the story says is NOT powered ("UNPOWERED SCOOTER", "NON-MOTORIZED SCOOTER",
 # "NONELECTRIC SCOOTER", "NOT AN ELECTRIC SCOOTER"). These phrases contain e-scooter words, so they
 # are removed before the e-scooter words are searched (independent review, Nov 2026).
@@ -96,7 +100,14 @@ def label_devices(df: pd.DataFrame, classifier: EbikeMopedClassifier | None = No
     label[_kw(narr, EXERCISE_WORDS) & label.isin(["Bicycle", "E-bike"])] = "Excluded"
     label[bike & ~_has(codes, "5045", "3215") & _kw(narr, r"NON-? ?ELECTRIC")] = "Bicycle"
 
-    undecided = _has(codes, "3215") & ~e_words & ~moped_words
+    # Code 3215 (mopeds / power-assisted cycles) with a story that names only a scooter, no bike:
+    # not an e-bike. An electric stand-up scooter is an e-scooter; any other scooter under this
+    # moped code is a motor scooter (independent review, Nov 2026).
+    scooter_only = (_has(codes, "3215") & ~e_words & ~moped_words & _kw(narr, r"SCOOTER")
+                    & ~_kw(narr, r"BIKE|BICYCL|CYCLE"))
+    label[scooter_only] = "Moped / minibike"
+    label[scooter_only & _kw(narr.str.replace(_noncapturing(ESC_NEG_WORDS), " ", regex=True), ESC_STRICT_WORDS)] = "E-scooter"
+    undecided = _has(codes, "3215") & ~e_words & ~moped_words & ~scooter_only
     source = pd.Series(np.where(label == "Other", "", "rules"), index=narr.index)
     source[undecided] = "classifier"
     if undecided.any():
