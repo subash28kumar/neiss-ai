@@ -91,8 +91,8 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
     ws["A4"] = CITE + f" (data updated {updated})"
     for r in (2, 3, 4):
         ws.cell(r, 1).font = Font(size=9, color="555555")
-    head = ["Device", "Age group", "US visits per 100,000 people", "US rate, 95% range: low", "US rate, 95% range: high",
-            f"{name} population, {year}", f"Benchmark: visits in {name} at the US rate", "Benchmark: 95% range (low - high)",
+    head = ["Device", "Age group", "US visits per 100,000 people", "US rate, likely range: low", "US rate, likely range: high",
+            f"{name} population, {year}", f"Benchmark: visits in {name} at the US rate", "Benchmark: likely range (low - high)",
             "Your own count (type here)", "Ratio: your count / benchmark", "Injury notes behind the US rate",
             "Few notes? (read with care)"]
     hr = 6
@@ -155,7 +155,7 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
         ("1. Count your own emergency department visits for each device and age group in the same year, using your usual case definition (for example syndromic surveillance or hospital discharge data).", False),
         ("2. Type each count into the yellow column I on the Compare sheet. The All ages row adds up your counts; its ratio appears once all age groups are filled in.", False),
         ("3. Column J shows your count divided by the benchmark. 1.0 means your state matches the US rate for its age mix; 1.5 means 50% more visits than the benchmark; 0.5 means half.", False),
-        ("4. Use the 95% range in column H to judge differences: a count inside the range is consistent with the US rate.", False),
+        ("4. Use the likely range in column H to judge differences: a count inside the range is consistent with the US rate. (The likely range is a 95% range: the true number is very likely inside it.)", False),
         ("", False),
         (f"How the numbers are made: a worked example (e-bike, ages 25-44, {name}, {year})", True),
         (f"Step 1. About 100 US hospitals report every emergency department visit to CPSC (the NEISS sample). NEISS-AI reads each short injury note and decides the device. In {year} it found {ex['records']:,} e-bike visits for ages 25-44 in those hospitals.", False),
@@ -164,7 +164,7 @@ def workbook(abbr, name, year, nat, state_pop, updated, path):
         (f"Step 4. {name} has about {sp:,} people aged 25-44 (column F). {ex['rate']:.1f} x {sp:,} / 100,000 = about {round(bench):,} visits: the benchmark (column G).", False),
         (f"Step 5. The US number comes from a sample of hospitals, so it has a margin of error. The US rate could be as low as {ex['rate_lo']:.1f} or as high as {ex['rate_hi']:.1f} per 100,000, so the {name} benchmark range is {round(blo):,} to {round(bhi):,} (column H).", False),
         (f"Step 6. The same is done for all {len(AGE_GROUPS)} age groups and added up: about {round(all_e):,} e-bike visits for {name} at the US rate. Working by age group makes the benchmark fair for a state whose population is younger or older than the US.", False),
-        (f"Step 7. If your team counted {mine:,} visits for this row, the ratio would be {mine:,} / {round(bench):,} = {mine / round(bench):.2f}: about {abs(mine / round(bench) - 1) * 100:.0f}% {'more' if mine >= bench else 'fewer'} than the benchmark. That count is {'inside' if blo <= mine <= bhi else 'outside'} the 95% range. (Example only, not real {name} data.)", False),
+        (f"Step 7. If your team counted {mine:,} visits for this row, the ratio would be {mine:,} / {round(bench):,} = {mine / round(bench):.2f}: about {abs(mine / round(bench) - 1) * 100:.0f}% {'more' if mine >= bench else 'fewer'} than the benchmark. That count is {'inside' if blo <= mine <= bhi else 'outside'} the likely range. (Example only, not real {name} data.)", False),
         ("In one sentence: US rate for each age group x the state's population in that age group = the number of visits the state would have at the US rate.", False),
         ("", False),
         ("Read with care", True),

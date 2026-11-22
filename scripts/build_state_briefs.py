@@ -235,7 +235,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         c.setFont("Sans", 7.4)
         c.setFillColor(HexColor(INK2))
         rate = e[0] / sum(st["pop"][str(year)]) * 1e5
-        c.drawString(x + 12, y - 52, f"95% range {fmt(e[1])} to {fmt(e[2])}")
+        c.drawString(x + 12, y - 52, f"likely range {fmt(e[1])} to {fmt(e[2])}")
         c.drawString(x + 12, y - 63, f"{rate:,.1f} per 100,000 residents")
         c.setFillColor(HexColor(INK3))
         c.drawString(x + 12, y - 73, f"Population-only estimate: {fmt(e[3])}")
@@ -257,7 +257,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         f"{up:.1f} times the {first} level (about {fmt(eb[str(first)][0])})." if up else "",
         mix_txt,
         f"Nationally, NEISS-AI estimates about {fmt(nat_e['est'])} US e-bike emergency visits in {year} "
-        f"(95% CI {fmt(nat_e['lo'])} to {fmt(nat_e['hi'])}). It reads each injury story, so e-bikes are counted the "
+        f"(likely range {fmt(nat_e['lo'])} to {fmt(nat_e['hi'])}). It reads each injury story, so e-bikes are counted the "
         f"same way before and after the 2024 change in official product codes."
         + (f" About {emoto['est'] / nat_e['est'] * 100:.1f}% of {year} e-bike visits look like e-motos "
            f"(electric motorcycles), a minimum." if emoto else ""),
@@ -284,10 +284,10 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
     c.drawImage(age_chart(st, year, groups), M + cw + 14, y - ch, width=cw, height=ch, preserveAspectRatio=True,
                 anchor="nw")
     y -= ch + 10
-    notes = "Shaded bands and whiskers: 95% ranges."
+    notes = "Shaded bands and lines: likely ranges (the true number is very likely, 95%, inside)."
     if any(unstable.get(("E-bike", yy)) for yy in years):
         un_years = [str(yy) for yy in years if unstable.get(("E-bike", yy))]
-        notes += f" Open circles: the national e-bike estimate for {', '.join(un_years)} is unstable by the CPSC rule."
+        notes += f" Open circles: the national e-bike estimate for {', '.join(un_years)} rests on few records (CPSC rule), so read it with care."
     y = para(c, M, y, notes, W - 2 * M, size=7.2, color=INK3) - 6
 
     # how calculated + limits (two columns)
@@ -301,15 +301,15 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
               "the US Consumer Product Safety Commission's NEISS sample of about 100 hospitals, reading each "
               "short injury story.", col_w, size=7.6)
     yl = para(c, M, yl - 2, f"2. For each age group, the national number is multiplied by {the}'s share of the US "
-              f"population in that age group (US Census Bureau, Vintage 2025), then the age groups are added up.",
+              f"population in that age group (US Census Bureau), then the age groups are added up.",
               col_w, size=7.6)
-    yl = para(c, M, yl - 2, "3. The 95% range carries the national sampling uncertainty into the state number "
-              "(survey-correct method, hospitals as clusters within strata).", col_w, size=7.6)
+    yl = para(c, M, yl - 2, "3. The likely range comes from the uncertainty in the national number, because NEISS samples about "
+              "100 hospitals rather than all of them.", col_w, size=7.6)
     yr = bullets(c, M + col_w + 18, yr - 13, [
         "NEISS does not record the patient's state, so these are expected numbers, not counts.",
         "They assume people in each age group get hurt at the national rate. Real numbers can be higher or lower "
         "where more people ride, roads differ, or laws differ.",
-        "The ranges show national sampling uncertainty only, not real differences between states.",
+        "The ranges show only the uncertainty in the national number, not real differences between states.",
         "For planning and context; for counts, use state hospital or crash data, which NEISS-AI can complement.",
     ], col_w, size=7.6)
     y = min(yl, yr) - 8

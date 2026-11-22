@@ -12,6 +12,9 @@ All notable changes to NEISS-AI are listed here.
   groups and their accuracy, how state numbers are calculated, the Hazard Watch false-alarm check, and
   the "How it works" steps. The Accuracy tab opens with an "In short" summary; technical terms stay
   in brackets for researchers.
+- Downloads now use the same plain words: the 51 state PDF briefs ("likely range", "rests on few
+  records"), the 51 "Compare your state" workbooks (column headings and steps) and the data pack
+  (column headings "Likely range: low/high" and "Few records?", plain read-me).
 
 ## Easier to find on Google: a page for every state — 2026-11-21
 

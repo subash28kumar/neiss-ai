@@ -50,8 +50,8 @@ def _top(ws, title, updated, ncols):
     ws["A2"] = "Please cite: " + CITATION
     ws["A2"].hyperlink = DOI_URL
     ws["A2"].font = Font(name=FONT, size=10, color="1F4E99", underline="single")
-    ws["A3"] = (f"National estimates of US emergency department visits from CPSC NEISS (public data), with 95% "
-                f"confidence intervals. Updated {updated}. More: {SITE}")
+    ws["A3"] = (f"National estimates of US emergency department visits from CPSC NEISS (public data), with likely "
+                f"ranges (95%: the true number is very likely inside). Updated {updated}. More: {SITE}")
     ws["A3"].font = Font(name=FONT, size=9, italic=True, color="555555")
     for r in (1, 2, 3):
         ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=max(ncols, 6))
@@ -81,8 +81,8 @@ def _table(ws, headers, rows, formats, widths, start=5):
     ws.freeze_panes = ws.cell(row=start + 1, column=1)
     ws.auto_filter.ref = f"A{start}:{get_column_letter(len(headers))}{start + len(rows)}"
     note = start + len(rows) + 2
-    ws.cell(row=note, column=1, value="Unstable = yes: fewer than 20 NEISS records, an estimate under 1,200, or a "
-                                       "coefficient of variation over 33% (CPSC's rule). Treat these numbers as rough.")
+    ws.cell(row=note, column=1, value="Few records? = yes: the number rests on fewer than 20 NEISS records, is under 1,200, or has a "
+                                       "very wide range (coefficient of variation over 33%, CPSC's rule). Treat these numbers as rough.")
     ws.cell(row=note + 1, column=1, value=SOURCE_LINE)
     for r in (note, note + 1):
         ws.cell(row=r, column=1).font = Font(name=FONT, size=9, italic=True, color="555555")
@@ -109,7 +109,7 @@ def build(out: Path = OUT) -> Path:
         ("", None),
         ("What is in this file", "head"),
         ("Visits by device: national emergency department (ED) visits per year for e-bikes, e-scooters, bicycles "
-         "and other micromobility devices, with 95% confidence intervals.", None),
+         "and other micromobility devices, each with a likely range (the true number is very likely, 95%, inside it).", None),
         ("E-bike and e-scooter by age: visits per year for children (0-17), adults (18-64) and older adults (65+).", None),
         (f"Hospital stays: share of ED visits that led to a hospital stay, by device and age group ({span} combined).", None),
         ("E-bike vs e-moto: e-bike visits split into regular e-bikes, likely e-motos and unclear stories.", None),
@@ -123,9 +123,10 @@ def build(out: Path = OUT) -> Path:
         ("Source data: the US Consumer Product Safety Commission's National Electronic Injury Surveillance System "
          "(NEISS), a national probability sample of about 100 hospital emergency departments. CPSC does not "
          "endorse NEISS-AI.", None),
-        ("Method: NEISS-AI labels each injury record with a text classifier and rules (so e-bike counts stay "
-         "consistent across CPSC's 2024 product-code change), then uses the NEISS survey weights with "
-         "Taylor-linearized 95% confidence intervals. Full method and code: " + SITE, None),
+        ("Method: NEISS-AI reads each injury note to label the device (so e-bike counts stay consistent across "
+         "CPSC's 2024 product-code change), then scales each sampled visit up to the whole country with CPSC's "
+         "weights. The likely ranges allow for the fact that only about 100 hospitals are sampled (technically, "
+         "Taylor-linearized 95% confidence intervals). Full method and code: " + SITE, None),
         ("Limits: these are counts of ED visits, not risk rates (the number of riders is not known). NEISS has no "
          "state or city information, so the 'Expected by state' sheet applies national rates for each age group to the state's age mix. Early e-bike "
          "estimates (2019-2021) rest on small samples.", None),
@@ -157,7 +158,7 @@ def build(out: Path = OUT) -> Path:
     _top(ws, "Emergency department visits by device and year", updated, 7)
     rows = [[r["year"], r["device"], r["est"], r["lo"], r["hi"], r["n"], yn(r["unstable"])]
             for r in sorted(data["by_device"], key=lambda r: (r["device"], r["year"]))]
-    _table(ws, ["Year", "Device", "Estimated visits", "95% CI low", "95% CI high", "NEISS records", "Unstable"],
+    _table(ws, ["Year", "Device", "Estimated visits", "Likely range: low", "Likely range: high", "NEISS records", "Few records?"],
            rows, {3: "#,##0", 4: "#,##0", 5: "#,##0", 6: "#,##0"}, [8, 20, 16, 13, 13, 14, 10])
 
     # ---- by age
@@ -165,7 +166,7 @@ def build(out: Path = OUT) -> Path:
     _top(ws, "E-bike and e-scooter emergency department visits by age group and year", updated, 8)
     rows = [[r["year"], r["device"], r["age_group"], r["est"], r["lo"], r["hi"], r["n"], yn(r["unstable"])]
             for r in sorted(data["by_age"], key=lambda r: (r["device"], r["age_group"], r["year"]))]
-    _table(ws, ["Year", "Device", "Age group", "Estimated visits", "95% CI low", "95% CI high", "NEISS records", "Unstable"],
+    _table(ws, ["Year", "Device", "Age group", "Estimated visits", "Likely range: low", "Likely range: high", "NEISS records", "Few records?"],
            rows, {4: "#,##0", 5: "#,##0", 6: "#,##0", 7: "#,##0"}, [8, 14, 11, 16, 13, 13, 14, 10])
 
     # ---- hospital stays
@@ -173,7 +174,7 @@ def build(out: Path = OUT) -> Path:
     _top(ws, f"Share of emergency department visits that led to a hospital stay, {span} combined", updated, 6)
     rows = [[r["device"], r["age_group"], r["share"], r["lo"], r["hi"], r["n"]]
             for r in sorted(data["hospitalized"], key=lambda r: (r["device"], r["age_group"]))]
-    _table(ws, ["Device", "Age group", "Share with a hospital stay", "95% CI low", "95% CI high", "NEISS records"],
+    _table(ws, ["Device", "Age group", "Share with a hospital stay", "Likely range: low", "Likely range: high", "NEISS records"],
            rows, {3: "0.0%", 4: "0.0%", 5: "0.0%", 6: "#,##0"}, [14, 11, 16, 13, 13, 14])
 
     # ---- e-bike vs e-moto
@@ -181,7 +182,7 @@ def build(out: Path = OUT) -> Path:
     _top(ws, "E-bike emergency department visits: regular e-bikes, likely e-motos and unclear stories", updated, 7)
     rows = [[r["year"], r["type"], r["est"], r["lo"], r["hi"], r["n"], yn(r["unstable"])]
             for r in sorted(data["by_ebike_type"], key=lambda r: (r["type"], r["year"]))]
-    _table(ws, ["Year", "Group", "Estimated visits", "95% CI low", "95% CI high", "NEISS records", "Unstable"],
+    _table(ws, ["Year", "Group", "Estimated visits", "Likely range: low", "Likely range: high", "NEISS records", "Few records?"],
            rows, {3: "#,##0", 4: "#,##0", 5: "#,##0", 6: "#,##0"}, [8, 16, 16, 13, 13, 14, 10])
 
     # ---- by month
@@ -189,7 +190,7 @@ def build(out: Path = OUT) -> Path:
     _top(ws, "Emergency department visits by month (bicycles, e-bikes, e-scooters)", updated, 8)
     rows = [[r["year"], r["month"], r["device"], r["est"], r["lo"], r["hi"], r["n"], yn(r["unstable"])]
             for r in sorted(data["by_month"], key=lambda r: (r["device"], r["year"], r["month"]))]
-    _table(ws, ["Year", "Month", "Device", "Estimated visits", "95% CI low", "95% CI high", "NEISS records", "Unstable"],
+    _table(ws, ["Year", "Month", "Device", "Estimated visits", "Likely range: low", "Likely range: high", "NEISS records", "Few records?"],
            rows, {4: "#,##0", 5: "#,##0", 6: "#,##0", 7: "#,##0"}, [8, 8, 12, 16, 13, 13, 14, 10])
 
     # ---- Expected by state (age-adjusted, with population-only for comparison; NOT counts)
