@@ -47,7 +47,7 @@ def test_circumstances_read_from_any_text():
     ("V28.01XA", "E-bike", "rider"),             # electric (assisted) bicycle driver
     ("V20.91XA", "E-bike", "rider"),
     ("V29.811A", "E-bike", "rider"),
-    ("V28.09XA", "Moped / minibike", "rider"),   # other motorcycle
+    ("V28.09XA", "Motorcycle or moped", "rider"),   # other motorcycle (ICD cannot split moped vs motorcycle)
     ("V18.0XXA", "Bicycle", "rider"),
     ("V00.831A", "Excluded", "rider"),           # motorized mobility scooter
 ])
@@ -105,3 +105,17 @@ def test_cli_label_notes(tmp_path, capsys):
     out = pd.read_csv(dest)
     assert list(out["device"]) == ["E-bike", "Bicycle", "E-scooter"]
     assert "never leaves this computer" in capsys.readouterr().out
+
+
+def test_motorcycle_codes_and_words_are_not_ebikes_or_mopeds():
+    # Independent review (Nov 2026): V29.81x is a motorcycle code, not an e-bike; ICD motorcycle
+    # codes cannot tell motorcycles from mopeds; the word MOTORCYCLE is not a moped.
+    from neissai.freetext import device_from_codes, label_note
+    assert device_from_codes("V29.818A")[0] == "Motorcycle or moped"
+    assert device_from_codes("V28.01XA")[0] == "E-bike"
+    assert device_from_codes("V29.9XXA")[0] == "Motorcycle or moped"
+    assert label_note("Harley motorcycle collision with car", codes="V23.4XXA")["device"] == "Motorcycle (not micromobility)"
+    assert label_note("fell off moped", codes="V28.09XA")["device"] == "Moped / minibike"
+    assert label_note("fell off e-bike", codes="V28.09XA")["device"] == "E-bike"
+    assert label_note("motorcycle crash")["device"] == "Motorcycle (not micromobility)"
+    assert label_note("electric motorcycle crash, sur-ron")["device"] == "E-bike"   # e-moto, flagged by ebike_type

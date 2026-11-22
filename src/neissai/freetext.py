@@ -14,6 +14,8 @@ What it returns for each record (see :func:`label_note`):
 
 * ``device``: "E-bike", "E-scooter", "Bicycle", "Kick scooter", "Hoverboard", "Skateboard",
   "Moped / minibike", "Scooter (type not stated)", "Other standing micromobility",
+  "Motorcycle or moped" (an ICD-10-CM motorcycle code, which cannot tell the two apart),
+  "Motorcycle (not micromobility)" (the note says motorcycle),
   "Excluded" (mobility scooter, exercise bike) or "Other" (no micromobility device found).
 * ``device_how``: what decided it: "words", "code", "code+words" or "classifier".
 * ``ebike_type`` (e-bikes only): "regular e-bike", "likely e-moto" or "unclear".
@@ -52,7 +54,7 @@ from .ebike_type import rider_speeds as _rider_speeds
 
 DEVICES_TEXT = ["E-bike", "E-scooter", "Bicycle", "Kick scooter", "Hoverboard", "Skateboard",
                 "Moped / minibike", "Scooter (type not stated)", "Other standing micromobility",
-                "Excluded", "Other"]
+                "Motorcycle or moped", "Motorcycle (not micromobility)", "Excluded", "Other"]
 
 
 def _rx(p: str) -> re.Pattern:
@@ -65,7 +67,8 @@ _ESC = _rx(ESC_WORDS + r"|\bE-?SCOOT\w*")
 _HOVER = _rx(HOVER_WORDS)
 _EMOTO_WORDS = re.compile(r"SUR-?RON|TALARIA|\bE-?MOTO|ELEC\w* (?:MOTORCYCLE|DIRT ?BIKE|MOTOR ?BIKE)")
 _SEGWAY = re.compile(r"SEGWAY|ONE ?WHEEL|ELECTRIC UNICYCLE|E-?UNICYCLE|E-?SKATE ?BOARD|ELECTRIC SKATE ?BOARD")
-_MOPED = _rx(MOPED_WORDS)
+_MOPED = _rx(MOPED_WORDS.replace("|MOTORCYCLE", ""))   # a motorcycle is not a moped (own-notes only)
+_MOTORCYCLE = re.compile(r"MOTORCYCL\w*|MOTOR CYCLE|HARLEY|SPORT ?BIKE|CROTCH ?ROCKET")
 _MOBILITY = _rx(MOBILITY_WORDS)
 _EXERCISE = _rx(EXERCISE_WORDS)
 _ESC_NEG = _rx(ESC_NEG_WORDS)
@@ -94,9 +97,9 @@ ICD10CM_RULES: list[tuple[re.Pattern, str, str]] = [
     (re.compile(r"^V0013"), "Skateboard", "rider"),
     (re.compile(r"^V0[1-6][019]2"), "Skateboard", "rider"),
     (re.compile(r"^V0014"), "Kick scooter", "rider"),                   # scooter (nonmotorized)
-    (re.compile(r"^V2\d\d1"), "E-bike", "rider"),                       # electric (assisted) bicycle, from Oct 2022
-    (re.compile(r"^V29\d\d1"), "E-bike", "rider"),
-    (re.compile(r"^V2\d"), "Moped / minibike", "rider"),                # other motorcycle / moped / motor scooter
+    (re.compile(r"^V2[0-8]\d1"), "E-bike", "rider"),                    # electric (assisted) bicycle, V20-V28: 5th character 1 (from Oct 2022)
+    (re.compile(r"^V29\d\d1"), "E-bike", "rider"),                      # V29: 6th character 1 (V29.81x is NOT an e-bike)
+    (re.compile(r"^V2\d"), "Motorcycle or moped", "rider"),             # ICD-10-CM motorcycle codes include mopeds and motor scooters
     (re.compile(r"^V1\d"), "Bicycle", "rider"),                         # pedal cycle rider
     (re.compile(r"^V01"), "Bicycle", "struck by rider"),                # pedestrian hit by pedal cycle
 ]
@@ -161,6 +164,7 @@ def _first_device(story: str) -> Optional[str]:
     add(_E, "E-bike")
     add(_EMOTO_WORDS, "E-bike")   # e-motos sit inside e-bike counts, flagged by ebike_type (as in NEISS-AI)
     add(_MOTORIZED_BIKE, "motorized bike")
+    add(_MOTORCYCLE, "Motorcycle (not micromobility)")
     add(_MOPED, "Moped / minibike")
     if not any(d in ("E-bike",) for *_, d in found):
         add(_BIKE, "Bicycle")
@@ -208,8 +212,10 @@ def label_note(text, codes=None, classifier: Optional[EbikeMopedClassifier] = No
         # Codes and words disagree. Words that name the device more exactly win where NEISS-AI's
         # own rules let the story override the code (e-bike words on a bicycle or motorcycle code,
         # e-scooter words on a scooter code, a stated type for an unstated scooter); otherwise the code.
-        if code_dev in ("Bicycle", "Moped / minibike") and words == "E-bike":
+        if code_dev in ("Bicycle", "Moped / minibike", "Motorcycle or moped") and words == "E-bike":
             device, how = "E-bike", "code+words"
+        elif code_dev == "Motorcycle or moped" and words in ("Moped / minibike", "Motorcycle (not micromobility)"):
+            device, how = words, "code+words"
         elif code_dev == "Other standing micromobility" and words == "Hoverboard":
             device, how = "Hoverboard", "code+words"
         elif code_dev == "Kick scooter" and words == "E-scooter":

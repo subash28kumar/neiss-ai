@@ -33,7 +33,7 @@ your table with new columns:
 
 | Column | What it holds |
 | --- | --- |
-| `device` | E-bike, E-scooter, Bicycle, Kick scooter, Hoverboard, Skateboard, Moped / minibike, Scooter (type not stated), Other standing micromobility, Excluded (mobility scooter, exercise bike) or Other |
+| `device` | E-bike, E-scooter, Bicycle, Kick scooter, Hoverboard, Skateboard, Moped / minibike, Scooter (type not stated), Other standing micromobility, Motorcycle or moped (a motorcycle code alone, which cannot tell the two apart), Motorcycle (not micromobility), Excluded (mobility scooter, exercise bike) or Other |
 | `device_how` | what decided it: words, code, code+words, or classifier (for "motorized bike" wording) |
 | `ebike_type` | for e-bikes: regular e-bike, likely e-moto (electric motorcycle) or unclear |
 | `helmet` | yes, no or not mentioned |
@@ -51,7 +51,7 @@ are welcome by email: nivi05subhash@gmail.com.
 
 ## What to expect (honest limits)
 
-We tested the text-only labels on 141,635 real NEISS stories (2019-2025) with the product codes
+We tested the text-only labels on 141,634 real NEISS stories (2019-2025) with the product codes
 hidden, and compared them with NEISS-AI's full labels (which also use CPSC's product codes):
 
 | Device | Same label from text alone |
@@ -59,17 +59,21 @@ hidden, and compared them with NEISS-AI's full labels (which also use CPSC's pro
 | Bicycle | 99% |
 | Skateboard | 97% |
 | E-bike | 95% (2025 national total within 4%) |
-| Moped / minibike | 95% |
+| Moped / minibike | 93% |
 | Hoverboard | 79% |
-| E-scooter | 80% (most of the rest say only "scooter") |
-| Kick scooter | about 1%: the note usually says only "scooter", so it is marked "type not stated" |
+| E-scooter | 82% (most of the rest say only "scooter") |
+| Kick scooter | about 6%: the note usually says only "scooter", so it is marked "type not stated" |
 
 What this means for you:
 
 - **"Scooter" alone cannot be sorted from the words.** If your data has ICD-10-CM codes, they settle
   it: standing e-scooter codes (V00.84-) exist from October 2020 and scooter (nonmotorized) is V00.14-.
-- **E-bike codes** (electric assisted bicycle, V20-V29 ending in 1) exist from October 2022. Before
-  that, e-bikes sit under bicycle or motorcycle codes and the note decides.
+- **E-bike codes** (electric assisted bicycle) exist from October 2022: in V20-V28 the 5th character
+  is 1 (for example V28.01), in V29 the 6th character is 1. Before that, e-bikes sit under bicycle or
+  motorcycle codes and the note decides.
+- **Motorcycle codes** (V20-V29) also cover mopeds and motor scooters, so a code alone gives
+  "Motorcycle or moped". If the note says moped, or motorcycle, that decides it. Motorcycles are not
+  micromobility; leave them out of e-bike and moped counts.
 - **Short notes say less.** When we kept only the first 60 characters of each story, agreement fell
   to about 72% overall, mostly because the device word was cut off. Real triage notes usually name
   the device early, but please check your own (step 3).

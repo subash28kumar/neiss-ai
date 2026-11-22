@@ -76,9 +76,11 @@ neissai label-notes my_ed_visits.csv --text-col triage_note --code-cols ecode1 -
 
 It reads the note text (and US ICD-10-CM external-cause codes, if you have them) and adds e-bike /
 e-scooter / bicycle / kick scooter / hoverboard / skateboard / moped labels, the e-bike vs e-moto
-group, helmet, motor-vehicle contact and the rider's stated speed. Tested on 141,635 real NEISS
-stories with the product codes hidden: same label as NEISS-AI's full method for 99% of bicycles,
-95% of e-bikes and 80% of e-scooters; "scooter" alone cannot be sorted from words (a code settles it).
+group, helmet, motor-vehicle contact and the rider's stated speed (mph or km/h). Motorcycles are kept
+apart ("Motorcycle or moped" from a code alone). Tested on 141,634 real NEISS stories with the product
+codes hidden: same label as NEISS-AI's full method (not a human check) for 99% of bicycles, 95% of
+e-bikes and 82% of e-scooters; "scooter" alone cannot be sorted from words (a code settles it). Built
+and tested on US notes; the ICD-10-CM code rules have not yet been tested on a real coded dataset.
 Plain guide and limits: [docs/own-notes.md](docs/own-notes.md). Results:
 [validation/freetext/RESULTS.md](validation/freetext/RESULTS.md).
 
