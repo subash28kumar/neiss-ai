@@ -71,6 +71,32 @@ def cmd_classify(a: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_label_notes(a: argparse.Namespace) -> int:
+    import pandas as pd
+    from .freetext import label_notes
+    src = Path(a.input)
+    if src.suffix.lower() in (".xlsx", ".xls"):
+        df = pd.read_excel(src, dtype=str)
+    else:
+        df = pd.read_csv(src, dtype=str, sep=None, engine="python")
+    codes = [c.strip() for c in a.code_cols.split(",")] if a.code_cols else None
+    out = label_notes(df, a.text_col, code_cols=codes, threshold=a.threshold)
+    dest = Path(a.out)
+    out.to_csv(dest, index=False)
+    print(f"Labelled {len(out):,} records (your file never leaves this computer).\n")
+    counts = out["device"].value_counts()
+    for dev, n in counts.items():
+        print(f"  {dev:30} {n:>8,}")
+    eb = out["ebike_type"].dropna().value_counts()
+    if len(eb):
+        print("\n  E-bikes by type:")
+        for t, n in eb.items():
+            print(f"    {t:28} {n:>8,}")
+    print(f"\nSaved to {dest.resolve()}")
+    print("Before using the numbers, check about 100 records by hand (guide: https://github.com/subash28kumar/neiss-ai/blob/main/docs/own-notes.md).")
+    return 0
+
+
 def cmd_hazards(a: argparse.Namespace) -> int:
     from . import hazards
     data = hazards.read_hazard_export(a.export_dir)
@@ -128,6 +154,14 @@ def main(argv: list[str] | None = None) -> int:
     h.add_argument("--out-dir", default="hazards")
     h.add_argument("--cluster", default="hospital", choices=["hospital", "stratum_psu"])
     h.set_defaults(func=cmd_hazards)
+
+    n = sub.add_parser("label-notes", help="label your own injury notes (any hospital data; text, optional ICD-10-CM codes)")
+    n.add_argument("input", help="CSV, TSV or Excel file with one row per visit")
+    n.add_argument("--text-col", required=True, help="name of the column with the note text")
+    n.add_argument("--code-cols", default="", help="optional: column(s) with ICD-10-CM codes, comma-separated")
+    n.add_argument("--out", default="labelled_notes.csv", help="output CSV (default labelled_notes.csv)")
+    n.add_argument("--threshold", type=float, default=0.5, help="classifier cut-off for 'E-bike' (default 0.5)")
+    n.set_defaults(func=cmd_label_notes)
 
     a = ap.parse_args(argv)
     return a.func(a)

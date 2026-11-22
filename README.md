@@ -64,6 +64,24 @@ Check a single story:
 neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"
 ```
 
+## Run it on your own injury notes (any hospital data)
+
+Have your own emergency department records, for example a state health department's triage notes?
+NEISS-AI can label them too, on your own computer (nothing is uploaded):
+
+```
+pip install neissai
+neissai label-notes my_ed_visits.csv --text-col triage_note --code-cols ecode1 --out labelled.csv
+```
+
+It reads the note text (and US ICD-10-CM external-cause codes, if you have them) and adds e-bike /
+e-scooter / bicycle / kick scooter / hoverboard / skateboard / moped labels, the e-bike vs e-moto
+group, helmet, motor-vehicle contact and the rider's stated speed. Tested on 141,635 real NEISS
+stories with the product codes hidden: same label as NEISS-AI's full method for 99% of bicycles,
+95% of e-bikes and 80% of e-scooters; "scooter" alone cannot be sorted from words (a code settles it).
+Plain guide and limits: [docs/own-notes.md](docs/own-notes.md). Results:
+[validation/freetext/RESULTS.md](validation/freetext/RESULTS.md).
+
 ## Emerging-hazard scan (Hazard Watch)
 
 New in v1.6.0. Checks **every NEISS product code** (about 800) and flags products whose injuries rose clearly faster than all emergency visits, after strict checks (design-based standard errors, Benjamini–Hochberg false discovery rate across all products, CPSC's reporting rule, and automatic handling of CPSC product-code changes). It also lists new words in the injury stories that started appearing more often.

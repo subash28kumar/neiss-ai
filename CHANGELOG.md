@@ -2,6 +2,24 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## v1.7.0: run NEISS-AI on your own injury notes — 2026-11-22
+
+- New `neissai label-notes` command and `neissai.label_notes()` / `label_note()` (module
+  `neissai.freetext`): label any table of injury notes, not only NEISS, from the note text and,
+  optionally, US ICD-10-CM external-cause codes. Runs on the user's own computer; nothing is uploaded.
+- Adds device (e-bike, e-scooter, bicycle, kick scooter, hoverboard, skateboard, moped, "scooter
+  (type not stated)", other standing micromobility, excluded, other), what decided it, e-bike vs
+  e-moto group, helmet, motor-vehicle contact, rider's stated speed, and rider vs "struck by rider"
+  from codes.
+- ICD-10-CM mapping follows the NEMSIS micromobility case definition (June 27, 2023): standing
+  e-scooter codes from Oct 2020, electric (assisted) bicycle codes from Oct 2022. Other code systems
+  (for example ICD-10-AM) can pass their own `code_map`.
+- Honest test (validation/freetext): on 141,635 real NEISS stories with product codes hidden, text
+  alone gives the same label as the full method for 99.1% of bicycles, 94.3% of e-bikes (2025 total
+  within 3.6%), 80.5% of e-scooters and 1.3% of kick scooters ("scooter" alone is marked "type not
+  stated"); 84.7% overall. Short notes (first 60 characters) 71.3%.
+- Plain guide: docs/own-notes.md. 36 new tests.
+
 ## Plainer English across the website — 2026-11-21
 
 - "95% CI" and "confidence bands" are now "likely range", explained once in plain words: NEISS samples
