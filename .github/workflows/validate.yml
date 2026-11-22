@@ -1,0 +1,46 @@
+# On demand: run one validation script on CPSC's NEISS files. Results go to a review branch, not main.
+name: Run a validation script
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: "Script under validation/ to run"
+        required: true
+      years:
+        description: "NEISS years to download"
+        default: "2019-2025"
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check the inputs
+        env:
+          SCRIPT: ${{ github.event.inputs.script }}
+          YEARS: ${{ github.event.inputs.years }}
+        run: |
+          [[ "$SCRIPT" =~ ^validation/[A-Za-z0-9_/]+\.py$ ]] && test -f "$SCRIPT" || { echo "script must be a .py file under validation/"; exit 1; }
+          [[ "$YEARS" =~ ^[0-9]{4}(-[0-9]{4})?$ ]] || { echo "bad years"; exit 1; }
+      - run: pip install -e .
+      - env:
+          YEARS: ${{ github.event.inputs.years }}
+        run: neissai download --years "$YEARS" --data-dir data
+      - env:
+          SCRIPT: ${{ github.event.inputs.script }}
+        run: python "$SCRIPT" --data-dir data
+      - name: Push results to a review branch
+        run: |
+          git config user.name "neissai-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "validation-run-${{ github.run_id }}"
+          git add validation/
+          git commit -m "Validation results ($(date +%Y-%m-%d))"
+          git push origin "validation-run-${{ github.run_id }}"
