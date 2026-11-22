@@ -2,6 +2,17 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Plainer English across the website — 2026-11-21
+
+- "95% CI" and "confidence bands" are now "likely range", explained once in plain words: NEISS samples
+  about 100 hospitals, so the true number is very likely (95%) inside the range. Same wording in the
+  state card, state pages, Explore, Ask a question and Search.
+- "Potentially unstable" is now "rests on few records, read with care" (CPSC's rule still given).
+- Rewritten in plain English: the forecast explanation and the "fair test" note, the e-bike vs e-moto
+  groups and their accuracy, how state numbers are calculated, the Hazard Watch false-alarm check, and
+  the "How it works" steps. The Accuracy tab opens with an "In short" summary; technical terms stay
+  in brackets for researchers.
+
 ## Easier to find on Google: a page for every state — 2026-11-21
 
 - New plain pages for all 50 states and DC (docs/states/<state>.html) and a states index: the same

@@ -118,7 +118,7 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
         f"<tr><td>{y}</td>" + "".join(f"<td>{fmt(st['e'][d][str(y)][0])}</td>" for d in DEVICES) + "</tr>"
         for y in sorted(int(k) for k in st["e"]["E-bike"]))
     title = f"E-bike injuries in {N}: emergency department visits, {first}-{year} | NEISS-AI"
-    desc = (f"About {fmt(eb[0])} e-bike emergency department visits in {N} in {year} (estimate, 95% range {fmt(eb[1])} to "
+    desc = (f"About {fmt(eb[0])} e-bike emergency department visits in {N} in {year} (estimate, likely range {fmt(eb[1])} to "
             f"{fmt(eb[2])}), about 1 in {one_in(pop, eb[0])} residents. E-scooter and bicycle injuries, trend since {first}, "
             f"forecast, road deaths and medical costs. Free from NEISS-AI.")
     url = f"{SITE}states/{slug(N)}.html"
@@ -146,10 +146,10 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
 <p class="crumb"><a href="../">NEISS-AI</a> › <a href="./">States</a> › {html.escape(N)}</p>
 <h1>E-bike injuries in {html.escape(N)}</h1>
 <p class="lede">In {year}, about <b>{fmt(eb[0])}</b> people in {html.escape(N)} went to an emergency room after an e-bike injury
-(95% range {fmt(eb[1])} to {fmt(eb[2])}). That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents,
+(likely range {fmt(eb[1])} to {fmt(eb[2])}). That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents,
 and about {eb[0] / eb_first:.0f} times the {first} level.</p>
 <p class="note">These injury numbers are estimates: national NEISS emergency department data, applied to {html.escape(N)}'s population
-in each age group. NEISS does not record the patient's state, so no one can count them directly from it.</p>
+in each age group. NEISS does not record the patient's state, so no one can count them directly from it. The <b>likely range</b> means the true number is very likely (95%) inside it.</p>
 <div class="k">
 <div><b>about {fmt(eb[0])}</b><span>e-bike emergency department visits, {year}</span></div>
 <div><b>1 in {one_in(pop, eb[0])}</b><span>residents had a visit</span></div>
