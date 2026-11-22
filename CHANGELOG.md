@@ -19,6 +19,8 @@ All notable changes to NEISS-AI are listed here.
 - The national fact sheet PDF is now built from the data by scripts/build_fact_sheet.py on every refresh
   (it was hand-made in October: bicycle hospital-stay share now 13%, main DOI in the citation).
 - New tests (tests/test_audit_claims.py) keep these claims tied to the data.
+- The same e-scooter note now appears on the Your state card, all 51 state pages, all 51 state briefs (PDF),
+  the 51 Compare-your-state workbooks and the data pack.
 
 ## v1.7.0: run NEISS-AI on your own injury notes — 2026-11-22
 

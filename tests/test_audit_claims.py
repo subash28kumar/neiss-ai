@@ -60,3 +60,19 @@ def test_fact_sheet_matches_data_and_uses_main_doi():
     est = [r["est"] for r in d["by_device"] if r["device"] == "E-bike" and r["year"] == max(x["year"] for x in d["by_device"])][0]
     assert f"{round(est / 100) * 100:,}" in text
     assert "10.5281/zenodo.23306744" in text and "23550272" not in text
+
+
+def test_escooter_note_on_state_pages_card_and_downloads():
+    import openpyxl
+    assert "differ from CPSC's published e-scooter figures" in _html("states/massachusetts.html")
+    assert "treat state e-scooter numbers with care" in _html()
+    wb = openpyxl.load_workbook(DOCS / "NEISS-AI_DataPack.xlsx", read_only=True)
+    readme = " ".join(str(r[0]) for r in wb["Read me"].iter_rows(values_only=True) if r and r[0])
+    assert "differ from CPSC's published e-scooter figures" in readme
+
+
+@pytest.mark.skipif(shutil.which("pdftotext") is None, reason="pdftotext not installed")
+def test_state_brief_has_escooter_note():
+    text = subprocess.run(["pdftotext", str(DOCS / "briefs" / "NEISS-AI_State_Brief_MA_2025.pdf"), "-"],
+                          capture_output=True, text=True).stdout
+    assert "e-scooter totals differ from CPSC" in text

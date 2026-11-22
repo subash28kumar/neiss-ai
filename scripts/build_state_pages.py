@@ -163,7 +163,9 @@ in each age group. NEISS does not record the patient's state, so no one can coun
 <h2>E-bikes, e-scooters and bicycles, {first}-{year}</h2>
 <table><tr><th>Year</th>{''.join(f'<th>{d}</th>' for d in DEVICES)}</tr>{rows}</table>
 <p class="note">Estimated emergency department visits in {html.escape(N)}. In {year}: e-scooter about {fmt(e['E-scooter'][0])},
-bicycle about {fmt(e['Bicycle'][0])}; about {e['E-bike'][0] / e['Bicycle'][0] * 10:.1f} e-bike injuries for every 10 bicycle injuries.</p>
+bicycle about {fmt(e['Bicycle'][0])}; about {e['E-bike'][0] / e['Bicycle'][0] * 10:.1f} e-bike injuries for every 10 bicycle injuries.
+E-scooter numbers: NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures
+(<a href="../#accuracy">details</a>), so treat them with care; CPSC's report is the official count.</p>
 
 <h2>Public health and transportation</h2>
 <ul>

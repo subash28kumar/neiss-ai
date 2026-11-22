@@ -305,6 +305,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
               col_w, size=7.6)
     yl = para(c, M, yl - 2, "3. The likely range comes from the uncertainty in the national number, because NEISS samples about "
               "100 hospitals rather than all of them.", col_w, size=7.6)
+    yl = para(c, M, yl - 2, "Note: e-scooter totals differ from CPSC's published figures.", col_w, size=7.6)
     yr = bullets(c, M + col_w + 18, yr - 13, [
         "NEISS does not record the patient's state, so these are expected numbers, not counts.",
         "They assume people in each age group get hurt at the national rate. Real numbers can be higher or lower "
@@ -312,7 +313,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         "The ranges show only the uncertainty in the national number, not real differences between states.",
         "For planning and context; for counts, use state hospital or crash data, which NEISS-AI can complement.",
     ], col_w, size=7.6)
-    y = min(yl, yr) - 8
+    y = min(yl, yr) - 6
 
     # citation box
     bh = 64
@@ -327,7 +328,7 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
               W - 2 * M - 20, size=7.6)
     para(c, M + 10, cy - 1, "Data: US Consumer Product Safety Commission, NEISS (national estimates); US Census "
          "Bureau, Vintage 2025 population estimates by age (SC-EST2025-ALLDATA6).", W - 2 * M - 20, size=7.2, color=INK2)
-    y -= bh + 12
+    y -= bh + 5
 
     # footer
     c.setFont("Sans", 7.4)
