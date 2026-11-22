@@ -17,6 +17,7 @@ import csv
 import datetime as dt
 import html
 import json
+import math
 import re
 from pathlib import Path
 
@@ -34,7 +35,15 @@ def r100(v: float) -> int:
 
 
 def fmt(v: float) -> str:
-    return f"{r100(v):,}" if v >= 1000 else f"{int(round(v / 10.0)) * 10:,}"
+    """Round like the website and the state briefs: half up (JavaScript Math.round), nearest 100
+    from 1,000, nearest 10 from 100, whole numbers below. Python's round() rounds halves to even,
+    which made a few pages differ from the briefs by 10 (e.g. 365 -> 360 vs 370)."""
+    v = float(v)
+    if v >= 1000:
+        return f"{math.floor(v / 100 + 0.5) * 100:,}"
+    if v >= 100:
+        return f"{math.floor(v / 10 + 0.5) * 10:,}"
+    return f"{math.floor(v + 0.5):,}"
 
 
 def one_in(pop: float, n: float) -> str:
