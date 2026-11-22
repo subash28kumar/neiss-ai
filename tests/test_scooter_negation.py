@@ -35,3 +35,12 @@ def test_own_notes_negated_scooters():
     assert label_note("FELL OFF AN UNPOWERED SCOOTER")["device"] == "Kick scooter"
     assert label_note("NON-MOTORIZED SCOOTER FALL, WRIST FX")["device"] == "Kick scooter"
     assert label_note("FELL OFF ELECTRIC SCOOTER")["device"] == "E-scooter"
+
+
+def test_moped_code_scooter_stories_are_not_ebikes():
+    rows = [("3215", "27-YOM RIDING A SCOOTER AT 20 MPH, FELL OFF SCOOTER"),
+            ("3215", "72YM RIDING A MOTORIZED ELECTRIC SCOOTER & FELL"),
+            ("3215", "45 YOM RIDING SCOOTER TO WORK, GOT HIT BY A CAR"),
+            ("3215", "FELL OFF NON-ELECTRIC SCOOTER"),
+            ("3215", "FELL OFF ELECTRIC BIKE")]
+    assert _lab(rows) == ["Moped / minibike", "E-scooter", "Moped / minibike", "Moped / minibike", "E-bike"]
