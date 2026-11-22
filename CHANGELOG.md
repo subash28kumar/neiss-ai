@@ -2,6 +2,17 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## State numbers described honestly (independent review) — 2026-11-22
+
+- An independent review found that the 51 state pages and state briefs overstated the state numbers.
+  They said the state's range holds the true state number "95%" of the time and ranked states
+  ("#18 of 51"). State numbers are the national rate for each age group applied to the state's
+  population, so they are expected numbers, not counts, and the range covers only the national
+  uncertainty.
+- State pages, state briefs and the interactive state card now say "expected ... at the national rate",
+  explain that the range shows only the uncertainty in the national number, and no longer rank states.
+- New test guards against the old wording coming back.
+
 ## Audit part 3: every number recomputed; Ask and Search read questions more honestly — 2026-11-22
 
 - Recomputed from the raw records: all 91 national estimates by device and by age (with ranges and

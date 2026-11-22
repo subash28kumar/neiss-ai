@@ -116,6 +116,6 @@ def test_state_pages_and_sitemap():
     S = json.loads((ROOT / "docs" / "data" / "state_estimates.json").read_text())
     ma = S["states"]["MA"]["e"]["E-bike"]["2025"][0]
     page = (ROOT / "docs" / "states" / "massachusetts.html").read_text()
-    assert f"about <b>{m.fmt(ma)}</b> people in Massachusetts" in page
+    assert f"about <b>{m.fmt(ma)}</b>\nwould have gone to an emergency room" in page and "expected numbers, not counts" in page
     ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page).group(1))
     assert ld["@type"] == "Dataset" and ld["spatialCoverage"]["name"].startswith("Massachusetts")

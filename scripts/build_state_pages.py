@@ -127,8 +127,8 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
         f"<tr><td>{y}</td>" + "".join(f"<td>{fmt(st['e'][d][str(y)][0])}</td>" for d in DEVICES) + "</tr>"
         for y in sorted(int(k) for k in st["e"]["E-bike"]))
     title = f"E-bike injuries in {N}: emergency department visits, {first}-{year} | NEISS-AI"
-    desc = (f"About {fmt(eb[0])} e-bike emergency department visits in {N} in {year} (estimate, likely range {fmt(eb[1])} to "
-            f"{fmt(eb[2])}), about 1 in {one_in(pop, eb[0])} residents. E-scooter and bicycle injuries, trend since {first}, "
+    desc = (f"About {fmt(eb[0])} e-bike emergency department visits expected in {N} in {year} at the national rate (an estimate, "
+            f"not a count; range {fmt(eb[1])} to {fmt(eb[2])}). E-scooter and bicycle injuries, trend since {first}, "
             f"forecast, road deaths and medical costs. Free from NEISS-AI.")
     url = f"{SITE}states/{slug(N)}.html"
     ld = {"@context": "https://schema.org", "@type": "Dataset", "name": f"E-bike, e-scooter and bicycle injuries in {N} (NEISS-AI estimates)",
@@ -154,15 +154,16 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
 <body><main>
 <p class="crumb"><a href="../">NEISS-AI</a> › <a href="./">States</a> › {html.escape(N)}</p>
 <h1>E-bike injuries in {html.escape(N)}</h1>
-<p class="lede">In {year}, about <b>{fmt(eb[0])}</b> people in {html.escape(N)} went to an emergency room after an e-bike injury
-(likely range {fmt(eb[1])} to {fmt(eb[2])}). That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents,
-and about {eb[0] / eb_first:.0f} times the {first} level.</p>
-<p class="note">These injury numbers are estimates: national NEISS emergency department data, applied to {html.escape(N)}'s population
-in each age group. NEISS does not record the patient's state, so no one can count them directly from it. The <b>likely range</b> means the true number is very likely (95%) inside it.</p>
+<p class="lede">If people in {html.escape(N)} were hurt at the national rate for their age group, about <b>{fmt(eb[0])}</b>
+would have gone to an emergency room after an e-bike injury in {year} (range {fmt(eb[1])} to {fmt(eb[2])}, from the national estimate).
+That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents, and about {eb[0] / eb_first:.0f} times the {first} level.</p>
+<p class="note"><b>These are expected numbers, not counts.</b> NEISS does not record the patient's state, so no one can count {html.escape(N)}'s
+visits from it. NEISS-AI takes the national rate for each age group and applies it to {html.escape(N)}'s population. The real number can be
+higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
+{html.escape(N)} differs from other states.</p>
 <div class="k">
-<div><b>about {fmt(eb[0])}</b><span>e-bike emergency department visits, {year}</span></div>
-<div><b>1 in {one_in(pop, eb[0])}</b><span>residents had a visit</span></div>
-<div><b>#{rank[ab]} of 51</b><span>states by number of e-bike visits</span></div>
+<div><b>about {fmt(eb[0])}</b><span>expected e-bike emergency department visits, {year}</span></div>
+<div><b>1 in {one_in(pop, eb[0])}</b><span>residents, at the national rate</span></div>
 {nxt}
 </div>
 <p><a class="btn" href="../#state?s={ab}">Open the interactive {html.escape(N)} view</a>
@@ -171,7 +172,7 @@ in each age group. NEISS does not record the patient's state, so no one can coun
 
 <h2>E-bikes, e-scooters and bicycles, {first}-{year}</h2>
 <table><tr><th>Year</th>{''.join(f'<th>{d}</th>' for d in DEVICES)}</tr>{rows}</table>
-<p class="note">Estimated emergency department visits in {html.escape(N)}. In {year}: e-scooter about {fmt(e['E-scooter'][0])},
+<p class="note">Expected emergency department visits in {html.escape(N)} at the national rate (estimates, not counts). In {year}: e-scooter about {fmt(e['E-scooter'][0])},
 bicycle about {fmt(e['Bicycle'][0])}; about {e['E-bike'][0] / e['Bicycle'][0] * 10:.1f} e-bike injuries for every 10 bicycle injuries.
 E-scooter numbers: NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures
 (<a href="../#accuracy">details</a>), so treat them with care; CPSC's report is the official count.</p>
@@ -211,7 +212,7 @@ def main() -> None:
         f.unlink()
     for ab in sorted(S["states"], key=lambda a: names[a]):
         (out / f"{slug(names[ab])}.html").write_text(page(ab, S, deaths, commute, costs, hosp, year, names, rank, updated), encoding="utf-8")
-    items = "".join(f"<li><a href=\"{slug(names[a])}.html\">{html.escape(names[a])}</a>: about {fmt(S['states'][a]['e']['E-bike'][str(year)][0])} e-bike emergency department visits in {year}</li>"
+    items = "".join(f"<li><a href=\"{slug(names[a])}.html\">{html.escape(names[a])}</a>: about {fmt(S['states'][a]['e']['E-bike'][str(year)][0])} expected e-bike emergency department visits in {year} (at the national rate)</li>"
                      for a in sorted(S["states"], key=lambda a: names[a]))
     idx_desc = f"E-bike, e-scooter and bicycle injury estimates for all 50 states and DC, {year}: emergency department visits, trends, forecasts, road deaths and medical costs. Free from NEISS-AI."
     (out / "index.html").write_text(f"""<!DOCTYPE html>
