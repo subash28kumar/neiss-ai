@@ -100,3 +100,22 @@ def test_every_state_page_matches_state_data_with_site_rounding():
         eb = st["e"]["E-bike"][y]
         for v in eb[:3]:
             assert fmt(v) in t, (ab, v)
+
+
+def test_ask_reads_ages_sex_and_missing_years_honestly():
+    html = _html()
+    # "women"/"men"/"adults" no longer silently means 18-64 only
+    assert "'18+':[18,999]" in html and "\\bwomen\\b/.test(t)) f.age='18+'" in html
+    # a year with no data gets a plain message, not another period's total
+    assert "No data for that year yet." in html
+    # several search words are described as words, not as an exact phrase
+    assert "contain all of the words" in html
+
+
+def test_hospital_stay_definition_is_the_same_everywhere():
+    import inspect
+    from neissai import devices
+    assert '"2", "4", "5", "8"' in inspect.getsource(devices.add_outcomes)
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "build_fact_sheet.py").read_text()
+    assert "isin([2, 4, 5, 8])" in src
+    assert "rare deaths" in _html()

@@ -360,7 +360,7 @@ a.btn{text-decoration:none;display:inline-block}
     </section>
     <section class="card">
       <h2>How often an injury means a hospital stay</h2>
-      <p class="desc">Share of injured riders admitted, transferred or held, 2019–2025. For children, a larger share of e-bike injuries than bicycle injuries ended in a hospital stay (about 11% vs 6%); the likely ranges nearly touch, so read the gap with care.</p>
+      <p class="desc">Share of injured riders admitted, transferred or held (the rare deaths in the emergency department are included), 2019–2025. For children, a larger share of e-bike injuries than bicycle injuries ended in a hospital stay (about 11% vs 6%); the likely ranges nearly touch, so read the gap with care.</p>
       <div class="legend" id="lg3"></div>
       <div class="chart" id="c3"></div>
     <div class="dlrow"><button class="btn dl" type="button" data-chart="c3">Download chart (PNG)</button></div>
@@ -1037,11 +1037,11 @@ const DEV_ORDER=['E-bike','E-scooter','Kick scooter','Bicycle','Hoverboard','Ska
 const DEV_COLOR_BY_NAME={'E-bike':'--s1','E-scooter':'--s2','Kick scooter':'--s3','Bicycle':'--ref','Hoverboard':'--s5','Skateboard':'--s6','Moped / minibike':'--s7'};
 const devColor=i=>css(DEV_COLOR_BY_NAME[R.devices[i]]);
 const devIdx=name=>R.devices.indexOf(name);
-const AGE_BANDS={'all':[-1,999],'0-17':[0,17],'0-4':[0,4],'5-9':[5,9],'10-14':[10,14],'15-19':[15,19],'5-11':[5,11],'11-14':[11,14],'12-17':[12,17],'15-17':[15,17],'18-24':[18,24],'25-44':[25,44],'45-64':[45,64],'18-64':[18,64],'65+':[65,999]};
-const AGE_LABEL={'all':'All ages','0-17':'Children 0–17','0-4':'Ages 0–4','5-9':'Ages 5–9','10-14':'Ages 10–14','15-19':'Ages 15–19','5-11':'Ages 5–11','11-14':'Ages 11–14','12-17':'Teens 12–17','15-17':'Teens 15–17','18-24':'Ages 18–24','25-44':'Ages 25–44','45-64':'Ages 45–64','18-64':'Adults 18–64','65+':'65 and older'};
+const AGE_BANDS={'all':[-1,999],'0-17':[0,17],'0-4':[0,4],'5-9':[5,9],'10-14':[10,14],'15-19':[15,19],'5-11':[5,11],'11-14':[11,14],'12-17':[12,17],'15-17':[15,17],'18-24':[18,24],'25-44':[25,44],'45-64':[45,64],'18-64':[18,64],'18+':[18,999],'65+':[65,999]};
+const AGE_LABEL={'all':'All ages','0-17':'Children 0–17','0-4':'Ages 0–4','5-9':'Ages 5–9','10-14':'Ages 10–14','15-19':'Ages 15–19','5-11':'Ages 5–11','11-14':'Ages 11–14','12-17':'Teens 12–17','15-17':'Teens 15–17','18-24':'Ages 18–24','25-44':'Ages 25–44','45-64':'Ages 45–64','18-64':'Adults 18–64','18+':'Adults 18 and older','65+':'65 and older'};
 const BODY={'any':{l:'Any body part',c:[]},'head':{l:'Head',c:[75]},'face':{l:'Face, eye, mouth or ear',c:[76,77,88,94]},'headface':{l:'Head or face',c:[75,76,77,88,94]},'neck':{l:'Neck',c:[89]},'shoulder':{l:'Shoulder',c:[30]},'arm':{l:'Arm or elbow',c:[80,32,33]},'wrist':{l:'Wrist',c:[34]},'hand':{l:'Hand or finger',c:[82,92]},'trunk':{l:'Chest, back or abdomen',c:[31,79,38]},'leg':{l:'Leg or knee',c:[81,35,36]},'knee':{l:'Knee',c:[35]},'ankle':{l:'Ankle',c:[37]},'foot':{l:'Foot or toe',c:[83,93]}};
 const DIAG={'any':{l:'Any injury',c:[]},'fracture':{l:'Fracture (broken bone)',c:[57]},'concussion':{l:'Concussion',c:[52]},'internal':{l:'Internal injury',c:[62]},'laceration':{l:'Cut (laceration)',c:[59]},'contusion':{l:'Bruise or scrape',c:[53]},'sprain':{l:'Sprain or strain',c:[64]},'dislocation':{l:'Dislocation',c:[55]},'burn':{l:'Burn',c:[46,47,48,49,51,73]},'dental':{l:'Dental injury',c:[60]}};
-const OUTCOME={'any':{l:'Any outcome'},'hosp':{l:'Hospital stay (admitted, transferred or held)'},'died':{l:'Died'},'released':{l:'Treated and released'}};
+const OUTCOME={'any':{l:'Any outcome'},'hosp':{l:'Hospital stay (admitted, transferred or held; rare deaths included)'},'died':{l:'Died'},'released':{l:'Treated and released'}};
 const CIRC={'any':{l:'Any circumstance'},'mv':{l:'Motor vehicle involved',bit:4},'nohelmet':{l:'Story says no helmet',bit:1},'helmet':{l:'Story says helmet worn',bit:2},'alcohol':{l:'Alcohol involved',bit:8},'fire':{l:'Fire involved',bit:16}};
 const SEX={'all':'Everyone','1':'Male','2':'Female'};
 
@@ -1359,6 +1359,7 @@ function parseQuestion(q){
   // years
   const ys=[...t.matchAll(/\b(19|20)\d{2}\b/g)].map(m=>+m[0]);
   const valid=ys.filter(y=>R.years.includes(y)), outside=ys.filter(y=>!R.years.includes(y));
+  if(outside.length&&!valid.length) f.noData=`NEISS data here cover ${R.years[0]}–${R.years[R.years.length-1]}. ${outside.join(', ')} is not available yet; CPSC releases each year's data the following spring. Try the same question for ${R.years[R.years.length-1]}, or see the forecast on the Overview tab.`;
   if(outside.length) notes.push(`NEISS data here cover ${R.years[0]}–${R.years[R.years.length-1]}; ${outside.join(', ')} is outside that range.`);
   if(/\bsince\b|\bafter\b|\bfrom\b/.test(t)&&valid.length===1){f.y0=valid[0];yearsGiven=true;trend=true;}
   else if(/\bbefore\b|\buntil\b/.test(t)&&valid.length===1){f.y1=valid[0];yearsGiven=true;trend=true;}
@@ -1368,7 +1369,7 @@ function parseQuestion(q){
   if(/by year|each year|per year|trend|over time|over the years|change|rising|growing|increase/.test(t)) trend=true;
   if(!yearsGiven) trend=true;
   // people
-  const under=t.match(/\b(under|younger than|below)\s+(\d{1,2})\b/), over=t.match(/\b(over|older than|above)\s+(\d{1,3})\b/), aged=t.match(/\b(?:aged?|ages)\s+(\d{1,2})\s*(?:to|-|and)\s*(\d{1,3})\b/);
+  const under=t.match(/\b(under|younger than|below)\s+(\d{1,2})\b/), over=t.match(/\b(over|older than|above)\s+(\d{1,3})\b/), aged=t.match(/\b(?:aged?|ages|between|kids|children|child|adults|teens|teenagers|people|riders)\s+(\d{1,2})\s*(?:to|-|–|and)\s*(\d{1,3})\b/)||t.match(/\b(\d{1,2})\s*(?:to|-|–)\s*(\d{1,3})\s*(?:years?|yrs?|year-olds?)\b/);
   if(aged){f.age='custom';f.ageRange=[+aged[1],+aged[2]];}
   else if(under){f.age='custom';f.ageRange=[0,+under[2]-1];}
   else if(over){f.age='custom';f.ageRange=[+over[2]+1,999];}
@@ -1377,7 +1378,7 @@ function parseQuestion(q){
   else if(/young adults?|college/.test(t)) f.age='18-24';
   else if(/children|\bchild\b|\bkids?\b|minors?|youth|under 18|\bboys?\b|\bgirls?\b/.test(t)) f.age='0-17';
   else if(/seniors?|elderly|older adults?|older people|65|aged? 65/.test(t)) f.age='65+';
-  else if(/\badults?\b|\bmen\b|\bwomen\b/.test(t)) f.age='18-64';
+  else if(/\badults?\b|\bmen\b|\bwomen\b/.test(t)) f.age='18+';
   if(f.age==='custom'){AGE_BANDS.custom=f.ageRange;AGE_LABEL.custom=`Ages ${f.ageRange[0]}–${f.ageRange[1]>200?'up':f.ageRange[1]}`;}
   if(/\bboys?\b|\bmen\b|\bmales?\b|\bmale riders?\b/.test(t)) f.sex='1';
   else if(/\bgirls?\b|\bwomen\b|\bfemales?\b/.test(t)) f.sex='2';
@@ -1425,6 +1426,7 @@ function askAnswer(q){
   const out=document.getElementById('askout'); out.textContent='';
   if(!q.trim()) return;
   const {f,mode,trend,notes}=parseQuestion(q);
+  if(f.noData){out.appendChild(h('div',{class:'answer'},h('p',{class:'big',text:'No data for that year yet.'}),h('p',{class:'ci',text:f.noData})));return;}
   const yrs=f.y0===f.y1?`in ${f.y0}`:`in ${f.y0}–${f.y1}`;
   const band=f.age==='custom'?f.ageRange:(AGE_BANDS[f.age]||[-1,999]);
   const minor=band[1]<=17, adult=band[0]>=18;
@@ -1493,7 +1495,7 @@ async function doSearch(q,dev){
   for(let i=0;i<R.n;i++){ if(dev!=='all' && R.d[i]!==+dev) continue; const s=S[i]; if(res.every(r=>r.test(s))){m[i]=1;hits.push(i);} }
   const tot=total(m);
   out.appendChild(h('div',{class:'answer'},
-    h('p',{class:'big',text:`${hits.length.toLocaleString('en-US')} stories mention "${q.trim()}"${dev==='all'?' among bike and scooter injuries':' for '+R.devices[+dev].toLowerCase()+'s'} (${R.years[0]}–${R.years[R.years.length-1]}).`}),
+    h('p',{class:'big',text:`${hits.length.toLocaleString('en-US')} stories ${words.length>1?'contain all of the words '+words.map(w=>'"'+w.toLowerCase()+'"').join(', '):'mention "'+q.trim()+'"'}${dev==='all'?' among bike and scooter injuries':' for '+R.devices[+dev].toLowerCase()+'s'} (${R.years[0]}–${R.years[R.years.length-1]}).`}),
     h('p',{class:'ci',text:hits.length?`That is about ${fmt(tot.est)} emergency visits nationally${dev==='all'?' with these devices':''} (likely range ${fmt(tot.lo)} to ${fmt(tot.hi)})${tot.unstable?'; rests on few records, read with care':''}. Words match from the start, so "batter" also finds "battery".`:'No matches. Try a shorter word.'})));
   if(!hits.length) return;
   const series=[{label:'Visits',color:css('--s1'),points:R.years.map((y,yi)=>({year:y,...total(m,yi)}))}];
