@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-19",
- "version": "1.6.1",
+ "updated": "2026-11-22",
+ "version": "1.7.0",
  "last_data_year": 2025,
  "method": {
   "name": "Slowing growth (damped trend on the log scale)",
@@ -8,19 +8,19 @@
   "slower_phi": 0.6,
   "faster_phi": 0.95,
   "window_years": 3,
-  "sigma_1yr": 0.1667555485485291,
+  "sigma_1yr": 0.16841305125778172,
   "phi_scores": {
-   "0.3": 0.29451171928059433,
-   "0.5": 0.24545063620709348,
-   "0.6": 0.2216099042839263,
-   "0.7": 0.19661684217108816,
-   "0.8": 0.17189114980724687,
-   "0.85": 0.1612174819127029,
-   "0.9": 0.1551407258537599,
-   "0.95": 0.16224348382504492
+   "0.3": 0.29622535762782115,
+   "0.5": 0.24682447630248275,
+   "0.6": 0.2225884536042015,
+   "0.7": 0.19714687883435114,
+   "0.8": 0.17191793810324307,
+   "0.85": 0.1609710365402791,
+   "0.9": 0.1550758732058615,
+   "0.95": 0.16383270414428205
   },
   "best_phi": 0.9,
-  "one_se_limit": 0.17862815797500356,
+  "one_se_limit": 0.17894035179916476,
   "backtest_devices": [
    "E-bike",
    "E-scooter",
@@ -38,21 +38,21 @@
     "years_ahead": 1,
     "forecasts": 18,
     "median_miss": 0.11602705675015268,
-    "mean_miss": 0.12706240931348134,
+    "mean_miss": 0.1285581387629976,
     "inside_80": 15
    },
    {
     "years_ahead": 2,
     "forecasts": 12,
-    "median_miss": 0.18102037803446724,
-    "mean_miss": 0.18954711943582003,
+    "median_miss": 0.1736340690136755,
+    "mean_miss": 0.18853628302666092,
     "inside_80": 10
    },
    {
     "years_ahead": 3,
     "forecasts": 6,
-    "median_miss": 0.19786211882901228,
-    "mean_miss": 0.2963463360834088,
+    "median_miss": 0.1975401690828863,
+    "mean_miss": 0.2940063507641543,
     "inside_80": 5
    }
   ],
@@ -116,108 +116,108 @@
     "cut": 2022,
     "h": 1,
     "year": 2023,
-    "forecast": 84170.9531,
-    "actual": 68137.0,
-    "log_error": 0.2113
+    "forecast": 80345.3973,
+    "actual": 63690.0,
+    "log_error": 0.2323
    },
    {
     "device": "E-scooter",
     "cut": 2022,
     "h": 2,
     "year": 2024,
-    "forecast": 109607.8861,
-    "actual": 122694.0,
-    "log_error": -0.1128
+    "forecast": 105837.2507,
+    "actual": 117884.0,
+    "log_error": -0.1078
    },
    {
     "device": "E-scooter",
     "cut": 2022,
     "h": 3,
     "year": 2025,
-    "forecast": 135389.6444,
-    "actual": 168786.0,
-    "log_error": -0.2205
+    "forecast": 131941.2479,
+    "actual": 164421.0,
+    "log_error": -0.2201
    },
    {
     "device": "E-scooter",
     "cut": 2023,
     "h": 1,
     "year": 2024,
-    "forecast": 82672.0338,
-    "actual": 122694.0,
-    "log_error": -0.3948
+    "forecast": 78380.8222,
+    "actual": 117884.0,
+    "log_error": -0.4081
    },
    {
     "device": "E-scooter",
     "cut": 2023,
     "h": 2,
     "year": 2025,
-    "forecast": 96502.6219,
-    "actual": 168786.0,
-    "log_error": -0.5591
+    "forecast": 92538.1191,
+    "actual": 164421.0,
+    "log_error": -0.5748
    },
    {
     "device": "E-scooter",
     "cut": 2024,
     "h": 1,
     "year": 2025,
-    "forecast": 152370.0028,
-    "actual": 168786.0,
-    "log_error": -0.1023
+    "forecast": 147807.3476,
+    "actual": 164421.0,
+    "log_error": -0.1065
    },
    {
     "device": "Kick scooter",
     "cut": 2022,
     "h": 1,
     "year": 2023,
-    "forecast": 79953.1263,
-    "actual": 72517.0,
-    "log_error": 0.0976
+    "forecast": 84210.5491,
+    "actual": 76964.0,
+    "log_error": 0.09
    },
    {
     "device": "Kick scooter",
     "cut": 2022,
     "h": 2,
     "year": 2024,
-    "forecast": 88628.6527,
-    "actual": 99863.0,
-    "log_error": -0.1193
+    "forecast": 93516.8615,
+    "actual": 104672.0,
+    "log_error": -0.1127
    },
    {
     "device": "Kick scooter",
     "cut": 2022,
     "h": 3,
     "year": 2025,
-    "forecast": 96242.1032,
-    "actual": 106909.0,
-    "log_error": -0.1051
+    "forecast": 101697.1218,
+    "actual": 111273.0,
+    "log_error": -0.09
    },
    {
     "device": "Kick scooter",
     "cut": 2023,
     "h": 1,
     "year": 2024,
-    "forecast": 80338.2539,
-    "actual": 99863.0,
-    "log_error": -0.2176
+    "forecast": 84960.6737,
+    "actual": 104672.0,
+    "log_error": -0.2086
    },
    {
     "device": "Kick scooter",
     "cut": 2023,
     "h": 2,
     "year": 2025,
-    "forecast": 87198.3838,
-    "actual": 106909.0,
-    "log_error": -0.2038
+    "forecast": 91952.2162,
+    "actual": 111273.0,
+    "log_error": -0.1907
    },
    {
     "device": "Kick scooter",
     "cut": 2024,
     "h": 1,
     "year": 2025,
-    "forecast": 112550.6808,
-    "actual": 106909.0,
-    "log_error": 0.0514
+    "forecast": 117545.0614,
+    "actual": 111273.0,
+    "log_error": 0.0548
    },
    {
     "device": "Bicycle",
@@ -359,16 +359,16 @@
     "cut": 2023,
     "h": 1,
     "year": 2024,
-    "forecast": 60842.9947,
+    "forecast": 60840.7125,
     "actual": 65132.0,
-    "log_error": -0.0681
+    "log_error": -0.0682
    },
    {
     "device": "Skateboard",
     "cut": 2023,
     "h": 2,
     "year": 2025,
-    "forecast": 54758.4849,
+    "forecast": 54754.7878,
     "actual": 60697.0,
     "log_error": -0.103
    },
@@ -441,8 +441,8 @@
      "year": 2026,
      "tested": true,
      "central": 143472,
-     "lo80": 115865,
-     "hi80": 177657,
+     "lo80": 115619,
+     "hi80": 178035,
      "slower": 131622,
      "faster": 153055
     },
@@ -450,8 +450,8 @@
      "year": 2027,
      "tested": true,
      "central": 189048,
-     "lo80": 139737,
-     "hi80": 255760,
+     "lo80": 139318,
+     "hi80": 256529,
      "slower": 153716,
      "faster": 225834
     },
@@ -459,8 +459,8 @@
      "year": 2028,
      "tested": true,
      "central": 235730,
-     "lo80": 162800,
-     "hi80": 341330,
+     "lo80": 162202,
+     "hi80": 342589,
      "slower": 168715,
      "faster": 326802
     },
@@ -468,8 +468,8 @@
      "year": 2029,
      "tested": false,
      "central": 281248,
-     "lo80": 183426,
-     "hi80": 431240,
+     "lo80": 182648,
+     "hi80": 433076,
      "slower": 178408,
      "faster": 464253
     },
@@ -477,8 +477,8 @@
      "year": 2030,
      "tested": false,
      "central": 323914,
-     "lo80": 200858,
-     "hi80": 522359,
+     "lo80": 199906,
+     "hi80": 524846,
      "slower": 184489,
      "faster": 648039
     }
@@ -488,51 +488,51 @@
    "actual": [
     {
      "year": 2019,
-     "est": 17549,
-     "lo": 9591,
-     "hi": 25507,
+     "est": 15645,
+     "lo": 7922,
+     "hi": 23369,
      "unstable": false
     },
     {
      "year": 2020,
-     "est": 32997,
-     "lo": 17011,
-     "hi": 48983,
+     "est": 29245,
+     "lo": 13609,
+     "hi": 44881,
      "unstable": false
     },
     {
      "year": 2021,
-     "est": 54455,
-     "lo": 34296,
-     "hi": 74614,
+     "est": 50472,
+     "lo": 30780,
+     "hi": 70164,
      "unstable": false
     },
     {
      "year": 2022,
-     "est": 60508,
-     "lo": 41180,
-     "hi": 79836,
+     "est": 56933,
+     "lo": 38010,
+     "hi": 75855,
      "unstable": false
     },
     {
      "year": 2023,
-     "est": 68137,
-     "lo": 48884,
-     "hi": 87389,
+     "est": 63690,
+     "lo": 45292,
+     "hi": 82088,
      "unstable": false
     },
     {
      "year": 2024,
-     "est": 122694,
-     "lo": 67692,
-     "hi": 177696,
+     "est": 117884,
+     "lo": 63622,
+     "hi": 172147,
      "unstable": false
     },
     {
      "year": 2025,
-     "est": 168786,
-     "lo": 97919,
-     "hi": 239652,
+     "est": 164421,
+     "lo": 94265,
+     "hi": 234577,
      "unstable": false
     }
    ],
@@ -540,47 +540,47 @@
     {
      "year": 2026,
      "tested": true,
-     "central": 221893,
-     "lo80": 179196,
-     "hi80": 274763,
-     "slower": 207225,
-     "faster": 233571
+     "central": 218164,
+     "lo80": 175811,
+     "hi80": 270719,
+     "slower": 203271,
+     "faster": 230044
     },
     {
      "year": 2027,
      "tested": true,
-     "central": 276177,
-     "lo80": 204140,
-     "hi80": 373635,
-     "slower": 234371,
-     "faster": 318015
+     "central": 273553,
+     "lo80": 201594,
+     "hi80": 371199,
+     "slower": 230859,
+     "faster": 316500
     },
     {
      "year": 2028,
      "tested": true,
-     "central": 329021,
-     "lo80": 227229,
-     "hi80": 476413,
-     "slower": 252337,
-     "faster": 426358
+     "central": 327831,
+     "lo80": 225576,
+     "hi80": 476439,
+     "slower": 249178,
+     "faster": 428556
     },
     {
      "year": 2029,
      "tested": false,
-     "central": 378488,
-     "lo80": 246844,
-     "hi80": 580340,
-     "slower": 263772,
-     "faster": 563294
+     "central": 378910,
+     "lo80": 246072,
+     "hi80": 583460,
+     "slower": 260860,
+     "faster": 571557
     },
     {
      "year": 2030,
      "tested": false,
-     "central": 423366,
-     "lo80": 262528,
-     "hi80": 682741,
-     "slower": 270880,
-     "faster": 733918
+     "central": 425447,
+     "lo80": 262568,
+     "hi80": 689364,
+     "slower": 268130,
+     "faster": 751378
     }
    ]
   },
@@ -588,51 +588,51 @@
    "actual": [
     {
      "year": 2019,
-     "est": 43371,
-     "lo": 28721,
-     "hi": 58021,
+     "est": 45193,
+     "lo": 30245,
+     "hi": 60141,
      "unstable": false
     },
     {
      "year": 2020,
-     "est": 49389,
-     "lo": 35584,
-     "hi": 63194,
+     "est": 53125,
+     "lo": 38745,
+     "hi": 67505,
      "unstable": false
     },
     {
      "year": 2021,
-     "est": 63770,
-     "lo": 41902,
-     "hi": 85639,
+     "est": 67753,
+     "lo": 45314,
+     "hi": 90193,
      "unstable": false
     },
     {
      "year": 2022,
-     "est": 70293,
-     "lo": 46055,
-     "hi": 94532,
+     "est": 73869,
+     "lo": 49298,
+     "hi": 98439,
      "unstable": false
     },
     {
      "year": 2023,
-     "est": 72517,
-     "lo": 48921,
-     "hi": 96113,
+     "est": 76964,
+     "lo": 52547,
+     "hi": 101381,
      "unstable": false
     },
     {
      "year": 2024,
-     "est": 99863,
-     "lo": 70161,
-     "hi": 129564,
+     "est": 104672,
+     "lo": 73970,
+     "hi": 135375,
      "unstable": false
     },
     {
      "year": 2025,
-     "est": 106909,
-     "lo": 75322,
-     "hi": 138497,
+     "est": 111273,
+     "lo": 78843,
+     "hi": 143704,
      "unstable": false
     }
    ],
@@ -640,47 +640,47 @@
     {
      "year": 2026,
      "tested": true,
-     "central": 119557,
-     "lo80": 96552,
-     "hi80": 148044,
-     "slower": 116261,
-     "faster": 122090
+     "central": 124119,
+     "lo80": 100023,
+     "hi80": 154019,
+     "slower": 120775,
+     "faster": 126687
     },
     {
      "year": 2027,
      "tested": true,
-     "central": 130744,
-     "lo80": 96641,
-     "hi80": 176882,
-     "slower": 122261,
-     "faster": 138504
+     "central": 135455,
+     "lo80": 99823,
+     "hi80": 183806,
+     "slower": 126861,
+     "faster": 143305
     },
     {
      "year": 2028,
      "tested": true,
-     "central": 140444,
-     "lo80": 96993,
-     "hi80": 203358,
-     "slower": 126008,
-     "faster": 156137
+     "central": 145265,
+     "lo80": 99955,
+     "hi80": 211115,
+     "slower": 130658,
+     "faster": 161105
     },
     {
      "year": 2029,
      "tested": false,
-     "central": 148719,
-     "lo80": 96992,
-     "hi80": 228031,
-     "slower": 128311,
-     "faster": 174963
+     "central": 153622,
+     "lo80": 99765,
+     "hi80": 236553,
+     "slower": 132991,
+     "faster": 180060
     },
     {
      "year": 2030,
      "tested": false,
-     "central": 155688,
-     "lo80": 96542,
-     "hi80": 251070,
-     "slower": 129714,
-     "faster": 194947
+     "central": 160653,
+     "lo80": 99148,
+     "hi80": 260311,
+     "slower": 134411,
+     "faster": 200129
     }
    ]
   },
@@ -741,8 +741,8 @@
      "year": 2026,
      "tested": true,
      "central": 443317,
-     "lo80": 358014,
-     "hi80": 548946,
+     "lo80": 357254,
+     "hi80": 550113,
      "slower": 441111,
      "faster": 444979
     },
@@ -750,8 +750,8 @@
      "year": 2027,
      "tested": true,
      "central": 450452,
-     "lo80": 332958,
-     "hi80": 609409,
+     "lo80": 331959,
+     "hi80": 611243,
      "slower": 445090,
      "faster": 455112
     },
@@ -759,8 +759,8 @@
      "year": 2028,
      "tested": true,
      "central": 456243,
-     "lo80": 315091,
-     "hi80": 660627,
+     "lo80": 313934,
+     "hi80": 663062,
      "slower": 447495,
      "faster": 464952
     },
@@ -768,8 +768,8 @@
      "year": 2029,
      "tested": false,
      "central": 460929,
-     "lo80": 300611,
-     "hi80": 706747,
+     "lo80": 299337,
+     "hi80": 709756,
      "slower": 448945,
      "faster": 474497
     },
@@ -777,8 +777,8 @@
      "year": 2030,
      "tested": false,
      "central": 464713,
-     "lo80": 288167,
-     "hi80": 749419,
+     "lo80": 286802,
+     "hi80": 752988,
      "slower": 449816,
      "faster": 483745
     }

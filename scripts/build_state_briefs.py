@@ -257,8 +257,8 @@ def build_one(D: dict, nat: dict, abbr: str, year: int, out: Path) -> Path:
         f"{up:.1f} times the {first} level (about {fmt(eb[str(first)][0])})." if up else "",
         mix_txt,
         f"Nationally, NEISS-AI estimates about {fmt(nat_e['est'])} US e-bike emergency visits in {year} "
-        f"(likely range {fmt(nat_e['lo'])} to {fmt(nat_e['hi'])}). It reads each injury story, so e-bikes are counted the "
-        f"same way before and after the 2024 change in official product codes."
+        f"(likely range {fmt(nat_e['lo'])} to {fmt(nat_e['hi'])}). It reads each injury story to tell e-bikes "
+        f"from mopeds, including before the 2024 change in official product codes."
         + (f" About {emoto['est'] / nat_e['est'] * 100:.1f}% of {year} e-bike visits look like e-motos "
            f"(electric motorcycles), a minimum." if emoto else ""),
     ]
