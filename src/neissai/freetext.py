@@ -77,6 +77,7 @@ _MOTORIZED_BIKE = re.compile(r"MOTORI[ZS]ED (?:BI(?:KE|CYCLE)|CYCLE)|POWER(?:ED)
 _NON_ELECTRIC = re.compile(r"NON-? ?ELECTRIC (?:BI(?:KE|CYCLE))|REGULAR (?:BI(?:KE|CYCLE))|PEDAL (?:BI(?:KE|CYCLE)) \(NOT ELECTRIC\)")
 _ONTO = re.compile(r"(?:RIDING|RODE|RIDE|RIDER OF|ON (?:A|AN|THE|HIS|HER|THEIR|MY)?|OFF (?:OF )?(?:A|AN|THE|HIS|HER|THEIR)?|FROM (?:A|AN|THE|HIS|HER|THEIR)?|OPERATING|DRIVING|USING)\s*(?:\w+\s+){0,2}$")
 _DX = re.compile(r"\bDX[\s:;.,]|DIAGNOSIS")
+_KMH = re.compile(r"(\d{1,3}) ?(?:KM/H|KMH|KPH|KM PER HOUR|KILOMETRES PER HOUR|KILOMETERS PER HOUR)")  # converted to mph
 
 # ICD-10-CM external-cause codes (US), following the NEMSIS micromobility case definition
 # (June 27, 2023) and the ICD-10-CM tabular list. Each rule: (regex on the code without dot,
@@ -220,7 +221,7 @@ def label_note(text, codes=None, classifier: Optional[EbikeMopedClassifier] = No
         else:
             device, how = code_dev, "code"
 
-    speeds = _rider_speeds(story)
+    speeds = _rider_speeds(_KMH.sub(lambda m: f"{round(int(m.group(1)) * 0.621371)} MPH", story))
     return {
         "device": device,
         "device_how": how,

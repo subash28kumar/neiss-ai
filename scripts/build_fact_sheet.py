@@ -36,7 +36,7 @@ def records_frame() -> pd.DataFrame:
     r = json.loads((DOCS / "data" / "records.json").read_text())
     return pd.DataFrame({
         "year": [r["years"][y] for y in r["y"]], "device": [r["devices"][d] for d in r["d"]],
-        "Sex": r["s"], "Body_Part": r["b"], "Diagnosis": r["g"], "Disposition": r["p"],
+        "Sex": r["s"], "Body_Part": r["b"], "Body_Part_2": r["b2"], "Diagnosis": r["g"], "Diagnosis_2": r["g2"], "Disposition": r["p"],
         "PSU": r["c"], "Stratum": [r["strata"][r["cluster_stratum"][c]] for c in r["c"]], "Weight": r["w"],
     })
 
@@ -60,8 +60,9 @@ def main() -> Path:
     bim = recent & (df["device"] == "Bicycle")
     hosp = df["Disposition"].isin([2, 4, 5, 8])   # same definition as the website: transferred, admitted, held, died
     male = share(df, ebm, df["Sex"] == 1)
-    head = share(df, ebm, df["Body_Part"].isin([75, 76, 77, 88, 94]))
-    frac = share(df, ebm, df["Diagnosis"] == 57)
+    # Same rule as the website's Explore filters: the first OR the second body part / diagnosis.
+    head = share(df, ebm, df["Body_Part"].isin([75, 76, 77, 88, 94]) | df["Body_Part_2"].isin([75, 76, 77, 88, 94]))
+    frac = share(df, ebm, (df["Diagnosis"] == 57) | (df["Diagnosis_2"] == 57))
     h_eb, h_bi = share(df, ebm, hosp), share(df, bim, hosp)
 
     updated = _dt.date.fromisoformat(D["updated"])
@@ -117,8 +118,8 @@ def main() -> Path:
     o65 = (age[(y22, "65+")]["est"], age[(y1, "65+")]["est"])
     y = B.bullets(c, m, y, [
         f"Mostly men: about {male['share']}% of injured riders were male (95% CI {male['ci_low']}–{male['ci_high']}%).",
-        f"Head and face: about {head['share']}% of injuries were to the head or face (95% CI {head['ci_low']}–{head['ci_high']}%).",
-        f"Broken bones: fractures were the most common diagnosis, about {frac['share']}% of visits (95% CI {frac['ci_low']}–{frac['ci_high']}%).",
+        f"Head and face: about {head['share']}% of visits included an injury to the head or face (95% CI {head['ci_low']}–{head['ci_high']}%).",
+        f"Broken bones: about {frac['share']}% of visits included a fracture (95% CI {frac['ci_low']}–{frac['ci_high']}%).",
         f"Hospital stays: about {h_eb['share']}% of e-bike visits (95% CI {h_eb['ci_low']}–{h_eb['ci_high']}%) ended in a hospital stay "
         f"(admitted, transferred or held; the rare deaths in the ED included); for bicycle injuries the share was {h_bi['share']}% (95% CI {h_bi['ci_low']}–{h_bi['ci_high']}%).",
         f"Older riders: visits among adults 65 and older rose from about {B.fmt(o65[0])} in {y22} to {B.fmt(o65[1])} in {y1}.",

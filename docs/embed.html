@@ -58,7 +58,7 @@ footer a:hover{text-decoration:underline}
 <div class="legend" id="legend"></div>
 <div id="chart" role="img"><div class="tip" id="tip"></div></div>
 <table class="sr" id="table"></table>
-<footer id="credit">Source: <a href="https://subash28kumar.github.io/neiss-ai/" target="_blank" rel="noopener">NEISS-AI</a> (Kumar S., 2026), using US Consumer Product Safety Commission NEISS data. <a href="https://doi.org/10.5281/zenodo.23550272" target="_blank" rel="noopener">doi.org/10.5281/zenodo.23550272</a></footer>
+<footer id="credit">Source: <a href="https://subash28kumar.github.io/neiss-ai/" target="_blank" rel="noopener">NEISS-AI</a> (Kumar S., 2026), using US Consumer Product Safety Commission NEISS data. <a href="https://doi.org/10.5281/zenodo.23306744" target="_blank" rel="noopener">doi.org/10.5281/zenodo.23306744</a></footer>
 <script>
 (function(){
 const q=new URLSearchParams(location.search);
@@ -76,7 +76,7 @@ const CHARTS={
     sub:'Estimated visits per year, with 95% confidence bands',
     series:D=>[{label:'E-bike',color:'--s1',rows:D.by_device.filter(r=>r.device==='E-bike')}]},
   'devices':{title:'E-bike and e-scooter injuries treated in US emergency departments',
-    sub:'Estimated visits per year, with 95% confidence bands',
+    sub:'Estimated visits per year, with 95% confidence bands. E-scooter numbers do not match CPSC\'s published e-scooter figures and are not reliable for trends; use CPSC\'s report for e-scooter counts.',
     series:D=>[{label:'E-scooter',color:'--s2',rows:D.by_device.filter(r=>r.device==='E-scooter')},
                {label:'E-bike',color:'--s1',rows:D.by_device.filter(r=>r.device==='E-bike')}]},
   'emoto':{title:'Regular e-bikes vs e-motos in US emergency department visits',

@@ -140,3 +140,26 @@ def test_state_outputs_do_not_claim_state_level_certainty_or_rank():
     assert "residents had a visit" not in html
     src = (DOCS.parent / "scripts" / "build_state_briefs.py").read_text()
     assert "very likely, 95%" not in src
+
+
+def test_visitor_wording_after_independent_review():
+    html = _html()
+    assert "Answer key: AI reviewers" in html                     # story tests say who made the key
+    assert "233 of 240 raw = 97.1%" in html                        # weighted vs raw e-moto score
+    assert "Look-back test" in html and "list to review, not an alarm" in html
+    assert "nearly touch" not in html and "overlap a little" in html
+    assert "bicycle product code 5040 alone" in html
+    assert "also includes electric skateboards, one-wheels and Segways" in html
+    emb = _html("embed.html")
+    assert "zenodo.23550272" not in emb and "zenodo.23306744" in emb
+    assert "not reliable for trends" in emb
+
+
+def test_fact_sheet_uses_site_definition_for_head_and_fracture():
+    src = (DOCS.parent / "scripts" / "build_fact_sheet.py").read_text()
+    assert 'df["Body_Part_2"].isin' in src and 'df["Diagnosis_2"] == 57' in src
+
+
+def test_own_notes_reads_kmh():
+    from neissai.freetext import label_note
+    assert label_note("fell off e-bike riding at 40 km/h")["rider_mph"] == 25

@@ -2,6 +2,21 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Smaller wording fixes from the independent review — 2026-11-22
+
+- Accuracy tab: story-level test tiles say the answer keys were made by AI reviewers; the e-moto tile
+  gives the raw score too (233 of 240 = 97.1%); the "In short" note states both limits.
+- Hazard Watch: "would it have caught e-bikes early?" is described as a look-back test, with the
+  100+ other words a person must read each year; bicycle total labelled as product code 5040 only;
+  e-scooter numbers explained like e-bike numbers.
+- Children's hospital-stay ranges now said to "overlap a little" (not "nearly touch").
+- Limits: early e-bike years described consistently (2019-2020 by CPSC's rule); the hoverboard group
+  also includes electric skateboards, one-wheels and Segways.
+- Embeddable chart: e-scooter caveat added; DOI corrected to the main record (10.5281/zenodo.23306744).
+- Fact sheet: head/face and fracture shares use the website's rule (first or second body part /
+  diagnosis): head or face 38%, fracture 33% of 2024-2025 e-bike visits.
+- `neissai label-notes`: speeds in km/h are read and converted to mph.
+
 ## Unpowered scooters fixed; accuracy limits stated plainly (independent review) — 2026-11-22
 
 - Bug fix: stories that say "UNPOWERED", "NON-MOTORIZED" or "NONELECTRIC" scooter were counted as
