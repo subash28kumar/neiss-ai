@@ -28,3 +28,7 @@ Chosen C = 8.0. Final model retrained on train + validation, then scored once on
 | Accuracy (cut-off 0.5) | 0.980 | 0.970-0.988 |
 | Sensitivity (e-bikes found) | 0.986 | 0.975-0.995 |
 | Specificity (mopeds kept out) | 0.966 | 0.944-0.985 |
+
+## Hard stories
+
+The locked test set is mostly stories that name the device. The model is only used on stories that name neither. On the 54 test stories like that it was right 74.1% of the time (61.1-85.2%). See `HARD_NOTES.md`.

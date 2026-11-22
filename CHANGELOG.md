@@ -2,6 +2,10 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## E-bike vs moped model tested on hard stories — 2026-11-22
+
+- New on-demand test (`validation/classifier_v2/hard_notes.py`): the model scored on the 54 locked-test 2024-2025 stories that name neither device, the kind it decides before 2024. Right 74.1% of the time (61.1-85.2%), against 98.0% on all 833. Site, README and results updated to show this.
+
 ## E-scooter gap with CPSC explained — 2026-11-22
 
 - Checked: from 2020 on, NEISS-AI's e-scooter estimates equal the estimate for CPSC's powered-scooter
