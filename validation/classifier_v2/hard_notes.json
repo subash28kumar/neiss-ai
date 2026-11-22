@@ -29,62 +29,62 @@
  },
  "HARD test notes (no e-bike or moped words)": {
   "metrics": {
-   "auc": 0.7631160572337043,
-   "accuracy": 0.7407407407407407,
-   "sensitivity": 0.8378378378378378,
-   "specificity": 0.5294117647058824,
-   "n": 54,
-   "n_ebike": 37
+   "auc": 0.7540322580645161,
+   "accuracy": 0.723404255319149,
+   "sensitivity": 0.8064516129032258,
+   "specificity": 0.5625,
+   "n": 47,
+   "n_ebike": 31
   },
   "ci": {
    "auc": [
-    0.6074869574869576,
-    0.8829464285714285
+    0.5880545112781955,
+    0.8908559113300489
    ],
    "accuracy": [
-    0.6111111111111112,
-    0.8518518518518519
+    0.5957446808510638,
+    0.851063829787234
    ],
    "sensitivity": [
-    0.7058823529411765,
-    0.9428571428571428
+    0.6562230603448276,
+    0.9354838709677419
    ],
    "specificity": [
-    0.2727272727272727,
-    0.7647058823529411
+    0.2857142857142857,
+    0.8
    ]
   }
  },
  "easy test notes (name the device)": {
   "metrics": {
-   "auc": 0.9998109640831758,
-   "accuracy": 0.9961489088575096,
-   "sensitivity": 0.996219281663516,
-   "specificity": 0.996,
-   "n": 779,
-   "n_ebike": 529
+   "auc": 0.999664891834531,
+   "accuracy": 0.9949109414758269,
+   "sensitivity": 0.9962616822429906,
+   "specificity": 0.9920318725099602,
+   "n": 786,
+   "n_ebike": 535
   },
   "ci": {
    "auc": [
-    0.9995035358163392,
-    1.0
+    0.9991661548185946,
+    0.9999775674506209
    ],
    "accuracy": [
-    0.9910141206675225,
-    1.0
+    0.989821882951654,
+    0.9987277353689568
    ],
    "sensitivity": [
-    0.9904761904761905,
+    0.9905482041587902,
     1.0
    ],
    "specificity": [
-    0.9868966777600369,
+    0.979757085020243,
     1.0
    ]
   }
  },
- "share of all 2024-2025 5045/5046 notes that are hard": 0.0722,
- "hard notes in all splits": 397,
+ "share of all 2024-2025 5045/5046 notes that are hard": 0.0645,
+ "hard notes in all splits": 355,
  "hard test examples": [
   {
    "code": "5046 moped",
@@ -105,11 +105,6 @@
    "code": "5046 moped",
    "p_ebike": 0.382,
    "text": "62YOM WAS THE RIDER OF A MOTORIZED BICYCLE AND WAS STRUCK BY A CAR AT APPROXIMATELY 40 MPH DX: TRAUMATIC SUBARACHNOID HEMORRHAGE; TRAUMATIC SUBDURAL HEMATOMA; A"
-  },
-  {
-   "code": "5046 moped",
-   "p_ebike": 0.799,
-   "text": "23YOM PRESENTED TO ED C/O PEDESTRAIN STRUCK, PT STATED HE WAS RIDING HIS ELETRIC BIKE AND WAS STRUCK BY A VEHICLE MAKING A TURN. C/O THIGH PAIN, KNEE AND R ANKL"
   },
   {
    "code": "5045 e-bike",
@@ -148,18 +143,8 @@
   },
   {
    "code": "5045 e-bike",
-   "p_ebike": 0.968,
-   "text": "14YOM REPORTS HE WAS ON AN ELECTRICK BIKE, NO HELMET, COMING DOWN A HILL AND FELL OVER THE HANDLE BARS. +LOC. DX HEAD INJURY WITH LOC, ADMIT."
-  },
-  {
-   "code": "5045 e-bike",
    "p_ebike": 0.948,
    "text": "39YOM INURED J BACK WHILE PULLING EV BIKE, DX LUMBAR STRAIN"
-  },
-  {
-   "code": "5045 e-bike",
-   "p_ebike": 0.911,
-   "text": "64YOM C/O BACK PAIN AND FLANK PAIN.  WAS RIDING HIS ELECTRONIC BIKE AND MOVED TO GET OUT OF THE WAY OF ANOTHER PERSON AND RAN HIS FRONT TIRE INTO A 2-FOOT-DEEP "
   },
   {
    "code": "5046 moped",
@@ -203,13 +188,28 @@
   },
   {
    "code": "5045 e-bike",
-   "p_ebike": 0.785,
-   "text": "15YOM  PRESENTING FOR CHIN PAIN AFTER CRASHING HIS E- BIKE YESTERDAY (NO HEAD HIT NO LOC AND WAS ABLE TO GET UP ON HIS OWN) PATIENT ENDORSING PAIN IN THE CHIN F"
+   "p_ebike": 0.813,
+   "text": "68 YOM TWISTED KNEE WHILE PUSHING HIS SCOOTER BIKE UP INTO A TRUCK YESTERDAY. DX: SPRAIN RIGHT KNEE"
   },
   {
    "code": "5045 e-bike",
-   "p_ebike": 0.813,
-   "text": "68 YOM TWISTED KNEE WHILE PUSHING HIS SCOOTER BIKE UP INTO A TRUCK YESTERDAY. DX: SPRAIN RIGHT KNEE"
+   "p_ebike": 0.346,
+   "text": "7YOM FELL OFF OF A MOTORIZED BICYCLE DX STRAINED RIGHT THUMB"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.9,
+   "text": "62YOM WAS TRAVELING ON A MOTORIZED BIKE WHEN HE FELL, TRAVELING AT A SLOW SPEED DX: LEFT LEG PAIN, CONTUSION OF LEFT THIGH"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.27,
+   "text": "52YOM PRESENTS WITH INJURIES AFTER BEING STRUCK ON KNEE BY MOTOR VEHICLE WHILE RIDING HIS MOTORIZED BICYCLE.  DX: LOWER LEG PAIN, LOWER BACK PAIN, NECK PAIN"
+  },
+  {
+   "code": "5046 moped",
+   "p_ebike": 0.477,
+   "text": "16YOM, WAS DRIVING MOTORIZED BIKE UNHELMETED WHEN STRUCK A PARKED CAR FLIPPED OVER AND STRUCK HIS FACE AND HEAD AGAINST THE GROUND, UNKNOWN LOC, DX: OPEN FRACTU"
   }
  ]
 }
