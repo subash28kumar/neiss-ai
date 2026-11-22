@@ -41,6 +41,7 @@ def test_escooter_mismatch_is_disclosed():
     # Independent review (Nov 2026): no trend claim for e-scooters; classifier limits stated
     assert "still useful for trends" not in html and "not reliable for trends" in html
     assert "every year is counted the same way" not in html
+    assert "powered-scooter product code (5022)" in html and "follow-up study" in html
     assert "not yet tested" in html and "validated text classifier" not in press
 
 

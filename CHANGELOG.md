@@ -2,6 +2,16 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## E-scooter gap with CPSC explained — 2026-11-22
+
+- Checked: from 2020 on, NEISS-AI's e-scooter estimates equal the estimate for CPSC's powered-scooter
+  product code 5022 within about 1% every year (2024: 117,900 vs 118,500).
+- CPSC's report (Appendix A, Section III-A) builds its e-scooter figures from a follow-up study:
+  patients contacted, only confirmed two-wheeled stand-up electric scooters kept, confirmed
+  "unspecified scooter" cases added, results re-weighted for non-response; adjusted weights applied to
+  pre-2024 years after the 2024 sample revision. Those answers are not public, so the gap cannot be
+  closed from public data. The Accuracy tab and README now say this plainly.
+
 ## v1.7.1 — 2026-11-22
 
 Package release with all of the independent-review fixes below (scooter negation, moped-code
