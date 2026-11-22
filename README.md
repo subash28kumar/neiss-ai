@@ -138,7 +138,7 @@ python scripts/train_classifier.py --data-dir data --years 2024-2025
 
 ## Limits
 
-NEISS counts emergency department visits, not riders or miles, so results are counts, not risk rates. Injuries treated elsewhere and deaths at the scene are not included. Helmet use is only what the story mentions. Early e-bike estimates (2019-2021) rest on small samples. The powered-scooter code may include some seated, moped-style scooters.
+NEISS counts emergency department visits, not riders or miles, so results are counts, not risk rates. Injuries treated elsewhere and deaths at the scene are not included. Helmet use is only what the story mentions. Early e-bike estimates rest on few records (2019-2020 by CPSC's rule; 2021 is also small). The hoverboard group also includes electric skateboards, one-wheels and Segways. The powered-scooter code may include some seated, moped-style scooters.
 
 ## Cite
 
