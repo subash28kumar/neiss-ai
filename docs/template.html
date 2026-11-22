@@ -294,13 +294,13 @@ a.btn{text-decoration:none;display:inline-block}
   </div>
   <section class="card">
     <h2>Emergency department visits by device</h2>
-    <p class="desc">Estimated US visits each year with 95% confidence bands. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
+    <p class="desc">Estimated US visits each year. The shaded band is the <b>likely range</b>: NEISS samples about 100 hospitals rather than all of them, so the true number is very likely (95%) inside the band. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
     <div class="playrow"><button class="btn primary" type="button" id="playbtn" aria-controls="c1">&#9654; Play 2019 &rarr; 2025</button><p class="playcap" id="playcap" aria-live="polite"></p></div>
     <div class="legend" id="lg1"></div>
     <div class="chart" id="c1"></div>
     <div class="dlrow"><button class="btn dl embed" type="button" data-embed="devices" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
-    <p class="note">Hollow points are estimates CPSC would call potentially unstable (fewer than 20 records, under 1,200, or coefficient of variation above 33%).</p>
-    <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI uses its classifier so every year is counted the same way.</p>
+    <p class="note">Hollow points rest on few hospital records, so read them with care (CPSC's rule: fewer than 20 records, under 1,200 visits, or a very wide range).</p>
+    <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI reads each injury note to tell e-bikes from mopeds, so every year is counted the same way.</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
   </section>
   <section class="card" id="fccard" hidden>
@@ -318,7 +318,7 @@ a.btn{text-decoration:none;display:inline-block}
   </section>
   <section class="card" id="monthcard">
     <h2>Injuries by month</h2>
-    <p class="desc">Estimated US emergency department visits in each month of the chosen year, with 95% confidence bands. Switch to "Share of the year" to compare seasons across devices, including regular bicycles.</p>
+    <p class="desc">Estimated US emergency department visits in each month of the chosen year; the shaded band is the likely range. Switch to "Share of the year" to compare seasons across devices, including regular bicycles.</p>
     <div class="filters">
       <label class="field">Year<select id="mYear" aria-label="Year"></select></label>
       <div class="field">View<div class="chips" role="group" aria-label="View">
@@ -345,7 +345,7 @@ a.btn{text-decoration:none;display:inline-block}
     <div class="legend" id="lge"></div>
     <div class="chart" id="ce"></div>
     <div class="dlrow"><button class="btn dl embed" type="button" data-embed="emoto" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="ce">Download chart (PNG)</button></div>
-    <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the story uses e-moto wording (electric motorcycle or dirt bike, gas- or engine-powered, an e-moto brand) or gives the rider's own speed above 28 mph, the top assisted speed of a legal Class 3 e-bike. <i>Unclear</i>: "motorized bike" or "motor bike" wording at any speed, wording that could mean either ("dirt bike or e-bike"), a speed range crossing 28 mph, a downhill or second-hand speed above 28 mph, or "fast" with no speed given. Diagnosis coding phrases are ignored. <i>Regular e-bike</i>: everything else. Speeds of other vehicles ("struck by a car going 30 mph") are ignored. <b>Accuracy.</b> The rule (version 2, November 2026) was rebuilt on 920 stories, then locked and tested once on 240 new stories from 2019&ndash;2025 that it had never seen. The test stories were labelled blind against written definitions, without seeing the rule. Across all e-bike stories the rule puts 98.9% in the right group (95% range 97.9&ndash;99.7%), and it estimates the share of likely e-motos closely (1.7% by the rule vs 1.6% by the blind labels). Single "likely e-moto" calls were right about 19 times in 20. Full details: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
+    <p class="note"><b>How the groups are made.</b> <i>Likely e-moto</i>: the note names an electric motorcycle or dirt bike, a gas engine or an e-moto brand, or says the rider was going faster than 28 mph (the top motor-assisted speed of a legal e-bike). <i>Unclear</i>: the note says only "motorized bike" or "motor bike", could mean either vehicle, or says "fast" with no speed. <i>Regular e-bike</i>: everything else. Speeds of other vehicles, such as a car "going 30 mph", are ignored. <b>How accurate.</b> The rule was built on 920 notes, then locked and tested once on 240 new notes it had never seen, which had been sorted separately using written definitions. It put about 99 notes in 100 in the right group, and its share of likely e-motos (1.7%) was very close to the separately sorted answer (1.6%). When it called a note "likely e-moto", it was right about 19 times in 20. Full details, including every rule: <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">methods note</a>.</p>
     <p class="note"><b>Read with care.</b> "Electric bike" in a hospital note does not prove the vehicle was a legal e-bike: notes often call any two-wheeler with pedals an electric bike. A story names an e-moto only when the writer says so, so "likely e-moto" is a lower bound. A stated speed of 20 to 28 mph is not counted as an e-moto, because a legal Class 3 e-bike can give motor help up to 28 mph. CPSC blacks out brand names in the stories ("***"), so most likely e-motos are found from the rider's stated speed; an e-moto described only as an "e-bike" cannot be found. The e-bike class (1, 2 or 3) is almost never written in the story, so classes cannot be counted. Earlier years have more unclear cases because stories then often said "motorized bicycle" rather than "e-bike".</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbe"></div></details>
   </section>
@@ -373,7 +373,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-ask" role="tabpanel" aria-labelledby="tab-ask" hidden>
   <section class="card">
     <h2>Ask a question in plain English</h2>
-    <p class="desc">Ask about devices, ages, injuries, outcomes and years. The answer is computed from the NEISS records in your browser, with a 95% confidence interval.</p>
+    <p class="desc">Ask about devices, ages, injuries, outcomes and years. The answer is worked out from the NEISS records in your browser, with a likely range (the true number is very likely, 95%, inside it).</p>
     <form class="askbox" id="askform">
       <input type="search" id="askq" placeholder="e.g. How many teenagers broke a bone on an e-scooter in 2025?" aria-label="Your question" autocomplete="off">
       <button class="btn primary" type="submit">Ask</button>
@@ -387,7 +387,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-explore" role="tabpanel" aria-labelledby="tab-explore" hidden>
   <section class="card">
     <h2>Explore the data</h2>
-    <p class="desc">Pick devices and filters. Every number is a national estimate with a 95% confidence interval.</p>
+    <p class="desc">Pick devices and filters. Every number is a national estimate with a likely range (the true number is very likely, 95%, inside it).</p>
     <div class="field" style="margin-bottom:10px">Devices<div class="chips" id="devchips"></div></div>
     <div class="filters" id="filters"></div>
     <div class="tiles" id="extiles"></div>
@@ -445,7 +445,7 @@ a.btn{text-decoration:none;display:inline-block}
         <button class="btn" id="stcmpClr" type="button">Clear</button>
         <button class="btn" id="stcmpCsv" type="button">Download as CSV</button>
       </div>
-      <p class="note">The numbers you type stay on your computer: nothing is sent or saved. Benchmark = the number of visits the state would have if it matched the US rate in that age group (US rate x the state's population in that age group). It is an estimate from national data, not a count. A count inside the 95% range is consistent with the US rate. Differences can come from how much people ride, local roads, weather and rules, or from a different way of counting (for example hospital codes that cannot tell an e-bike from a bicycle). Small age groups, such as under 5, rest on few injury notes; read them with care.</p>
+      <p class="note">The numbers you type stay on your computer: nothing is sent or saved. Benchmark = the number of visits the state would have if it matched the US rate in that age group (US rate x the state's population in that age group). It is an estimate from national data, not a count. A count inside the likely range is consistent with the US rate. Differences can come from how much people ride, local roads, weather and rules, or from a different way of counting (for example hospital codes that cannot tell an e-bike from a bicycle). Small age groups, such as under 5, rest on few injury notes; read them with care.</p>
     </div>
     <p class="citeline" id="stcite"></p>
     <p class="note">Every state on its own page (easy to share and search): <a href="states/">e-bike injuries by state</a>.</p>
@@ -488,7 +488,7 @@ a.btn{text-decoration:none;display:inline-block}
         <tr><td style="text-align:left"><b>Floors or flooring materials</b></td><td>1.86 M</td><td>3.08 M</td><td>+66%</td><td>546 → 901</td><td style="text-align:left"><span class="hz coding">Coding</span></td><td style="text-align:left">Jump starts suddenly in April 2025 at most hospitals: most likely a coding change, not a real rise.</td></tr>
       </tbody>
     </table></div>
-    <p class="note">National estimates of emergency department visits, rounded; rates are visits per 100,000 US residents (Census Bureau population estimates). Each flag passed a false-discovery check (Benjamini&ndash;Hochberg, 5%) across all products. "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
+    <p class="note">National estimates of emergency department visits, rounded; rates are visits per 100,000 US residents (Census Bureau population estimates). Each flag passed a strict check that allows for testing about 800 products at once, so few flags are false alarms (Benjamini&ndash;Hochberg method, 5%). "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
     <p class="note"><b>Why is the e-bike number here (102,600 in 2025) a little different from the Overview (101,600)?</b> They are counted two ways. Hazard Watch compares CPSC product codes, so it counts records with CPSC's e-bike code. The Overview and Explore use NEISS-AI's reading of each injury story to decide which records are e-bikes. The two differ by about 1%.</p>
   </section>
   <section class="card">
@@ -527,9 +527,10 @@ neissai hazards --years 2020-2025</code></pre>
   <section class="card">
     <h2>How accurate is NEISS-AI?</h2>
     <p class="desc"><a href="#reads">See how NEISS-AI reads a real injury story</a>, then check how often it gets it right below. Every check below was done in one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. All of them can be repeated with the open code and the test files.</p>
+    <p class="note"><b>In short:</b> NEISS-AI's e-bike totals match the government's own published figures within 5%, and when its rules were tested on injury stories they had never seen, they put about 98 to 99 stories in 100 in the right group. The table below gives the details; the technical terms are for researchers who want to check the work.</p>
     <div class="tiles">
       <div class="tile"><p class="label">Matches CPSC's published totals</p><div class="num">within 5%</div><p class="sub">E-bike visits, 2022–2024</p></div>
-      <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">AUC 0.998</div><p class="sub">Text classifier, locked test of 833 stories it never saw</p></div>
+      <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">98% right</div><p class="sub">Tested once on 833 stories it had never seen</p></div>
       <div class="tile"><p class="label">E-bike vs e-moto</p><div class="num">98.9%</div><p class="sub">Stories in the right group, fresh 240-story test</p></div>
       <div class="tile"><p class="label">Motor vehicle involved</p><div class="num">98.3%</div><p class="sub">295 of 300 test stories right</p></div>
       <div class="tile"><p class="label">Helmet worn / not worn / not said</p><div class="num">300 / 300</div><p class="sub">Test stories right</p></div>
@@ -544,12 +545,12 @@ neissai hazards --years 2020-2025</code></pre>
       <thead><tr><th>What is checked</th><th>How it was tested</th><th>Result</th><th>Details</th></tr></thead>
       <tbody>
         <tr><td data-label="What is checked">National e-bike totals</td><td data-label="How it was tested">NEISS-AI's estimates compared with the figures CPSC published for the same years</td><td data-label="Result">+4.4% (2022), +0.7% (2023), +0.3% (2024)</td><td data-label="Details"><a href="https://www.cpsc.gov/s3fs-public/Micromobility_Products-Related_Deaths_Injuries_and_Hazard_Patterns_2017-2024.pdf">CPSC report</a></td></tr>
-        <tr><td data-label="What is checked">E-bike or moped, before 2024</td><td data-label="How it was tested">Before 2024 e-bikes and mopeds shared one product code. A classifier was trained on 2024–2025 stories (where the codes are separate) with a fixed 70/15/15 split: trained on 70%, tuned on 15%, then tested once on a locked 15% (833 stories)</td><td data-label="Result">AUC 0.998 [0.996–0.999]: shown one e-bike story and one moped story, it ranks the e-bike story higher 99.8 times in 100. Accuracy 98.0% [97.0–98.8]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/classifier_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/scripts/train_classifier_split.py">Training code</a></td></tr>
-        <tr><td data-label="What is checked">Regular e-bike or e-moto</td><td data-label="How it was tested">Rule rebuilt on 920 stories (v2, November 2026), then locked (its code fingerprint recorded) and tested once on 240 new stories from 2019–2025</td><td data-label="Result">98.9% right [97.9–99.7]; 233 of 240 raw. Share of likely e-motos: 1.7% by the rule vs 1.6% by the answer key. A single "likely e-moto" call was right about 19 times in 20 (previous version: 3 in 4)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/ebike_type_TEST2_240.csv">Test file</a></td></tr>
+        <tr><td data-label="What is checked">E-bike or moped, before 2024</td><td data-label="How it was tested">Before 2024 e-bikes and mopeds shared one product code. A text model learned from 2024–2025 stories (where the codes are separate): it learned from 70% of them, was tuned on 15%, then tested once on the last 15% (833 stories) that it had never seen</td><td data-label="Result">AUC 0.998 [0.996–0.999]: shown one e-bike story and one moped story, it ranks the e-bike story higher 99.8 times in 100. Accuracy 98.0% [97.0–98.8]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/classifier_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/scripts/train_classifier_split.py">Training code</a></td></tr>
+        <tr><td data-label="What is checked">Regular e-bike or e-moto</td><td data-label="How it was tested">Rule rebuilt on 920 stories (v2, November 2026), then locked so it could not be changed, and tested once on 240 new stories from 2019–2025</td><td data-label="Result">98.9% right [97.9–99.7]; 233 of 240 raw. Share of likely e-motos: 1.7% by the rule vs 1.6% by the answer key. A single "likely e-moto" call was right about 19 times in 20 (previous version: 3 in 4)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/RESULTS.md">Results</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/EBIKE_TYPE.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/ebike_type_v2/ebike_type_TEST2_240.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Motor vehicle involved</td><td data-label="How it was tested">Rules frozen, then tested once on 300 random stories (2019–2025) never used to build them</td><td data-label="Result">98.3% right [96.2–99.3]. Found 44 of 47 real cases; 44 of its 46 flags were correct</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/injurycoder_test_300.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Helmet status</td><td data-label="How it was tested">Same 300 test stories. Three answers: worn, not worn, not mentioned. "Not mentioned" is never counted as "no helmet"</td><td data-label="Result">300 of 300 right [98.7–100]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a></td></tr>
         <tr><td data-label="What is checked">Hazard Watch</td><td data-label="How it was tested">Totals checked against NEISS-AI's own national estimates; the word scan was run on past years to see whether it would have caught known new hazards</td><td data-label="Result">Totals identical (bicycles 2025: 420,962). The scan flagged e-bike words in 2021, 2022 and 2023 (before CPSC's 2024 e-bike code), water beads in 2023 and e-scooters in 2024</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/METHODS_hazard_scan.md">Methods</a></td></tr>
-        <tr><td data-label="What is checked">Uncertainty</td><td data-label="How it was tested">Survey weights and Taylor-linearized standard errors, with hospitals as clusters within strata, as CPSC does</td><td data-label="Result">Every number has a 95% confidence interval. Numbers CPSC would call unstable (fewer than 20 records, under 1,200 visits, or a coefficient of variation above 33%) are flagged</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/src/neissai/estimate.py">Code</a></td></tr>
+        <tr><td data-label="What is checked">Uncertainty</td><td data-label="How it was tested">Each sampled visit is scaled up to the country with CPSC's weights, and the ranges allow for the fact that only about 100 hospitals are sampled, the same way CPSC does it (survey weights; Taylor-linearized standard errors with hospitals as clusters within strata)</td><td data-label="Result">Every number has a likely range (95% confidence interval). Numbers resting on few records are flagged (CPSC rule: fewer than 20 records, under 1,200 visits, or a coefficient of variation above 33%)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/src/neissai/estimate.py">Code</a></td></tr>
       </tbody>
     </table></div>
     <h3 style="font-size:15px;margin:18px 0 0">E-bike totals: NEISS-AI and CPSC side by side</h3>
@@ -597,7 +598,7 @@ neissai hazards --years 2020-2025</code></pre>
 <section class="panel" id="p-about" role="tabpanel" aria-labelledby="tab-about" hidden>
   <section class="card" id="reads">
     <h2>See how NEISS-AI reads a story</h2>
-    <p class="desc">Real injury stories written by hospital emergency department staff (public CPSC data). Pick one to see which words NEISS-AI used and what it decided. These are the tool's own rules and classifier weights, not a simplified copy.</p>
+    <p class="desc">Real injury stories written by hospital emergency department staff (public CPSC data). Pick one to see which words NEISS-AI used and what it decided. These are the tool's real rules, not a simplified copy.</p>
     <div class="examples" id="rdChips" aria-label="Example stories"></div>
     <p class="actions" style="margin-top:8px"><button class="btn" type="button" id="rdMore">Show another story</button></p>
     <div class="rdbox"><p class="rdmeta" id="rdMeta"></p><p class="rdstory" id="rdStory" aria-live="polite"><span class="loading">Loading example stories…</span></p></div>
@@ -609,8 +610,8 @@ neissai hazards --years 2020-2025</code></pre>
     <h2>How NEISS-AI works</h2>
     <ol class="steps">
       <li><b>Read every NEISS record.</b> Each record is one emergency department visit, with product codes, the patient's age and a short injury story written by hospital staff.</li>
-      <li><b>Label the device.</b> Product codes and whole-word keywords in the story identify e-bikes, e-scooters, bicycles and similar devices. Before 2024 e-bikes shared code 3215 with mopeds; when the story is unclear, a text classifier trained on 2024–2025 records (where the codes are separate) decides. Cross-validated accuracy: AUC 0.998.</li>
-      <li><b>Estimate national totals.</b> NEISS is a stratified sample of hospitals, so each estimate uses survey weights and Taylor-linearized 95% confidence intervals, and flags unstable numbers using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
+      <li><b>Label the device.</b> Product codes and whole-word keywords in the story identify e-bikes, e-scooters, bicycles and similar devices. Before 2024 e-bikes shared code 3215 with mopeds; when the story is unclear, a text classifier trained on 2024–2025 records (where the codes are separate) decides. In a test on stories it had never seen, it was right 98 times in 100.</li>
+      <li><b>Estimate national totals.</b> NEISS is a sample of about 100 hospitals, so each visit is scaled up to the whole country using CPSC's weights, every number gets a likely range (technically, Taylor-linearized 95% confidence intervals), and numbers resting on few records are flagged using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
       <li><b>Refresh automatically.</b> When CPSC releases a new year of data, an automated job reruns the tool and updates this site.</li>
     </ol>
   </section>
@@ -705,7 +706,7 @@ function legend(id,items){const L=document.getElementById(id);L.textContent='';i
 function table(id,head,rows){const W=document.getElementById(id);W.textContent='';const t=h('table');t.appendChild(h('tr',null,head.map(x=>h('th',{text:x}))));rows.forEach(r=>t.appendChild(h('tr',null,r.map(c=>h('td',{text:String(c)})))));W.appendChild(t);}
 /* ---------- table CSV download + citation ---------- */
 const TOOL_DOI='10.5281/zenodo.23306744';   // concept DOI: always the latest version, so every citation counts together
-const UNSTABLE_NOTE='unstable = yes if fewer than 20 records, an estimate under 1,200, or a coefficient of variation above 33% (CPSC rule).';
+const UNSTABLE_NOTE='few records = yes if the estimate rests on fewer than 20 records, is under 1,200, or has a very wide range (coefficient of variation above 33%, CPSC rule): read it with care.';
 function citeLine(){return `Source: NEISS-AI (Kumar 2026), national estimates from CPSC NEISS. https://doi.org/${TOOL_DOI}. Accessed ${new Date().toISOString().slice(0,10)}.`;}
 const CSVS={};
 function csvTools(id,title,head,rows,file,note){
@@ -764,9 +765,9 @@ function lineChart(id, series, opts){
     series.slice().sort((a,b)=>b.points[i].est-a.points[i].est).forEach(s=>{const p=s.points[i];
       const k=h('i');k.style.borderColor=s.color;
       const r=h('div',{class:'row'},k,h('b',{text:(opts.fmtTip||fmt)(p.est)+(p.unstable?' *':'')}),h('span',{text:s.label}));
-      if(opts.band) r.appendChild(h('div',{class:'ci',text:`95% CI ${(opts.fmtTip||fmt)(p.lo)} to ${(opts.fmtTip||fmt)(p.hi)}`}));
+      if(opts.band) r.appendChild(h('div',{class:'ci',text:`likely range ${(opts.fmtTip||fmt)(p.lo)} to ${(opts.fmtTip||fmt)(p.hi)}`}));
       tip.appendChild(r);});
-    if(series.some(s=>s.points[i].unstable)) tip.appendChild(h('div',{class:'ci',style:'margin-top:4px',text:'* potentially unstable estimate'}));
+    if(series.some(s=>s.points[i].unstable)) tip.appendChild(h('div',{class:'ci',style:'margin-top:4px',text:'* rests on few records: read with care'}));
     tip.style.opacity=1;
     const scale=host.clientWidth/W; let left=px*scale+14; if(left+tip.offsetWidth>host.clientWidth) left=px*scale-tip.offsetWidth-14;
     tip.style.left=Math.max(0,left)+'px';tip.style.top='8px';
@@ -798,7 +799,7 @@ function barChart(id, groups, series, opts){
       if(bw>=26) txt(svg,Math.round(v.v*100)+'%',{x:bx+bw/2,y:y1-5,'text-anchor':'middle',class:'dlabel'});
       const show=()=>{p.setAttribute('opacity',.82);tip.textContent='';tip.appendChild(h('div',{class:'t-h',text:`${s.label}, ages ${g}`}));
         const k=h('i');k.style.borderColor=s.color;tip.appendChild(h('div',{class:'row'},k,h('b',{text:pct(v.v)+' hospitalised'}),h('span')));
-        tip.appendChild(h('div',{class:'ci',style:'margin-left:22px',text:`95% CI ${pct(v.lo)} to ${pct(v.hi)} · ${v.n.toLocaleString('en-US')} records`}));
+        tip.appendChild(h('div',{class:'ci',style:'margin-left:22px',text:`likely range ${pct(v.lo)} to ${pct(v.hi)} · ${v.n.toLocaleString('en-US')} records`}));
         tip.style.opacity=1;const scale=host.clientWidth/W;let left=(bx+bw)*scale+10;if(left+tip.offsetWidth>host.clientWidth)left=bx*scale-tip.offsetWidth-10;tip.style.left=Math.max(0,left)+'px';tip.style.top=Math.max(0,y1*scale-10)+'px';};
       const hide=()=>{p.removeAttribute('opacity');tip.style.opacity=0;};
       p.addEventListener('pointerenter',show);p.addEventListener('pointerleave',hide);p.addEventListener('focus',show);p.addEventListener('blur',hide);
@@ -856,12 +857,12 @@ function drawOverview(){
   const last=a=>a[a.length-1], yr=(a,y)=>a.find(r=>r.year===y);
   document.getElementById('updated').textContent=D.updated;
   document.getElementById('t1').textContent=k(last(eb).est);
-  document.getElementById('t1s').textContent=`95% CI ${k(last(eb).lo)}–${k(last(eb).hi)} · up ${Math.round((last(eb).est/yr(eb,last(eb).year-1).est-1)*100)}% from ${last(eb).year-1}`;
+  document.getElementById('t1s').textContent=`likely range ${k(last(eb).lo)}–${k(last(eb).hi)} · up ${Math.round((last(eb).est/yr(eb,last(eb).year-1).est-1)*100)}% from ${last(eb).year-1}`;
   document.getElementById('t2').textContent=k(last(kids).est);
   document.getElementById('t2s').textContent=`${(last(kids).est/yr(kids,2022).est).toFixed(0)}× the 2022 count · ${Math.round(last(kids).est/last(eb).est*100)}% of e-bike injuries`;
   document.getElementById('t3').textContent=k(last(es).est);
   drawStory(eb,es,kids);
-  document.getElementById('t3s').textContent=`95% CI ${k(last(es).lo)}–${k(last(es).hi)}`;
+  document.getElementById('t3s').textContent=`likely range ${k(last(es).lo)}–${k(last(es).hi)}`;
   legend('lg1',[{label:'E-bike',color:css('--s1')},{label:'E-scooter',color:css('--s2')},{label:'Kick scooter',color:css('--s3')},{label:'Unstable estimate',hollow:true}]);
   C1S=[{label:'E-scooter',color:css('--s2'),points:es},{label:'E-bike',color:css('--s1'),points:eb},{label:'Kick scooter',color:css('--s3'),points:get('Kick scooter')}];
   if(!PLAY.on) lineChart('c1',C1S,{band:true,aria:C1ARIA});
@@ -932,7 +933,7 @@ function drawForecast(){
   const hair=el('line',{y1:m.t,y2:H-m.b,stroke:css('--text-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:0},svg);
   const tip=h('div',{class:'tip'});host.appendChild(tip);
   const hit=el('rect',{x:m.l-20,y:m.t,width:W-m.l-m.r+40,height:H-m.t-m.b,fill:'transparent',tabindex:0},svg);
-  const pts=[...A.map(p=>({year:p.year,t:`${fmt(p.est)} (95% CI ${fmt(p.lo)}–${fmt(p.hi)})${p.unstable?' · unstable':''}`,k:'NEISS-AI estimate'})),...F.map(p=>({year:p.year,t:`${fmt(p.central)} (80% range ${fmt(p.lo80)}–${fmt(p.hi80)})`,k:p.tested?'Forecast (tested horizon)':'Scenario (not testable yet)',s:`slower ${fmt(p.slower)} · faster ${fmt(p.faster)}`}))];
+  const pts=[...A.map(p=>({year:p.year,t:`${fmt(p.est)} (likely range ${fmt(p.lo)}–${fmt(p.hi)})${p.unstable?' · few records':''}`,k:'NEISS-AI estimate'})),...F.map(p=>({year:p.year,t:`${fmt(p.central)} (80% range ${fmt(p.lo80)}–${fmt(p.hi80)})`,k:p.tested?'Forecast (tested horizon)':'Scenario (not testable yet)',s:`slower ${fmt(p.slower)} · faster ${fmt(p.faster)}`}))];
   let cur=-1;
   const show=i=>{cur=i;const p=pts[i],px=x(p.year);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.setAttribute('opacity',1);
     tip.textContent='';tip.appendChild(h('b',{text:String(p.year)}));tip.appendChild(h('div',{text:p.k+': '+p.t}));if(p.s)tip.appendChild(h('div',{text:p.s}));
@@ -944,7 +945,7 @@ function drawForecast(){
   hit.addEventListener('focus',()=>show(A.length-1));
   // notes, accuracy, table, lock
   const M=FC.method;
-  document.getElementById('fcnote').textContent=`Solid line: NEISS-AI national estimates with 95% confidence bands. Dashed line: forecast (central path) with an 80% range, the range that caught the real value about 80% of the time in testing. Shaded area: ${last+tested+1} onward cannot be tested with the years available yet, so treat it as a scenario. Method: ${M.text} Forecasts follow past trends; they cannot predict the effect of a specific law, a price change or a change in how hospitals write notes.`;
+  document.getElementById('fcnote').textContent=`Solid line: NEISS-AI national estimates, with the likely range shaded. Dashed line: the forecast, with an 80% range (in tests on past years, the real number fell inside this range about 8 times in 10). From ${last+tested+1} on, the forecast cannot be tested yet, so treat it as a scenario. How it works: next year's growth is based on the average growth of the last 3 years, slowed a little each year, because new products usually grow more slowly over time. Forecasts follow past trends; they cannot predict the effect of a new law, a price change or a change in how hospitals write notes.`;
   const S=FC.backtest.summary, ebd=FC.backtest.detail.filter(r=>r.device==='E-bike'&&r.year===last).sort((a,b)=>a.cut-b.cut);
   const acc=document.getElementById('fcacc');acc.textContent='';
   acc.appendChild(h('p',{class:'desc',text:`We pretended to stand in ${last-tested}, ${last-tested+1} and ${last-tested+2}, forecast the following years with this exact method, and compared with what NEISS later showed, for ${M.backtest_devices.length} devices (${M.backtest_devices.join(', ')}). Part of each "miss" is noise in the yearly estimates themselves.`}));
@@ -952,11 +953,11 @@ function drawForecast(){
   table('tbfcacc',['Years ahead','Forecasts tested','Typical miss (median)','Inside the 80% range'],S.map(r=>[r.years_ahead,r.forecasts,Math.round(r.median_miss*100)+'%',`${r.inside_80} of ${r.forecasts}`]));
   if(ebd.length)acc.appendChild(h('p',{class:'note',text:'E-bike example: '+ebd.map(r=>`with data up to ${r.cut}, forecast for ${r.year}: ${fmt(r.forecast)} (actual ${fmt(r.actual)}, ${r.forecast>=r.actual?'+':'−'}${Math.round(Math.abs(r.forecast/r.actual-1)*100)}%)`).join('; ')+'. In recent years e-bike injuries grew faster than the method expected, so it may be cautious.'}));
   const head=['Year','Kind','Estimate (central)','Range low','Range high','Slower growth','Faster growth'];
-  const rows=[...A.map(r=>[r.year,'NEISS-AI estimate (95% CI)',fmt(r.est),fmt(r.lo),fmt(r.hi),'','']),...F.map(r=>[r.year,r.tested?'Forecast (80% range)':'Scenario (80% range, not testable yet)',fmt(r.central),fmt(r.lo80),fmt(r.hi80),fmt(r.slower),fmt(r.faster)])];
+  const rows=[...A.map(r=>[r.year,'NEISS-AI estimate (likely range)',fmt(r.est),fmt(r.lo),fmt(r.hi),'','']),...F.map(r=>[r.year,r.tested?'Forecast (80% range)':'Scenario (80% range, not testable yet)',fmt(r.central),fmt(r.lo80),fmt(r.hi80),fmt(r.slower),fmt(r.faster)])];
   table('tbfc',head,rows);
   csvTools('tbfc',`${FCDEV} emergency department visits: estimates ${A[0].year}-${last} and forecasts ${f1.year}-${F[F.length-1].year}`,head,[...A.map(r=>[r.year,'estimate',r.est,r.lo,r.hi,'','']),...F.map(r=>[r.year,r.tested?'forecast':'scenario',r.central,r.lo80,r.hi80,r.slower,r.faster])],`neissai_forecast_${FCDEV.toLowerCase().replace(/[^a-z]+/g,'_')}.csv`,'Forecasts from past trends (slowing growth method, tested on past years). Not predictions of the effect of any law.');
   const chk=(FC.checks||[]).filter(c=>c.device===FCDEV);
-  document.getElementById('fclock').textContent=(lock?`Locked forecast: the ${lock.year} forecast was published on ${lock.locked_on} (fingerprint ${lock.fingerprint}) and will not be changed. When CPSC releases ${lock.year} data, this page will show forecast versus actual. `:'')+chk.map(c=>`${c.year}: forecast ${fmt(c.forecast)}, actual ${fmt(c.actual)} (${c.inside_80?'inside':'outside'} the 80% range).`).join(' ');
+  document.getElementById('fclock').textContent=(lock?`Fair test: the ${lock.year} forecast was saved on ${lock.locked_on} and will not be changed. When CPSC releases ${lock.year} data, this page will show the forecast next to the real number (record ID ${lock.fingerprint}). `:'')+chk.map(c=>`${c.year}: forecast ${fmt(c.forecast)}, actual ${fmt(c.actual)} (${c.inside_80?'inside':'outside'} the 80% range).`).join(' ');
 }
 
 
@@ -1125,8 +1126,8 @@ function renderExplore(push){
   const sh=share(hosp,den);
   const yrsTxt=EX.y0===EX.y1?String(EX.y0):`${EX.y0}–${EX.y1}`;
   tiles.append(
-    h('div',{class:'tile'},h('p',{class:'label',text:`Estimated visits, ${yrsTxt}`}),h('div',{class:'num',text:fmt(tot.est)}),h('div',{class:'sub',text:`95% CI ${fmt(tot.lo)}–${fmt(tot.hi)}${tot.unstable?' · unstable estimate':''}`})),
-    h('div',{class:'tile'},h('p',{class:'label',text:'Share with a hospital stay'}),h('div',{class:'num',text:isNaN(sh.v)?'–':pct(sh.v)}),h('div',{class:'sub',text:isNaN(sh.v)?'':`95% CI ${pct(sh.lo)}–${pct(sh.hi)}`})),
+    h('div',{class:'tile'},h('p',{class:'label',text:`Estimated visits, ${yrsTxt}`}),h('div',{class:'num',text:fmt(tot.est)}),h('div',{class:'sub',text:`likely range ${fmt(tot.lo)}–${fmt(tot.hi)}${tot.unstable?' · few records, read with care':''}`})),
+    h('div',{class:'tile'},h('p',{class:'label',text:'Share with a hospital stay'}),h('div',{class:'num',text:isNaN(sh.v)?'–':pct(sh.v)}),h('div',{class:'sub',text:isNaN(sh.v)?'':`likely range ${pct(sh.lo)}–${pct(sh.hi)}`})),
     h('div',{class:'tile'},h('p',{class:'label',text:'NEISS records used'}),h('div',{class:'num',text:tot.n.toLocaleString('en-US')}),h('div',{class:'sub',text:'each record is one emergency visit in the sample'})));
   const yIdx=[];for(let y=EX.y0;y<=EX.y1;y++) yIdx.push(R.years.indexOf(y));
   const series=EX.devices.map(d=>{const md=buildMask({...EX,devices:[d]});return {label:R.devices[d],color:devColor(d),points:yIdx.map(yi=>({year:R.years[yi],...total(md,yi)}))};});
@@ -1136,7 +1137,7 @@ function renderExplore(push){
   lastRows=[];series.forEach(s=>s.points.forEach(p=>lastRows.push([s.label,p.year,Math.round(p.est),Math.round(p.lo),Math.round(p.hi),p.n,p.unstable?'yes':'no'])));
   const ec=document.getElementById('excite'); ec.textContent='';
   ec.append(citeLine()+' View: '+describe(EX).join(', ')+'. ',h('button',{class:'btn',type:'button','data-citecopy':'1',style:'padding:2px 8px;font-size:12px',text:'Copy citation'}));
-  table('tbx',['Device','Year','Estimate','95% CI low','95% CI high','Records','Unstable'],lastRows.map(r=>[r[0],r[1],fmt(r[2]),fmt(r[3]),fmt(r[4]),r[5].toLocaleString('en-US'),r[6]]));
+  table('tbx',['Device','Year','Estimate','Likely range: low','Likely range: high','Records','Few records?'],lastRows.map(r=>[r[0],r[1],fmt(r[2]),fmt(r[3]),fmt(r[4]),r[5].toLocaleString('en-US'),r[6]]));
   csvTools('tbx','NEISS-AI national estimates. Filters: '+describe(EX).join('; '),['device','year','estimate','ci_low','ci_high','records','unstable'],lastRows,'neissai_estimates.csv');
 }
 function exploreToParams(){return {dev:EX.devices.join('.'),y0:EX.y0,y1:EX.y1,age:EX.age,sex:EX.sex,body:EX.body,diag:EX.diag,out:EX.outcome,circ:EX.circ};}
@@ -1441,7 +1442,7 @@ function askAnswer(q){
     const outW=f.outcome==='hosp'?' and needed a hospital stay':f.outcome==='died'?' and died':f.outcome==='released'?' and were treated and released':'';
     big.textContent=`About ${fmt(tot.est)} ${who} were treated in US emergency departments for ${devAdj} injuries${extraTxt}${outW} ${yrs}.`;
     sub.textContent=`95% confidence interval ${fmt(tot.lo)} to ${fmt(tot.hi)}, based on ${tot.n.toLocaleString('en-US')} NEISS records.`;
-    if(tot.unstable) notes.unshift('This estimate is potentially unstable by CPSC\'s rule (small sample or wide interval). Treat it as rough.');
+    if(tot.unstable) notes.unshift('This estimate rests on few hospital records (CPSC\'s rule), so treat it as rough.');
     if(trend&&yIdx.length>1) series=[{label:'Visits',color:css('--s1'),points:yIdx.map(yi=>({year:R.years[yi],...total(m,yi)}))}];
   }
   const box=h('div',{class:'answer'},big,sub); out.appendChild(box);
@@ -1475,7 +1476,7 @@ async function doSearch(q,dev){
   const tot=total(m);
   out.appendChild(h('div',{class:'answer'},
     h('p',{class:'big',text:`${hits.length.toLocaleString('en-US')} stories mention "${q.trim()}"${dev==='all'?'':' for '+R.devices[+dev].toLowerCase()+'s'} (${R.years[0]}–${R.years[R.years.length-1]}).`}),
-    h('p',{class:'ci',text:hits.length?`That is about ${fmt(tot.est)} emergency visits nationally (95% CI ${fmt(tot.lo)} to ${fmt(tot.hi)})${tot.unstable?'; potentially unstable estimate':''}. Word matches start at word boundaries, so "batter" also finds "battery".`:'No matches. Try a shorter word.'})));
+    h('p',{class:'ci',text:hits.length?`That is about ${fmt(tot.est)} emergency visits nationally (likely range ${fmt(tot.lo)} to ${fmt(tot.hi)})${tot.unstable?'; rests on few records, read with care':''}. Words match from the start, so "batter" also finds "battery".`:'No matches. Try a shorter word.'})));
   if(!hits.length) return;
   const series=[{label:'Visits',color:css('--s1'),points:R.years.map((y,yi)=>({year:y,...total(m,yi)}))}];
   out.appendChild(h('div',{class:'chart',id:'searchchart',style:'margin-top:8px'}));
@@ -1651,8 +1652,8 @@ function renderState(push){
   if(BX){if(pick&&adj){BX.hidden=false;BX.href=`benchmarks/NEISS-AI_Compare_Your_State_${pick}_2025.xlsx`;
     BX.onclick=()=>{try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'bench-'+pick,title:'Compare your state Excel: '+STATE_POP[pick].n,event:true});}catch(e){}};}
   else{BX.hidden=true;}}
-  document.getElementById('stnote').textContent=(adj?`How it is calculated: for each of 7 age groups, the national estimate for ${ST.dev.toLowerCase()} visits in ${y} for that age group times the state's share of the US population in that age group (US Census Bureau, Vintage 2025, July 1), added up over the age groups. The national total is ${fmt(r.est)} (95% CI ${fmt(r.lo)} to ${fmt(r.hi)}). "Population only" is the national estimate times the state's share of the whole US population. The range carries the national sampling uncertainty into the state number; real differences between states (how many people ride, where, and how) are not included.`
-    :`How it is calculated: the national estimate for ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, 95% CI ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of the US population on July 1, ${y} (US Census Bureau, Vintage 2025). The range shows only the uncertainty in the national estimate; real differences between states (how many people ride, where, and how) are not included.`)+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The national estimate for this device and year is potentially unstable by the CPSC rule, so treat it with extra care.':'');
+  document.getElementById('stnote').textContent=(adj?`How it is calculated: for each of 7 age groups, we take the US number of ${ST.dev.toLowerCase()} visits in ${y} for that age group and give the state its share, based on how many people of that age live there (US Census Bureau). Then we add up the 7 groups. The US total is ${fmt(r.est)} (likely range ${fmt(r.lo)} to ${fmt(r.hi)}). "Population only" is a simpler version that uses the state's share of all US residents, ignoring age. The state's range comes only from the uncertainty in the US number; real differences between states, such as how many people ride, are not included.`
+    :`How it is calculated: the US number of ${ST.dev.toLowerCase()} visits in ${y} (${fmt(r.est)}, likely range ${fmt(r.lo)} to ${fmt(r.hi)}) times the state's share of all US residents (US Census Bureau). The range comes only from the uncertainty in the US number; real differences between states, such as how many people ride, are not included.`)+' Map shapes: us-atlas (US Census Bureau cartographic boundaries).'+(r.unstable?' The US number for this device and year rests on few hospital records, so treat it with extra care.':'');
   document.getElementById('stcite').textContent=citeLine();
   // table
   const rows=Object.keys(STATE_POP).sort((a,b)=>STATE_POP[a].n.localeCompare(STATE_POP[b].n)).map(a=>{const e1=stExp(a,'E-bike',y),e2=stExp(a,'E-scooter',y),e3=stExp(a,'Bicycle',y);
@@ -1765,7 +1766,7 @@ function stCardImage(C){
 <text x='60' y='130' fill='#ffffff' font-size='44' font-weight='800' ${F}>${esc(N)}</text>
 <text x='60' y='170' fill='#c9d6e3' font-size='24' ${F}>${esc(C.d)} injuries, ${C.y}</text>
 <text x='60' y='270' fill='#ffffff' font-size='72' font-weight='800' ${F}>about ${fmt(C.e.est)}</text>
-<text x='60' y='310' fill='#c9d6e3' font-size='22' ${F}>emergency department visits (95% range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})</text>
+<text x='60' y='310' fill='#c9d6e3' font-size='22' ${F}>emergency department visits (likely range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})</text>
 ${lines.map((t,i)=>`<text x='60' y='${375+i*38}' fill='#e8eef5' font-size='22' ${F}>${esc(t)}</text>`).join('')}
 ${g}
 <text x='60' y='${H-58}' fill='#9fb0c3' font-size='17' ${F}>Estimates from national emergency department data (US CPSC NEISS) and ${esc(N)}'s population by age, not counts.</text>
@@ -1788,7 +1789,7 @@ function renderStCard(){
   box.appendChild(h('div',{class:'cardhead'},h('div',null,h('h3',{text:`${N}: ${dl} injuries, ${y}`}),h('p',{text:'Estimates from national emergency department data and the state\'s population by age, not counts.'})),close));
   const k=(v,l)=>h('div',{class:'k'},h('div',{class:'v',text:v}),h('div',{class:'l',text:l}));
   box.appendChild(h('div',{class:'kgrid'},
-    k('about '+fmt(C.e.est),`emergency department visits (95% range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})`),
+    k('about '+fmt(C.e.est),`emergency department visits (likely range ${fmt(C.e.lo)} to ${fmt(C.e.hi)})`),
     k(C.perDay,`${dl} emergency department visits in ${N}`),
     k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents had a visit'),
     k(`#${C.rank} of ${C.n}`,`states by number of ${dl} visits`),
@@ -1855,7 +1856,7 @@ function renderCompare(){
   document.getElementById('stcmpdesc').textContent=`Have your own emergency department counts for ${D.name} in ${D.y}? "Benchmark" is the number of ${D.d.toLowerCase()} visits ${D.name} would have at the US rate for each age group. Type your counts in the yellow "Your count" boxes. Ratio = your count / benchmark: 1.00 = the same, 1.50 = 50% more, 0.50 = half.`;
   const W=document.getElementById('stcmptab'); W.textContent='';
   const t=h('table');
-  t.appendChild(h('tr',null,['Age group','Benchmark','95% range','Your count','Ratio'].map(x=>h('th',{text:x}))));
+  t.appendChild(h('tr',null,['Age group','Benchmark','Likely range','Your count','Ratio'].map(x=>h('th',{text:x}))));
   const rowEls=[];
   D.groups.forEach((g,k)=>{
     const inp=h('input',{type:'number',min:'0',step:'1',inputmode:'numeric','aria-label':`Your count, ${g.lab}`,style:'width:5.5em;background:#fff8e1;color:#222;border:1px solid #c9b46a;border-radius:4px;padding:3px 6px'});
@@ -1890,9 +1891,9 @@ function cmpUpdate(D,rowEls,totEls){
   totEls.yc.textContent=n?sum.toLocaleString('en-US'):'';
   const res=document.getElementById('stcmpres');
   if(n===D.groups.length){const R=cmpRatioText(sum,D.tot.est,D.tot.lo,D.tot.hi);totEls.rcT.textContent=R.r.toFixed(2);
-    res.textContent=`All ages: your ${sum.toLocaleString('en-US')} visits are ${R.txt} (${D.tot.est.toLocaleString('en-US')}), ratio ${R.r.toFixed(2)}. That is ${R.inside?'inside':'outside'} the 95% range, so it is ${R.inside?'consistent with':'different from'} the US rate for ${D.name}'s age mix.`;}
+    res.textContent=`All ages: your ${sum.toLocaleString('en-US')} visits are ${R.txt} (${D.tot.est.toLocaleString('en-US')}), ratio ${R.r.toFixed(2)}. That is ${R.inside?'inside':'outside'} the likely range, so it is ${R.inside?'consistent with':'different from'} the US rate for ${D.name}'s age mix.`;}
   else{totEls.rcT.textContent=n?'fill in all age groups':'';
-    res.textContent=(n===1&&last&&last.g.est>0)?`${last.g.lab}: your ${last.m.toLocaleString('en-US')} visits are ${last.R.txt} (${last.g.est.toLocaleString('en-US')}), ratio ${last.R.r.toFixed(2)}. That is ${last.R.inside?'inside':'outside'} the 95% range, so it is ${last.R.inside?'consistent with':'different from'} the US rate.`:'';}
+    res.textContent=(n===1&&last&&last.g.est>0)?`${last.g.lab}: your ${last.m.toLocaleString('en-US')} visits are ${last.R.txt} (${last.g.est.toLocaleString('en-US')}), ratio ${last.R.r.toFixed(2)}. That is ${last.R.inside?'inside':'outside'} the likely range, so it is ${last.R.inside?'consistent with':'different from'} the US rate.`:'';}
   if(CMP.example&&res.textContent)res.textContent+=` (Example only: a made-up number, not real ${D.name} data.)`;
   if(n&&!CMP.example&&!CMP_COUNTED[D.a]){CMP_COUNTED[D.a]=1;try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'compare-used-'+D.a,title:'Compare your counts used: '+D.name,event:true});}catch(e){}}
 }
