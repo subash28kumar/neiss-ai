@@ -63,12 +63,14 @@ def test_fact_sheet_matches_data_and_uses_main_doi():
 
 
 def test_escooter_note_on_state_pages_card_and_downloads():
-    import openpyxl
+    import html as _h
+    import zipfile
     assert "differ from CPSC's published e-scooter figures" in _html("states/massachusetts.html")
     assert "treat state e-scooter numbers with care" in _html()
-    wb = openpyxl.load_workbook(DOCS / "NEISS-AI_DataPack.xlsx", read_only=True)
-    readme = " ".join(str(r[0]) for r in wb["Read me"].iter_rows(values_only=True) if r and r[0])
-    assert "differ from CPSC's published e-scooter figures" in readme
+    # read the workbook's text directly (an .xlsx is a zip of XML), so no spreadsheet library is needed
+    with zipfile.ZipFile(DOCS / "NEISS-AI_DataPack.xlsx") as z:
+        text = " ".join(_h.unescape(z.read(n).decode("utf-8")) for n in z.namelist() if n.endswith(".xml"))
+    assert "differ from CPSC's published e-scooter figures" in text
 
 
 @pytest.mark.skipif(shutil.which("pdftotext") is None, reason="pdftotext not installed")
