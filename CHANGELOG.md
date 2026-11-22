@@ -2,6 +2,14 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## Ranges use each year's own hospital sample — 2026-11-22
+
+- Independent review: one-year 95% ranges were computed with the hospitals of all seven years in
+  each stratum (hospitals not sampled that year counted as zeros). They now use only the hospitals
+  sampled that year, as CPSC does, in Python (`national_estimates`, `shares`, state estimates, fact
+  sheet) and in the browser (`records.json` gains `year_clusters`). The old ranges were too wide, not
+  too narrow; the estimates themselves do not change.
+
 ## Smaller wording fixes from the independent review — 2026-11-22
 
 - Accuracy tab: story-level test tiles say the answer keys were made by AI reviewers; the e-moto tile

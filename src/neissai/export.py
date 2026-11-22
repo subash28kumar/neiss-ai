@@ -29,9 +29,13 @@ def export_web_data(labeled: pd.DataFrame, out_dir: Union[str, Path], updated: s
     d = labeled[labeled["device"].isin(DEVICES)].copy()
     d = d[d["year"].notna() & d["Weight"].notna()].reset_index(drop=True)
     years = sorted(int(y) for y in d["year"].unique())
-    strata = sorted(d["Stratum"].astype(str).unique())
+    # The sample design comes from ALL records (every sampled hospital, even one with no
+    # micromobility record that year), so one-year ranges in the browser use that year's design.
+    full = labeled[labeled["year"].notna() & labeled["Weight"].notna()]
+    full_cl = full["Stratum"].astype(str) + "_" + full["PSU"].astype(str)
+    strata = sorted(full["Stratum"].astype(str).unique())
     d["cluster"] = d["Stratum"].astype(str) + "_" + d["PSU"].astype(str)
-    clusters = sorted(d["cluster"].unique())
+    clusters = sorted(full_cl.unique())
     cl_index = {c: i for i, c in enumerate(clusters)}
     st_index = {s: i for i, s in enumerate(strata)}
 
@@ -52,6 +56,8 @@ def export_web_data(labeled: pd.DataFrame, out_dir: Union[str, Path], updated: s
         "devices": DEVICES,
         "strata": strata,
         "cluster_stratum": [st_index[c.split("_")[0]] for c in clusters],
+        # hospitals (clusters) sampled in each year, by position in "years"
+        "year_clusters": [sorted(cl_index[c] for c in full_cl[full["year"].astype(int) == y].unique()) for y in years],
         "n": int(len(d)),
         "y": [years.index(int(v)) for v in d["year"]],
         "d": [DEVICES.index(v) for v in d["device"]],

@@ -32,8 +32,26 @@ CITE = ("Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS eme
         "narratives [software]. Zenodo; 2026. " + B.DOI)
 
 
-def records_frame() -> pd.DataFrame:
+def records_frame(years=None) -> pd.DataFrame:
+    """Micromobility records; with ``years``, only those years plus an empty row for every hospital
+    sampled in those years that has no such record, so ranges use those years' sample design."""
     r = json.loads((DOCS / "data" / "records.json").read_text())
+    df = _frame(r)
+    if years is None:
+        return df
+    df = df[df["year"].isin(years)]
+    if r.get("year_clusters"):
+        sampled = set().union(*(r["year_clusters"][r["years"].index(y)] for y in years))
+        missing = sorted(sampled - set(df["PSU"]))
+        if missing:
+            pad = pd.DataFrame({"year": years[0], "device": "", "Sex": 0, "Body_Part": 0, "Body_Part_2": 0,
+                                "Diagnosis": 0, "Diagnosis_2": 0, "Disposition": 0, "PSU": missing,
+                                "Stratum": [r["strata"][r["cluster_stratum"][c]] for c in missing], "Weight": 0.0})
+            df = pd.concat([df, pad], ignore_index=True)
+    return df.reset_index(drop=True)
+
+
+def _frame(r) -> pd.DataFrame:
     return pd.DataFrame({
         "year": [r["years"][y] for y in r["y"]], "device": [r["devices"][d] for d in r["d"]],
         "Sex": r["s"], "Body_Part": r["b"], "Body_Part_2": r["b2"], "Diagnosis": r["g"], "Diagnosis_2": r["g2"], "Disposition": r["p"],
@@ -54,8 +72,8 @@ def main() -> Path:
     eb = {y: rows[(y, "E-bike")] for y in years}
     age = {(x["year"], x["age_group"]): x for x in D["by_age"] if x["device"] == "E-bike"}
 
-    df = records_frame()
-    recent = df["year"].isin([y0, y1])
+    df = records_frame([y0, y1])
+    recent = df["year"].isin([y0, y1]) & (df["device"] != "")
     ebm = recent & (df["device"] == "E-bike")
     bim = recent & (df["device"] == "Bicycle")
     hosp = df["Disposition"].isin([2, 4, 5, 8])   # same definition as the website: transferred, admitted, held, died

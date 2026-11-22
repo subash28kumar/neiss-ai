@@ -2,6 +2,8 @@
 
 NEISS is a stratified sample of hospitals (Stratum, PSU = hospital, Weight). Standard errors
 use Taylor linearization with hospitals as clusters within strata, the approach CPSC uses.
+A one-year estimate uses that year's sample design only (the hospitals and strata sampled that
+year); estimates that pool several years use the hospitals sampled in any of those years.
 Estimates are flagged "unstable" when based on fewer than 20 records, when the estimate is
 below 1,200, or when the coefficient of variation is above 33% (CPSC's reporting rule).
 """
@@ -61,6 +63,13 @@ def proportion(df: pd.DataFrame, numerator: pd.Series, denominator: pd.Series) -
             "records": int(den.sum())}
 
 
+def _design(df: pd.DataFrame, key, by: Sequence[str]) -> pd.DataFrame:
+    """The sample design for one group: that year's records when the group is a single year."""
+    if "year" in by and "year" in df.columns:
+        return df[df["year"] == key["year"]]
+    return df
+
+
 def national_estimates(df: pd.DataFrame, by: Sequence[str] = ("year", "device"),
                        where: Optional[pd.Series] = None) -> pd.DataFrame:
     """Table of national estimates for every combination of the ``by`` columns.
@@ -75,7 +84,8 @@ def national_estimates(df: pd.DataFrame, by: Sequence[str] = ("year", "device"),
         m = base.copy()
         for col in by:
             m &= df[col] == key[col]
-        r = total(df, m)
+        d = _design(df, key, by)
+        r = total(d, m.loc[d.index])
         rows.append({**{c: key[c] for c in by}, **r})
     return pd.DataFrame(rows)
 
@@ -90,6 +100,7 @@ def shares(df: pd.DataFrame, outcome: str, by: Sequence[str] = ("device",),
         m = base.copy()
         for col in by:
             m &= df[col] == key[col]
-        r = proportion(df, df[outcome] == 1, m)
+        d = _design(df, key, by)
+        r = proportion(d, d[outcome] == 1, m.loc[d.index])
         rows.append({**{c: key[c] for c in by}, "outcome": outcome, **r})
     return pd.DataFrame(rows)

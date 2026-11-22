@@ -551,7 +551,7 @@ neissai hazards --years 2020-2025</code></pre>
         <tr><td data-label="What is checked">Motor vehicle involved</td><td data-label="How it was tested">Rules frozen, then tested once on 300 random stories (2019–2025) never used to build them</td><td data-label="Result">98.3% right [96.2–99.3]. Found 44 of 47 real cases; 44 of its 46 flags were correct. The answer key and the 5 disagreements were settled by AI reviewers against the written definitions, not by a person</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a> · <a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/injurycoder_test_300.csv">Test file</a></td></tr>
         <tr><td data-label="What is checked">Helmet status</td><td data-label="How it was tested">Same 300 test stories. Three answers: worn, not worn, not mentioned. "Not mentioned" is never counted as "no helmet"</td><td data-label="Result">300 of 300 right [98.7–100]</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/README.md">Methods</a></td></tr>
         <tr><td data-label="What is checked">Hazard Watch</td><td data-label="How it was tested">Totals checked against NEISS-AI's own national estimates; the word scan was run on past years to see whether it would have caught known new hazards</td><td data-label="Result">Totals identical (for example, bicycle product code 5040 alone, 2025: 420,962; the Overview's bicycle total of 434,600 also counts other bicycle codes). The scan flagged e-bike words in 2021, 2022 and 2023 (before CPSC's 2024 e-bike code), water beads in 2023 and the word "e-scooter" in 2024</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/validation/METHODS_hazard_scan.md">Methods</a></td></tr>
-        <tr><td data-label="What is checked">Uncertainty</td><td data-label="How it was tested">Each sampled visit is scaled up to the country with CPSC's weights, and the ranges allow for the fact that only about 100 hospitals are sampled, the same way CPSC does it (survey weights; Taylor-linearized standard errors with hospitals as clusters within strata)</td><td data-label="Result">Every number has a likely range (95% confidence interval). Numbers resting on few records are flagged (CPSC rule: fewer than 20 records, under 1,200 visits, or a coefficient of variation above 33%)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/src/neissai/estimate.py">Code</a></td></tr>
+        <tr><td data-label="What is checked">Uncertainty</td><td data-label="How it was tested">Each sampled visit is scaled up to the country with CPSC's weights, and the ranges allow for the fact that only about 100 hospitals are sampled, the same way CPSC does it (survey weights; Taylor-linearized standard errors with hospitals as clusters within strata, using each year's own sample of hospitals; until November 2026 the hospitals of all years were pooled, which made the ranges about 2–30% too wide)</td><td data-label="Result">Every number has a likely range (95% confidence interval). Numbers resting on few records are flagged (CPSC rule: fewer than 20 records, under 1,200 visits, or a coefficient of variation above 33%)</td><td data-label="Details"><a href="https://github.com/subash28kumar/neiss-ai/blob/main/src/neissai/estimate.py">Code</a></td></tr>
       </tbody>
     </table></div>
     <h3 style="font-size:15px;margin:18px 0 0">E-bike totals: NEISS-AI and CPSC side by side</h3>
@@ -1054,28 +1054,41 @@ async function loadRecords(){
   CL_STRATUM.forEach((s,c)=>{(STRATUM_CLUSTERS[s]=STRATUM_CLUSTERS[s]||[]).push(c);});
   return R;
 }
+/* Sample design for the years an estimate covers: the hospitals sampled in those years, grouped by
+   stratum (as CPSC does for a one-year estimate). Older data files without year_clusters use all. */
+const DESIGN_CACHE={};
+function designFor(yset){
+  if(!R.year_clusters) return STRATUM_CLUSTERS;
+  const key=[...yset].sort((a,b)=>a-b).join(',');
+  if(DESIGN_CACHE[key]) return DESIGN_CACHE[key];
+  const used=new Set(); yset.forEach(yi=>(R.year_clusters[yi]||[]).forEach(c=>used.add(c)));
+  const g={}; used.forEach(c=>{const s=CL_STRATUM[c];(g[s]=g[s]||[]).push(c);});
+  return DESIGN_CACHE[key]=g;
+}
 async function loadStories(){ if(STORIES) return STORIES; const res=await fetch('data/stories.json',{cache:'no-cache'}); STORIES=await res.json(); return STORIES; }
 
-function clusterVar(sums){
-  let v=0;
-  for(const s in STRATUM_CLUSTERS){const cs=STRATUM_CLUSTERS[s], n=cs.length; if(n<2) continue;
+function clusterVar(sums, design){
+  let v=0; const G=design||STRATUM_CLUSTERS;
+  for(const s in G){const cs=G[s], n=cs.length; if(n<2) continue;
     let mean=0; for(const c of cs) mean+=sums[c]; mean/=n;
     let ss=0; for(const c of cs){const dlt=sums[c]-mean; ss+=dlt*dlt;} v+=n/(n-1)*ss;}
   return v;
 }
 function total(mask, yi){
   const sums=new Float64Array(CL_STRATUM.length); let est=0,n=0;
-  for(let i=0;i<R.n;i++){ if(!mask[i]) continue; if(yi!=null && R.y[i]!==yi) continue; sums[R.c[i]]+=R.w[i]; est+=R.w[i]; n++; }
-  const se=Math.sqrt(clusterVar(sums)), cv=est>0?se/est:NaN;
+  const ys=new Set(yi!=null?[yi]:[]);
+  for(let i=0;i<R.n;i++){ if(!mask[i]) continue; if(yi!=null && R.y[i]!==yi) continue; sums[R.c[i]]+=R.w[i]; est+=R.w[i]; n++; if(yi==null) ys.add(R.y[i]); }
+  const se=Math.sqrt(clusterVar(sums,designFor(ys))), cv=est>0?se/est:NaN;
   return {est,se,lo:Math.max(est-1.96*se,0),hi:est+1.96*se,n,cv,unstable:(n<20||est<1200||cv>0.33)};
 }
 function share(numMask, denMask, yi){
   let X=0,Y=0,n=0;
-  for(let i=0;i<R.n;i++){ if(!denMask[i]) continue; if(yi!=null && R.y[i]!==yi) continue; X+=R.w[i]; if(numMask[i]) Y+=R.w[i]; n++; }
+  const ys=new Set(yi!=null?[yi]:[]);
+  for(let i=0;i<R.n;i++){ if(!denMask[i]) continue; if(yi!=null && R.y[i]!==yi) continue; X+=R.w[i]; if(numMask[i]) Y+=R.w[i]; n++; if(yi==null) ys.add(R.y[i]); }
   if(X===0) return {v:NaN,lo:NaN,hi:NaN,n:0};
   const r=Y/X, sums=new Float64Array(CL_STRATUM.length);
   for(let i=0;i<R.n;i++){ if(!denMask[i]) continue; if(yi!=null && R.y[i]!==yi) continue; sums[R.c[i]]+=((numMask[i]?R.w[i]:0)-r*R.w[i])/X; }
-  const se=Math.sqrt(clusterVar(sums));
+  const se=Math.sqrt(clusterVar(sums,designFor(ys)));
   return {v:r,lo:Math.max(r-1.96*se,0),hi:Math.min(r+1.96*se,1),n};
 }
 function isHosp(i){const p=R.p[i];return p===2||p===4||p===5||p===8;}
