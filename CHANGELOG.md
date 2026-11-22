@@ -2,6 +2,11 @@
 
 All notable changes to NEISS-AI are listed here.
 
+## v1.7.1 — 2026-11-22
+
+Package release with all of the independent-review fixes below (scooter negation, moped-code
+scooter stories, one-year design for ranges, motorcycle codes and km/h in `label-notes`).
+
 ## Own notes: motorcycles handled honestly — 2026-11-22
 
 - `neissai label-notes` / `label_note`: V29.81x (motorcycle and military vehicle) was read as an
