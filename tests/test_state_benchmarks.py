@@ -67,7 +67,7 @@ def test_site_compare_box_matches_workbook_numbers():
     assert 'id="stcmp"' in tpl and "fill in all age groups" in tpl and ".reqbox[hidden]{display:none}" in tpl
     site = json.loads((ROOT / "docs" / "data" / "state_estimates.json").read_text())
     ma = site["states"]["MA"]["age"]["E-bike"]["2025"]
-    assert site["age_groups"][4] == "25-44" and ma[4] == [656, 422, 891]  # one-year design (Nov 2026); was [656, 402, 910]
+    assert site["age_groups"][4] == "25-44" and ma[4] == [657, 422, 891]  # misspelling + stationary-object fixes (v1.7.2); was [656, 422, 891]
 
 
 def test_state_cyclist_deaths_file_matches_nhtsa_totals():

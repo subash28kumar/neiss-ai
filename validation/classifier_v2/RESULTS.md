@@ -31,4 +31,4 @@ Chosen C = 8.0. Final model retrained on train + validation, then scored once on
 
 ## Hard stories
 
-The locked test set is mostly stories that name the device. The model is only used on stories that name neither. On the 54 test stories like that it was right 74.1% of the time (61.1-85.2%). See `HARD_NOTES.md`.
+The locked test set is mostly stories that name the device. The model is only used on stories that name neither. On the 47 test stories like that (after the misspelling rule, Nov 2026) it was right 72.3% of the time (59.6-85.1%). See `HARD_NOTES.md`.
