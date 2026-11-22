@@ -11,6 +11,11 @@ on:
         description: "Years to include (e.g. 2019-2026)"
         required: false
         default: ""
+      force:
+        description: "Rebuild even with no new year (after a rule change). The result goes to a review branch, not main."
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -34,7 +39,7 @@ jobs:
             echo "years=2019-$(date +%Y)" >> "$GITHUB_OUTPUT"
           fi
       - name: Download NEISS files and rebuild site data
-        run: python scripts/update_site.py --data-dir data --years "${{ steps.yrs.outputs.years }}" --download
+        run: python scripts/update_site.py --data-dir data --years "${{ steps.yrs.outputs.years }}" --download ${{ github.event.inputs.force == 'true' && '--force' || '' }}
       - name: Commit updated site (only if data changed)
         run: |
           git config user.name "neissai-bot"
@@ -43,6 +48,13 @@ jobs:
           if git diff --cached --quiet; then
             echo "No change in data."
           else
-            git commit -m "Refresh NEISS data ($(date +%Y-%m-%d))"
-            git push
+            if [ "${{ github.event.inputs.force }}" = "true" ]; then
+              # A forced rebuild (rule change) is reviewed before it reaches the website.
+              git checkout -b "data-rebuild-${{ github.run_id }}"
+              git commit -m "Rebuild site data after a rule change ($(date +%Y-%m-%d))"
+              git push origin "data-rebuild-${{ github.run_id }}"
+            else
+              git commit -m "Refresh NEISS data ($(date +%Y-%m-%d))"
+              git push
+            fi
           fi

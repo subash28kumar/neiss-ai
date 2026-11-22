@@ -46,7 +46,7 @@ import pandas as pd
 
 from . import circumstances as _circ
 from .classifier import EbikeMopedClassifier
-from .devices import E_WORDS, ESC_WORDS, EXERCISE_WORDS, HOVER_WORDS, MOBILITY_WORDS, MOPED_WORDS
+from .devices import ESC_NEG_WORDS, E_WORDS, ESC_WORDS, EXERCISE_WORDS, HOVER_WORDS, MOBILITY_WORDS, MOPED_WORDS
 from .ebike_type import ebike_type as _ebike_type
 from .ebike_type import rider_speeds as _rider_speeds
 
@@ -68,7 +68,8 @@ _SEGWAY = re.compile(r"SEGWAY|ONE ?WHEEL|ELECTRIC UNICYCLE|E-?UNICYCLE|E-?SKATE 
 _MOPED = _rx(MOPED_WORDS)
 _MOBILITY = _rx(MOBILITY_WORDS)
 _EXERCISE = _rx(EXERCISE_WORDS)
-_KICK = re.compile(r"KICK ?SCOOTER|RAZOR SCOOTER|PUSH ?SCOOTER|(?:NON-? ?(?:ELECTRIC|MOTORI[ZS]ED|POWERED)|MANUAL|FOOT[- ]POWERED) SCOOTER")
+_ESC_NEG = _rx(ESC_NEG_WORDS)
+_KICK = re.compile(r"KICK ?SCOOTER|RAZOR SCOOTER|PUSH ?SCOOTER|(?:MANUAL|FOOT[- ]POWERED) SCOOTER|" + _ESC_NEG.pattern)
 _SCOOTER = re.compile(r"SCOOTER")
 _SKATE = re.compile(r"SKATE ?BOARD|LONG ?BOARD")
 _BIKE = re.compile(r"\bBI(?:KE|CYCLE)S?\b|BICYCL\w*|\bCYCLIST|\bBIKING\b|\bCYCLING\b|PUSH ?BIKE|PEDAL ?BIKE|\bBMX\b|MOUNTAIN ?BIKE")
@@ -143,8 +144,8 @@ def _first_device(story: str) -> Optional[str]:
     follows 'riding / on / fell off / from', then the first one named."""
     found = []  # (preferred?, position, device)
 
-    def add(rx, dev):
-        for m in rx.finditer(story):
+    def add(rx, dev, text=None):
+        for m in rx.finditer(story if text is None else text):
             pref = bool(_ONTO.search(story[max(0, m.start() - 40):m.start()]))
             found.append((not pref, m.start(), dev))
             break
@@ -152,7 +153,7 @@ def _first_device(story: str) -> Optional[str]:
     add(_SEGWAY, "Other standing micromobility")
     add(_HOVER, "Hoverboard")
     add(_SKATE, "Skateboard")
-    add(_ESC, "E-scooter")
+    add(_ESC, "E-scooter", _ESC_NEG.sub(lambda m: " " * len(m.group()), story))   # "UNPOWERED SCOOTER" is not an e-scooter
     add(_KICK, "Kick scooter")
     if not any(d in ("E-scooter", "Kick scooter") for *_, d in found):
         add(_SCOOTER, "Scooter (type not stated)")
@@ -179,7 +180,7 @@ def label_note(text, codes=None, classifier: Optional[EbikeMopedClassifier] = No
     story = _story(t)
     p_ebike = None
 
-    if _MOBILITY.search(story) and not _ESC.search(story.replace("MOBILITY SCOOTER", "")):
+    if _MOBILITY.search(story) and not _ESC.search(_ESC_NEG.sub(" ", story.replace("MOBILITY SCOOTER", ""))):
         words = "Excluded"
     elif _EXERCISE.search(story):
         words = "Excluded"
