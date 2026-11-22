@@ -1,6 +1,6 @@
 {
  "updated": "2026-11-22",
- "version": "1.7.1",
+ "version": "1.7.2",
  "last_data_year": 2025,
  "method": {
   "name": "Slowing growth (damped trend on the log scale)",
