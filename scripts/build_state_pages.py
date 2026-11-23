@@ -28,6 +28,12 @@ MODEL = ROOT / "src" / "neissai" / "model"
 SITE = "https://subash28kumar.github.io/neiss-ai/"
 DOI = "https://doi.org/10.5281/zenodo.23306744"
 DEVICES = ["E-bike", "E-scooter", "Bicycle"]
+# Privacy-friendly visit counter used on every other page of the site (no cookies). The small script
+# also counts clicks on PDF links (state briefs), the same way the main site counts brief downloads.
+GC = ('<script data-goatcounter="https://neiss-ai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
+      '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(\'a[href$=".pdf"]\');'
+      'if(a){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:"brief-pdf-"+a.getAttribute("href").split("/").pop(),'
+      'title:"State page brief PDF",event:true});}catch(x){}}});</script>')
 
 
 def r100(v: float) -> int:
@@ -150,6 +156,7 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
 <meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}social.png"><meta property="og:type" content="article">
 <script type="application/ld+json">{json.dumps(ld)}</script>
+{GC}
 <style>{CSS}</style></head>
 <body><main>
 <p class="crumb"><a href="../">NEISS-AI</a> › <a href="./">States</a> › {html.escape(N)}</p>
@@ -218,7 +225,7 @@ def main() -> None:
     (out / "index.html").write_text(f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>E-bike injuries by state, {year} | NEISS-AI</title><meta name="description" content="{html.escape(idx_desc)}">
-<link rel="canonical" href="{SITE}states/"><style>{CSS}</style></head><body><main>
+<link rel="canonical" href="{SITE}states/">{GC}<style>{CSS}</style></head><body><main>
 <p class="crumb"><a href="../">NEISS-AI</a> › States</p><h1>E-bike injuries by state, {year}</h1>
 <p class="lede">Pick a state for its e-bike, e-scooter and bicycle injury numbers, trend, forecast, road deaths and medical costs.
 Injury numbers are estimates from national NEISS emergency department data and each state's population by age.</p>
