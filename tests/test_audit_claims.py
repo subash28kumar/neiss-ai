@@ -164,3 +164,10 @@ def test_fact_sheet_uses_site_definition_for_head_and_fracture():
 def test_own_notes_reads_kmh():
     from neissai.freetext import label_note
     assert label_note("fell off e-bike riding at 40 km/h")["rider_mph"] == 25
+
+
+def test_no_same_way_every_year_claim():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    for p in ["docs/template.html", "docs/index.html", "docs/press.html", "README.md"]:
+        assert "counted the same way every year" not in (root / p).read_text()
