@@ -1,0 +1,20 @@
+{
+ "version": "1.7.2",
+ "site_version": "1.7.2",
+ "rows": 141818,
+ "micromobility_rows": 141728,
+ "site_rows": 141728,
+ "by_device": {
+  "Bicycle": 77865,
+  "E-bike": 5810,
+  "E-scooter": 13363,
+  "Excluded": 90,
+  "Hoverboard": 4499,
+  "Kick scooter": 17566,
+  "Moped / minibike": 6315,
+  "Skateboard": 16310
+ },
+ "mismatches": [],
+ "match": true,
+ "unique_case_numbers": 141818
+}
