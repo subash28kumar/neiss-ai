@@ -111,6 +111,7 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 @keyframes cardin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.stcard{animation:none}}
 .stcard[hidden]{display:none}
+.stcard .usebox{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:10px 14px;margin:12px 0;font-size:14.5px}.stcard .usebox ul{margin:6px 0 0;padding-left:20px}
 .stcard .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .stcard .cardhead h3{margin:0;font-size:20px}
 .stcard .cardhead p{margin:2px 0 0;color:var(--text-2);font-size:13px}
@@ -1826,6 +1827,9 @@ function renderStCard(){
     k(C.perDay,`expected ${dl} emergency department visits in ${N}`),
     k(C.one?`1 in ${C.one.toLocaleString('en-US')}`:'n/a','residents, at the national rate'),
     C.fc.length?k('about '+fmt(C.fc[0][1]),`expected in ${C.fc[0][0]} (80% range ${fmt(C.fc[0][2])} to ${fmt(C.fc[0][3])})`):null));
+  box.appendChild(h('div',{class:'usebox'},h('b',{text:'What this number is for'}),h('ul',null,
+    h('li',null,h('b',{text:'Good for: '}),'a rough local figure for grant applications, reports and safety plans, and a benchmark to check your own hospital counts against.'),
+    h('li',null,h('b',{text:'Not for: '}),`ranking states or judging how safe ${N} is. Every state gets the same national rate for each age group, so differences between states come only from population size and age mix, not from local riding or road safety.`))));
   // trend + forecast
   box.appendChild(h('h4',null,h('span',{class:'tag',text:'Forecast'}),'Trend and outlook'));
   box.appendChild(stSpark(C,box.clientWidth-36));
