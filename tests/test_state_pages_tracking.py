@@ -35,14 +35,14 @@ def test_site_state_card_says_what_numbers_are_for():
 def test_state_pages_explain_the_formula_with_correct_example():
     import re
     t = (STATES / "california.html").read_text(encoding="utf-8")
-    assert 'id="how"' in t and "How the number is worked out" in t and "Formula:" in t
+    assert 'id="how"' in t and "How the number is worked out" in t and 'class="fbox"' in t and "Worked example" in t
     # the worked example must land on the same 25-44 number the site shows (3,751 for CA in 2025 data)
     import json
     S = json.loads((STATES.parent / "data" / "state_estimates.json").read_text(encoding="utf-8"))
     k = S["age_groups"].index("25-44")
     y = max(S["states"]["CA"]["age"]["E-bike"])
     val = S["states"]["CA"]["age"]["E-bike"][y][k][0]
-    assert f"&asymp; {val:,} visits" in t
+    assert f"&asymp; {val:,}</b>" in t
 
 
 def test_every_state_link_target_exists():
