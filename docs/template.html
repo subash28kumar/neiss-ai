@@ -24,6 +24,7 @@
   --a1:#104281; --a2:#2a78d6; --a3:#86b6ef;
   --h1:#f0a06a; --h2:#e8783c; --h3:#d35a20; --h4:#a44314; --h5:#6b2a0c; --dot:#c2410c;
   --band-op:.14; --code-bg:#f0efec; --warn:#8a5a00; --warn-bg:#fdf3dc;
+  --fx-bg:#fff8d6; --fx-bd:#2a78d6; --fn-bg:#dbe8ff; --fn-tx:#123a7a; --fs-bg:#d7f3df; --fs-tx:#0f5a2b;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -34,6 +35,7 @@
     --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
     --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c; --dot:#f59a5b;
     --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
+    --fx-bg:#2a2614; --fx-bd:#7fb0ff; --fn-bg:#1d3357; --fn-tx:#cfe0ff; --fs-bg:#183a24; --fs-tx:#c9f0d5;
   }
 }
 :root[data-theme="dark"]{
@@ -44,6 +46,7 @@
   --a1:#9ec5f4; --a2:#3987e5; --a3:#184f95;
   --h1:#8a3d16; --h2:#b04c1b; --h3:#d6602a; --h4:#ec8a52; --h5:#f6b88c; --dot:#f59a5b;
   --band-op:.22; --code-bg:#232321; --warn:#f2c46b; --warn-bg:#2d2513;
+    --fx-bg:#2a2614; --fx-bd:#7fb0ff; --fn-bg:#1d3357; --fn-tx:#cfe0ff; --fs-bg:#183a24; --fs-tx:#c9f0d5;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -111,6 +114,11 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 @keyframes cardin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.stcard{animation:none}}
 .stcard[hidden]{display:none}
+.fbox{border:2px solid var(--fx-bd);background:var(--fx-bg);border-radius:10px;padding:14px 18px;margin:12px 0}
+.fbox .flabel{font-weight:700;margin:0 0 6px;font-size:15px}.fbox .feq{font-size:21px;line-height:1.9;margin:4px 0;font-weight:700}
+.fbox .fn,.fbox .fs{padding:2px 8px;border-radius:6px;font-weight:800;white-space:nowrap}
+.fbox .fn{background:var(--fn-bg);color:var(--fn-tx)}.fbox .fs{background:var(--fs-bg);color:var(--fs-tx)}
+.fbox .fkey{font-size:13.5px;color:var(--text-2);margin:6px 0 0}
 .stcard .usebox{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:10px 14px;margin:12px 0;font-size:14.5px}.stcard .usebox ul{margin:6px 0 0;padding-left:20px}
 .stcard .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .stcard .cardhead h3{margin:0;font-size:20px}
@@ -415,7 +423,11 @@ a.btn{text-decoration:none;display:inline-block}
   <section class="card">
     <h2>Expected injuries in your state</h2>
     <p class="desc">Pick a state to see roughly how many emergency room visits it would have if its people were hurt at the national rate for their age. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or pick it from the list.</p>
-    <p class="note"><b>How the number is worked out:</b> for each age group, the national e-bike ER visit rate × the state's population in that age group, then added up. <a href="states/california.html#how">See it step by step for California</a>; every state's own page shows its own example.</p>
+    <div class="fbox" id="stformula">
+      <p class="flabel">How the number is worked out</p>
+      <p class="feq"><span class="fs">State visits</span> = add up, for each age group: <span class="fn">national visits</span> &divide; <span class="fn">US population</span> &times; <span class="fs">state population</span></p>
+      <p class="fkey"><span class="fn">blue</span> = whole US (NEISS and Census) &nbsp; <span class="fs">green</span> = the state &nbsp;&middot;&nbsp; <a href="states/california.html#how">See a worked example for California</a>; every state's page shows its own.</p>
+    </div>
     <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates and the state's age mix. <b>E-scooters:</b> NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures (see the Accuracy tab), so treat state e-scooter numbers with care.</div>
     <div class="filters">
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
