@@ -12,3 +12,9 @@ def test_search_tab_says_where_stories_come_from():
 def test_no_llm_answer_is_on_how_it_works():
     assert "Does NEISS-AI use a large language model" in T
     assert "the same story always gets the same answer" in T
+
+
+def test_no_consistent_counts_claim_anywhere():
+    root = Path(__file__).resolve().parents[1]
+    for f in ["docs/template.html", "docs/press.html", "scripts/build_data_pack.py", "README.md"]:
+        assert "stay consistent across" not in (root / f).read_text(encoding="utf-8"), f

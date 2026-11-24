@@ -123,8 +123,8 @@ def build(out: Path = OUT) -> Path:
         ("Source data: the US Consumer Product Safety Commission's National Electronic Injury Surveillance System "
          "(NEISS), a national probability sample of about 100 hospital emergency departments. CPSC does not "
          "endorse NEISS-AI.", None),
-        ("Method: NEISS-AI reads each injury note to label the device (so e-bike counts stay consistent across "
-         "CPSC's 2024 product-code change), then scales each sampled visit up to the whole country with CPSC's "
+        ("Method: NEISS-AI reads each injury note to label the device (before 2024, e-bikes and mopeds shared one "
+         "product code, so the note is used to tell them apart), then scales each sampled visit up to the whole country with CPSC's "
          "weights. The likely ranges allow for the fact that only about 100 hospitals are sampled (technically, "
          "Taylor-linearized 95% confidence intervals). Full method and code: " + SITE, None),
         ("Limits: these are counts of ED visits, not risk rates (the number of riders is not known). NEISS has no "

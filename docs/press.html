@@ -92,7 +92,7 @@ img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--border);
 <h2>How to describe the source</h2>
 <div class="quote">…according to NEISS-AI, a free, open tool by independent researcher Subash Kumar that produces national injury estimates from the Consumer Product Safety Commission's emergency department data.</div>
 <p><b>How it works, in three lines.</b> NEISS is a national sample of about 100 hospital emergency departments run by CPSC. NEISS-AI uses product codes and the words in each short injury description to identify e-bikes, e-scooters and other devices; for unclear pre-2024 e-bike/moped notes, a text classifier (tested on 2024–2025 notes) decides. It then applies CPSC's survey weights to estimate national totals with 95% confidence intervals.</p>
-<p><b>Accuracy.</b> NEISS-AI's e-bike estimates for 2022–2024 match CPSC's own published figures within 5%. Because it reads the injury descriptions, its counts stay consistent across CPSC's 2024 change in product codes for e-bikes.</p>
+<p><b>Accuracy.</b> NEISS-AI's e-bike estimates for 2022–2024 match CPSC's own published figures within 5%. Because it reads the injury descriptions, it can tell e-bikes apart from mopeds before 2024, when they shared one product code. On the hardest notes, which name neither device, it is right about 72 times in 100.</p>
 <p><b>Please note.</b></p>
 <ul>
 <li>These are injuries treated in emergency departments, not deaths and not all injuries.</li>
