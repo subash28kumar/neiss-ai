@@ -374,7 +374,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-ask" role="tabpanel" aria-labelledby="tab-ask" hidden>
   <section class="card">
     <h2>Ask a question in plain English</h2>
-    <p class="desc">Ask about devices, ages, injuries, outcomes and years. The answer is worked out from the NEISS records in your browser, with a likely range (the true number is very likely, 95%, inside it).</p>
+    <p class="desc">Ask a question in plain words about devices, ages, injuries, outcomes or years. Your browser works out the answer from the NEISS records, with a likely range: the true number is very likely (95%) inside it.</p>
     <form class="askbox" id="askform">
       <input type="search" id="askq" placeholder="e.g. How many teenagers broke a bone on an e-scooter in 2025?" aria-label="Your question" autocomplete="off">
       <button class="btn primary" type="submit">Ask</button>
@@ -388,7 +388,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-explore" role="tabpanel" aria-labelledby="tab-explore" hidden>
   <section class="card">
     <h2>Explore the data</h2>
-    <p class="desc">Pick devices and filters. Every number is a national estimate with a likely range (the true number is very likely, 95%, inside it).</p>
+    <p class="desc">Pick devices and filters. Every number is a national estimate with a likely range: the true number is very likely (95%) inside it.</p>
     <div class="field" style="margin-bottom:10px">Devices<div class="chips" id="devchips"></div></div>
     <div class="filters" id="filters"></div>
     <div class="tiles" id="extiles"></div>
@@ -403,7 +403,7 @@ a.btn{text-decoration:none;display:inline-block}
     </div>
     <p class="citeline" id="excite"></p>
     <div class="reqbox">
-      <p><b>Need a breakdown this view can't make?</b> For example, other age ranges, several filters at once, or a ready-to-use table for a report. Request a free custom analysis; I usually reply within 1–2 working days.</p>
+      <p><b>Need a breakdown this view can't make?</b> For example, other age ranges, several filters at once, or a table ready for a report. Ask me for a free custom analysis. I usually reply within 1–2 working days.</p>
       <p class="actions"><a class="btn primary" href="#" data-req="explore">Request a custom analysis</a></p>
     </div>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tbx"></div></details>
@@ -414,7 +414,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-state" role="tabpanel" aria-labelledby="tab-state" hidden>
   <section class="card">
     <h2>Expected injuries in your state</h2>
-    <p class="desc">Pick a state to see about how many emergency department visits it would have if its people were hurt at the national rate for their age group. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or choose it from the list.</p>
+    <p class="desc">Pick a state to see roughly how many emergency room visits it would have if its people were hurt at the national rate for their age. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or pick it from the list.</p>
     <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates and the state's age mix. <b>E-scooters:</b> NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures (see the Accuracy tab), so treat state e-scooter numbers with care.</div>
     <div class="filters">
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
@@ -446,12 +446,12 @@ a.btn{text-decoration:none;display:inline-block}
         <button class="btn" id="stcmpClr" type="button">Clear</button>
         <button class="btn" id="stcmpCsv" type="button">Download as CSV</button>
       </div>
-      <p class="note">The numbers you type stay on your computer: nothing is sent or saved. Benchmark = the number of visits the state would have if it matched the US rate in that age group (US rate x the state's population in that age group). It is an estimate from national data, not a count. A count inside the likely range is consistent with the US rate. Differences can come from how much people ride, local roads, weather and rules, or from a different way of counting (for example hospital codes that cannot tell an e-bike from a bicycle). Small age groups, such as under 5, rest on few injury notes; read them with care.</p>
+      <p class="note">The numbers you type stay on your computer. Nothing is sent or saved. The benchmark is how many visits the state would have at the US rate for that age group (US rate x the state's population in that age group). It's an estimate from national data, not a count. If your count is inside the likely range, it's in line with the US rate. Differences can come from how much people ride, local roads, weather and rules, or from counting differently (for example, hospital codes that can't tell an e-bike from a bicycle). Small age groups, such as under 5, rest on few injury notes, so read them with care.</p>
     </div>
     <p class="citeline" id="stcite"></p>
     <p class="note">Every state on its own page (easy to share and search): <a href="states/">e-bike injuries by state</a>.</p>
     <div class="reqbox">
-      <p><b>Need more for your state?</b> For example, age groups, a different set of devices or years, or a short summary for a grant or briefing. Request a free custom analysis; I usually reply within 1–2 working days.</p>
+      <p><b>Need more for your state?</b> For example, age groups, other devices or years, or a short summary for a grant or briefing. Ask me for a free custom analysis. I usually reply within 1–2 working days.</p>
       <p class="actions"><a class="btn primary" href="#" data-req="state">Request a custom analysis</a></p>
     </div>
     <details><summary>Show the numbers for every state</summary><div class="tablewrap" id="tbst"></div></details>
@@ -477,7 +477,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-hazards" role="tabpanel" aria-labelledby="tab-hazards" hidden>
   <section class="card">
     <h2>Hazard Watch: which products started hurting more people?</h2>
-    <p class="desc">NEISS-AI checks <b>every product code</b> in the national emergency room data (about 800 products), not only products someone already suspects. A product is flagged when its injuries rose clearly faster than all emergency visits, after checks for chance, small numbers and coding changes. It also reads the injury stories for new words that start appearing more often.</p>
+    <p class="desc">NEISS-AI checks <b>every product code</b> in the national emergency room data (about 800 products), not just the ones people already worry about. A product is flagged when its injuries rose clearly faster than all emergency visits, after checks for chance, small numbers and coding changes. It also scans the injury stories for new words that are suddenly appearing more often.</p>
     <h3 id="hz-title">2025 signals, compared with 2024</h3>
     <div class="tablewrap"><table class="hztable">
       <thead><tr><th style="text-align:left">Product</th><th id="hz-h1">2024</th><th id="hz-h2">2025</th><th>Change</th><th>Per 100,000 people</th><th style="text-align:left">Status</th><th style="text-align:left">What it means</th></tr></thead>
@@ -489,12 +489,12 @@ a.btn{text-decoration:none;display:inline-block}
         <tr><td style="text-align:left"><b>Floors or flooring materials</b></td><td>1.86 M</td><td>3.08 M</td><td>+66%</td><td>546 → 901</td><td style="text-align:left"><span class="hz coding">Coding</span></td><td style="text-align:left">Jump starts suddenly in April 2025 at most hospitals: most likely a coding change, not a real rise.</td></tr>
       </tbody>
     </table></div>
-    <p class="note">National estimates of emergency department visits, rounded; rates are visits per 100,000 US residents (Census Bureau population estimates). Each flag passed a strict check that allows for testing about 800 products at once, so few flags are false alarms (Benjamini&ndash;Hochberg method, 5%). "Check" and "Coding" flags need a person to read the stories before drawing conclusions.</p>
+    <p class="note">National estimates of emergency room visits, rounded. Rates are visits per 100,000 US residents (Census Bureau estimates). Because about 800 products are tested at once, each flag had to pass a strict check, so few flags are false alarms (Benjamini&ndash;Hochberg method, 5%). "Check" and "Coding" flags need a person to read the stories before drawing any conclusion.</p>
     <p class="note"><b>Why is the e-bike number here (102,600 in 2025) a little different from the Overview (101,800)?</b> They are counted two ways. Hazard Watch compares CPSC product codes, so it counts records with CPSC's e-bike code. The Overview and Explore use NEISS-AI's reading of each injury story to decide which records are e-bikes. The two differ by about 1%. The same is true for e-scooters: Hazard Watch counts CPSC's powered-scooter code, while the Overview reads the stories (and, for example, leaves out scooters the story says were unpowered), so the e-scooter numbers here differ from the Overview too.</p>
   </section>
   <section class="card">
     <h2>Would it have caught e-bikes early?</h2>
-    <p class="desc">In a look-back test, yes, through the injury stories (we already knew e-bikes were the answer, so this shows the scan could have caught them, not that it would have been noticed). The scan also leaves over 100 other rising words each year for a person to read, so it is a list to review, not an alarm. Words such as "electric bike" and "e-bike" rose faster than all stories every year from 2021, three years before CPSC created a separate e-bike product code in 2024. Checked on its own, the old moped and power-assisted cycle code (where e-bikes were counted) also rose in 2021&ndash;2023; in the all-product scan those yearly numbers were too uncertain to pass the strict test, which is why the word check matters.</p>
+    <p class="desc">In a look-back test, yes, through the injury stories. We already knew e-bikes were the answer, so this shows the scan could have caught them, not that anyone would have noticed. Words such as "electric bike" and "e-bike" rose faster than all stories every year from 2021, three years before CPSC gave e-bikes their own product code in 2024. The scan also leaves over 100 other rising words each year for a person to read, so it is a list to review, not an alarm. On its own, the old moped and power-assisted cycle code (where e-bikes were counted) also rose in 2021&ndash;2023. In the all-product scan those yearly numbers were too uncertain to pass the strict test, which is why the word check matters.</p>
     <div class="tablewrap"><table>
       <thead><tr><th style="text-align:left">Year</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
       <tbody><tr><td style="text-align:left">Stories with e-bike wording</td><td>55</td><td>106</td><td>269</td><td>488</td><td>711</td><td>1,108</td><td>2,124</td></tr></tbody>
@@ -515,7 +515,7 @@ a.btn{text-decoration:none;display:inline-block}
   </section>
   <section class="card">
     <h2>Limits, and how to run it yourself</h2>
-    <p class="desc">National and yearly by default: a single month is much less sensitive (for e-bikes in 2025, one month needs about a 50% rise to be detected, a full year about 28%). 2024 shows no flags because NEISS hospital weights rose sharply that year. 2020&ndash;2021 are pandemic years, so many sports and activity products swing up and down. Coding practice can look like a hazard (floors in 2025). Emergency visits only, so all counts are a floor.</p>
+    <p class="desc">The scan is national and yearly by default. A single month is much less sensitive: for e-bikes in 2025, one month needs about a 50% rise to be detected, a full year about 28%. 2024 shows no flags because NEISS hospital weights rose sharply that year. 2020&ndash;2021 were pandemic years, so many sports and activity products swing up and down. Changes in how hospitals code injuries can look like a hazard (floors in 2025). And the scan covers emergency visits only, so every count is a floor.</p>
 <pre><code>pip install -U neissai
 neissai download --years 2019-2025 --data-dir data
 neissai hazard-export --years 2019-2025 --data-dir data
@@ -527,8 +527,8 @@ neissai hazards --years 2020-2025</code></pre>
 <section class="panel" id="p-accuracy" role="tabpanel" aria-labelledby="tab-accuracy" hidden>
   <section class="card">
     <h2>How accurate is NEISS-AI?</h2>
-    <p class="desc"><a href="#reads">See how NEISS-AI reads a real injury story</a>, then check how often it gets it right below. Every check below was done in one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. All of them can be repeated with the open code and the test files.</p>
-    <p class="note"><b>In short:</b> NEISS-AI's e-bike totals match the government's own published figures within 5%, and when its rules were tested on injury stories they had never seen, they put about 97 to 99 stories in 100 in the right group. Two limits: the answer keys for those story tests were made by AI reviewers, not people, and the e-bike/moped model has not yet been tested on the harder pre-2024 notes where it is used. <b>E-scooters are different:</b> NEISS-AI's e-scooter totals do not match CPSC's published e-scooter figures (see "E-scooter totals" further down this tab), so use CPSC's numbers when you need the official e-scooter count. The table below gives the details; the technical terms are for researchers who want to check the work.</p>
+    <p class="desc"><a href="#reads">See how NEISS-AI reads a real injury story</a>, then see below how often it gets it right. Every check was done one of two ways: against CPSC's own published figures, or on injury stories that were set aside and never used to build the rules. Anyone can repeat them with the open code and test files.</p>
+    <p class="note"><b>In short:</b> NEISS-AI's e-bike totals match the government's own published figures within 5%. When its rules were tested on injury stories they had never seen, they put about 97 to 99 stories in 100 in the right group. Two limits: the answer keys for those tests were made by AI reviewers, not people, and the e-bike/moped model hasn't yet been tested on the harder pre-2024 notes where it is used. <b>E-scooters are different:</b> NEISS-AI's e-scooter totals don't match CPSC's published e-scooter figures (see "E-scooter totals" further down), so use CPSC's numbers for the official e-scooter count. The table below has the details; the technical terms are there for researchers who want to check the work.</p>
     <div class="tiles">
       <div class="tile"><p class="label">Matches CPSC's published totals</p><div class="num">within 5%</div><p class="sub">E-bike visits, 2022–2024</p></div>
       <div class="tile"><p class="label">E-bike vs moped (before 2024)</p><div class="num">72% right</div><p class="sub">On the 47 hardest unseen 2024–2025 stories (naming neither device), the kind it decides before 2024. 98% on all 833</p></div>
@@ -566,16 +566,16 @@ neissai hazards --years 2020-2025</code></pre>
       <thead><tr><th style="text-align:left">Year</th><th>NEISS-AI</th><th>CPSC published</th><th>Difference</th></tr></thead>
       <tbody id="cpscEsc"></tbody>
     </table></div>
-    <p class="note"><b>Why they differ.</b> From 2020 on, NEISS-AI's e-scooter count is, in effect, the count of every NEISS record with CPSC's powered-scooter product code (5022): within about 1% in every year. CPSC's published figures come from a special follow-up study. Staff contacted patients, kept only cases confirmed as two-wheeled, stand-up electric scooters (removing seated scooters, mopeds, mobility scooters, powered skateboards and scooters that were not electric), added "unspecified scooter" cases confirmed as powered, and re-weighted the results for people who did not answer. CPSC also revised the NEISS hospital sample in 2024 and says it applied adjusted weights to the years before 2024. The follow-up answers are not in the public data, so NEISS-AI cannot repeat that review. That is why the gap goes both ways: NEISS-AI is below CPSC in 2019 and 2021&ndash;2022, and above it in 2023&ndash;2024. So <b>NEISS-AI's e-scooter numbers are not reliable for trends</b>: use CPSC's figures for e-scooter counts and trends. Read NEISS-AI's e-scooter numbers as &ldquo;visits coded as powered scooters&rdquo;, not confirmed e-scooters. Same CPSC source as above (Appendix A and Section III-A).</p>
+    <p class="note"><b>Why they differ.</b> From 2020 on, NEISS-AI's e-scooter count is, in effect, every NEISS record with CPSC's powered-scooter product code (5022), within about 1% each year. CPSC's published figures come from a special follow-up study. CPSC staff contacted patients and kept only cases confirmed as two-wheeled, stand-up electric scooters. They removed seated scooters, mopeds, mobility scooters, powered skateboards and scooters that weren't electric, added "unspecified scooter" cases confirmed as powered, and re-weighted the results for people who didn't answer. CPSC also revised the NEISS hospital sample in 2024 and says it adjusted the weights for earlier years. The follow-up answers aren't in the public data, so NEISS-AI can't repeat that review. That's why the gap goes both ways: NEISS-AI is below CPSC in 2019 and 2021&ndash;2022, and above it in 2023&ndash;2024. So <b>NEISS-AI's e-scooter numbers are not reliable for trends</b>: use CPSC's figures for e-scooter counts and trends. Read NEISS-AI's e-scooter numbers as &ldquo;visits coded as powered scooters&rdquo;, not confirmed e-scooters. Same CPSC source as above (Appendix A and Section III-A).</p>
   </section>
 
   <section class="card">
     <h2>Who checked the answers</h2>
     <ul class="acclist">
       <li><span class="status done">Done</span> <b>National totals</b> were checked against CPSC's own published figures, an official source independent of NEISS-AI. E-bike totals match within 5%; e-scooter totals do not (see above).</li>
-      <li><span class="status done">Done</span> <b>Story-level tests</b> (e-moto, motor vehicle, helmet) used answer keys made by independent AI reviewers that never saw NEISS-AI's rules and worked only from the written definitions. Where two reviewers were used they agreed closely, but because they were the same kind of system this is not as independent as two people reading the stories.</li>
-      <li><span class="status next">Next</span> <b>An outside human check.</b> I am looking for injury researchers to label the test stories blind (without seeing NEISS-AI's answers). The results will be published here, whatever they show.</li>
-      <li><span class="status next">Next</span> <b>Learning from people.</b> The hardest e-bike stories are on the <a href="label.html">labelling page</a> as Set C. When at least two approved reviewers agree on an answer, NEISS-AI uses it for that story and for near-identical stories. Guardrails: reviewers are approved by name, stories with known answers check each reviewer's care, the locked test stories are never learned from, and a new version is published only if accuracy on those locked tests does not drop. Every version is kept, so a change can be undone.</li>
+      <li><span class="status done">Done</span> <b>Story-level tests</b> (e-moto, motor vehicle, helmet) used answer keys made by AI reviewers that never saw NEISS-AI's rules and worked only from the written definitions. Where two reviewers were used, they agreed closely. But they were the same kind of system, so this is not as independent as two people reading the stories.</li>
+      <li><span class="status next">Next</span> <b>An outside human check.</b> I'm looking for injury researchers to label the test stories blind, without seeing NEISS-AI's answers. I'll publish the results here, whatever they show.</li>
+      <li><span class="status next">Next</span> <b>Learning from people.</b> The hardest e-bike stories are on the <a href="label.html">labelling page</a> as Set C. When at least two approved reviewers agree on an answer, NEISS-AI uses it for that story and for near-identical ones. Safeguards: reviewers are approved by name, stories with known answers check each reviewer's care, the locked test stories are never learned from, and a new version is published only if accuracy on those locked tests doesn't drop. Every version is kept, so any change can be undone.</li>
     </ul>
   </section>
 
@@ -593,7 +593,7 @@ neissai hazards --years 2020-2025</code></pre>
   </section>
 
   <section class="card">
-    <div class="reqbox"><p><b>Help check NEISS-AI.</b> Are you an injury researcher, epidemiologist or student? Label a set of test stories without seeing NEISS-AI's answers (about 15–30 seconds each; even 50 helps), and I will publish how well they agree, whatever the result. Your name is credited only if you want it.</p><p class="actions"><a class="btn primary" href="label.html">Start labelling stories</a><a class="btn" href="#" data-check="accuracy">Email me first</a></p></div>
+    <div class="reqbox"><p><b>Help check NEISS-AI.</b> Are you an injury researcher, epidemiologist or student? Label a set of test stories without seeing NEISS-AI's answers (about 15–30 seconds each; even 50 helps). I'll publish how well they agree, whatever the result, and credit your name only if you want.</p><p class="actions"><a class="btn primary" href="label.html">Start labelling stories</a><a class="btn" href="#" data-check="accuracy">Email me first</a></p></div>
     <p class="note">The test files and scoring scripts are in the <a href="https://github.com/subash28kumar/neiss-ai/tree/main/validation">validation folder</a> on GitHub. Run <code>python validation/score_injurycoder.py</code> to reproduce the motor vehicle and helmet results.</p>
   </section>
 </section>
@@ -602,20 +602,20 @@ neissai hazards --years 2020-2025</code></pre>
 <section class="panel" id="p-about" role="tabpanel" aria-labelledby="tab-about" hidden>
   <section class="card" id="reads">
     <h2>See how NEISS-AI reads a story</h2>
-    <p class="desc">Real injury stories written by hospital emergency department staff (public CPSC data). Pick one to see which words NEISS-AI used and what it decided. These are the tool's real rules, not a simplified copy.</p>
+    <p class="desc">Real injury stories written by hospital emergency room staff (public CPSC data). Pick one to see which words NEISS-AI used and what it decided. These are the tool's real rules, not a simplified copy.</p>
     <div class="examples" id="rdChips" aria-label="Example stories"></div>
     <p class="actions" style="margin-top:8px"><button class="btn" type="button" id="rdMore">Show another story</button></p>
     <div class="rdbox"><p class="rdmeta" id="rdMeta"></p><p class="rdstory" id="rdStory" aria-live="polite"><span class="loading">Loading example stories…</span></p></div>
     <div class="rdout" id="rdOut"></div>
     <p class="actions" style="margin-top:8px"><a class="btn" href="#" id="rdFlag">Is an answer wrong? Tell me</a></p>
-    <p class="note">Each highlighted phrase is what the rule matched. How often these rules are right is on the <a href="#accuracy">Accuracy</a> tab; like any rule, they sometimes miss. The site shows a set of stories already read by the tool; the open-source code reads any story: <code>neissai classify "16YOM FELL OFF HIS E-BIKE"</code>.</p>
+    <p class="note">Each highlighted phrase is what a rule matched. Like any rule, they sometimes miss; how often is on the <a href="#accuracy">Accuracy</a> tab. This page shows stories the tool has already read. The open-source code can read any story: <code>neissai classify "16YOM FELL OFF HIS E-BIKE"</code>.</p>
   </section>
   <section class="card">
     <h2>How NEISS-AI works</h2>
     <ol class="steps">
-      <li><b>Read every NEISS record.</b> Each record is one emergency department visit, with product codes, the patient's age and a short injury story written by hospital staff.</li>
-      <li><b>Label the device.</b> Product codes and whole-word keywords in the story identify e-bikes, e-scooters, bicycles and similar devices. Before 2024 e-bikes shared code 3215 with mopeds; when the story is unclear, a text classifier trained on 2024–2025 records (where the codes are separate) decides. On 833 unseen 2024–2025 stories it was right 98 times in 100, but on the 47 hardest of them (naming neither device, the kind it decides before 2024) only 72 times in 100. Treat single pre-2024 records it labels as uncertain; year totals still match CPSC's e-bike figures within 5% for 2022–2023.</li>
-      <li><b>Estimate national totals.</b> NEISS is a sample of about 100 hospitals, so each visit is scaled up to the whole country using CPSC's weights, every number gets a likely range (technically, Taylor-linearized 95% confidence intervals), and numbers resting on few records are flagged using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
+      <li><b>Read every NEISS record.</b> Each record is one emergency room visit, with product codes, the patient's age and a short injury story written by hospital staff.</li>
+      <li><b>Label the device.</b> Product codes and key words in the story identify e-bikes, e-scooters, bicycles and similar devices. Before 2024, e-bikes shared code 3215 with mopeds. When the story doesn't say which, a text model trained on 2024–2025 records (where the codes are separate) decides. On 833 unseen 2024–2025 stories it was right 98 times in 100, but on the 47 hardest of them (naming neither device, the kind it decides before 2024) only 72 times in 100. So treat any single pre-2024 record it labels as uncertain. Year totals still match CPSC's e-bike figures within 5% for 2022–2023.</li>
+      <li><b>Estimate national totals.</b> NEISS is a sample of about 100 hospitals, so each visit is scaled up to the whole country with CPSC's weights. Every number gets a likely range (technically, Taylor-linearized 95% confidence intervals), and numbers resting on few records are flagged using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
       <li><b>Refresh automatically.</b> When CPSC releases a new year of data, an automated job reruns the tool and updates this site.</li>
     </ol>
     <h3>Does NEISS-AI use a large language model, like ChatGPT?</h3>
@@ -623,7 +623,7 @@ neissai hazards --years 2020-2025</code></pre>
   </section>
   <section class="card" id="accuracy">
     <h2>How we know it's accurate</h2>
-    <p class="desc">NEISS-AI's e-bike totals for 2022–2024 are within 5% of CPSC's own published figures, and every story-reading rule was tested once on stories it had never seen. The full report card, the test files and the known limits are on the Accuracy tab.</p>
+    <p class="desc">NEISS-AI's e-bike totals for 2022–2024 are within 5% of CPSC's own published figures, and every story-reading rule was tested once on stories it had never seen. The full report card, test files and known limits are on the Accuracy tab.</p>
     <p class="actions"><button class="btn primary" type="button" data-tabgo="accuracy">See the accuracy report card</button></p>
   </section>
   <section class="card">
@@ -642,7 +642,7 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   </section>
   <section class="card" id="cite">
     <h2>Cite this tool</h2>
-    <p class="desc">If NEISS-AI helps your research, teaching or reporting, please cite the software and the method paper.</p>
+    <p class="desc">To cite NEISS-AI in research, teaching or reporting, use the software and method paper below.</p>
     <p class="cite" id="cite-sw">Kumar S. NEISS-AI: AI-assisted national injury estimates from NEISS emergency department narratives [software]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23306744">https://doi.org/10.5281/zenodo.23306744</a></p>
     <p><button class="btn" type="button" data-copy="cite-sw">Copy software citation</button></p>
     <p class="cite" id="cite-pp">Kumar S. E-bike injuries among US children surged in 2025: national estimates from emergency department reports, 2019–2025, using machine learning to read injury narratives [preprint]. Zenodo; 2026. <a href="https://doi.org/10.5281/zenodo.23354066">https://doi.org/10.5281/zenodo.23354066</a></p>
@@ -655,13 +655,13 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   </section>
   <section class="card" id="datapack" hidden>
     <h2>Get the free data pack by email</h2>
-    <p class="desc">All the main national estimates in one Excel file: visits by device, age group and month, hospital stays, e-bikes vs e-motos and the latest Hazard Watch signals, each with a 95% confidence interval and the citation on every sheet. Leave your email and it arrives in a minute, along with a few updates a year when new data comes out.</p>
+    <p class="desc">All the main national estimates in one Excel file: visits by device, age group and month, hospital stays, e-bikes vs e-motos, and the latest Hazard Watch signals. Each has a 95% confidence interval, and every sheet carries the citation. Leave your email and it arrives in a minute, plus a few updates a year when new data comes out.</p>
     <p class="actions"><a class="btn primary" href="#" data-packform>Get the free data pack</a></p>
     <p class="note">Your email is used only for the data pack and NEISS-AI updates; it is never shared. Every number on this website stays free without signing up.</p>
   </section>
   <section class="card" id="custom">
     <h2>Request a free custom analysis</h2>
-    <p class="desc">If the Ask and Explore tabs can't answer your question, I can run a custom analysis of the NEISS data for you, free of charge. I usually reply within 1–2 working days.</p>
+    <p class="desc">If the Ask and Explore tabs can't answer your question, I can run a custom analysis of the NEISS data for you, free. I usually reply within 1–2 working days.</p>
     <ul>
       <li><b>What I can make:</b> national estimates for any mix of device (e-bike, e-scooter, bicycle and others), years, age range, sex, injury type and body part, with 95% confidence intervals; a table or chart for your report; and two or three ready-to-use sentences with a citation.</li>
       <li><b>What NEISS cannot answer:</b> state or city numbers (NEISS is a national sample) and risk per rider or per mile (NEISS counts emergency visits, not riders).</li>
@@ -671,14 +671,14 @@ neissai classify "14YOM FELL OFF HIS ELECTRIC BIKE GOING 20MPH"</code></pre>
   </section>
   <section class="card" id="feedback">
     <h2>Used NEISS-AI? Tell me</h2>
-    <p class="desc">Did these numbers end up in a report, grant application, safety plan, presentation, class or news story? Please send me the link or the title. It takes a minute, and it helps keep this tool free and growing.</p>
+    <p class="desc">Did these numbers end up in a report, grant application, safety plan, talk, class or news story? Please send me the link or title. It takes a minute, and it helps keep this tool free and growing.</p>
     <p class="actions"><a class="btn primary" href="#" data-used="about">Tell me how you used it</a>
     <a class="btn" href="https://github.com/subash28kumar/neiss-ai/issues/new">Report a problem</a></p>
     <p class="note">I read every note and reply personally. I will only mention your work publicly if you say yes.</p>
   </section>
   <section class="card">
     <h2>Limits</h2>
-    <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. NEISS has no state or city information. Helmet use and motor vehicle involvement are only what the story mentions; about 4 in 5 stories do not mention a helmet. Early e-bike estimates rest on few records (2019–2020 by CPSC's rule; 2021 is also small). The hoverboard group also includes electric skateboards, one-wheels and Segways. The question box understands common phrases, not every possible question; check the "Understood as" line under each answer.</p>
+    <p class="desc">Limits: NEISS counts emergency visits, not riders or miles, so these are counts, not risk rates. NEISS has no state or city information. Helmet use and motor vehicle involvement are only what the story mentions; about 4 in 5 stories don't mention a helmet. Early e-bike estimates rest on few records (2019–2020 by CPSC's rule; 2021 is also small). The hoverboard group also includes electric skateboards, one-wheels and Segways. The question box understands common phrases, not every possible question, so check the "Understood as" line under each answer.</p>
   </section>
 </section>
 
