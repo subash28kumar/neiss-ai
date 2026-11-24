@@ -415,6 +415,7 @@ a.btn{text-decoration:none;display:inline-block}
   <section class="card">
     <h2>Expected injuries in your state</h2>
     <p class="desc">Pick a state to see roughly how many emergency room visits it would have if its people were hurt at the national rate for their age. The estimate uses the state's own age mix (US Census Bureau), so a state with more young adults gets a higher number than its population alone suggests. Click a state on the map or pick it from the list.</p>
+    <p class="note"><b>How the number is worked out:</b> for each age group, the national e-bike ER visit rate × the state's population in that age group, then added up. <a href="states/california.html#how">See it step by step for California</a>; every state's own page shows its own example.</p>
     <div class="warnbox"><b>These are estimates, not counts.</b> NEISS is a national sample of about 100 hospitals and does not say which state a patient lives in, so it cannot count injuries in one state. A state's real number can be higher or lower, for example where more people ride. Use these numbers for planning and context, and say they are based on national rates and the state's age mix. <b>E-scooters:</b> NEISS-AI's national e-scooter totals differ from CPSC's published e-scooter figures (see the Accuracy tab), so treat state e-scooter numbers with care.</div>
     <div class="filters">
       <label class="field">State<select id="stSel" aria-label="State"></select></label>
@@ -1869,6 +1870,7 @@ function renderStCard(){
   const cp=h('button',{class:'btn',type:'button',text:'Copy a sentence'});cp.addEventListener('click',()=>document.getElementById('stcopy').click());acts.appendChild(cp);
   const sh=h('button',{class:'btn',type:'button',text:'Copy link'});sh.addEventListener('click',()=>document.getElementById('stshare').click());acts.appendChild(sh);
   const im=h('button',{class:'btn',type:'button',text:'Save as image'});im.addEventListener('click',()=>stCardImage(C));acts.appendChild(im);
+  acts.appendChild(h('a',{class:'btn',href:`states/${N.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html#how`,text:'How this number is worked out'}));
   acts.appendChild(h('a',{class:'btn',href:'#','data-req':'state',text:`Request a free custom analysis for ${N}`}));
   box.appendChild(acts);
   box.appendChild(h('p',{class:'fine',text:`How these are made: national NEISS-AI estimates for each age group x ${N}'s population in that age group (US Census Bureau). Hospital stays, busiest months and e-moto shares use national patterns applied to ${N}. Real local numbers can differ, for example where more people ride. Road deaths are real counts from NHTSA's Fatality Analysis Reporting System (crashes involving a motor vehicle on a public road); biking to work comes from the Census Bureau's American Community Survey; medical bills use CDC average costs for bicycle injuries. `+citeLine()}));

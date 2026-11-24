@@ -16,10 +16,10 @@ main{max-width:860px;margin:0 auto;padding:28px 20px 60px}a{color:#1f5fbf}
 th,td{text-align:right;padding:6px 8px;border-bottom:1px solid #e3e1dc}th:first-child,td:first-child{text-align:left}
 .btn{display:inline-block;background:#1f5fbf;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px;margin:6px 8px 6px 0}
 .btn.alt{background:#fff;color:#1f5fbf;border:1px solid #1f5fbf}.note{font-size:14px;color:#555}
-.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
+.formula{background:#f0efec;border-radius:8px;padding:10px 14px;font-size:15px}.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
 h2{margin-top:30px;font-size:21px}ul{padding-left:20px}li{margin:6px 0}
 @media (prefers-color-scheme:dark){body{background:#161616;color:#ececec}.k div{background:#232323}.k span,.note,.crumb{color:#b5b5b5}
-th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}</style></head>
+th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.formula{background:#232323}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}</style></head>
 <body><main>
 <p class="crumb"><a href="../">NEISS-AI</a> › <a href="./">States</a> › Florida</p>
 <h1>E-bike injuries in Florida</h1>
@@ -30,6 +30,8 @@ That is about 19 a day, or 1 in 3,500 residents, and about 14 times the 2020 lev
 visits from it. NEISS-AI takes the national rate for each age group and applies it to Florida's population. The real number can be
 higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
 Florida differs from other states.</p>
+<p class="note"><b>How it is worked out:</b> for each age group, the national e-bike ER visit rate × Florida's
+population in that age group, then added up. <a href="#how">See it step by step</a>.</p>
 <div class="use"><b>What this number is for</b>
 <ul><li><b>Good for:</b> a rough local figure for grant applications, reports and safety plans, and a benchmark to check
 your own hospital counts against.</li>
@@ -58,6 +60,26 @@ shares by age applied to Florida).</li>
 <li><b>Who:</b> the most visits were among people aged 25-44.</li>
 <li><b>Road deaths (real count):</b> in 2024, 208 bicyclists, including e-bike riders, were killed in traffic crashes with motor vehicles in Florida: 6.6% of all traffic deaths, 0.89 per 100,000 people, higher than the US rate of 0.32. <a href="https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813822">Source: NHTSA FARS</a>.</li><li><b>Biking to work (real survey):</b> about 53,500 people in Florida usually bike to work (0.48% of workers; US 0.47%), Census ACS 2025. More riding usually means more bike injuries.</li><li><b>Medical bills (estimate):</b> e-bike injuries in Florida in 2025 likely cost about $54 million to $125 million in medical care (2025 dollars). The low number is if every injury cost like a fall with no car; the high number is if every injury cost like a crash with a car. <a href="https://stacks.cdc.gov/view/cdc/90013">Source: CDC study</a>.</li>
 </ul>
+
+
+<h2 id="how">How the number is worked out</h2>
+<p><b>In one line:</b> for each age group, the national e-bike ER visit rate × Florida's population in that age group,
+then added up. The example below uses ages 25&ndash;44.</p>
+<ol>
+<li><b>Count the national visits for each age group.</b> NEISS samples about 100 hospitals. Each sampled visit stands for many
+visits across the country, using CPSC's weights (for e-bikes in 2025, about 43 visits each on average).
+Adding them up gives the national number. <i>Example: about 30,700 e-bike ER visits by people aged 25&ndash;44 in 2025.</i></li>
+<li><b>Turn it into a rate.</b> Divide by the number of people that age in the whole US (US Census Bureau).
+<i>Example: 30,700 &divide; 91.9 million people aged 25&ndash;44 = about 33.4 visits per 100,000 people.</i></li>
+<li><b>Apply the rate to Florida.</b> Multiply the rate by Florida's population in the same age group.
+<i>Example: 33.4 per 100,000 × 5,903,109 people aged 25&ndash;44 in Florida &asymp; 1,974 visits.</i></li>
+<li><b>Add up all seven age groups</b> (under 5, 5&ndash;13, 14&ndash;17, 18&ndash;24, 25&ndash;44, 45&ndash;64 and 65+).
+<i>For Florida in 2025, that gives about 6,800.</i></li>
+</ol>
+<p class="formula"><b>Formula:</b> Florida visits = the sum, over age groups, of
+(national visits in that age group &divide; US population in that age group) × Florida's population in that age group.</p>
+<p class="note">The range (4,900 to 8,600) comes only from the uncertainty in the national estimate. The method assumes
+people in every state are hurt at the same rate for their age, so it cannot show differences in how much people ride, local roads or rules.</p>
 
 <h2>How to cite</h2>
 <p>NEISS-AI (Kumar, 2026), state estimates from US CPSC NEISS emergency department data. <a href="https://doi.org/10.5281/zenodo.23306744">https://doi.org/10.5281/zenodo.23306744</a>.
