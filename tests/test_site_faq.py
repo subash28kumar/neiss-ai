@@ -22,3 +22,12 @@ def test_no_consistent_counts_claim_anywhere():
 
 def test_your_state_tab_has_highlighted_formula_box():
     assert 'id="stformula"' in T and "national visits</span> &divide;" in T
+
+
+def test_how_each_device_is_identified_table():
+    assert 'id="devicerules"' in T and "Code 5022 (powered scooters, from 2020)" in T
+    # rules described must match the code
+    import re
+    src = (Path(__file__).resolve().parents[1] / "src" / "neissai" / "devices.py").read_text(encoding="utf-8")
+    for code in ["5045", "3215", "5022", "5040", "5033", "5023", "5024", "1329", "5025", "5042", "1333", "5046", "5035"]:
+        assert code in src and code in T, code

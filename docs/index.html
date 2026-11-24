@@ -119,6 +119,7 @@ nav.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(
 .fbox .fn,.fbox .fs{padding:2px 8px;border-radius:6px;font-weight:800;white-space:nowrap}
 .fbox .fn{background:var(--fn-bg);color:var(--fn-tx)}.fbox .fs{background:var(--fs-bg);color:var(--fs-tx)}
 .fbox .fkey{font-size:13.5px;color:var(--text-2);margin:6px 0 0}
+table.rules th,table.rules td{white-space:normal;text-align:left;vertical-align:top;line-height:1.5}table.rules td:first-child{white-space:nowrap;font-weight:600;padding-right:14px}
 .stcard .usebox{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:10px 14px;margin:12px 0;font-size:14.5px}.stcard .usebox ul{margin:6px 0 0;padding-left:20px}
 .stcard .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .stcard .cardhead h3{margin:0;font-size:20px}
@@ -631,6 +632,18 @@ neissai hazards --years 2020-2025</code></pre>
       <li><b>Estimate national totals.</b> NEISS is a sample of about 100 hospitals, so each visit is scaled up to the whole country with CPSC's weights. Every number gets a likely range (technically, Taylor-linearized 95% confidence intervals), and numbers resting on few records are flagged using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
       <li><b>Refresh automatically.</b> When CPSC releases a new year of data, an automated job reruns the tool and updates this site.</li>
     </ol>
+    <h3 id="devicerules">How each device is identified</h3>
+    <p class="desc">Only e-bikes need heavy story reading. For the other devices, CPSC's product code does most of the work, with a few corrections from the story.</p>
+    <div class="tablewrap"><table class="rules">
+      <tr><th>Device</th><th>How NEISS-AI identifies it</th></tr>
+      <tr><td>E-bike</td><td>Code 5045 (from 2024). Before 2024, a record under code 3215 (mopeds and power-assisted cycles) or a bicycle code whose story says e-bike or electric bike. When a code 3215 story names neither an e-bike nor a moped, the text model decides.</td></tr>
+      <tr><td>E-scooter</td><td>Code 5022 (powered scooters, from 2020), plus other scooter codes whose story clearly names an e-scooter. Stories that say "mobility scooter" or "wheelchair" are left out; stories that say "non-electric" or "unpowered" scooter go to kick scooter. In 2019, before code 5022, only older-code records whose story names an e-scooter. These totals do not match CPSC's published e-scooter figures (see <a href="#accuracy">Accuracy</a>).</td></tr>
+      <tr><td>Bicycle</td><td>Codes 5040 and 5033. Stories that name an e-bike go to e-bike; exercise bikes are left out.</td></tr>
+      <tr><td>Kick scooter</td><td>Codes 5023, 5024 and 1329, unless the story names an e-scooter.</td></tr>
+      <tr><td>Hoverboard</td><td>Code 5025 (in 2019, the older code 5042 when the story says hoverboard). This group also includes electric skateboards, one-wheels and Segways.</td></tr>
+      <tr><td>Skateboard</td><td>Code 1333.</td></tr>
+      <tr><td>Moped / minibike</td><td>Codes 5046 and 5035, plus code 3215 stories that name a moped, minibike, dirt bike, motorcycle or gas scooter, and code 3215 scooters that are not electric stand-up scooters.</td></tr>
+    </table></div>
     <h3>Does NEISS-AI use a large language model, like ChatGPT?</h3>
     <p class="desc">No. It uses word rules plus a small, classic text model (word weights and logistic regression), trained on 2024&ndash;2025 stories where e-bikes and mopeds have separate codes. It is free to run, the same story always gets the same answer, and anyone can check the rules in the open code. The answer keys for some accuracy tests were made by AI reviewers; the <a href="#accuracy">Accuracy</a> tab explains this limit.</p>
   </section>
