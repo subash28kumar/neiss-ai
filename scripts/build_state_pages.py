@@ -88,9 +88,10 @@ main{max-width:860px;margin:0 auto;padding:28px 20px 60px}a{color:#1f5fbf}
 th,td{text-align:right;padding:6px 8px;border-bottom:1px solid #e3e1dc}th:first-child,td:first-child{text-align:left}
 .btn{display:inline-block;background:#1f5fbf;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px;margin:6px 8px 6px 0}
 .btn.alt{background:#fff;color:#1f5fbf;border:1px solid #1f5fbf}.note{font-size:14px;color:#555}
+.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
 h2{margin-top:30px;font-size:21px}ul{padding-left:20px}li{margin:6px 0}
 @media (prefers-color-scheme:dark){body{background:#161616;color:#ececec}.k div{background:#232323}.k span,.note,.crumb{color:#b5b5b5}
-th,td{border-color:#333}a{color:#7fb0ff}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
+th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
 
 
 def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dict | None, hosp: dict, year: int,
@@ -168,6 +169,11 @@ That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residen
 visits from it. NEISS-AI takes the national rate for each age group and applies it to {html.escape(N)}'s population. The real number can be
 higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
 {html.escape(N)} differs from other states.</p>
+<div class="use"><b>What this number is for</b>
+<ul><li><b>Good for:</b> a rough local figure for grant applications, reports and safety plans, and a benchmark to check
+your own hospital counts against.</li>
+<li><b>Not for:</b> ranking states or judging how safe {html.escape(N)} is. Every state gets the same national rate for each
+age group, so differences between states come only from population size and age mix, not from local riding or road safety.</li></ul></div>
 <div class="k">
 <div><b>about {fmt(eb[0])}</b><span>expected e-bike emergency department visits, {year}</span></div>
 <div><b>1 in {one_in(pop, eb[0])}</b><span>residents, at the national rate</span></div>
