@@ -185,13 +185,13 @@ people in every state are hurt at the same rate for their age, so it cannot show
 <body><main>
 <p class="crumb"><a href="../">NEISS-AI</a> › <a href="./">States</a> › {html.escape(N)}</p>
 <h1>E-bike injuries in {html.escape(N)}</h1>
-<p class="lede">If people in {html.escape(N)} were hurt at the national rate for their age group, about <b>{fmt(eb[0])}</b>
-would have gone to an emergency room after an e-bike injury in {year} (range {fmt(eb[1])} to {fmt(eb[2])}, from the national estimate).
-That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents, and about {eb[0] / eb_first:.0f} times the {first} level.</p>
-<p class="note"><b>These are expected numbers, not counts.</b> NEISS does not record the patient's state, so no one can count {html.escape(N)}'s
-visits from it. NEISS-AI takes the national rate for each age group and applies it to {html.escape(N)}'s population. The real number can be
-higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
-{html.escape(N)} differs from other states.</p>
+<p class="lede">NEISS-AI estimates that <b>about {fmt(eb[0])} people in {html.escape(N)}</b> went to an emergency room after an
+e-bike injury in {year}, based on national injury rates. That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residents, and about
+{eb[0] / eb_first:.0f} times as many as in {first}.</p>
+<p class="note"><b>These are expected numbers, not counts.</b> US hospital injury data does not say which state a patient lives in,
+so no one can count {html.escape(N)}'s visits directly. Instead, NEISS-AI takes the national injury rate for each age group and applies it
+to {html.escape(N)}'s population. The real number could be higher or lower, for example if more or fewer people ride in {html.escape(N)}.
+The likely range ({fmt(eb[1])} to {fmt(eb[2])}) shows only the uncertainty in the national number, not how {html.escape(N)} differs from other states.</p>
 <div class="fbox">
 <p class="flabel">How the number is worked out</p>
 <p class="feq"><span class="fs">{html.escape(N)} visits</span> = add up, for each age group:
