@@ -463,7 +463,7 @@ a.btn{text-decoration:none;display:inline-block}
 <section class="panel" id="p-search" role="tabpanel" aria-labelledby="tab-search" hidden>
   <section class="card">
     <h2>Search the injury stories</h2>
-    <p class="desc">Every NEISS record has a short story written by hospital staff. Search the stories of the bike and scooter injuries on this site (e-bikes, e-scooters, bicycles, kick scooters, hoverboards, skateboards and mopeds; about 142,000 records from 2019 to 2025), for example <i>battery</i>, <i>hit by car</i>, <i>helmet</i>, <i>delivery</i>) to see national estimates and real examples. All words must appear.</p>
+    <p class="desc">Every NEISS record has a short story written by hospital emergency department staff. CPSC publishes these stories every year in its public <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data">NEISS data</a>, a sample of about 100 US hospitals. Search the stories of the bike and scooter injuries on this site (e-bikes, e-scooters, bicycles, kick scooters, hoverboards, skateboards and mopeds; about 142,000 records from 2019 to 2025), for example <i>battery</i>, <i>hit by car</i>, <i>helmet</i> or <i>delivery</i>, to see national estimates and real examples. All words must appear.</p>
     <form class="askbox" id="searchform">
       <input type="search" id="searchq" placeholder="e.g. battery" aria-label="Words to search for" autocomplete="off">
       <select id="searchdev" aria-label="Device"></select>
@@ -618,6 +618,8 @@ neissai hazards --years 2020-2025</code></pre>
       <li><b>Estimate national totals.</b> NEISS is a sample of about 100 hospitals, so each visit is scaled up to the whole country using CPSC's weights, every number gets a likely range (technically, Taylor-linearized 95% confidence intervals), and numbers resting on few records are flagged using CPSC's rule. E-bike estimates for 2022–2024 match CPSC's published figures within 5%.</li>
       <li><b>Refresh automatically.</b> When CPSC releases a new year of data, an automated job reruns the tool and updates this site.</li>
     </ol>
+    <h3>Does NEISS-AI use a large language model, like ChatGPT?</h3>
+    <p class="desc">No. It uses word rules plus a small, classic text model (word weights and logistic regression), trained on 2024&ndash;2025 stories where e-bikes and mopeds have separate codes. It is free to run, the same story always gets the same answer, and anyone can check the rules in the open code. The answer keys for some accuracy tests were made by AI reviewers; the <a href="#accuracy">Accuracy</a> tab explains this limit.</p>
   </section>
   <section class="card" id="accuracy">
     <h2>How we know it's accurate</h2>
