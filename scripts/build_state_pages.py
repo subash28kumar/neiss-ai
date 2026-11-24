@@ -88,14 +88,14 @@ main{max-width:860px;margin:0 auto;padding:28px 20px 60px}a{color:#1f5fbf}
 th,td{text-align:right;padding:6px 8px;border-bottom:1px solid #e3e1dc}th:first-child,td:first-child{text-align:left}
 .btn{display:inline-block;background:#1f5fbf;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px;margin:6px 8px 6px 0}
 .btn.alt{background:#fff;color:#1f5fbf;border:1px solid #1f5fbf}.note{font-size:14px;color:#555}
-.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
+.formula{background:#f0efec;border-radius:8px;padding:10px 14px;font-size:15px}.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
 h2{margin-top:30px;font-size:21px}ul{padding-left:20px}li{margin:6px 0}
 @media (prefers-color-scheme:dark){body{background:#161616;color:#ececec}.k div{background:#232323}.k span,.note,.crumb{color:#b5b5b5}
-th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
+th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.formula{background:#232323}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
 
 
 def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dict | None, hosp: dict, year: int,
-         names: dict, rank: dict, updated: str) -> str:
+         names: dict, rank: dict, updated: str, how: dict | None = None) -> str:
     st = S["states"][ab]
     N = st["name"]
     pop = sum(st["pop"][str(year)])
@@ -130,6 +130,32 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
                      f"{money(eb[0] * c['other_bicycle_injury'])} to {money(eb[0] * c['road_crash_with_motor_vehicle'])} in "
                      f"medical care ({py} dollars). The low number is if every injury cost like a fall with no car; the high "
                      f"number is if every injury cost like a crash with a car. <a href=\"{html.escape(costs['url'])}\">Source: CDC study</a>.</li>")
+    how_html = ""
+    if how:
+        k = how["k"]
+        stp = st["pop"][str(year)][k]
+        val = ages[k][0]
+        rate = how["nat"] / how["us_pop"] * 100000
+        how_html = f"""
+<h2 id="how">How the number is worked out</h2>
+<p><b>In one line:</b> for each age group, the national e-bike ER visit rate × {html.escape(N)}'s population in that age group,
+then added up. The example below uses ages 25&ndash;44.</p>
+<ol>
+<li><b>Count the national visits for each age group.</b> NEISS samples about 100 hospitals. Each sampled visit stands for many
+visits across the country, using CPSC's weights (for e-bikes in {year}, about {how['avg_w']:.0f} visits each on average).
+Adding them up gives the national number. <i>Example: about {fmt(how['nat'])} e-bike ER visits by people aged 25&ndash;44 in {year}.</i></li>
+<li><b>Turn it into a rate.</b> Divide by the number of people that age in the whole US (US Census Bureau).
+<i>Example: {fmt(how['nat'])} &divide; {how['us_pop'] / 1e6:.1f} million people aged 25&ndash;44 = about {rate:.1f} visits per 100,000 people.</i></li>
+<li><b>Apply the rate to {html.escape(N)}.</b> Multiply the rate by {html.escape(N)}'s population in the same age group.
+<i>Example: {rate:.1f} per 100,000 × {stp:,} people aged 25&ndash;44 in {html.escape(N)} &asymp; {val:,} visits.</i></li>
+<li><b>Add up all seven age groups</b> (under 5, 5&ndash;13, 14&ndash;17, 18&ndash;24, 25&ndash;44, 45&ndash;64 and 65+).
+<i>For {html.escape(N)} in {year}, that gives about {fmt(eb[0])}.</i></li>
+</ol>
+<p class="formula"><b>Formula:</b> {html.escape(N)} visits = the sum, over age groups, of
+(national visits in that age group &divide; US population in that age group) × {html.escape(N)}'s population in that age group.</p>
+<p class="note">The range ({fmt(eb[1])} to {fmt(eb[2])}) comes only from the uncertainty in the national estimate. The method assumes
+people in every state are hurt at the same rate for their age, so it cannot show differences in how much people ride, local roads or rules.</p>
+"""
     rows = "".join(
         f"<tr><td>{y}</td>" + "".join(f"<td>{fmt(st['e'][d][str(y)][0])}</td>" for d in DEVICES) + "</tr>"
         for y in sorted(int(k) for k in st["e"]["E-bike"]))
@@ -169,6 +195,8 @@ That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residen
 visits from it. NEISS-AI takes the national rate for each age group and applies it to {html.escape(N)}'s population. The real number can be
 higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
 {html.escape(N)} differs from other states.</p>
+<p class="note"><b>How it is worked out:</b> for each age group, the national e-bike ER visit rate × {html.escape(N)}'s
+population in that age group, then added up. <a href="#how">See it step by step</a>.</p>
 <div class="use"><b>What this number is for</b>
 <ul><li><b>Good for:</b> a rough local figure for grant applications, reports and safety plans, and a benchmark to check
 your own hospital counts against.</li>
@@ -198,12 +226,27 @@ shares by age applied to {html.escape(N)}).</li>
 {''.join(lines)}
 </ul>
 
+{how_html}
 <h2>How to cite</h2>
 <p>NEISS-AI (Kumar, 2026), state estimates from US CPSC NEISS emergency department data. <a href="{DOI}">{DOI}</a>.
 Numbers updated {updated}.</p>
 <p class="note">Other states: <a href="./">all 50 states and DC</a>. Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">code</a>.</p>
 </main></body></html>
 """
+
+
+def example_numbers(S: dict, year: int, group: str = "25-44") -> dict:
+    """National e-bike visits and US population for one age group, for the step-by-step example.
+    Uses the same records and weights as the state estimates (docs/data/records.json)."""
+    import sys
+    sys.path.insert(0, str(ROOT / "src"))
+    from neissai.state import AGE_GROUPS, StateEstimator
+    records = json.loads((DATA / "records.json").read_text(encoding="utf-8"))
+    k = [g[2] for g in AGE_GROUPS].index(group)
+    est = StateEstimator(records, "E-bike", year)
+    nat = est.estimate([1.0 if i == k else 0.0 for i in range(len(AGE_GROUPS))])["est"]
+    tot = est.estimate([1.0] * len(AGE_GROUPS))
+    return {"k": k, "nat": nat, "us_pop": S["us"][str(year)]["pop"][k], "avg_w": tot["est"] / tot["records"]}
 
 
 def main() -> None:
@@ -219,12 +262,13 @@ def main() -> None:
     rank = {a: i + 1 for i, a in enumerate(order)}
     names = {a: S["states"][a]["name"] for a in S["states"]}
     updated = str(D.get("updated") or dt.date.today().isoformat())[:10]
+    how = example_numbers(S, year)
     out = DOCS / "states"
     out.mkdir(exist_ok=True)
     for f in out.glob("*.html"):
         f.unlink()
     for ab in sorted(S["states"], key=lambda a: names[a]):
-        (out / f"{slug(names[ab])}.html").write_text(page(ab, S, deaths, commute, costs, hosp, year, names, rank, updated), encoding="utf-8")
+        (out / f"{slug(names[ab])}.html").write_text(page(ab, S, deaths, commute, costs, hosp, year, names, rank, updated, how), encoding="utf-8")
     items = "".join(f"<li><a href=\"{slug(names[a])}.html\">{html.escape(names[a])}</a>: about {fmt(S['states'][a]['e']['E-bike'][str(year)][0])} expected e-bike emergency department visits in {year} (at the national rate)</li>"
                      for a in sorted(S["states"], key=lambda a: names[a]))
     idx_desc = f"E-bike, e-scooter and bicycle injury estimates for all 50 states and DC, {year}: emergency department visits, trends, forecasts, road deaths and medical costs. Free from NEISS-AI."
