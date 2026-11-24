@@ -261,7 +261,7 @@ a.btn{text-decoration:none;display:inline-block}
   <button class="themebtn" id="themebtn" type="button" aria-label="Switch light or dark theme">Theme</button>
   <p class="kicker">NEISS-AI · open injury tracker</p>
   <h1>E-bike and e-scooter injuries in the United States, <span style="white-space:nowrap">2019–2025</span></h1>
-  <p class="lede">National estimates of injuries treated in hospital emergency departments, from the US Consumer Product Safety Commission's NEISS data. An AI text classifier reads the injury stories, so e-bike counts stay consistent across CPSC's 2024 product-code change.</p>
+  <p class="lede">How many people in the US go to the emergency room after e-bike and e-scooter crashes, year by year. The numbers come from CPSC's NEISS hospital data. Before 2024, e-bikes and mopeds shared one product code, so NEISS-AI reads each injury note to tell them apart.</p>
   <p class="meta">Data: CPSC NEISS 2019–2025 · Updated <span id="updated"></span> · Free and open source: <a href="https://github.com/subash28kumar/neiss-ai">github.com/subash28kumar/neiss-ai</a> · <a href="#about" data-goto="cite">Cite this tool</a> · <a href="#accuracy">How accurate it is</a> · <a href="#reads">How it reads a story</a> · <a href="press.html">For journalists</a> · <a href="#about" data-goto="custom">Request a free custom analysis</a> · <a href="#about" data-goto="feedback">Share how you use it</a><br>An independent project, not affiliated with or endorsed by CPSC.</p>
 </header>
 
@@ -290,18 +290,18 @@ a.btn{text-decoration:none;display:inline-block}
     </div>
   </section>
   <div class="reqbox" id="needbox">
-    <p><b>Need numbers for a report, grant, presentation or news story?</b> Ask a question in plain English, build your own table in Explore, or request a free custom analysis.</p>
+    <p><b>Need a number for a report, grant, talk or news story?</b> Ask a question in plain words, build your own table, or ask me for a free custom analysis.</p>
     <p class="actions"><button class="btn" type="button" data-tabgo="ask">Ask a question</button><button class="btn" type="button" data-tabgo="explore">Explore the data</button><button class="btn" type="button" data-tabgo="state">Your state</button><a class="btn" href="#" data-packform hidden>Get the free data pack (Excel)</a><a class="btn primary" href="#about" data-goto="custom">Request a custom analysis</a></p>
   </div>
   <section class="card">
     <h2>Emergency department visits by device</h2>
-    <p class="desc">Estimated US visits each year. The shaded band is the <b>likely range</b>: NEISS samples about 100 hospitals rather than all of them, so the true number is very likely (95%) inside the band. Regular bicycles (about 400,000 a year, roughly flat) are left out so the newer devices can be seen; add them in <a href="#explore">Explore the data</a>.</p>
+    <p class="desc">Estimated US emergency room visits each year. NEISS samples about 100 hospitals, not all of them, so each number has a <b>likely range</b>: the shaded band. Regular bicycles are left out here because their numbers are much bigger (about 400,000 a year) and would flatten the other lines. You can add them in <a href="#explore">Explore the data</a>.</p>
     <div class="playrow"><button class="btn primary" type="button" id="playbtn" aria-controls="c1">&#9654; Play 2019 &rarr; 2025</button><p class="playcap" id="playcap" aria-live="polite"></p></div>
     <div class="legend" id="lg1"></div>
     <div class="chart" id="c1"></div>
     <div class="dlrow"><button class="btn dl embed" type="button" data-embed="devices" aria-expanded="false">Embed this chart</button><button class="btn dl" type="button" data-chart="c1">Download chart (PNG)</button></div>
     <p class="note">Hollow points rest on few hospital records, so read them with care (CPSC's rule: fewer than 20 records, under 1,200 visits, or a very wide range).</p>
-    <p class="note"><b>Is the rise just a change in coding?</b> No. CPSC gave e-bikes their own product code in 2024, and both 2024 and 2025 use that separate code, so the 2024–2025 rise is not a coding effect. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI reads each injury note to tell e-bikes from mopeds. Most of those years' e-bikes are named in the note; for notes that are unclear, a text model decides (see Accuracy), so the early years are less certain than 2024–2025.</p>
+    <p class="note"><b>Is the rise just a change in coding?</b> No. E-bikes got their own product code in 2024, and the rise from 2024 to 2025 uses that same code in both years. For 2019–2023, when e-bikes shared a code with mopeds, NEISS-AI reads each note. Most notes name the device. For the unclear ones, a text model decides, so the earlier years are less certain (see Accuracy).</p>
     <details><summary>Show the numbers</summary><div class="tablewrap" id="tb1"></div></details>
   </section>
   <section class="card" id="fccard" hidden>
@@ -4491,11 +4491,11 @@ function drawStory(eb,es,kids){
   const mE=Math.round(every(b.est)), mS=Math.round(every(s.est));
   document.getElementById('sbEvery').textContent=`Every ${mE} minutes`;
   document.getElementById('sbEveryT').textContent=`In ${y}, about every ${mE} minutes someone in the US went to an emergency department after an e-bike injury. For e-scooters: about every ${mS} minutes.`;
-  document.getElementById('sbEveryN').textContent=`From the national estimate of ${fmt(b.est)} e-bike visits in ${y}. Allowing for the 95% confidence interval (${fmt(b.lo)} to ${fmt(b.hi)}), between every ${Math.round(every(b.hi))} and every ${Math.round(every(b.lo))} minutes. This is an average over the year, not a live count.`;
+  document.getElementById('sbEveryN').textContent=`Based on about ${fmt(b.est)} e-bike ER visits in ${y}. Given the likely range (${fmt(b.lo)} to ${fmt(b.hi)}), it could be anywhere from every ${Math.round(every(b.hi))} to every ${Math.round(every(b.lo))} minutes. It's a yearly average, not a live count.`;
   const sh=k.est/b.est, n=Math.round(1/sh), oneIn=Math.abs(1/n-sh)<0.02;
   document.getElementById('sbKids').textContent=oneIn?`1 in ${n}`:`${Math.round(sh*100)}%`;
   document.getElementById('sbKidsT').textContent=`${oneIn?'1 in '+n:Math.round(sh*100)+'%'} people hurt on e-bikes in ${y} ${oneIn?'was':'were'} a child (age 0–17).`;
-  document.getElementById('sbKidsN').textContent=`About ${fmt(k.est)} of ${fmt(b.est)} e-bike emergency visits (${Math.round(sh*100)}%). Each figure stands for 5% of injured riders.`;
+  document.getElementById('sbKidsN').textContent=`About ${fmt(k.est)} of the ${fmt(b.est)} e-bike ER visits (${Math.round(sh*100)}%). Each small figure is 5% of injured riders.`;
   const P=document.getElementById('sbPeople');P.textContent='';P.setAttribute('role','img');
   const lit=Math.round(sh*20);P.setAttribute('aria-label',`${lit} of 20 figures highlighted: children`);
   const acc=css('--accent'), off=css('--text-3');
