@@ -88,10 +88,10 @@ main{max-width:860px;margin:0 auto;padding:28px 20px 60px}a{color:#1f5fbf}
 th,td{text-align:right;padding:6px 8px;border-bottom:1px solid #e3e1dc}th:first-child,td:first-child{text-align:left}
 .btn{display:inline-block;background:#1f5fbf;color:#fff;text-decoration:none;padding:10px 16px;border-radius:8px;margin:6px 8px 6px 0}
 .btn.alt{background:#fff;color:#1f5fbf;border:1px solid #1f5fbf}.note{font-size:14px;color:#555}
-.formula{background:#f0efec;border-radius:8px;padding:10px 14px;font-size:15px}.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
+.fbox{border:2px solid #1f5fbf;background:#fff8d6;border-radius:10px;padding:14px 18px;margin:12px 0 18px}.flabel{font-weight:700;margin:0 0 6px;font-size:15px}.feq{font-size:20px;line-height:1.9;margin:4px 0}.fn,.fs{padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap}.fn{background:#dbe8ff;color:#123a7a}.fs{background:#d7f3df;color:#0f5a2b}.fkey{font-size:13.5px;color:#555;margin:6px 0 0}table.calc td{vertical-align:top}table.calc td:nth-child(2){text-align:left}.cstep{font-weight:700;color:#1f5fbf;width:28px}.cnum{white-space:nowrap}table.calc small{color:#666}.use{border-left:4px solid #1f5fbf;background:#eef3fb;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:15px}.use ul{margin:6px 0 0}
 h2{margin-top:30px;font-size:21px}ul{padding-left:20px}li{margin:6px 0}
 @media (prefers-color-scheme:dark){body{background:#161616;color:#ececec}.k div{background:#232323}.k span,.note,.crumb{color:#b5b5b5}
-th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.formula{background:#232323}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
+th,td{border-color:#333}a{color:#7fb0ff}.use{background:#1c2633;border-left-color:#7fb0ff}.fbox{background:#2a2614;border-color:#7fb0ff}.fn{background:#1d3357;color:#cfe0ff}.fs{background:#183a24;color:#c9f0d5}.fkey,table.calc small{color:#b5b5b5}.btn{background:#3b7be0;color:#fff}.btn.alt{background:transparent;color:#7fb0ff;border-color:#7fb0ff}}"""
 
 
 def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dict | None, hosp: dict, year: int,
@@ -137,22 +137,19 @@ def page(ab: str, S: dict, deaths: dict | None, commute: dict | None, costs: dic
         val = ages[k][0]
         rate = how["nat"] / how["us_pop"] * 100000
         how_html = f"""
-<h2 id="how">How the number is worked out</h2>
-<p><b>In one line:</b> for each age group, the national e-bike ER visit rate × {html.escape(N)}'s population in that age group,
-then added up. The example below uses ages 25&ndash;44.</p>
-<ol>
-<li><b>Count the national visits for each age group.</b> NEISS samples about 100 hospitals. Each sampled visit stands for many
-visits across the country, using CPSC's weights (for e-bikes in {year}, about {how['avg_w']:.0f} visits each on average).
-Adding them up gives the national number. <i>Example: about {fmt(how['nat'])} e-bike ER visits by people aged 25&ndash;44 in {year}.</i></li>
-<li><b>Turn it into a rate.</b> Divide by the number of people that age in the whole US (US Census Bureau).
-<i>Example: {fmt(how['nat'])} &divide; {how['us_pop'] / 1e6:.1f} million people aged 25&ndash;44 = about {rate:.1f} visits per 100,000 people.</i></li>
-<li><b>Apply the rate to {html.escape(N)}.</b> Multiply the rate by {html.escape(N)}'s population in the same age group.
-<i>Example: {rate:.1f} per 100,000 × {stp:,} people aged 25&ndash;44 in {html.escape(N)} &asymp; {val:,} visits.</i></li>
-<li><b>Add up all seven age groups</b> (under 5, 5&ndash;13, 14&ndash;17, 18&ndash;24, 25&ndash;44, 45&ndash;64 and 65+).
-<i>For {html.escape(N)} in {year}, that gives about {fmt(eb[0])}.</i></li>
-</ol>
-<p class="formula"><b>Formula:</b> {html.escape(N)} visits = the sum, over age groups, of
-(national visits in that age group &divide; US population in that age group) × {html.escape(N)}'s population in that age group.</p>
+<h2 id="how">Worked example: {html.escape(N)}, ages 25&ndash;44, {year}</h2>
+<table class="calc">
+<tr><td class="cstep">1</td><td>National e-bike ER visits, ages 25&ndash;44<br><small>NEISS sample of about 100 hospitals; each sampled visit counts for about {how['avg_w']:.0f} US visits (CPSC weights)</small></td>
+<td class="cnum"><span class="fn">{fmt(how['nat'])}</span></td></tr>
+<tr><td class="cstep">2</td><td>&divide; US population, ages 25&ndash;44<br><small>US Census Bureau</small></td>
+<td class="cnum"><span class="fn">{how['us_pop']:,}</span></td></tr>
+<tr><td class="cstep">=</td><td><b>National rate</b></td><td class="cnum"><b>{rate:.1f} per 100,000 people</b></td></tr>
+<tr><td class="cstep">3</td><td>&times; {html.escape(N)} population, ages 25&ndash;44</td>
+<td class="cnum"><span class="fs">{stp:,}</span></td></tr>
+<tr><td class="cstep">=</td><td><b>{html.escape(N)} visits, ages 25&ndash;44</b></td><td class="cnum"><b>&asymp; {val:,}</b></td></tr>
+<tr><td class="cstep">4</td><td>Do the same for all seven age groups (under 5, 5&ndash;13, 14&ndash;17, 18&ndash;24, 25&ndash;44, 45&ndash;64, 65+) and add them up</td>
+<td class="cnum"><b>about {fmt(eb[0])}</b></td></tr>
+</table>
 <p class="note">The range ({fmt(eb[1])} to {fmt(eb[2])}) comes only from the uncertainty in the national estimate. The method assumes
 people in every state are hurt at the same rate for their age, so it cannot show differences in how much people ride, local roads or rules.</p>
 """
@@ -195,8 +192,12 @@ That is about {round(eb[0] / 365):,} a day, or 1 in {one_in(pop, eb[0])} residen
 visits from it. NEISS-AI takes the national rate for each age group and applies it to {html.escape(N)}'s population. The real number can be
 higher or lower, for example where more or fewer people ride. The <b>range</b> shows only the uncertainty in the national number, not how
 {html.escape(N)} differs from other states.</p>
-<p class="note"><b>How it is worked out:</b> for each age group, the national e-bike ER visit rate × {html.escape(N)}'s
-population in that age group, then added up. <a href="#how">See it step by step</a>.</p>
+<div class="fbox">
+<p class="flabel">How the number is worked out</p>
+<p class="feq"><span class="fs">{html.escape(N)} visits</span> = add up, for each age group:
+<span class="fn">national visits</span> &divide; <span class="fn">US population</span> &times; <span class="fs">{html.escape(N)} population</span></p>
+<p class="fkey"><span class="fn">blue</span> = whole US (NEISS and Census) &nbsp; <span class="fs">green</span> = {html.escape(N)} &nbsp;&middot;&nbsp; <a href="#how">See the worked example</a></p>
+</div>
 <div class="use"><b>What this number is for</b>
 <ul><li><b>Good for:</b> a rough local figure for grant applications, reports and safety plans, and a benchmark to check
 your own hospital counts against.</li>
